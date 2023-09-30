@@ -39,6 +39,21 @@ input {
   z-index: 5;
 }
 
+/* Styles for the flash message */
+.flash-message {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.flash-message.success {
+    background-color: #4CAF50; /* Green background color for success message */
+}
+
+
 form {
   display: flex;
   align-items: center;
