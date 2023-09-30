@@ -26,7 +26,7 @@ services:
       PMA_HOSTS: db
       UPLOAD_LIMIT: 50M
   php:
-    image: php:8-fpm
+    build: ./php
     container_name: php
     restart: unless-stopped
     volumes:
