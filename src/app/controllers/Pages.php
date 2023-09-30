@@ -1,18 +1,22 @@
 <?php
-class Pages extends Controller
-{
-    public function __construct()
-    {
-        
+  class Pages extends Controller {
+    public function __construct(){
+     
+    }
+    
+    public function index(){
+      $data = [
+        'title' => 'JobLinkUp',
+      ];
+     
+      $this->view('pages/index', $data);
     }
 
-    public function index()
-    {
-        $this->view('hello');
-    }
+    public function about(){
+      $data = [
+        'title' => 'About Us'
+      ];
 
-    public function about($id)
-    {
-        echo $id;
+      $this->view('pages/about', $data);
     }
-}
+  }
