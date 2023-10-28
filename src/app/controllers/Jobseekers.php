@@ -228,4 +228,13 @@ class Jobseekers extends Controller
             return false;
         }
     }
+
+    public function dashboard(){
+        $data = [
+          'title' => 'JobLinkUp',
+        ];
+       
+        $this->view('jobseeker/dashboard', $data);
+    }
+
 }
