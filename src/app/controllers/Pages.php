@@ -9,7 +9,7 @@
         'title' => 'JobLinkUp',
       ];
      
-      $this->view('pages/index', $data);
+      $this->view('home/index', $data);
     }
 
     public function about(){
