@@ -3,10 +3,14 @@ class Jobseekers extends Controller
 {
 
     public $jobseekerModel;
+    public $jobModel;
+    public $wishlistModel;
 
     public function __construct()
     {
         $this->jobseekerModel = $this->model('Jobseeker');
+        $this->jobModel = $this->model('Job');
+        $this->wishlistModel = $this->model('Wishlist');
     }
 
     public function index()
@@ -208,7 +212,7 @@ class Jobseekers extends Controller
         $_SESSION['user_id'] = $user->id;
         $_SESSION['user_email'] = $user->email;
         $_SESSION['user_name'] = $user->username;
-        redirect('pages/index');
+        redirect('jobseekers/dashboard');
     }
 
     public function logout()
@@ -229,12 +233,118 @@ class Jobseekers extends Controller
         }
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $data = [
-          'title' => 'JobLinkUp',
+            'style' => 'jobseeker/dashboard.css',
+            'title' => 'Dashboard',
+            'header_title' => 'Dashboard'
         ];
-       
+
         $this->view('jobseeker/dashboard', $data);
     }
 
+    public function profile()
+    {
+        $data = [
+            'style' => 'jobseeker/profile.css',
+            'title' => 'Profile',
+            'header_title' => 'Profile'
+        ];
+
+        $this->view('jobseeker/profile', $data);
+    }
+
+    public function wishlist($id, $action = null)
+    {
+        if ($action == 'delete') {
+
+            $job_id_str = trim(htmlspecialchars($id));
+            $job_id = (int)$job_id_str;
+
+            $data = [
+                'style' => 'jobseeker/wishlist.css',
+                'title' => 'Wishlist',
+                'header_title' => 'Wishlist',
+                'job_id' => $job_id,
+                'seeker_id' => $_SESSION['user_id']
+            ];
+            $this->wishlistModel->deleteFromList($data);
+            $this->view('wishlist/confirm', $data);
+        }
+
+        $wishlist = $this->jobModel->getWishlist($id);
+
+        $data = [
+            'style' => 'jobseeker/wishlist.css',
+            'title' => 'Wishlist',
+            'header_title' => 'Wishlist',
+            'wishlist' => $wishlist
+        ];
+        $this->view('wishlist/index', $data);
+    }
+
+    public function appliedJobs()
+    {
+        $data = [
+            'style' => 'jobseeker/applied.css',
+            'title' => 'Applied Jobs',
+            'header_title' => 'Applied Jobs',
+        ];
+
+        $this->view('jobseeker/jobs-applied', $data);
+    }
+
+
+    public function jobalerts()
+    {
+        $data = [
+            'style' => 'jobseeker/alerts.css',
+            'title' => 'Jobs Alerts',
+            'header_title' => 'Job Alerts',
+        ];
+
+        $this->view('jobseeker/jobalerts', $data);
+    }
+
+
+    public function changePassword()
+    {
+        $data = [
+            'style' => 'jobseeker/pass.css',
+            'title' => 'Change Password',
+            'header_title' => 'Change Password',
+        ];
+
+        $this->view('jobseeker/changepassword', $data);
+    }
+
+    public function chat()
+    {
+        $data = [
+            'style' => 'jobseeker/chat.css',
+            'title' => 'Chat',
+            'header_title' => 'Chat With Recruiters',
+        ];
+
+        $this->view('jobseeker/chat', $data);
+    }
+
+    public function recprof()
+    {
+        $data = [
+            'title' => 'JobLinkUp',
+        ];
+
+        $this->view('jobseeker/rec-prof', $data);
+    }
+
+    public function recjob()
+    {
+        $data = [
+            'title' => 'JobLinkUp',
+        ];
+
+        $this->view('jobseeker/rec-job', $data);
+    }
 }
