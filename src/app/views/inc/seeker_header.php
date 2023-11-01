@@ -44,7 +44,7 @@
                                         <a href="<?php echo URLROOT ?>/jobseekers">Job Seekers</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo URLROOT ?>/recruiters">Job Seekers</a>
+                                        <a href="<?php echo URLROOT ?>/recruiters">Job Recruiters</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo URLROOT ?>/aboutus">About Us</a>
