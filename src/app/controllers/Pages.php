@@ -6,7 +6,8 @@
     
     public function index(){
       $data = [
-        'title' => 'JobLinkUp',
+        'style' => 'home/style.css',
+        'title' => 'Home'
       ];
      
       $this->view('home/index', $data);
