@@ -44,7 +44,7 @@
                                         <a href="<?php echo URLROOT ?>/jobseekers">Job Seekers</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo URLROOT ?>/admins">Job Seekers</a>
+                                        <a href="<?php echo URLROOT ?>/moderators">Job Seekers</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo URLROOT ?>/aboutus">About Us</a>
@@ -87,18 +87,16 @@
                                         </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4><?php echo $_SESSION['admin_name'] ?></h4>
+                                        <h4><?php echo $_SESSION['moderator_name'] ?></h4>
                                     </div>
 
                                     <div class="twm-nav-list-1">
                                         <ul>
-                                            <li><a href="<?php echo URLROOT ?>/admins/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/admins/addadmin"><i class="fa fa-user"></i> Add Moderators</a></li>
-                                            <li><a href="#"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
-                                            <li><a href="#"><i class="fa fa-suitcase"></i> Manage Ads</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
+                                            <li><a href="#"><i class="fa fa-suitcase"></i>Verify Buisness</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
-                                            <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/admins/logout"><i class="fa fa-share-square"></i> Logout</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>

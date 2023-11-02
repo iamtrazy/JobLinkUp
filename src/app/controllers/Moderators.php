@@ -123,4 +123,99 @@ class Moderators extends Controller
             return false;
         }
     }
+
+    public function dashboard()
+    {
+        if (!isset($_SESSION['moderator_id'])) {
+            $this->index();
+        } else {
+            $data = [
+                'style' => 'jobseeker/dashboard.css',
+                'title' => 'Dashboard',
+                'header_title' => 'Dashboard'
+            ];
+
+            $this->view('moderator/dashboard', $data);
+        }
+    }
+
+    public function changepassword()
+    {
+        if (!isset($_SESSION['moderator_id'])) {
+            $this->index();
+        } else {
+
+            // Check for POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Sanitize POST data
+                $old_password = trim(htmlspecialchars($_POST['old_password']));
+                $new_password = trim(htmlspecialchars($_POST['new_password']));
+                $confirm_password = trim(htmlspecialchars($_POST['confirm_password']));
+
+                // Init data
+                $data = [
+                    'style' => 'jobseeker/pass.css',
+                    'title' => 'Change Password',
+                    'header_title' => 'Change Password',
+                    'old_password' => $old_password,
+                    'new_password' => $new_password,
+                    'confirm_password' => $confirm_password,
+                    'old_password_err' => '',
+                    'new_password_err' => '',
+                    'confirm_password_err' => '',
+                ];
+
+                // Validate Old Password
+                $loggedInUser = $this->moderatorModel->getUserById($_SESSION['moderator_id']);
+                if (!$loggedInUser || !password_verify($data['old_password'], $loggedInUser->password)) {
+                    $data['old_password_err'] = 'Incorrect old password';
+                }
+
+                // Validate New Password
+                if (empty($data['new_password'])) {
+                    $data['new_password_err'] = 'Please enter a new password';
+                } elseif (strlen($data['new_password']) < 6) {
+                    $data['new_password_err'] = 'Password must be at least 6 characters';
+                }
+
+                // Validate Confirm Password
+                if ($data['new_password'] != $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match';
+                }
+
+                // If there are no errors, update the password
+                if (empty($data['old_password_err']) && empty($data['new_password_err']) && empty($data['confirm_password_err'])) {
+                    // Hash the new password
+                    $hashed_password = password_hash($data['new_password'], PASSWORD_DEFAULT);
+
+                    // Update the password in the database
+                    $moderator_id = $_SESSION['moderator_id'];
+                    if ($this->moderatorModel->changePassword($moderator_id, $hashed_password)) {
+                        jsflash('password_updated', '/moderators/dashboard');
+                    } else {
+                        jsflash('Password update failed', '/moderators/changepassword');
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('moderator/changepassword', $data);
+                }
+            } else {
+                // Init data
+                $data = [
+                    'style' => 'jobseeker/pass.css',
+                    'title' => 'Change Password',
+                    'header_title' => 'Change Password',
+                    'old_password' => '',
+                    'new_password' => '',
+                    'confirm_password' => '',
+                    'old_password_err' => '',
+                    'new_password_err' => '',
+                    'confirm_password_err' => '',
+                ];
+
+                // Load view
+                $this->view('moderator/changepassword', $data);
+            }
+        }
+    }
 }
