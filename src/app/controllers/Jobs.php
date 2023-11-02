@@ -62,6 +62,7 @@ class Jobs extends Controller
     public function add(){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
           $data = [
+            'recruiter_id' => $_SESSION['business_id'],
             'location' => trim(htmlspecialchars($_POST['location'])),
             'topic' => trim(htmlspecialchars($_POST['topic'])),
             'website' => trim(htmlspecialchars($_POST['website'])),
@@ -87,13 +88,13 @@ class Jobs extends Controller
             //Execute
             if($this->jobModel->addJob($data)){
               // Redirect to login
-              redirect('recruiters/postjob');
+              jsflash('Job published','recruiters/postjob');
             } else {
               die('Something went wrong');
             }
           } else {
             // Load view with errors
-            $this->view('recruiters/postjob', $data);
+            jsflash('Incorrect Details','recruiters/postjob');
           }
   
         } else {
