@@ -40,35 +40,35 @@
                 </div>
                 <div class="twm-bnr-popular-search">
                   <span class="twm-title">Popular Searches:</span>
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Freelance Writing</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Babysitting</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Remote Work</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Pet Care</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Lawn Care</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Barista</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Writing</a
                   >
                   ,
-                  <a href="https://thewebmax.org/jobzilla/job-list.html"
+                  <a href="#"
                     >Dog Walking</a
                   >...
                 </div>

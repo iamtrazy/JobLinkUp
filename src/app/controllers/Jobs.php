@@ -17,6 +17,10 @@ class Jobs extends Controller
     // Load All job
     public function index()
     {
+      if(!isset($_SESSION['user_id'])){
+        $_SESSION['guest_id'] = '1';
+        $_SESSION['user_name'] = 'Guest User';
+      }
         $jobs = $this->jobModel->getJobs();
 
         $data = [
