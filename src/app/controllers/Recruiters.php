@@ -28,8 +28,8 @@ class Recruiters extends Controller
             'login_password_err' => '',
         ];
 
-        if (isset($_SESSION['buisness_id'])) {
-            //$this->dashboard();
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
         } else {
             $this->view('recruiters/register', $data);
         }
@@ -38,8 +38,8 @@ class Recruiters extends Controller
     public function register()
     {
 
-        if (isset($_SESSION['buisness_id'])) {
-            //$this->dashboard();
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
         } else {
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -135,8 +135,8 @@ class Recruiters extends Controller
 
     public function login()
     {
-        if (isset($_SESSION['buisness_id'])) {
-            //$this->dashboard();
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
         } else {
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -220,10 +220,10 @@ class Recruiters extends Controller
 
     private function createUserSession($user)
     {
-        $_SESSION['buisness_id'] = $user->id;
-        $_SESSION['businsess_email'] = $user->email;
+        $_SESSION['business_id'] = $user->id;
+        $_SESSION['business_email'] = $user->email;
         $_SESSION['business_name'] = $user->name;
-        redirect('recruiters/postjob');
+        redirect('recruiters/dashboard');
     }
 
     public function logout()
@@ -241,6 +241,21 @@ class Recruiters extends Controller
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function dashboard()
+    {
+        if (!isset($_SESSION['business_id'])) {
+            $this->login();
+        } else {
+            $data = [
+                'style' => 'recruiter/dashboard.css',
+                'title' => 'Dashboard',
+                'header_title' => 'Dashboard'
+            ];
+
+            $this->view('recruiters/dashboard', $data);
         }
     }
 
