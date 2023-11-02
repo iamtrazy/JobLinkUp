@@ -26,3 +26,16 @@ function flash($name = '', $message = '', $class = 'flash-message success')
         }
     }
 }
+
+function jsflash($message = '', $path = '')
+{
+
+    echo '<script type="text/javascript">';
+
+    if (!empty($message && $path)) {
+        echo 'window.alert("' . $message . '");';
+        echo 'window.location.href = "' . URLROOT . '/' . $path . '";';
+    }
+
+    echo '</script>';
+}
