@@ -22,10 +22,11 @@ class Job
     public function addJob($data)
     {
         // Prepare Query
-        $this->db->query('INSERT INTO jobs ( location, rate, topic, type, website, category, detail) 
-        VALUES (:location, :rate, :topic, :type, :website, :category, :detail)');
+        $this->db->query('INSERT INTO jobs ( recruiter_id, location, rate, topic, type, website, category, detail) 
+        VALUES (:recruiter_id, :location, :rate, :topic, :type, :website, :category, :detail)');
 
         // Bind Values
+        $this->db->bind(':recruiter_id', $data['recruiter_id']);
         $this->db->bind(':location', $data['location']);
         $this->db->bind(':rate', $data['rate']);
         $this->db->bind(':topic', $data['topic']);
