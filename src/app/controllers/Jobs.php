@@ -87,7 +87,7 @@ class Jobs extends Controller
             //Execute
             if($this->jobModel->addJob($data)){
               // Redirect to login
-              $this->view('job/add_alert', $data);
+              redirect('recruiters/postjob');
             } else {
               die('Something went wrong');
             }
