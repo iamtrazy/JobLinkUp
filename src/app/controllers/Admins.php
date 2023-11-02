@@ -127,7 +127,7 @@ class Admins extends Controller
     public function dashboard()
     {
         if (!isset($_SESSION['admin_id'])) {
-            $this->login();
+            $this->index();
         } else {
             $data = [
                 'style' => 'jobseeker/dashboard.css',

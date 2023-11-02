@@ -1,7 +1,7 @@
 <?php
 if (isset($_SESSION['user_id'])) {
   require APPROOT . '/views/inc/seeker_header.php';
-}
+} else
 if (isset($_SESSION['business_id'])) {
   require APPROOT . '/views/inc/recruiter_header.php';
 } else {
