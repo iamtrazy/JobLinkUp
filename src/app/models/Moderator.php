@@ -58,7 +58,6 @@ class Moderator
     {
         // Hash the new password before updating the database
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
         // Update the password in the database for the specified moderator
         $this->db->query('UPDATE moderators SET password = :password WHERE id = :id');
         $this->db->bind(':password', $hashed_password);
