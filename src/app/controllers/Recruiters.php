@@ -102,7 +102,7 @@ class Recruiters extends Controller
                     // Register User
                     if ($this->recruiterModel->register($data)) {
                         flash('register_success', 'You are registered and can log in');
-                        redirect('Recruiters/login');
+                        redirect('recruiters/login');
                     } else {
                         die('Something went wrong');
                     }
