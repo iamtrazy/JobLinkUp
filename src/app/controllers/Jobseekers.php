@@ -191,7 +191,7 @@ class Jobseekers extends Controller
                     } else {
                         $data['login_password_err'] = 'Password incorrect';
 
-                        $this->view('jobseeker/login', $data);
+                        $this->view('jobseeker/register', $data);
                     }
                 } else {
                     // Load view with errors
