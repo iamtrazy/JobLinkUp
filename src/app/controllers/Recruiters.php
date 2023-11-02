@@ -9,6 +9,27 @@ class Recruiters extends Controller
         $this->jobModel = $this->model('Job');
     }
 
+    public function index()
+    {
+
+        $data = [
+            'name' => '',
+            'email' => '',
+            'password' => '',
+            'confirm_password' => '',
+            'name_err' => '',
+            'email_err' => '',
+            'password_err' => '',
+            'confirm_password_err' => '',
+            'login_email' => '',
+            'login_password' => '',
+            'login_email_err' => '',
+            'login_password_err' => '',
+        ];
+
+        $this->view('jobseeker/register', $data);
+    }
+
     public function postjob()
     {
         $data = [
