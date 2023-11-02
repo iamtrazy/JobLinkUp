@@ -1,6 +1,9 @@
 <?php
 if (isset($_SESSION['user_id'])) {
   require APPROOT . '/views/inc/seeker_header.php';
+}
+if (isset($_SESSION['business_id'])) {
+  require APPROOT . '/views/inc/recruiter_header.php';
 } else {
   require APPROOT . '/views/inc/guest_header_jobs.php';
 }
@@ -36,7 +39,7 @@ if (isset($_SESSION['user_id'])) {
             </div>
             <?php if (isset($_SESSION['user_id'])) {
               echo '
-              <a href="' . URLROOT . '/jobs/wishlist/'. $job->id. '">
+              <a href="' . URLROOT . '/jobs/wishlist/' . $job->id . '">
                 <button type="button">
                   <i class="fas fa-cart-plus"></i>
                 </button>

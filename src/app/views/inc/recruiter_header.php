@@ -87,19 +87,20 @@
                                         </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4>Artistre Studio PVT Ltd</h4>
+                                        <h4><?php echo $_SESSION['business_name'] ?></h4>
                                         <p>IT Contractor</p>
                                     </div>
 
                                     <div class="twm-nav-list-1">
                                         <ul>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                                             <li><a href="#"><i class="fa fa-user"></i> Company Profile</a></li>
                                             <li><a href="#"><i class="fa fa-suitcase"></i> Manage Jobs</a></li>
-                                            <li><a href="#"><i class="fa fa-book-reader"></i> Post A Jobs</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Jobs</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
                                             <li><a href="#"><i class="fa fa-user-check"></i> Browse Candidates</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Passeord</a></li>
-                                            <li><a href="#"><i class="fa fa-share-square"></i> Logout</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>
