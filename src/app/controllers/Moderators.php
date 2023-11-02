@@ -112,7 +112,7 @@ class Moderators extends Controller
         unset($_SESSION['moderator_email']);
         unset($_SESSION['moderator_name']);
         session_destroy();
-        redirect('');
+        redirect('moderators');
     }
 
     private function isLoggedIn()
@@ -185,13 +185,10 @@ class Moderators extends Controller
 
                 // If there are no errors, update the password
                 if (empty($data['old_password_err']) && empty($data['new_password_err']) && empty($data['confirm_password_err'])) {
-                    // Hash the new password
-                    $hashed_password = password_hash($data['new_password'], PASSWORD_DEFAULT);
-
                     // Update the password in the database
                     $moderator_id = $_SESSION['moderator_id'];
-                    if ($this->moderatorModel->changePassword($moderator_id, $hashed_password)) {
-                        jsflash('password_updated', '/moderators/dashboard');
+                    if ($this->moderatorModel->changePassword($moderator_id, $new_password)) {
+                        jsflash('Password Updated', '/moderators/dashboard');
                     } else {
                         jsflash('Password update failed', '/moderators/changepassword');
                     }

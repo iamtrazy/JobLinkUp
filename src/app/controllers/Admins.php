@@ -112,7 +112,7 @@ class Admins extends Controller
         unset($_SESSION['admin_email']);
         unset($_SESSION['admin_name']);
         session_destroy();
-        redirect('');
+        redirect('admins');
     }
 
     private function isLoggedIn()
@@ -165,7 +165,7 @@ class Admins extends Controller
                 $data['email_err'] = 'Pleae enter email';
             } else {
                 // Check email
-                if ($this->adminModel->findUserByEmail($data['email'])) {
+                if ($this->adminModel->findModeratorByEmail($data['email'])) {
                     $data['email_err'] = 'Email is already taken';
                 }
             }
