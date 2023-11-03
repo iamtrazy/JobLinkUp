@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 <label>Job Title</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="topic" type="text" placeholder="Devid Smith" required />
+                                    <input class="form-control" name="topic" type="text" placeholder="Artist" required />
                                     <i class="fs-input-icon fa fa-address-card"></i>
                                 </div>
                             </div>
