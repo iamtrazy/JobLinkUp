@@ -1,4 +1,15 @@
-http://joblinkup.com, http://www.joblinkup.com {
+{
+	servers {
+		listener_wrappers {
+			proxy_protocol {
+				timeout 0
+			}
+			tls
+		}
+	}
+}
+
+http://joblinkup.duckdns.org {
 	root * /var/www/joblinkup/public
 	php_fastcgi php:9000
 
@@ -12,7 +23,7 @@ http://joblinkup.com, http://www.joblinkup.com {
 	file_server
 }
 
-http://phpmyadmin.local {
+http://pmajoblinkup.duckdns.org {
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
 	file_server

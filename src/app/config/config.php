@@ -8,6 +8,6 @@
   // App Root
   define('APPROOT', dirname(dirname(__FILE__)));
   // URL Root
-  define('URLROOT', 'http://joblinkup.com');
+  define('URLROOT', 'https://joblinkup.duckdns.org');
   // Site Name
   define('SITENAME', 'JobLinkUp');
