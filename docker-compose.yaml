@@ -41,20 +41,19 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - pma:/var/www/pma/html/
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
-      - caddy-config:/config
-      - caddy-data:/data
+      - ./caddy-data/config:/config
+      - ./caddy-data/data:/data 
     networks:
       - app-network
 
 volumes:
   dbdata:
   pma:
-  caddy-config:
-  caddy-data:
 
 networks:
   app-network:

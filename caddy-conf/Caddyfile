@@ -1,4 +1,4 @@
-http://joblinkup.com, http://www.joblinkup.com {
+https://joblinkup.com, https://www.joblinkup.com {
 	root * /var/www/joblinkup/public
 	php_fastcgi php:9000
 
@@ -10,10 +10,12 @@ http://joblinkup.com, http://www.joblinkup.com {
 	}
 
 	file_server
+	tls internal
 }
 
-http://phpmyadmin.local {
+https://phpmyadmin.local {
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
 	file_server
+	tls internal
 }
