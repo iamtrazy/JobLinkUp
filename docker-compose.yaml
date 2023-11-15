@@ -45,12 +45,16 @@ services:
       - pma:/var/www/pma/html/
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
+      - caddy-config:/config
+      - caddy-data:/data
     networks:
       - app-network
 
 volumes:
   dbdata:
   pma:
+  caddy-config:
+  caddy-data:
 
 networks:
   app-network:
