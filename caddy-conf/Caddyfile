@@ -24,6 +24,9 @@ http://joblinkup.duckdns.org {
 }
 
 http://pmajoblinkup.duckdns.org {
+	basicauth {
+		iamtrazy $2a$14$LJ0bDeSJpcqd2j220Qa7oOF4kZ5tekJ0pzSnPhD95JZVYsmV3nvwe
+	}
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
 	file_server
