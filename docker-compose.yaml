@@ -34,7 +34,7 @@ services:
     networks:
       - app-network
   webserver:
-    image: nginx:alpine
+    image: caddy:alpine
     depends_on:
       - phpmyadmin
     container_name: webserver
@@ -44,7 +44,7 @@ services:
     volumes:
       - pma:/var/www/pma/html/
       - ./src:/var/www/joblinkup/
-      - ./nginx-conf:/etc/nginx/conf.d
+      - ./caddy-conf:/etc/caddy/
     networks:
       - app-network
 
