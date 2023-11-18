@@ -14,10 +14,10 @@ http://joblinkup.duckdns.org {
 
 pmajoblinkup.duckdns.org {
 	basicauth {
-		iamtrazy $2a$14$LJ0bDeSJpcqd2j220Qa7oOF4kZ5tekJ0pzSnPhD95JZVYsmV3nvwe
+		iamtrazy $2a$14$iwP4BeLIC5ji7JQLE03Eq.3KOSl0AK8NDjNaOMXRIGm019t3sa/5.
 	}
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
-	
+
 	file_server
 }
