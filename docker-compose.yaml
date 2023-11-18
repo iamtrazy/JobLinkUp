@@ -40,7 +40,8 @@ services:
     container_name: webserver
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "127.0.0.1:20009:80"
+      - "127.0.0.1:20010:443"
     volumes:
       - pma:/var/www/pma/html/
       - ./src:/var/www/joblinkup/

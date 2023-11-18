@@ -1,14 +1,3 @@
-{
-	servers {
-		listener_wrappers {
-			proxy_protocol {
-				timeout 0
-			}
-			tls
-		}
-	}
-}
-
 http://joblinkup.duckdns.org {
 	root * /var/www/joblinkup/public
 	php_fastcgi php:9000
@@ -23,11 +12,12 @@ http://joblinkup.duckdns.org {
 	file_server
 }
 
-http://pmajoblinkup.duckdns.org {
+pmajoblinkup.duckdns.org {
 	basicauth {
 		iamtrazy $2a$14$LJ0bDeSJpcqd2j220Qa7oOF4kZ5tekJ0pzSnPhD95JZVYsmV3nvwe
 	}
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
+	
 	file_server
 }
