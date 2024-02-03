@@ -6,10 +6,11 @@
     
     public function index(){
       $data = [
-        'title' => 'JobLinkUp',
+        'style' => 'home/style.css',
+        'title' => 'Home'
       ];
      
-      $this->view('pages/index', $data);
+      $this->view('home/index', $data);
     }
 
     public function about(){
