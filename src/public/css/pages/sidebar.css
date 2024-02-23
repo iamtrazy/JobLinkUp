@@ -13,11 +13,15 @@ font-family: 'Open Sans', sans-serif;
 .navigation{
     position: fixed;
     width: 400px;
-    height: 100%;
+    height: 50%;
     background-color: var(--blue);
     border-left:10px solid red;
     transition:0.5s;
     overflow: hidden;
+}
+
+.navigation.active{
+    width: 80px;
 }
 
 .navigation ul{
@@ -114,5 +118,6 @@ font-family: 'Open Sans', sans-serif;
     box-shadow: 35px -35px 0 10px white;
     pointer-events: none;
 }
+
 
 

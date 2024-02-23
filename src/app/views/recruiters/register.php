@@ -1,96 +1,83 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?>
 
-<div class="container">
-    <div class="forms-container">
-        <div class="signin-signup">
-            <form action="<?php echo URLROOT; ?>/recruiters/login" method="post" class="sign-in-form">
-                <?php echo flash('register_success'); ?>
-                <h2 class="title">Sign in</h2>
-                <div class="input-field <?php echo (!empty($data['login_email_err'])) ? 'is-invalid' : ''; ?>">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" name="login_email" placeholder="Email" value="<?php echo $data['login_email']; ?>">
-                </div>
-                <span class="invalid-feedback"><?php echo $data['login_email_err']; ?></span>
-                <div class="input-field <?php echo (!empty($data['login_password_err'])) ? 'is-invalid' : ''; ?>">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="login_password" placeholder="Password" value="<?php echo $data['login_password']; ?>">
-                </div>
-                <span class="invalid-feedback"><?php echo $data['login_password_err']; ?></span>
-                <input type="submit" value="Login" class="btn solid" />
-                <p class="social-text">Or Sign in with social platforms</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </form>
-            <form action="<?php echo URLROOT; ?>/recruiters/register" method="post" class="sign-up-form">
-                <h2 class="title">Sign up</h2>
-                <div class="input-field <?php echo (!empty($data['name_err'])) ? 'is-invalid' : ''; ?>">
-                    <i class="fas fa-user"></i>
-                    <input type="text" name="name" placeholder="Username" value="<?php echo $data['name']; ?>">
-                </div>
-                <span class="invalid-feedback"><?php echo $data['name_err']; ?></span>
-                <div class="input-field <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" name="email" placeholder="Email" value="<?php echo $data['email']; ?>">
-                </div>
-                <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
-                <div class="input-field <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Password" value="<?php echo $data['password']; ?>">
-                </div>
-                <span class="invalid-feedback"><?php echo $data['password_err']; ?></span>
-                <div class="input-field <?php echo (!empty($data['confirm_password_err'])) ? 'is-invalid' : ''; ?>">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" name="confirm_password" placeholder="Confirm Password" value="<?php echo $data['confirm_password']; ?>">
-                </div>
-                <span class="invalid-feedback"><?php echo $data['confirm_password_err']; ?></span>
-                <input type="submit" value="Register" class="btn" value="Sign up" />
-                <p class="social-text">Or Sign up with social platforms</p>
-                <div class="social-media">
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-icon">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <div class="panels-container">
-        <div class="panel left-panel">
-            <div class="content">
-                <h3>New here ?</h3>
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                    ex ratione. Aliquid!
-                </p>
-                <button class="btn transparent" id="sign-up-btn">
-                    Sign up
-                </button>
-            </div>
-            <img src="<?php echo URLROOT; ?>/img/log.svg" class="image" alt="" />
-        </div>
-        <div class="panel right-panel">
-            <div class="content">
-                <h3>One of us ?</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                    laboriosam ad deleniti.
-                </p>
-                <button class="btn transparent" id="sign-in-btn">
-                    Sign in
-                </button>
-            </div>
-            <img src="<?php echo URLROOT; ?>/img/register.svg" class="image" alt="" />
-        </div>
-    </div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/recruiter/register.css">
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Maven+Pro:wght@600&family=Open+Sans:wght@500&display=swap');
+</style>
+
+</head>
+<body>
+    <div class="container">
+
+    <div class="content_container"><?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?>
 </div>
+ <div class="content_container">
+ <div class="wrapper">
+    <form action="">
+        <h1>Register</h1>
+        <div class="form-container">
+            <label for="Username">
+        <input type="text" placeholder="username" required>User Name:
+            </label>
+        </div>
+        <div class="form-container">
+        <label for="email">
+        <input type="email" placeholder="email">Email
+        </label>
+        </div>
+       
+        <div class="form-container">
+        <label>
+        <input type="password" placeholder="password">Password
+        </label>
+        </div>
+        <div class="form-container">
+        <label>
+        <input type="password" placeholder="confirm password">Confirm Password
+        </label>
+        </div>
+
+        <div class="remember-me">
+            <label for="">
+                <input type="checkbox" name="" id=""> Remember Me
+            </label>
+
+            <a href="#">Forgot Password</a>
+        </div>
+
+        <button type="submit" class="btn">Log In</button>
+        <div class="register-link">
+            <p>don't have an account?
+                <a href="#">Register</a>
+            </p>
+        </div>
+    </form>
+</div>
+ </div>   <!--content-container-->
+ </div> <!--container -->
+</body>
+</html>
+
+
+
+
+
+
+
+
+<form action="<?php echo URLROOT; ?>/recruiters/login" method="post" class="sign-in-form">
+
+
+
+
+
 <script src="<?php echo URLROOT; ?>/js/login.js"></script>
 <?php require APPROOT . '/views/inc/footer.php'; ?>

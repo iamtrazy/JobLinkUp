@@ -93,9 +93,11 @@
 
                                     <div class="twm-nav-list-1">
                                         <ul>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/dashboardd"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                                             <li><a href="#"><i class="fa fa-user"></i> Company Profile</a></li>
                                             <li><a href="#"><i class="fa fa-suitcase"></i> Manage Jobs</a></li>
+                                            <li><a href="#"><i class="fa fa-suitcase"></i> My listings </a></li>
+                                            <li><a href="#"><i class="fa fa-suitcase"></i> Company profile </a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Jobs</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
                                             <li><a href="#"><i class="fa fa-user-check"></i> Browse Candidates</a></li>

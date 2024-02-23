@@ -1,17 +1,143 @@
 *{
     font-family: 'Lato', sans-serif;
-    margin:0;
-    padding: 0;
-    box-sizing: border-box;
 }
-body{
-    min-height:100vh;
-    overflow-x:hidden;
-}
+
+
+
 
 
 .container{
+    /* max-width: 100%;
+    margin: auto;
+    padding: 1rem;
+    min-height: calc(100vh - 100px);
+    display: grid;
+    /*grid-template-columns: repeat(2,1fr);*/
+    
+    
+    /* grid-template-rows: repeat(2,1fr);
+    gap:5rem;
+    background-color: yellow; */ */
+  }
+  .content_container{
+    /* display: flex;
+    height: 50vh;
+    flex-direction: column;
+    justify-content: end;
+    background-color: pink;
+    align-items: end;
+    padding-right: 10px; */
+}
+
+
+.cardBox{
+    position:relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-gap:30px;
+}
+
+
+.cardBox .card{
     position: relative;
+    background: white;
+    padding: 30px;
+    box-shadow: 0px 7px 25px grey;
+    border: var(#133074) 5px;
+    justify-content: space-between;
+    cursor: pointer;
+    display: flex;
+    border-radius: 30px;
+
+}
+
+.cardBox .card .numbers{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.5rem;
+    color: var(#133074);
+}
+.cardBox .card .cardName{
+    color:black;
+    font-size: 1.1rem;
+    margin-top: 5px;
+
+}
+.cardBox .card .iconBx{
+    font-size: 3.5rem;
+    color: black;
+}
+.cardBox .card:hover .iconBx{
+    background: var(#133074);
+}
+
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx {
+    color:white;
+}
+
+
+/*table*/
+
+.tabular-wrapper{
+    background: white;
+    margin-top: 1rem;
+    border-radius: 10px;
+    padding: 2rem;
     width: 100%;
 }
 
+.table-container{
+    
+    width:100%;
+}
+
+table{
+    width: 100%;
+    border-collapse:collapse;
+}
+
+
+thead{
+    background: #133074;
+    color: white;
+}
+th{
+    padding: 15px;
+    text-align: left;
+}
+
+
+tbody{
+    background:rgb(222, 222, 255) !important;
+}
+td{
+    padding: 15px;
+    font-size: 14px;
+    color: black;
+}
+
+tr:nth-child(even){
+    background:white !important;
+}
+
+tfoot{
+    background: #133074 !important;
+    font-weight: bold;
+    color: white;
+}
+
+tfoot td{
+    padding: 15px;
+}
+
+
+.table-container button{
+    color: green;
+    background: none;
+    cursor: pointer;
+}

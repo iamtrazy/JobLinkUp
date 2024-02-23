@@ -244,7 +244,7 @@ class Recruiters extends Controller
         }
     }
 
-    public function dashboard()
+    public function recruiter_log_in()
     {
         if (!isset($_SESSION['business_id'])) {
             $this->login();
@@ -269,4 +269,79 @@ class Recruiters extends Controller
 
         $this->view('recruiters/postjob', $data);
     }
+    public function browsecandidates()
+    {
+        $data = [
+            'style' => 'recruiter/postjob.css',
+            'title' => 'Job Applications',
+            'header_title' => 'Browse Candidates'
+        ];
+
+        $this->view('recruiters/browse_candidates', $data);
+    }
+
+    public function dashboardd()
+    {
+        $data = [
+            'style' => 'recruiter/dashboardd.css',
+            'title' => 'Employer dashboard',
+            'header_title' => 'Dashboard'
+        ];
+
+        $this->view('recruiters/dashboardd', $data);
+    }
+    public function managejobs()
+    {
+        $data = [
+            'style' => 'recruiter/managejobs.css',
+            'title' => 'Manage Job Listings',
+            'header_title' => 'manage jobs'
+        ];
+
+        $this->view('recruiters/managejobs', $data);
+    }
+    public function myprofile()
+    {
+        $data = [
+            'style' => 'recruiter/my-profile.css',
+            'title' => 'My Profile',
+            'header_title' => 'Recruiter'
+        ];
+
+        $this->view('recruiters/myprofile', $data);
+    }
+    public function setupprofile_step1()
+    {
+        $data = [
+            'style' => 'recruiter/register_step1.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/register_step1', $data);
+    }
+    public function setupprofile_step2()
+    {
+        $data = [
+            'style' => 'recruiter/register_step2.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/register_step2', $data);
+    }
+    public function setupprofile_step3()
+    {
+        $data = [
+            'style' => 'recruiter/register_step3.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/register_step3', $data);
+    }
+
+
+
+     
 }

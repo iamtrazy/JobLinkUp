@@ -79,7 +79,6 @@
             </ul>
         </div>
     </div>
-
     <script src="https://kit.fontawesome.com/d8ae8e94ca.js" crossorigin="anonymous"></script>
 </body>
 

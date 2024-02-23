@@ -1,34 +1,53 @@
-<?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?>
-<?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
 
-    <link rel="stylesheet" href="<?php echo URLROOT ?>/css/recruiter/postjob.css">
     <style>
   @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Maven+Pro:wght@600&family=Open+Sans:wght@500&display=swap');
 </style>
-</head>
+    <link rel="stylesheet" href="<?php echo URLROOT ?>/css/recruiter/my-profile.css">
 
+
+</head>
 <body>
     <div class="container">
+        <div class="content_container">
+            <img src="" alt="image unavailable">
+        <h1 class="profile-heading">Chamudi Siriwardhane</h1>
+        </div>
 
-    <!-- <div class="content_container"><?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?> -->
-</div>
- <div class="content_container">
- <div class="wrapper">
+
+
+        <div class="content_container_2">
+            heyy
+            hi 
+            <div class="item">
+                hellloooo
+            </div>
+
+
+         <!--wrapper taken from recruiter/postjob.php form container -->
+
+            <div class="wrapper">
     <form action="">
-        <h1>Post Job</h1>
+        <h1>Employer</h1>
+
+        <!--seperated into rows-->
+        <div class="profile-row">
+            
+
+<!--row item-->
         <div class="form-container">
-        
             <label for="Job Title">
             <i class="fs-input-icon fa fa-address-card">
                 Job Title:</label>
         <input type="text" placeholder="Eg :Dog Sitting" required>
         </div>
+<!--row item-->
 
         <div class="">
         <label for="Job Category">Job Category
@@ -44,7 +63,8 @@
         </select>
         </div>
 
-        
+        <!--row item-->
+
         <div class="form-container">
         <i class="fs-input-icon fa fa-address-card">
 
@@ -58,6 +78,14 @@
                 <option>Temporary</option>
                 </select>
         </div>
+
+    
+    
+    
+    
+    
+    </div>  <!--end of row-->
+       
         
         <div class="">
         <i class="fs-input-icon fa fa-dollar-sign"></i>
@@ -136,17 +164,7 @@
         </div>
     </form>
 </div><!--wrapper-->
- </div>   <!--content-container-->
- </div> <!--container -->
+        </div>
+    </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-<?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
