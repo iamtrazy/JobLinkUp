@@ -350,6 +350,16 @@ class Recruiters extends Controller
 
         $this->view('recruiters/analytics', $data);
     }
+    public function practice()
+    {
+        $data = [
+            'style' => 'recruiter/practice.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => ''
+        ];
+
+        $this->view('recruiters/practice', $data);
+    }
 
 
 

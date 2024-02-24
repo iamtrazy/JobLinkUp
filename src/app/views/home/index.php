@@ -48,12 +48,7 @@
   </section>
   <section>
   
-  <form class="example" action="/action_page.php" style="margin:auto;max-width:500px">
-      <input type="text" placeholder="Search our tutorials, e.g. HTML" id="search2" class="ga-fp" 
-      autocomplete="off" onkeydown="key_pressed_in_search(event)" oninput="find_search_results(this)" onfocus="find_search_results(this)" style="border-bottom-left-radius: 25px;">
-      <button type="button" id="learntocode_searchbtn" onclick="click_learntocode_search_btn()"><i id="learntocode_searchicon" class="fa fa-search ga-fp"></i></button>
-      <div id="listofsearchresults" style="display: none;"></div>
-    </form>
+ 
 </section>
 </body>
 </html>
