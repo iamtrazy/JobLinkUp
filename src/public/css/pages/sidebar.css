@@ -18,9 +18,12 @@ font-family: 'Open Sans', sans-serif;
     border-left:10px solid red;
     transition:0.5s;
     overflow: hidden;
+    /* left: -400px;  hide the side bar initially */
+
 }
 
 .navigation.active{
+    /* left: 30px; move the side bar into view when active */
     width: 80px;
 }
 

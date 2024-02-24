@@ -340,6 +340,16 @@ class Recruiters extends Controller
 
         $this->view('recruiters/register_step3', $data);
     }
+    public function analytics()
+    {
+        $data = [
+            'style' => 'recruiter/analytics.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/analytics', $data);
+    }
 
 
 

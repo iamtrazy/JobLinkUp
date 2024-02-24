@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Maven+Pro:wght@600&family=Open+Sans:wght@500&display=swap');
+</style>
     <link rel="stylesheet" href="<?php echo URLROOT ?>/css/recruiter/register_step1.css">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/css/recruiter/progress.min.css" />
 
@@ -11,7 +14,9 @@
 <body>
 
     <div class="all-columns">
-
+    <div class="content_container">
+nothing here
+</div>
         <div class="content_container">
                  <!-- the progress bar-->
     <h1>Complete the profile step 1</h1>
@@ -93,18 +98,21 @@
 
                 <div class="input-field ">
                     <i class="fas fa-user" aria-hidden="true"></i>
-                    What's your contact number?
+                    <label for="">What's your contact number?</label>
+                    
                     <input type="text" name="contactno" placeholder="021 XXXXXXX" value="">
                 </div>
                 <div class="input-field ">
                     <i class="fas fa-user" aria-hidden="true"></i>
-                    Where are you currently located? (City and State)
+                    
+                    <label for="">Where are you currently located? (City and State)</label>
                     <input type="text" name="location" placeholder="Colombo 7" value="">
                 </div>
                 <div class="input-field ">
                     <i class="fas fa-user" aria-hidden="true"></i>
-                    How would you summarize your professional background in one sentence? (e.g., "Experienced Web Developer" or "Recent Graduate in Marketing")
-                    <input type="textarea" name="professional_bg" placeholder="I am unemployed/ I am a student" value="">
+                    <label for="">How would you summarize your professional background in one sentence? (e.g., "Experienced Web Developer" or "Recent Graduate in Marketing")
+</label>
+                    <input type="textarea" rows="4" cols="4" name="professional_bg" placeholder="I am unemployed/ I am a student" value="">
                 </div>
 
                 <!-- <span class="invalid-feedback"></span>
@@ -116,21 +124,29 @@
             
         </div>      
             <!--buttons-->
+
+            <div class="btn-container">
             <input type="submit" value="Save" class="btn">  
                 
-            <a href="<?php echo URLROOT ?>/recruiters/setupprofile_step2">
-                <input type="submit" value="Next" class="btn">
-            </a>
+                <a href="<?php echo URLROOT ?>/recruiters/setupprofile_step2">
+                    <input type="submit" value="Next" class="btn">
+                </a>
+                
+            </div> <!--btn container-->
             
         </p>
 
         </form>
 
+</div> <!--wrapper-->
+        </div><!--content container-->
 
-        </div>
+    <div class="content_container">
+nothing here.
 
-        
+jshfidjifjdifjdkfjdikfjdjkgfndjfndjnfj <br>rbshrshnfrsiuhrsiuhr <br>rewhrsjhrsh
     </div>
+    </div> <!--all columns-->
    
     
 </body>

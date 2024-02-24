@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo URLROOT ?>/css/recruiter/topbar.css">
+    <link rel="stylesheet" href="<?php echo URLROOT ?>/css/pages/sidebar.css">
 </head>
 <body>
 <div class="main">
@@ -13,7 +14,8 @@
             </div>
 
             <div class="logo">
-                <img src="<?php echo URLROOT ?>/img/"> 
+                <img src="<?php echo URLROOT ?>/img/JobLinkUp-logo.png" style="height:150px; width:90px;"> 
+                
             </div>
             <div>
                 <ul>
@@ -58,7 +60,17 @@
 
     </div>
     <script src="https://kit.fontawesome.com/d8ae8e94ca.js" crossorigin="anonymous"></script>
-    <script src="<?php echo URLROOT ?>/js/recruiter/topbar.js"></script>
+    <script>
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+let main = document.querySelector(".main");
+
+toggle.onclick = function(){
+    navigation.classList.toggle("active");
+    main.classList.toggle("active");
+}
+</script>
+
 </body>
 </html>
 

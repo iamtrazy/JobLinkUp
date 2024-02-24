@@ -41,15 +41,18 @@
             
 
 <!--row item-->
-        <div class="form-container">
+<div class="row-item">
+<div class="form-container">
             <label for="Job Title">
             <i class="fs-input-icon fa fa-address-card">
                 Job Title:</label>
         <input type="text" placeholder="Eg :Dog Sitting" required>
         </div>
+</div>
+        
 <!--row item-->
 
-        <div class="">
+        <div class="row-item">
         <label for="Job Category">Job Category
         </label>
         <select name="category" id="" placeholder="Data Entry">
@@ -61,24 +64,22 @@
                                             <option>Miscellaneous</option>
                                             <option>Other</option>                             
         </select>
+
         </div>
 
         <!--row item-->
-
+<div class="row-item">
         <div class="form-container">
         <i class="fs-input-icon fa fa-address-card">
 
         <label for="">Job type:</label>
-
-        <input type="text" placeholder="Eg :Temporary" required>
-           
                 <select name="type" id="">
                 <option>Freelance</option>
                 <option>Part Time</option>
                 <option>Temporary</option>
                 </select>
         </div>
-
+</div><!--row-item-->
     
     
     
@@ -86,7 +87,8 @@
     
     </div>  <!--end of row-->
        
-        
+    <div class="profile-row">
+        <div class="row-item">
         <div class="">
         <i class="fs-input-icon fa fa-dollar-sign"></i>
 
@@ -96,9 +98,9 @@
 
             <input type="radio">Negotiable
         </div>
-
-
-<div class="form-container">
+        </div><!--row-item-->
+        <div class="row-item">
+        <div class="form-container">
 <i class="fs-input-icon fa fa-globe-americas"></i>
 
             <label for="Web site link">Enter your website link
@@ -106,9 +108,11 @@
         <input type="text" placeholder="Eg :slt.lk" required>
             
             
-        </div>
+        
+        </div><!--row-item-->
 
-<div class="form-container">
+        <div class="row-item">
+        <div class="form-container">
 <i class="fs-input-icon fa fa-home"></i>
 
             <label for="Complete address">Complete address</label>
@@ -117,6 +121,73 @@
         <input type="text" placeholder="707/3-B Station Road, Pannipitiya" required>
             
         </div>
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+        
+    </div><!--profile-row-->
+
+    <div class="profile-row">
+        <div class="row-item">
+
+        </div><!--row-item-->
+        <div class="row-item">
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+        
+    </div><!--profile-row-->
+
+    <div class="profile-row">
+        <div class="row-item">
+
+        </div><!--row-item-->
+        <div class="row-item">
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+        
+    </div><!--profile-row-->
+
+    <div class="profile-row">
+        <div class="row-item">
+
+        </div><!--row-item-->
+        <div class="row-item">
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+
+        <div class="row-item">
+
+        </div><!--row-item-->
+        
+    </div><!--profile-row-->
+        
+
+
+
+
 
 <div class="form-container">
 <i class="fs-input-icon fa fa-home"></i>
@@ -167,4 +238,15 @@
         </div>
     </div>
 </body>
+
+<!--things to be included 
+
+company details
+contact information
+settings in which can change email preferences
+date joined
+reviews 
+rating
+-->
+
 </html>

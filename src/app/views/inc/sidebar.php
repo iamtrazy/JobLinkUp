@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/pages/sidebar.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/recruiter/topbar.css" />
     <style>
   @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Maven+Pro:wght@600&family=Open+Sans:wght@500&display=swap');
 </style>
@@ -77,9 +78,21 @@
                     </a>
                 </li>
             </ul>
-        </div>
-    </div>
+        </div> <!--navigation bar-->
+    </div><!--container-->
     <script src="https://kit.fontawesome.com/d8ae8e94ca.js" crossorigin="anonymous"></script>
+
+    <!--javascript-->
+   <script>
+let toggle = document.querySelector(".toggle");
+let navigation = document.querySelector(".navigation");
+
+
+toggle.onclick = function(){
+    navigation.classList.toggle("active");
+    main.classList.toggle("active");
+}
+</script>
 </body>
 
                         
