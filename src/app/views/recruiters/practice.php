@@ -2,3 +2,4 @@
 <?php require APPROOT . '/views/inc/sidebar.php'; ?>
 
 
+hi i am chamdi
