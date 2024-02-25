@@ -1,0 +1,367 @@
+<?php
+class Recruiters extends Controller
+{
+
+    public $recruiterModel;
+    public $jobModel;
+
+    public function __construct()
+    {
+        $this->recruiterModel = $this->model('Recruiter');
+        $this->jobModel = $this->model('Job');
+    }
+
+    public function index()
+    {
+        $data = [
+            'name' => '',
+            'email' => '',
+            'password' => '',
+            'confirm_password' => '',
+            'name_err' => '',
+            'email_err' => '',
+            'password_err' => '',
+            'confirm_password_err' => '',
+            'login_email' => '',
+            'login_password' => '',
+            'login_email_err' => '',
+            'login_password_err' => '',
+        ];
+
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
+        } else {
+            $this->view('recruiters/register', $data);
+        }
+    }
+
+    public function register()
+    {
+
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
+        } else {
+            // Check for POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Process form
+
+
+                // Init data
+                $data = [
+                    'name' => trim(htmlspecialchars($_POST['name'])),
+                    'email' => trim(htmlspecialchars($_POST['email'])),
+                    'password' => trim(htmlspecialchars($_POST['password'])),
+                    'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
+                    'name_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'login_email' => '',
+                    'login_password' => '',
+                    'login_email_err' => '',
+                    'login_password_err' => '',
+                ];
+
+                // Validate Email
+                if (empty($data['email'])) {
+                    $data['email_err'] = 'Pleae enter email';
+                } else {
+                    // Check email
+                    if ($this->recruiterModel->findUserByEmail($data['email'])) {
+                        $data['email_err'] = 'Email is already taken';
+                    }
+                }
+
+                // Validate Name
+                if (empty($data['name'])) {
+                    $data['name_err'] = 'Pleae enter name';
+                }
+
+                // Validate Password
+                if (empty($data['password'])) {
+                    $data['password_err'] = 'Pleae enter password';
+                } elseif (strlen($data['password']) < 6) {
+                    $data['password_err'] = 'Password must be at least 6 characters';
+                }
+
+                // Validate Confirm Password
+                if (empty($data['confirm_password'])) {
+                    $data['confirm_password_err'] = 'Pleae confirm password';
+                } else {
+                    if ($data['password'] != $data['confirm_password']) {
+                        $data['confirm_password_err'] = 'Passwords do not match';
+                    }
+                }
+
+                // Make sure errors are empty
+                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                    // Validated
+
+                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                    // Register User
+                    if ($this->recruiterModel->register($data)) {
+                        flash('register_success', 'You are registered and can log in');
+                        redirect('recruiters/login');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('recruiters/register', $data);
+                }
+            } else {
+                // Init data
+                $data = [
+                    'name' => '',
+                    'email' => '',
+                    'password' => '',
+                    'confirm_password' => '',
+                    'name_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'login_email' => '',
+                    'login_password' => '',
+                    'login_email_err' => '',
+                    'login_password_err' => '',
+                ];
+
+                // Load view
+                $this->view('recruiters/register', $data);
+            }
+        }
+    }
+
+    public function login()
+    {
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
+        } else {
+            // Check for POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Process form
+                // Sanitize POST data
+
+                // Init data
+                $data = [
+                    'name' => '',
+                    'email' => '',
+                    'password' => '',
+                    'confirm_password' => '',
+                    'name_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'login_email' => trim(htmlspecialchars($_POST['login_email'])),
+                    'login_password' => trim(htmlspecialchars($_POST['login_password'])),
+                    'login_email_err' => '',
+                    'login_password_err' => '',
+                ];
+
+                // Validate Email
+                if (empty($data['login_email'])) {
+                    $data['login_email_err'] = 'Pleae enter email';
+                }
+
+                // Validate Password
+                if (empty($data['login_password'])) {
+                    $data['login_password_err'] = 'Please enter password';
+                }
+
+                // Check for user/email
+                if ($this->recruiterModel->findUserByEmail($data['login_email'])) {
+                    // User found
+                } else {
+                    // User not found
+                    $data['login_email_err'] = 'No user found';
+                }
+
+                // Make sure errors are empty
+                if (empty($data['login_email_err']) && empty($data['login_password_err'])) {
+                    // Validated
+                    // Check and set logged in user
+                    $loggedInUser = $this->recruiterModel->login($data['login_email'], $data['login_password']);
+
+                    if ($loggedInUser) {
+                        // Create Session
+                        $this->createUserSession($loggedInUser);
+                    } else {
+                        $data['login_password_err'] = 'Password incorrect';
+
+                        $this->view('recruiters/register', $data);
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('recruiters/register', $data);
+                }
+            } else {
+                // Init data
+                $data = [
+                    'name' => '',
+                    'email' => '',
+                    'password' => '',
+                    'confirm_password' => '',
+                    'name_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'login_email' => '',
+                    'login_password' => '',
+                    'login_email_err' => '',
+                    'login_password_err' => '',
+                ];
+
+                // Load view
+                $this->view('recruiters/register', $data);
+            }
+        }
+    }
+
+    private function createUserSession($user)
+    {
+        $_SESSION['business_id'] = $user->id;
+        $_SESSION['business_email'] = $user->email;
+        $_SESSION['business_name'] = $user->name;
+        redirect('recruiters/dashboard');
+    }
+
+    public function logout()
+    {
+        unset($_SESSION['business_id']);
+        unset($_SESSION['business_email']);
+        unset($_SESSION['business_name']);
+        session_destroy();
+        redirect('');
+    }
+
+    private function isLoggedIn()
+    {
+        if (isset($_SESSION['business_id'])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function recruiter_log_in()
+    {
+        if (!isset($_SESSION['business_id'])) {
+            $this->login();
+        } else {
+            $data = [
+                'style' => 'recruiter/dashboard.css',
+                'title' => 'Dashboard',
+                'header_title' => 'Dashboard'
+            ];
+
+            $this->view('recruiters/dashboard', $data);
+        }
+    }
+
+    public function postjob()
+    {
+        $data = [
+            'style' => 'recruiter/postjob.css',
+            'title' => 'Post A Job',
+            'header_title' => 'Post A Job'
+        ];
+
+        $this->view('recruiters/postjob', $data);
+    }
+    public function browsecandidates()
+    {
+        $data = [
+            'style' => 'recruiter/postjob.css',
+            'title' => 'Job Applications',
+            'header_title' => 'Browse Candidates'
+        ];
+
+        $this->view('recruiters/browse_candidates', $data);
+    }
+
+    public function dashboardd()
+    {
+        $data = [
+            'style' => 'recruiter/dashboardd.css',
+            'title' => 'Employer dashboard',
+            'header_title' => 'Dashboard'
+        ];
+
+        $this->view('recruiters/dashboardd', $data);
+    }
+    public function managejobs()
+    {
+        $data = [
+            'style' => 'recruiter/managejobs.css',
+            'title' => 'Manage Job Listings',
+            'header_title' => 'manage jobs'
+        ];
+
+        $this->view('recruiters/managejobs', $data);
+    }
+    public function myprofile()
+    {
+        $data = [
+            'style' => 'recruiter/my-profile.css',
+            'title' => 'My Profile',
+            'header_title' => 'Recruiter'
+        ];
+
+        $this->view('recruiters/myprofile', $data);
+    }
+    public function setupprofile_step1()
+    {
+        $data = [
+            'style' => 'recruiter/register_step1.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/register_step1', $data);
+    }
+    public function setupprofile_step2()
+    {
+        $data = [
+            'style' => 'recruiter/register_step2.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/register_step2', $data);
+    }
+    public function setupprofile_step3()
+    {
+        $data = [
+            'style' => 'recruiter/register_step3.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/register_step3', $data);
+    }
+    public function analytics()
+    {
+        $data = [
+            'style' => 'recruiter/analytics.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => 'Set Up Profile'
+        ];
+
+        $this->view('recruiters/analytics', $data);
+    }
+    public function practice()
+    {
+        $data = [
+            'style' => 'recruiter/practice.css',
+            'title' => 'Complete Your Profile',
+            'header_title' => ''
+        ];
+
+        $this->view('recruiters/practice', $data);
+    }
+
+
+
+     
+}
