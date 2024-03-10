@@ -28,11 +28,12 @@ class Recruiters extends Controller
             'login_password_err' => '',
         ];
 
-        if (isset($_SESSION['business_id'])) {
-            $this->dashboard();
-        } else {
-            $this->view('recruiters/register', $data);
-        }
+        // if (isset($_SESSION['business_id'])) {
+        //     $this->dashboard();
+        // } else {
+        //     $this->view('recruiters/register', $data);
+        // }
+        $this->dashboard();
     }
 
     public function register()
@@ -246,9 +247,9 @@ class Recruiters extends Controller
 
     public function dashboard()
     {
-        if (!isset($_SESSION['business_id'])) {
-            $this->login();
-        } else {
+        // if (!isset($_SESSION['business_id'])) {
+        //     $this->login();
+        // } else {
             $data = [
                 'style' => 'recruiter/dashboard.css',
                 'title' => 'Dashboard',
@@ -257,7 +258,7 @@ class Recruiters extends Controller
 
             $this->view('recruiters/dashboard', $data);
         }
-    }
+    
 
     public function postjob()
     {
@@ -268,5 +269,36 @@ class Recruiters extends Controller
         ];
 
         $this->view('recruiters/postjob', $data);
+    }
+
+    public function manage()
+    {
+        $data = [
+            'style' => 'recruiter/manage.css',
+            'title' => 'Manage',
+            'header_title' => 'Manage jobs'
+        ];
+
+        $this->view('recruiters/manage', $data);
+    }
+    public function profile()
+    {
+        $data = [
+            'style' => 'recruiter/myprofile.css',
+            'title' => 'profile',
+            'header_title' => 'Chamudi Siriwardhane'
+        ];
+
+        $this->view('recruiters/myprofile', $data);
+    }
+    public function applications()
+    {
+        $data = [
+            'style' => 'recruiter/applications.css',
+            'title' => 'Applications',
+            'header_title' => 'Applications'
+        ];
+
+        $this->view('recruiters/applications', $data);
     }
 }
