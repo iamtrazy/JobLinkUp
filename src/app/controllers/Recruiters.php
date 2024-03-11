@@ -301,4 +301,14 @@ class Recruiters extends Controller
 
         $this->view('recruiters/applications', $data);
     }
+    public function editprofile()
+    {
+        $data = [
+            'style' => 'recruiter/editprofile.css',
+            'title' => 'Edit profile',
+            'header_title' => 'Edit Profile'
+        ];
+
+        $this->view('recruiters/editprofile', $data);
+    }
 }
