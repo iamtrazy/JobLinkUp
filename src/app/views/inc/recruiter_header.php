@@ -87,8 +87,11 @@
                                         </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4><?php echo $_SESSION['business_name'] ?></h4>
-                                        <p>IT Contractor</p>
+                                        <h4>Chamudi Siriwardhane</h4>
+                                        <p>Recruiter</p>
+                                        <p>Joined on 2017 June</p>
+                                        <p>Verified</p>
+                                        <p>Zavolt Ltd.</p>
                                     </div>
 
                                     <div class="twm-nav-list-1">
