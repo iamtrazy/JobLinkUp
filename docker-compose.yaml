@@ -33,21 +33,59 @@ services:
       - ./src:/var/www/joblinkup/
     networks:
       - app-network
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:6-fpm-alpine
+    container_name: wordpress
+    restart: unless-stopped
+    env_file: .env
+    working_dir: /var/www/wordpress0/html
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress
+    volumes:
+      - wordpress:/var/www/wordpress0/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    networks:
+      - app-network
   webserver:
     image: caddy:alpine
     depends_on:
       - phpmyadmin
+      - wordpress
     container_name: webserver
     restart: unless-stopped
     ports:
-      - "127.0.0.1:20009:80"
-      - "127.0.0.1:20010:443"
+      - "80:80"
+      - "443:443"
     volumes:
       - pma:/var/www/pma/html/
+      - wordpress:/var/www/wordpress0/html
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
       - caddy-config:/config
       - caddy-data:/data
+    networks:
+      - app-network
+  hotels:
+    build: ./Hotel-Management
+    depends_on:
+      - webserver
+    container_name: hotels
+    restart: unless-stopped
+    networks:
+      - app-network
+  cars:
+    build: ./car-rental-nikila
+    depends_on:
+      - webserver
+    container_name: cars
+    restart: unless-stopped
+    volumes:
+      - ./car-rental-nikila/assets:/app/assets
     networks:
       - app-network
 
@@ -56,6 +94,7 @@ volumes:
   pma:
   caddy-config:
   caddy-data:
+  wordpress:
 
 networks:
   app-network:
