@@ -51,6 +51,24 @@ services:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - app-network
+  wordpress1:
+    depends_on:
+      - db
+    image: wordpress:php7.4-fpm-alpine
+    container_name: wordpress1
+    restart: unless-stopped
+    env_file: .env
+    working_dir: /var/www/wordpress1/html
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=wordpress1
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress1
+    volumes:
+      - wordpress1:/var/www/wordpress1/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    networks:
+      - app-network
   webserver:
     image: caddy:alpine
     depends_on:
@@ -64,6 +82,7 @@ services:
     volumes:
       - pma:/var/www/pma/html/
       - wordpress:/var/www/wordpress0/html
+      - wordpress1:/var/www/wordpress1/html
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
       - caddy-config:/config
@@ -95,6 +114,7 @@ volumes:
   caddy-config:
   caddy-data:
   wordpress:
+  wordpress1:
 
 networks:
   app-network:

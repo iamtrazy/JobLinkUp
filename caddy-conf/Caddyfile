@@ -41,6 +41,14 @@ dev1.iamtrazy.eu.org {
 
 }
 
+dev2.iamtrazy.eu.org {
+        root * /var/www/wordpress1/html
+        php_fastcgi wordpress1:9000
+        file_server
+
+}
+
+
 jakcarrentalsolutions.com.au, www.jakcarrentalsolutions.com.au {
         basicauth /register {
                 nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
