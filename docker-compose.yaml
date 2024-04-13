@@ -48,7 +48,7 @@ services:
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
       - ./caddy-data/config:/config
-      - ./caddy-data/data:/data 
+      - ./caddy-data/data:/data
     networks:
       - app-network
 
