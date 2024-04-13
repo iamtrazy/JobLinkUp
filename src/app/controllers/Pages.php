@@ -13,6 +13,10 @@
       $this->view('home/index', $data);
     }
 
+    public function phpinfo(){
+      $this->view('pages/info');
+    }
+
     public function about(){
       $data = [
         'title' => 'About Us'

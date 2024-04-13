@@ -8,7 +8,6 @@ joblinkup.duckdns.org {
 		@pc path_regexp pc ^/(.+)$
 		rewrite @pc /index.php?url={re.pc.1}
 	}
-
 	file_server
 }
 
@@ -18,46 +17,77 @@ pmajoblinkup.duckdns.org {
 	}
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
-
 	file_server
 }
 
 bougainvilla.iamtrazy.eu.org {
-        basicauth {
-                bougainvilla $2a$14$VP4fo50t8O5j9gjKL43RTuDzeuklihW2VbIsrwE4AmwUXpyTIa7/W
-        }
-        handle_path /backend* {
-                reverse_proxy hotels:8000
-        }
+	basicauth {
+		bougainvilla $2a$14$VP4fo50t8O5j9gjKL43RTuDzeuklihW2VbIsrwE4AmwUXpyTIa7/W
+	}
+	handle_path /backend* {
+		reverse_proxy hotels:8000
+	}
 	handle {
 		reverse_proxy hotels:3000
 	}
 }
 
 dev1.iamtrazy.eu.org {
-        root * /var/www/wordpress0/html
-        php_fastcgi wordpress:9000
+	root * /var/www/wordpress0/html
+	php_fastcgi wordpress:9000
 	file_server
-
 }
 
 dev2.iamtrazy.eu.org {
-        root * /var/www/wordpress1/html
-        php_fastcgi wordpress1:9000
-        file_server
-
+	root * /var/www/wordpress1/html
+	php_fastcgi wordpress1:9000
+	file_server
 }
 
+jakcarrentalsolutions.com.au, www.jakcarrentalsolutions.com.au {
+	basicauth /register {
+		nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
+	}
+
+	basicauth /api/register {
+		nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
+	}
+
+	reverse_proxy cars:3000
+}
+
+bougainvilla.iamtrazy.eu.org {
+	basicauth {
+		bougainvilla $2a$14$VP4fo50t8O5j9gjKL43RTuDzeuklihW2VbIsrwE4AmwUXpyTIa7/W
+	}
+	handle_path /backend* {
+		reverse_proxy hotels:8000
+	}
+	handle {
+		reverse_proxy hotels:3000
+	}
+}
+
+dev1.iamtrazy.eu.org {
+	root * /var/www/wordpress0/html
+	php_fastcgi wordpress:9000
+	file_server
+}
+
+dev2.iamtrazy.eu.org {
+	root * /var/www/wordpress1/html
+	php_fastcgi wordpress1:9000
+	file_server
+}
 
 jakcarrentalsolutions.com.au, www.jakcarrentalsolutions.com.au {
-        basicauth /register {
-                nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
-        }
+	basicauth /register {
+		nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
+	}
 
-        basicauth /api/register {
-                nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
-        }
+	basicauth /api/register {
+		nikila $2a$14$Gha6t6N33PfPqgq1UWDBlOrdh/XuAmIfw/WTauEXMZk6PjqgmDxsu
+	}
 
-        reverse_proxy cars:3000
-
+	reverse_proxy cars:3000
 }
