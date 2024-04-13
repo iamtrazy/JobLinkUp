@@ -99,6 +99,24 @@ services:
       - caddy-data:/data
     networks:
       - app-network
+  hotels:
+    build: ./Hotel-Management
+    depends_on:
+      - webserver
+    container_name: hotels
+    restart: unless-stopped
+    networks:
+      - app-network
+  cars:
+    build: ./car-rental-nikila
+    depends_on:
+      - webserver
+    container_name: cars
+    restart: unless-stopped
+    volumes:
+      - ./car-rental-nikila/assets:/app/assets
+    networks:
+      - app-network
 
 volumes:
   dbdata:
