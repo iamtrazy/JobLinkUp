@@ -24,13 +24,13 @@ class Jobs extends Controller
     $jobs = $this->jobModel->getJobs();
 
     $data = [
-      'style' => 'jobs/style.css',
+      'style' => 'jobs/style_new.css',
       'title' => 'Jobs Grid',
       'header_title' => 'The Most Exciting Jobs',
       'jobs' => $jobs
     ];
 
-    $this->view('job/index', $data);
+    $this->view('job/new_index', $data);
   }
 
   public function wishlist($id)
