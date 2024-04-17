@@ -1,3 +1,7 @@
+<head><script src="<?php echo URLROOT ?> /js/find.js"></script>
+
+
+</head>
 <?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
 <div class="section-full p-t120  p-b90 site-bg-white" style="transform: none;">
                 <div class="container" style="transform: none;">
@@ -107,11 +111,20 @@
                        
                         <div class="col-lg-12 col-md-12">
                             <div class="text-left">
-                                <button type="submit" class="site-button m-r5" href="<?php echo URLROOT ?> /recruiter/editprofile">
+                                <button type="submit" class="site-button m-r5" href="<?php echo URLROOT ?> /recruiter/editprofile" id="edit-profile-button">
                                     Edit profile
+
                                 </button>
                             </div>
                         </div> <!--button-->
+                        <div id="success-message">
+                            <!--response eka daanna-->
+                            <?php 
+                            $jobmodel->jseditrecruiterdetails(); or
+                            jsfinduser->loadform();
+                            ?>
+                        </div>
+                        
                     </div>
                     
                                    
@@ -123,3 +136,4 @@
         </form>
     </div>
 </div>
+<!--email eka gannw-->
