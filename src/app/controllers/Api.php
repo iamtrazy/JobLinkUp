@@ -34,6 +34,8 @@ class Api extends Controller
             $sort_by = "created_at";
         } else if ($sort === "category") {
             $sort_by = "category";
+        } else if ($sort === "price") {
+            $sort_by = "rate";
         } else {
             $sort_by = "created_at";
         }

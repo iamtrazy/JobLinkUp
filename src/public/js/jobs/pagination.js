@@ -9,7 +9,10 @@ $(document).ready(function () {
     var sortBy = "created_at"; // Default sorting by created_at
     if (selectedOption === "Category") {
       sortBy = "category";
+    } else if (selectedOption === "Price") {
+      sortBy = "price";
     }
+
     var currentPage = 1; // Assuming we always start from page 1 when sorting changes
     loadJobs(currentPage, perPage, sortBy);
   });

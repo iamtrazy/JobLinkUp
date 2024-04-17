@@ -17,6 +17,7 @@ if (isset($_SESSION['business_id'])) {
             <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="category">
                 <option>Most Recent</option>
                 <option>Category</option>
+                <option>Price</option>
             </select>
 
             <span class="woocommerce-result-count">Per Page</span>

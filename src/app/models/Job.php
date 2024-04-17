@@ -22,9 +22,11 @@ class Job
 
         // Prepare the SQL query with LIMIT, OFFSET, and ORDER BY
         if ($sort_by == "created_at") {
-            $query = "SELECT * FROM jobs ORDER BY $sort_by DESC LIMIT :perPage OFFSET :offset";
+            $query = "SELECT * FROM jobs ORDER BY created_at DESC LIMIT :perPage OFFSET :offset";
         } else if ($sort_by == "category") {
-            $query = "SELECT * FROM jobs ORDER BY $sort_by LIMIT :perPage OFFSET :offset";
+            $query = "SELECT * FROM jobs ORDER BY category LIMIT :perPage OFFSET :offset";
+        } else if ($sort_by == "rate") {
+            $query = "SELECT * FROM jobs ORDER BY rate DESC LIMIT :perPage OFFSET :offset";
         }
 
         // Bind parameters
