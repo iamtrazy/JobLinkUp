@@ -95,46 +95,35 @@
                                             </div>
                                         </div>
                                         <div class="twm-sidebar-ele-filter">
-                                            <h4 class="section-head-small mb-4">Job Type</h4>
+                                            <h4 class="section-head-small mb-4">Type of employment</h4>
                                             <ul>
                                                 <li>
-                                                    <div class=" form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Freelance</label>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input employment-checkbox" id="Freelance" value="Freelance">
+                                                        <label class="form-check-label" for="Freelance">Freelance</label>
                                                     </div>
-                                                    <span class="twm-job-type-count">09</span>
                                                 </li>
                                                 <li>
-                                                    <div class=" form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck3">
-                                                        <label class="form-check-label" for="exampleCheck3">Internship</label>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input employment-checkbox" id="Intership" value="Internship">
+                                                        <label class="form-check-label" for="Intership">Internship</label>
                                                     </div>
-                                                    <span class="twm-job-type-count">15</span>
                                                 </li>
                                                 <li>
-                                                    <div class=" form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck4">
-                                                        <label class="form-check-label" for="exampleCheck4">Part Time</label>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input employment-checkbox" id="PartTime" value="Part-Time">
+                                                        <label class="form-check-label" for="PartTime">Part Time</label>
                                                     </div>
-                                                    <span class="twm-job-type-count">20</span>
                                                 </li>
                                                 <li>
-                                                    <div class=" form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck5">
-                                                        <label class="form-check-label" for="exampleCheck5">Temporary</label>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input employment-checkbox" id="PartTime" value="Volunteer">
+                                                        <label class="form-check-label" for="PartTime">Volunteer</label>
                                                     </div>
-                                                    <span class="twm-job-type-count">22</span>
                                                 </li>
-                                                <li>
-                                                    <div class=" form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck6">
-                                                        <label class="form-check-label" for="exampleCheck6">Volunteer</label>
-                                                    </div>
-                                                    <span class="twm-job-type-count">25</span>
-                                                </li>
-
                                             </ul>
                                         </div>
+
                                         <div class="twm-sidebar-ele-filter">
                                             <h4 class="section-head-small mb-4">Date Posts</h4>
                                             <ul>
@@ -172,35 +161,6 @@
                                                     <div class="form-check">
                                                         <input type="radio" class="form-check-input" id="exampleradio6">
                                                         <label class="form-check-label" for="exampleradio6">All</label>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="twm-sidebar-ele-filter">
-                                            <h4 class="section-head-small mb-4">Type of employment</h4>
-                                            <ul>
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="Freelance1">
-                                                        <label class="form-check-label" for="Freelance1">Freelance</label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="FullTime1">
-                                                        <label class="form-check-label" for="FullTime1">Full Time</label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="Intership1">
-                                                        <label class="form-check-label" for="Intership1">Intership</label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="Part-Time1">
-                                                        <label class="form-check-label" for="Part-Time1">Part Time</label>
                                                     </div>
                                                 </li>
                                             </ul>

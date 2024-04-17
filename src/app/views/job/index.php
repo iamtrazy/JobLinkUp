@@ -22,7 +22,7 @@ if (isset($_SESSION['business_id'])) {
 
             <span class="woocommerce-result-count">Per Page</span>
             <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
-                <option>10</option>
+                <option>8</option>
                 <option>15</option>
                 <option>20</option>
             </select>
