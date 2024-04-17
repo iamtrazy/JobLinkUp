@@ -1,10 +1,12 @@
-<?php foreach ($data['jobs'] as $job) : ?>
+<?php
+require_once APPROOT . '/helpers/date_helper.php'; // Include the helper file
+foreach ($data['jobs'] as $job) : ?>
     <div class="col-lg-6 col-md-12 m-b30">
         <div class="twm-jobs-grid-style1" style="margin-bottom: 3%;">
             <div class="twm-media">
                 <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="#" />
             </div>
-            <span class="twm-job-post-duration">1 days ago</span>
+            <span class="twm-job-post-duration"><?php echo time_elapsed_string($job->created_at); ?></span>
             <div class="twm-jobs-category green">
                 <span class="twm-bg-green"><?php echo $job->type; ?></span>
             </div>
@@ -27,7 +29,7 @@
                     </button>
 
                     <a href="<?php echo URLROOT ?>/jobs/wishlist/<?php echo $job->id; ?>">
-                        <button type="button" class="wishlist-btn";>
+                        <button type="button" class="wishlist-btn" ;>
                             <i class="fas fa-heart"></i>
                         </button>
                     </a>
