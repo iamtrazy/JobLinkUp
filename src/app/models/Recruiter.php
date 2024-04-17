@@ -56,4 +56,38 @@ class Recruiter
       return false;
     }
   }
+  public function loadform(){
+    //load more comments
+  }
+  
+ //public function jseditrecruiterdetails($email){
+  
+  
+  
+  
+  // Prepare SQL statement
+  //$database->query('SELECT * FROM recruiters WHERE email = :email');
+  
+  // Bind parameter
+ // $database->bind(':email', $email);
+  
+  // Execute the query
+  //$database->execute();
+  
+  // Check if user exists
+ // if ($database->rowCount() > 0) {
+      // User exists
+  //    echo json_encode(array('exists' => true));
+  //} else {
+      // User does not exist
+  //    echo json_encode(array('exists' => false));
+  //}
+
+ 
+  
+    // Login User
+  
+
+
 }
+

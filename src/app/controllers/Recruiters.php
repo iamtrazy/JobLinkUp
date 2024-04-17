@@ -311,4 +311,8 @@ class Recruiters extends Controller
 
         $this->view('recruiters/editprofile', $data);
     }
-}
+   
+        
+       
+    }
+

@@ -1,6 +1,14 @@
-<form action="<?php /*echo URLROOT; ?>/recruiter/edit" method="post */" >
+<head>
+<style>
+    .success-message{
+        background-color:green;
+        
+    }
+</style>
+</head>
+<form action="<?php echo URLROOT ?>/recruiter/edit.php" method="POST">
 
-<div class="panel panel-default">
+<div class="panel">
     <div class="panel-heading wt-panel-heading p-a20">
         <h4 class="panel-tittle m-a0">
             <i class="fa fa-suitcase"></i>Job Details
@@ -99,9 +107,13 @@
                         //redirect to the profile page and display the original content
                     </button>
                     
+                    <p id="success-message" class="success-msg">
+                    </p>
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 </form>
+<script src="<?php echo URLROOT ?> /js/find.js "></script>
