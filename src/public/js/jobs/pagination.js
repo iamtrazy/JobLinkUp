@@ -2,8 +2,15 @@ $(document).ready(function () {
   var currentPage = 1;
   var perPage = 8; // Default number of jobs per page
   var selectedCategories = "all"; // Initialize selected categories
+  var timeCriterion = "all"; // Initialize time criterion
 
-  loadJobs(currentPage, perPage, "created_at", selectedCategories);
+  loadJobs(
+    currentPage,
+    perPage,
+    "created_at",
+    selectedCategories,
+    timeCriterion
+  );
 
   $(".product-filter-wrap select[data-bv-field='category']").change(
     function () {
@@ -16,7 +23,7 @@ $(document).ready(function () {
       }
 
       currentPage = 1; // Assuming we always start from page 1 when sorting changes
-      loadJobs(currentPage, perPage, sortBy, selectedCategories);
+      loadJobs(currentPage, perPage, sortBy, selectedCategories, timeCriterion);
     }
   );
 
@@ -25,7 +32,7 @@ $(document).ready(function () {
     e.preventDefault();
     if (currentPage > 1) {
       currentPage--;
-      loadJobs(currentPage, perPage, null, selectedCategories);
+      loadJobs(currentPage, perPage, null, selectedCategories, timeCriterion);
     }
   });
 
@@ -35,7 +42,7 @@ $(document).ready(function () {
     var totalPages = Math.ceil($(".pagination-list li").length - 2); // Calculate total pages based on the number of page links excluding previous and next buttons
     if (currentPage < totalPages) {
       currentPage++;
-      loadJobs(currentPage, perPage, null, selectedCategories);
+      loadJobs(currentPage, perPage, null, selectedCategories, timeCriterion);
     }
   });
 
@@ -45,7 +52,7 @@ $(document).ready(function () {
     var page = parseInt($(this).text());
     if (!isNaN(page)) {
       currentPage = page;
-      loadJobs(currentPage, perPage, null, selectedCategories);
+      loadJobs(currentPage, perPage, null, selectedCategories, timeCriterion);
     }
   });
 
@@ -53,7 +60,7 @@ $(document).ready(function () {
   $(".product-filter-wrap select[data-bv-field='size']").change(function () {
     perPage = parseInt($(this).val());
     currentPage = 1; // Reset to first page
-    loadJobs(currentPage, perPage, null, selectedCategories);
+    loadJobs(currentPage, perPage, null, selectedCategories, timeCriterion);
   });
 
   // Event handler for checkbox change
@@ -64,13 +71,26 @@ $(document).ready(function () {
       })
       .get()
       .join(","); // Join the array elements with comma
-    loadJobs(currentPage, perPage, "created_at", selectedCategories);
+    loadJobs(
+      currentPage,
+      perPage,
+      "created_at",
+      selectedCategories,
+      timeCriterion
+    );
   });
 
-  function loadJobs(page, perPage, sortBy, selectedCategories) {
-    // If sortBy or selectedCategories are null, use default values
+  // Event handler for time criterion change
+  $(".twm-sidebar-ele-filter input[type='radio']").change(function () {
+    timeCriterion = $(this).val();
+    loadJobs(currentPage, perPage, null, selectedCategories, timeCriterion);
+  });
+
+  function loadJobs(page, perPage, sortBy, selectedCategories, timeCriterion) {
+    // If sortBy, selectedCategories, or timeCriterion are null, use default values
     sortBy = sortBy || "created_at";
     selectedCategories = selectedCategories || "all";
+    timeCriterion = timeCriterion || "all";
 
     $.ajax({
       url:
@@ -80,6 +100,8 @@ $(document).ready(function () {
         perPage +
         "/" +
         sortBy +
+        "/" +
+        timeCriterion +
         "/" +
         selectedCategories,
       type: "GET",
@@ -100,7 +122,7 @@ $(document).ready(function () {
     selectedCategories = selectedCategories || "all";
 
     $.ajax({
-      url: "api/jobcount/" + selectedCategories,
+      url: "api/jobcount/" + selectedCategories + "/" + timeCriterion,
       type: "GET",
       dataType: "json",
       success: function (response) {

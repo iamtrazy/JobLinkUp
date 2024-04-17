@@ -129,43 +129,43 @@
                                             <ul>
                                                 <li>
                                                     <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio1">
+                                                        <input type="radio" class="form-check-input" id="exampleradio1" name="datePosts" value="1">
                                                         <label class="form-check-label" for="exampleradio1">Last hour</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio2">
+                                                        <input type="radio" class="form-check-input" id="exampleradio2" name="datePosts" value="24">
                                                         <label class="form-check-label" for="exampleradio2">Last 24 hours</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio3">
+                                                        <input type="radio" class="form-check-input" id="exampleradio3" name="datePosts" value="7">
                                                         <label class="form-check-label" for="exampleradio3">Last 7 days</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio4">
+                                                        <input type="radio" class="form-check-input" id="exampleradio4" name="datePosts" value="14">
                                                         <label class="form-check-label" for="exampleradio4">Last 14 days</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio5">
+                                                        <input type="radio" class="form-check-input" id="exampleradio5" name="datePosts" value="30">
                                                         <label class="form-check-label" for="exampleradio5">Last 30 days</label>
                                                     </div>
                                                 </li>
                                                 <li>
                                                     <div class="form-check">
-                                                        <input type="radio" class="form-check-input" id="exampleradio6">
+                                                        <input type="radio" class="form-check-input" id="exampleradio6" name="datePosts" value="all">
                                                         <label class="form-check-label" for="exampleradio6">All</label>
                                                     </div>
                                                 </li>
                                             </ul>
                                         </div>
-                                    </form>
+
                                 </div>
                                 <div class="widget tw-sidebar-tags-wrap">
                                     <h4 class="section-head-small mb-4">Tags</h4>
