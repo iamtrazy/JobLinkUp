@@ -1,14 +1,12 @@
-version: '3'
-#test
 services:
   db:
     image: mariadb:11
     container_name: db
     restart: unless-stopped
     env_file: .env
-    volumes: 
+    volumes:
       - dbdata:/var/lib/mysql
-    command: '--default-authentication-plugin=mysql_native_password'
+    command: "--default-authentication-plugin=mysql_native_password"
     networks:
       - app-network
   phpmyadmin:
@@ -26,36 +24,34 @@ services:
       PMA_HOSTS: db
       UPLOAD_LIMIT: 50M
   php:
-    image: php:8-fpm
+    build: ./php
     container_name: php
     restart: unless-stopped
     volumes:
       - ./src:/var/www/joblinkup/
+      - ./php/php-dev.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
       - app-network
+    extra_hosts:
+      host.docker.internal: host-gateway
   webserver:
-    image: nginx:alpine
+    image: caddy:alpine
     depends_on:
       - phpmyadmin
     container_name: webserver
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - pma:/var/www/pma/html/
       - ./src:/var/www/joblinkup/
-      - ./nginx-conf:/etc/nginx/conf.d
+      - ./caddy-conf:/etc/caddy/
+      - ./caddy-data/config:/config
+      - ./caddy-data/data:/data
     networks:
       - app-network
-  # certbot:
-  #   depends_on:
-  #     - webserver
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - certbot-etc:/etc/letsencrypt
-  #     - wordpress:/var/www/html
-  #   command: certonly --webroot --webroot-path=/var/www/html --email iamtrazy@proton.me --agree-tos --no-eff-email --staging -d wordpress.local -d www.wordpress.local
+
 volumes:
   dbdata:
   pma:

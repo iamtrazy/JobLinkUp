@@ -1,0 +1,21 @@
+https://joblinkup.com, https://www.joblinkup.com {
+	root * /var/www/joblinkup/public
+	php_fastcgi php:9000
+
+	@rewrites not file
+
+	route @rewrites {
+		@pc path_regexp pc ^/(.+)$
+		rewrite @pc /index.php?url={re.pc.1}
+	}
+
+	file_server
+	tls internal
+}
+
+https://phpmyadmin.local {
+	root * /var/www/pma/html
+	php_fastcgi phpmyadmin:9000
+	file_server
+	tls internal
+}
