@@ -8,16 +8,32 @@ class Job
         $this->db = new Database;
     }
 
-    // Get All Jobs
-    public function getJobs()
+    public function totalJobs()
     {
-        $this->db->query("SELECT *
-                        FROM jobs");
+        $this->db->query("SELECT COUNT(*) AS total_jobs FROM jobs");
+        $row = $this->db->single();
+        return $row;
+    }
 
+    public function getJobs($page, $perPage)
+    {
+        // Calculate the offset based on the page number and records per page
+        $offset = ($page - 1) * $perPage;
+
+        // Prepare the SQL query with LIMIT and OFFSET
+        $query = "SELECT * FROM jobs LIMIT :perPage OFFSET :offset";
+
+        // Bind parameters
+        $this->db->query($query);
+        $this->db->bind(':perPage', $perPage, PDO::PARAM_INT);
+        $this->db->bind(':offset', $offset, PDO::PARAM_INT);
+
+        // Execute the query
         $results = $this->db->resultset();
 
         return $results;
     }
+
 
     public function addJob($data)
     {
@@ -34,7 +50,7 @@ class Job
         $this->db->bind(':website', $data['website']);
         $this->db->bind(':category', $data['category']);
         $this->db->bind(':detail', $data['detail']);
-        
+
         //Execute
         if ($this->db->execute()) {
             return true;
