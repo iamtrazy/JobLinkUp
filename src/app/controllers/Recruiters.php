@@ -313,6 +313,102 @@ class Recruiters extends Controller
     }
    
         
-       
+    public function applications($id = null, $action = null)
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $this->login();
+        } else {
+            if ($id == NULL) {
+                $this->dashboard();
+            }
+            if ($action == 'delete') {
+
+                $job_id_str = trim(htmlspecialchars($id));
+                $job_id = (int)$job_id_str;
+
+                $data = [
+                    'style' => 'jobrecruiter/applications.css',
+                    'title' => 'Job Applications',
+                    'header_title' => 'Job Applications',
+                    'job_id' => $job_id,
+                    'seeker_id' => $_SESSION['user_id']
+                ];
+                $this->applicationModel->deleteFromApplications($data);
+                $this->view('applications/confirm', $data);
+            }
+
+            $applications = $this->applicationModel->getApplication($id);
+
+            $data = [
+                'style' => 'jobseeker/wishlist.css',
+                'title' => 'Wishlist',
+                'header_title' => 'Wishlist',
+                'wishlist' => $wishlist
+            ];
+            $this->view('application/index', $data);
+        }
+    }
+
+    public function appliedJobs()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $this->login();
+        } else {
+            $data = [
+                'style' => 'jobseeker/applied.css',
+                'title' => 'Applied Jobs',
+                'header_title' => 'Applied Jobs',
+            ];
+
+            $this->view('jobseeker/jobs-applied', $data);
+        }
+    }
+
+
+    public function applicationalerts()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $this->login();
+        } else {
+            $data = [
+                'style' => 'jobrecruiter/alerts.css',
+                'title' => 'Pending applications',
+                'header_title' => 'Job Alerts',
+            ];
+
+            $this->view('jobseeker/jobalerts', $data);
+        }
+    }
+
+
+    public function changePassword()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $this->login();
+        } else {
+            $data = [
+                'style' => 'jobrecruiter/pass.css',
+                'title' => 'Change Password',
+                'header_title' => 'Change Password',
+            ];
+
+            $this->view('jobrecruiter/changepassword', $data);
+        }
+    }
+
+    public function chat()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $this->login();
+        } else {
+            $data = [
+                'style' => 'jobrecruiter/chat.css',
+                'title' => 'Chat',
+                'header_title' => 'Chat With Seekers',
+            ];
+
+            $this->view('jobrecruiter/chat', $data);
+        }
+    }
     }
 
