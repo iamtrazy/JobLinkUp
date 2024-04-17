@@ -21,13 +21,11 @@ class Jobs extends Controller
       $_SESSION['guest_id'] = '1';
       $_SESSION['user_name'] = 'Guest User';
     }
-    $jobs = $this->jobModel->getJobs();
 
     $data = [
       'style' => 'jobs/style.css',
       'title' => 'Jobs Grid',
       'header_title' => 'The Most Exciting Jobs',
-      'jobs' => $jobs
     ];
 
     $this->view('job/index', $data);
