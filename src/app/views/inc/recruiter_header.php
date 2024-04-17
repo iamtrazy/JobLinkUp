@@ -87,19 +87,22 @@
                                         </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4><?php echo $_SESSION['business_name'] ?></h4>
-                                        <p>IT Contractor</p>
+                                        <h4>Chamudi Siriwardhane</h4>
+                                        <p>Recruiter</p>
+                                        <p>Joined on 2017 June</p>
+                                        <p>Verified</p>
+                                        <p>Zavolt Ltd.</p>
                                     </div>
 
                                     <div class="twm-nav-list-1">
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="#"><i class="fa fa-user"></i> Company Profile</a></li>
-                                            <li><a href="#"><i class="fa fa-suitcase"></i> Manage Jobs</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Jobs</a></li>
-                                            <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
-                                            <li><a href="#"><i class="fa fa-user-check"></i> Browse Candidates</a></li>
-                                            <li><a href="#"><i class="fa fa-fingerprint"></i> Change Passeord</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> My Profile</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/manage"><i class="fa fa-suitcase"></i> Manage Job Listings</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Job</a></li>
+                                            <li><a href="#"><i class="fa fa-credit-card"></i>Transactions</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/applications"><i class="fa fa-user-check"></i> Browse Applications</a></li>
+                                            <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
                                     </div>

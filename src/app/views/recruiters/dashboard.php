@@ -185,4 +185,5 @@
         </div>
     </div>
 </div>
+
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
