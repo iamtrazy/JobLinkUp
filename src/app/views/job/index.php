@@ -14,14 +14,12 @@ if (isset($_SESSION['business_id'])) {
         <form class="woocommerce-ordering twm-filter-select" method="get">
             <span class="woocommerce-result-count">Sort By</span>
 
-            <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
+            <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="category">
                 <option>Most Recent</option>
-                <option>Freelance</option>
-                <option>Full Time</option>
-                <option>Internship</option>
-                <option>Part Time</option>
-                <option>Temporary</option>
+                <option>Category</option>
             </select>
+
+            <span class="woocommerce-result-count">Per Page</span>
             <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
                 <option>10</option>
                 <option>15</option>

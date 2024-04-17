@@ -15,13 +15,17 @@ class Job
         return $row;
     }
 
-    public function getJobs($page, $perPage)
+    public function getJobs($page, $perPage, $sort_by)
     {
         // Calculate the offset based on the page number and records per page
         $offset = ($page - 1) * $perPage;
 
-        // Prepare the SQL query with LIMIT and OFFSET
-        $query = "SELECT * FROM jobs LIMIT :perPage OFFSET :offset";
+        // Prepare the SQL query with LIMIT, OFFSET, and ORDER BY
+        if ($sort_by == "created_at") {
+            $query = "SELECT * FROM jobs ORDER BY $sort_by DESC LIMIT :perPage OFFSET :offset";
+        } else if ($sort_by == "category") {
+            $query = "SELECT * FROM jobs ORDER BY $sort_by LIMIT :perPage OFFSET :offset";
+        }
 
         // Bind parameters
         $this->db->query($query);

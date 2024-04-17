@@ -15,7 +15,7 @@ class Api extends Controller
     }
 
     // Load All job
-    public function jobs($page, $perPage)
+    public function jobs($page, $perPage, $sort)
     {
         // Sanitize and validate page number
         $page_no = filter_var($page, FILTER_VALIDATE_INT);
@@ -30,7 +30,15 @@ class Api extends Controller
         }
 
         // Fetch jobs for the current page
-        $jobs = $this->jobModel->getJobs($page_no, $per_page);
+        if ($sort === "date") {
+            $sort_by = "created_at";
+        } else if ($sort === "category") {
+            $sort_by = "category";
+        } else {
+            $sort_by = "created_at";
+        }
+
+        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by);
 
         // Pass page number, jobs, and per page to the view
         $data = [

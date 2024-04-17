@@ -23,7 +23,7 @@ class Jobs extends Controller
     }
 
     $data = [
-      'style' => 'jobs/style_new.css',
+      'style' => 'jobs/style.css',
       'title' => 'Jobs Grid',
       'header_title' => 'The Most Exciting Jobs',
     ];
