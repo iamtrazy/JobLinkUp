@@ -47,7 +47,7 @@ class Job
         return $row;
     }
 
-    public function getJobs($page, $perPage, $sort_by, $timeCriterion, $selectedCategories = [], $searchKeyword = null)
+    public function getJobs($page, $perPage, $sort_by, $timeCriterion, $selectedCategories = [], $searchKeyword = null, $isLocation = null)
     {
         // Calculate the offset based on the page number and records per page
         $offset = ($page - 1) * $perPage;
@@ -65,9 +65,14 @@ class Job
         }
 
         // Add search filter if search keyword is provided
-        if ($searchKeyword !== null) {
-            $query .= " AND (topic LIKE :searchKeyword OR detail LIKE :searchKeyword)";
+        if ($searchKeyword !== null && $isLocation == 0) {
+            $query .= " AND (topic LIKE :searchKeyword )";
         }
+
+        if ($searchKeyword !== null && $isLocation == 1) {
+            $query .= " AND (location LIKE :searchKeyword)";
+        }
+
 
         if (!($timeCriterion == 'all')) {
             // Filter jobs based on the time criterion
@@ -102,7 +107,6 @@ class Job
             $searchKeyword = '%' . $searchKeyword . '%';
             $this->db->bind(':searchKeyword', $searchKeyword);
         }
-
         // Execute the query
         $results = $this->db->resultset();
 

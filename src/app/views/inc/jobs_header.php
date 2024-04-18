@@ -91,15 +91,17 @@
                                             <div id="searchResults" class="dropdown-menu dropdown-menu-right" aria-labelledby="searchInput"></div>
                                         </div>
 
-
-
                                         <div class="form-group mb-4">
                                             <h4 class="section-head-small mb-4">Location</h4>
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search location">
-                                                <button class="btn" type="button"><i class="fas fa-map-marker-alt"></i></button>
+                                                <input type="text" class="form-control" id="searchLocationInput" placeholder="Location or Zip code">
+                                                <div class="input-group-append">
+                                                    <button class="btn" id="searchLocationButton" type="button"><i class="fas fa-map-marker-alt"></i></button>
+                                                </div>
                                             </div>
+                                            <div id="searchLocationResults" class="dropdown-menu dropdown-menu-right" aria-labelledby="searchLocationInput"></div>
                                         </div>
+
                                         <div class="twm-sidebar-ele-filter">
                                             <h4 class="section-head-small mb-4">Type of employment</h4>
                                             <ul>
