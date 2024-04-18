@@ -1,5 +1,5 @@
 <?php
-class applications
+class Applications
 {
     private $db;
 
@@ -8,23 +8,7 @@ class applications
         $this->db = new Database;
     }
 
-    public function addtoApplications($data)
-    {
-        // Prepare Query
-        $this->db->query('INSERT INTO applications (seeker_id, job_id) 
-        VALUES (:seeker_id, :job_id)');
-
-        // Bind Values
-        $this->db->bind(':seeker_id', $data['seeker_id']);
-        $this->db->bind(':job_id', $data['job_id']);
-
-        //Execute
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
     // Find user by email
     public function findApplications($seeker_id, $job_id)
@@ -43,18 +27,7 @@ class applications
         }
     }
 
-    public function addtoApplications($data)
-    {
-        $this->db->query('INSERT INTO applications (seeker_id, job_id) 
-                        VALUES (:seeker_id, :job_id)');
-        $this->db->bind(':seeker_id', $data['seeker_id']);
-        $this->db->bind(':job_id', $data['job_id']);
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    
 
     public function deleteFromApplications($data)
     {
@@ -69,4 +42,25 @@ class applications
             return false;
         }
     }
+    public function viewApplications($data){
+        $this->db->query('SELECT * FROM applications
+        WHERE job_id = :job_id
+        AND '); 
+        $this->db->bind(':job_id', $data['job_id']);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getApplications($id)
+    {
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , application.created_at
+                        FROM applications
+                        INNER JOIN jobs ON jobs.id=applications.job_id
+                        WHERE applications.seeker_id = $id;");
+        $results = $this->db->resultset();
+        return $results;
+    }
+
 }

@@ -35,6 +35,7 @@ if (isset($_SESSION['business_id'])) {
         <div class="pagination-style1">
             <ul class="pagination-list clearfix">
                 <!-- Pagination links will be dynamically generated here -->
+                
             </ul>
         </div>
     </div>

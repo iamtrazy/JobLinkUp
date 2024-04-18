@@ -1,60 +1,4 @@
 <?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
-<!-- <div class="col-xl-8 col-lg-8 col-md-10 m-b30">
-<table class="table table-striped table-hovered">
-  <thead class="thead-default-color">
-    <tr>
-      <th scope="col">Application ID</th>
-      <th scope="col">published date</th>
-      <th scope="col">status</th>
-      <th scope="col">action</th>
-      <th scope="col">blah</th>
-      <th scope="col">boost</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>03/05/2021</td>
-      <td>Pending</td>
-      <td>View</td>
-      <td>Delete</td>
-      <td>Review</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>03/05/2021</td>
-      <td>Pending</td>
-      <td>View</td>
-      <td>Delete</td>
-      <td>Review</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>03/05/2021</td>
-      <td>Pending</td>
-      <td>View</td>
-      <td>Delete</td>
-      <td>Review</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>03/05/2021</td>
-      <td>Pending</td>
-      <td>View</td>
-      <td>Delete</td>
-      <td>Review</td>
-    </tr>
-    <tr>
-      <th scope="row">chamma</th>
-      <td>03/05/2021</td>
-      <td>Pending</td>
-      <td>View</td>
-      <td>Delete</td>
-      <td>Review</td>
-    </tr>
-  </tbody>
-</table>
-</div> -->
 
 <div class="section-full p-t120  p-b90 site-bg-white" style="transform: none;">
                 
@@ -298,7 +242,6 @@
                                                  <div class="twm-media-pic">
                                                     <img src="images/candidates/pic1.jpg" alt="#">
                                                  </div>
-                                                 <div class="twm-candidates-tag"><span>Featured</span></div>
                                              </div>
                                              <div class="twm-mid-content">
                                                  <a href="candidate-detail.html" class="twm-job-title">
@@ -325,7 +268,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic2.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -351,7 +293,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic3.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -359,6 +300,7 @@
                                                 </a>
                                                 <p>Bank <wdautohl-customtag style="font-weight:bold;color:red;font-size:inherit;display:inline;" id="wdautohl_id_3" class="wdautohl_bWFuZ2Vy">Manger</wdautohl-customtag></p>
                                                 <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
+                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">Downlaod Resume</a>
                                                 <div class="twm-fot-content">
                                                     <div class="twm-left-info">
                                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
@@ -377,7 +319,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic4.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -403,7 +344,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic5.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -429,7 +369,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic6.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -455,7 +394,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic7.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -481,7 +419,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic8.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -506,7 +443,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic9.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
@@ -531,7 +467,6 @@
                                                 <div class="twm-media-pic">
                                                    <img src="images/candidates/pic10.jpg" alt="#">
                                                 </div>
-                                                <div class="twm-candidates-tag"><span>Featured</span></div>
                                             </div>
                                             <div class="twm-mid-content">
                                                 <a href="candidate-detail.html" class="twm-job-title">
