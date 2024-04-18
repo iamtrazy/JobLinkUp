@@ -47,7 +47,7 @@ class Job
         return $row;
     }
 
-    public function getJobs($page, $perPage, $sort_by, $timeCriterion, $selectedCategories = [])
+    public function getJobs($page, $perPage, $sort_by, $timeCriterion, $selectedCategories = [], $searchKeyword = null)
     {
         // Calculate the offset based on the page number and records per page
         $offset = ($page - 1) * $perPage;
@@ -59,10 +59,16 @@ class Job
         if (!($selectedCategories[0] == 'all')) {
             $query .= " WHERE type IN ('" . implode("', '", $selectedCategories) . "')";
         } else if ($timeCriterion == 'all') {
-            $query .= "";
+            $query .= " WHERE 1";
         } else {
             $query .= " WHERE 1";
         }
+
+        // Add search filter if search keyword is provided
+        if ($searchKeyword !== null) {
+            $query .= " AND (topic LIKE :searchKeyword OR detail LIKE :searchKeyword)";
+        }
+
         if (!($timeCriterion == 'all')) {
             // Filter jobs based on the time criterion
             if ($timeCriterion == '1') {
@@ -92,6 +98,10 @@ class Job
         $this->db->query($query);
         $this->db->bind(':perPage', $perPage, PDO::PARAM_INT);
         $this->db->bind(':offset', $offset, PDO::PARAM_INT);
+        if ($searchKeyword !== null) {
+            $searchKeyword = '%' . $searchKeyword . '%';
+            $this->db->bind(':searchKeyword', $searchKeyword);
+        }
 
         // Execute the query
         $results = $this->db->resultset();

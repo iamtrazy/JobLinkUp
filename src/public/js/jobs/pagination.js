@@ -1,6 +1,7 @@
 $(document).ready(function () {
   var currentPage = 1;
   var perPage = 8; // Default number of jobs per page
+  var sortBy = "created_at";
   var selectedCategories = "all"; // Initialize selected categories
   var timeCriterion = "all"; // Initialize time criterion
 
@@ -15,7 +16,7 @@ $(document).ready(function () {
   $(".product-filter-wrap select[data-bv-field='category']").change(
     function () {
       var selectedOption = $(this).val();
-      var sortBy = "created_at"; // Default sorting by created_at
+      // Default sorting by created_at
       if (selectedOption === "Category") {
         sortBy = "category";
       } else if (selectedOption === "Price") {
@@ -86,24 +87,38 @@ $(document).ready(function () {
     loadJobs(currentPage, perPage, null, selectedCategories, timeCriterion);
   });
 
-  function loadJobs(page, perPage, sortBy, selectedCategories, timeCriterion) {
+  function loadJobs(
+    page,
+    perPage,
+    sortBy,
+    selectedCategories,
+    timeCriterion,
+    keyword
+  ) {
     // If sortBy, selectedCategories, or timeCriterion are null, use default values
     sortBy = sortBy || "created_at";
     selectedCategories = selectedCategories || "all";
     timeCriterion = timeCriterion || "all";
 
+    var apiUrl =
+      "api/jobs/" +
+      page +
+      "/" +
+      perPage +
+      "/" +
+      sortBy +
+      "/" +
+      timeCriterion +
+      "/" +
+      selectedCategories;
+
+    // Add keyword parameter if provided
+    if (keyword) {
+      apiUrl += "/" + encodeURIComponent(keyword);
+    }
+
     $.ajax({
-      url:
-        "api/jobs/" +
-        page +
-        "/" +
-        perPage +
-        "/" +
-        sortBy +
-        "/" +
-        timeCriterion +
-        "/" +
-        selectedCategories,
+      url: apiUrl,
       type: "GET",
       success: function (response) {
         $("#jobs").html(response);
@@ -117,6 +132,106 @@ $(document).ready(function () {
     });
   }
 
+  function fetchJobTitles(
+    currentPage,
+    perPage,
+    sortBy,
+    selectedCategories,
+    timeCriterion,
+    keyword
+  ) {
+    $.ajax({
+      url:
+        "api/jobsearch/" +
+        currentPage +
+        "/" +
+        perPage +
+        "/" +
+        sortBy +
+        "/" +
+        timeCriterion +
+        "/" +
+        selectedCategories +
+        "/" +
+        encodeURIComponent(keyword),
+      type: "GET",
+      success: function (response) {
+        // Extract job topics from the response
+        var jobTopics = response.jobs.map(function (job) {
+          return job.topic;
+        });
+
+        // Generate HTML for dropdown with job topics
+        var dropdownHTML = jobTopics
+          .map(function (topic) {
+            return '<div class="dropdown-item">' + topic + "</div>";
+          })
+          .join("");
+
+        // Populate dropdown with job topics
+        $("#searchResults").html(dropdownHTML).show();
+      },
+      error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+      },
+    });
+  }
+
+  var typingTimer; // Timer identifier
+  var doneTypingInterval = 2000; // Time in milliseconds (0.5 seconds)
+
+  $("#searchInput").on("input", function () {
+    clearTimeout(typingTimer); // Clear the timer on each input
+
+    var keyword = $(this).val().trim();
+    if (keyword !== "") {
+      // Set a timer to delay the search by the defined interval
+      typingTimer = setTimeout(function () {
+        fetchJobTitles(
+          currentPage,
+          perPage,
+          sortBy,
+          selectedCategories,
+          timeCriterion,
+          keyword
+        );
+      }, doneTypingInterval);
+    } else {
+      $("#searchResults").empty().hide();
+    }
+  });
+
+  $("#searchButton").click(function () {
+    var keyword = $("#searchInput").val().trim();
+    if (keyword !== "") {
+      loadJobs(
+        currentPage,
+        perPage,
+        null,
+        selectedCategories,
+        timeCriterion,
+        keyword
+      );
+    }
+  });
+
+  // Event handler for keypress event on search input
+  $("#searchInput").keypress(function (event) {
+    // Check if Enter key is pressed
+    if (event.keyCode === 13) {
+      var keyword = $(this).val().trim();
+      if (keyword !== "") {
+        loadJobs(
+          currentPage,
+          perPage,
+          null,
+          selectedCategories,
+          timeCriterion,
+          keyword
+        );
+      }
+    }
+  });
   // Function to fetch total job count
   function fetchTotalJobsCount() {
     selectedCategories = selectedCategories || "all";
