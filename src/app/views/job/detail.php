@@ -16,7 +16,16 @@ if (isset($_SESSION['user_id'])) {
                     <div class="twm-job-self-top">
                         <div class="twm-media-bg">
                             <img src="<?php echo URLROOT ?>/img/job_banner/<?php echo $data['job']->banner_img; ?>" alt="Job Banner">
-                            <div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>
+                            <?php
+                            // Assuming time_elapsed_string function is defined somewhere
+
+                            $time_elapsed = time_elapsed_string($data['job']->created_at);
+
+                            if (strpos($time_elapsed, 'hours') !== false || $time_elapsed === 'now') {
+                                echo '<div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>';
+                            }
+                            ?>
+
                         </div>
                         <div class="twm-mid-content">
                             <div class="twm-media">

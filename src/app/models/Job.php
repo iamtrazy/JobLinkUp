@@ -92,7 +92,7 @@ class Job
         if ($sort_by == "created_at") {
             $query .= " ORDER BY created_at DESC";
         } elseif ($sort_by == "category") {
-            $query .= " ORDER BY category";
+            $query .= " ORDER BY type";
         } elseif ($sort_by == "rate") {
             $query .= " ORDER BY rate DESC";
         }

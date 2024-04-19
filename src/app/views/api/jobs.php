@@ -1,7 +1,7 @@
 <?php
 foreach ($data['jobs'] as $job) : ?>
-    <div class="col-lg-6 col-md-12 m-b30">
-        <div class="twm-jobs-grid-style1" style="margin-bottom: 3%;">
+    <div class="col-lg-6 col-md-12 m-b30" style="cursor: pointer;">
+        <div class="twm-jobs-grid-style1" style="margin-bottom: 3%;" onclick="redirectToJobDetail('<?php echo URLROOT ?>/jobs/detail/<?php echo $job->id; ?>')">
             <div class="twm-media">
                 <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="#" />
             </div>
