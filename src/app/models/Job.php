@@ -47,7 +47,7 @@ class Job
         return $row;
     }
 
-    public function getJobs($page, $perPage, $sort_by, $timeCriterion, $selectedCategories = [])
+    public function getJobs($page, $perPage, $sort_by, $timeCriterion, $selectedCategories = [], $searchKeyword = null, $isLocation = null)
     {
         // Calculate the offset based on the page number and records per page
         $offset = ($page - 1) * $perPage;
@@ -59,10 +59,21 @@ class Job
         if (!($selectedCategories[0] == 'all')) {
             $query .= " WHERE type IN ('" . implode("', '", $selectedCategories) . "')";
         } else if ($timeCriterion == 'all') {
-            $query .= "";
+            $query .= " WHERE 1";
         } else {
             $query .= " WHERE 1";
         }
+
+        // Add search filter if search keyword is provided
+        if ($searchKeyword !== null && $isLocation == 0) {
+            $query .= " AND (topic LIKE :searchKeyword )";
+        }
+
+        if ($searchKeyword !== null && $isLocation == 1) {
+            $query .= " AND (location LIKE :searchKeyword)";
+        }
+
+
         if (!($timeCriterion == 'all')) {
             // Filter jobs based on the time criterion
             if ($timeCriterion == '1') {
@@ -92,7 +103,10 @@ class Job
         $this->db->query($query);
         $this->db->bind(':perPage', $perPage, PDO::PARAM_INT);
         $this->db->bind(':offset', $offset, PDO::PARAM_INT);
-
+        if ($searchKeyword !== null) {
+            $searchKeyword = '%' . $searchKeyword . '%';
+            $this->db->bind(':searchKeyword', $searchKeyword);
+        }
         // Execute the query
         $results = $this->db->resultset();
 
@@ -100,14 +114,32 @@ class Job
     }
 
 
+    public function getJobById($job_id)
+    {
+        // Prepare the SQL query to fetch job details by ID
+        $query = "SELECT * FROM jobs WHERE id = :job_id";
 
+        // Bind the job ID parameter
+        $this->db->query($query);
+        $this->db->bind(':job_id', $job_id);
+
+        // Execute the query
+        $result = $this->db->single();
+
+        // Check if a job with the given ID exists
+        if ($this->db->rowCount() > 0) {
+            return $result; // Return job details
+        } else {
+            return false; // Return false if job not found
+        }
+    }
 
 
     public function addJob($data)
     {
         // Prepare Query
-        $this->db->query('INSERT INTO jobs ( recruiter_id, location, rate, topic, type, website, category, detail) 
-        VALUES (:recruiter_id, :location, :rate, :topic, :type, :website, :category, :detail)');
+        $this->db->query('INSERT INTO jobs (recruiter_id, location, rate, topic, type, website, keywords, detail, banner_img) 
+        VALUES (:recruiter_id, :location, :rate, :topic, :type, :website, :keywords, :detail, :banner_image)');
 
         // Bind Values
         $this->db->bind(':recruiter_id', $data['recruiter_id']);
@@ -116,8 +148,9 @@ class Job
         $this->db->bind(':topic', $data['topic']);
         $this->db->bind(':type', $data['type']);
         $this->db->bind(':website', $data['website']);
-        $this->db->bind(':category', $data['category']);
+        $this->db->bind(':keywords', $data['keywords']);
         $this->db->bind(':detail', $data['detail']);
+        $this->db->bind(':banner_image', $data['banner_image']); // Bind the image path
 
         //Execute
         if ($this->db->execute()) {

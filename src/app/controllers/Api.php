@@ -15,7 +15,7 @@ class Api extends Controller
     }
 
     // Load All job
-    public function jobs($page, $perPage, $sort, $timeCriterion, $selected_categories)
+    public function jobs($page, $perPage, $sort, $timeCriterion, $selected_categories, $keyword = null, $isLocation = null)
     {
         // Sanitize and validate page number
         $page_no = filter_var($page, FILTER_VALIDATE_INT);
@@ -45,7 +45,7 @@ class Api extends Controller
 
         $criterion = isset($timeCriterion) ? $timeCriterion : 'all';
 
-        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories);
+        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword, $isLocation);
 
         // Pass page number, jobs, and per page to the view
         $data = [
@@ -56,6 +56,49 @@ class Api extends Controller
 
         $this->view('api/jobs', $data);
     }
+
+    public function jobsearch($page, $perPage, $sort, $timeCriterion, $selected_categories, $keyword = null, $isLocation = null)
+    {
+        // Sanitize and validate page number
+        $page_no = filter_var($page, FILTER_VALIDATE_INT);
+        if ($page_no === false || $page_no <= 0) {
+            $page_no = 1;
+        }
+
+        // Sanitize and validate records per page
+        $per_page = filter_var($perPage, FILTER_VALIDATE_INT);
+        if ($per_page === false || $per_page <= 0) {
+            $per_page = 10; // Default to 10 records per page if invalid value provided
+        }
+
+        // Extract selected categories from POST request
+        $categories = isset($selected_categories) ? explode(",", $selected_categories) : ['all'];
+
+        // Fetch jobs for the current page with selected categories
+        if ($sort === "date") {
+            $sort_by = "created_at";
+        } else if ($sort === "category") {
+            $sort_by = "category";
+        } else if ($sort === "price") {
+            $sort_by = "rate";
+        } else {
+            $sort_by = "created_at";
+        }
+
+        $criterion = isset($timeCriterion) ? $timeCriterion : 'all';
+
+        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword, $isLocation);
+
+        // Pass page number, jobs, and per page to the view
+        $data = [
+            'page_no' => $page_no,
+            'jobs' => $jobs,
+            'per_page' => $per_page
+        ];
+
+        $this->view('api/json', $data);
+    }
+
 
 
 
