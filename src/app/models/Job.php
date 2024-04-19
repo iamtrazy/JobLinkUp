@@ -120,8 +120,8 @@ class Job
     public function addJob($data)
     {
         // Prepare Query
-        $this->db->query('INSERT INTO jobs ( recruiter_id, location, rate, topic, type, website, category, detail) 
-        VALUES (:recruiter_id, :location, :rate, :topic, :type, :website, :category, :detail)');
+        $this->db->query('INSERT INTO jobs (recruiter_id, location, rate, topic, type, website, keywords, detail, banner_img) 
+        VALUES (:recruiter_id, :location, :rate, :topic, :type, :website, :keywords, :detail, :banner_image)');
 
         // Bind Values
         $this->db->bind(':recruiter_id', $data['recruiter_id']);
@@ -130,8 +130,9 @@ class Job
         $this->db->bind(':topic', $data['topic']);
         $this->db->bind(':type', $data['type']);
         $this->db->bind(':website', $data['website']);
-        $this->db->bind(':category', $data['category']);
+        $this->db->bind(':keywords', $data['keywords']);
         $this->db->bind(':detail', $data['detail']);
+        $this->db->bind(':banner_image', $data['banner_image']); // Bind the image path
 
         //Execute
         if ($this->db->execute()) {
