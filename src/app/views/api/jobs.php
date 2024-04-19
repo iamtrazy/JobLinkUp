@@ -1,5 +1,4 @@
 <?php
-require_once APPROOT . '/helpers/date_helper.php'; // Include the helper file
 foreach ($data['jobs'] as $job) : ?>
     <div class="col-lg-6 col-md-12 m-b30">
         <div class="twm-jobs-grid-style1" style="margin-bottom: 3%;">

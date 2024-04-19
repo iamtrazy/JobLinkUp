@@ -22,7 +22,7 @@ if (isset($_SESSION['user_id'])) {
                             <div class="twm-media">
                                 <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="Profile Picture">
                             </div>
-                            <h4 class="twm-job-title"><?php echo $data['job']->topic; ?> <span class="twm-job-post-duration">/ <?php echo getTimeDifference($data['job']->created_at); ?></span></h4>
+                            <h4 class="twm-job-title"><?php echo $data['job']->topic; ?> <span class="twm-job-post-duration">/ <?php echo time_elapsed_string($data['job']->created_at); ?></span></h4>
                             <p class="twm-job-address"><i class="fas fa-map-marker-alt"></i><?php echo $data['job']->location; ?></p>
                             <div class="twm-job-self-mid">
                                 <div class="twm-job-self-mid-left">
