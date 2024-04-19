@@ -31,6 +31,7 @@ class Jobs extends Controller
     $this->view('job/index', $data);
   }
 
+
   public function detail($id = null)
   {
     if (!isset($_SESSION['user_id'])) {
@@ -38,14 +39,52 @@ class Jobs extends Controller
       $_SESSION['user_name'] = 'Guest User';
     }
 
-    $data = [
-      'style' => 'jobs/detail.css',
-      'title' => 'Jobs Details',
-      'header_title' => 'The Most Exciting Jobs',
-    ];
+    // Check if $id is provided and is not null
+    if ($id !== null) {
+      // Retrieve job details for the given $id
+      $job = $this->jobModel->getJobById($id);
 
-    $this->view('job/detail', $data);
+      // Check if job details are retrieved successfully
+      if ($job) {
+        // Prepare data to pass to the view
+        $data = [
+          'style' => 'jobs/detail.css',
+          'title' => 'Jobs Details',
+          'header_title' => 'The Most Exciting Jobs',
+          'job' => $job // Pass job details to the view
+        ];
+
+        // Load the detail view with job details
+        $this->view('job/detail', $data);
+      } else {
+        // Handle case when job details are not found
+        // You can display an error message or redirect to a different page
+        jsflash('Job details not found', 'jobs');
+        die('Job details not found');
+      }
+    } else {
+      // Handle case when $id is not provided or is null
+      // You can display an error message or redirect to a different page
+      jsflash('Job details not found', 'jobs');
+      die('Job ID is required');
+    }
   }
+
+  // public function detail($id = null)
+  // {
+  //   if (!isset($_SESSION['user_id'])) {
+  //     $_SESSION['guest_id'] = '1';
+  //     $_SESSION['user_name'] = 'Guest User';
+  //   }
+
+  //   $data = [
+  //     'style' => 'jobs/detail.css',
+  //     'title' => 'Jobs Details',
+  //     'header_title' => 'The Most Exciting Jobs',
+  //   ];
+
+  //   $this->view('job/detail', $data);
+  // }
 
   public function wishlist($id)
   {
@@ -122,7 +161,7 @@ class Jobs extends Controller
         // Validation passed
         //Execute
         if ($this->jobModel->addJob($data)) {
-                   jsflash('Job published', 'recruiters/postjob');
+          jsflash('Job published', 'recruiters/postjob');
         } else {
           die('Something went wrong');
         }

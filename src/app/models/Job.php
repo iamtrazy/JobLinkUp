@@ -114,7 +114,25 @@ class Job
     }
 
 
+    public function getJobById($job_id)
+    {
+        // Prepare the SQL query to fetch job details by ID
+        $query = "SELECT * FROM jobs WHERE id = :job_id";
 
+        // Bind the job ID parameter
+        $this->db->query($query);
+        $this->db->bind(':job_id', $job_id);
+
+        // Execute the query
+        $result = $this->db->single();
+
+        // Check if a job with the given ID exists
+        if ($this->db->rowCount() > 0) {
+            return $result; // Return job details
+        } else {
+            return false; // Return false if job not found
+        }
+    }
 
 
     public function addJob($data)

@@ -1,21 +1,24 @@
 <?php
-function time_elapsed_string($datetime) {
-    $now = new DateTime;
-    $ago = new DateTime($datetime);
-    $diff = $now->diff($ago);
+function getTimeDifference($postedDate)
+{
+    $now = new DateTime(); // Current date and time
+    $postedDateTime = new DateTime($postedDate); // Posted date and time
 
-    if ($diff->y > 0) {
-        return $diff->y > 1 ? $diff->format("%y years ago") : "1 year ago";
-    } elseif ($diff->m > 0) {
-        return $diff->m > 1 ? $diff->format("%m months ago") : "1 month ago";
-    } elseif ($diff->d > 0) {
-        return $diff->d > 1 ? $diff->format("%d days ago") : "1 day ago";
-    } elseif ($diff->h > 0) {
-        return $diff->h > 1 ? $diff->format("%h hours ago") : "1 hour ago";
-    } elseif ($diff->i > 0) {
-        return $diff->i > 1 ? $diff->format("%i minutes ago") : "1 minute ago";
+    // Calculate the difference
+    $difference = $now->diff($postedDateTime);
+
+    // Format the difference
+    if ($difference->y > 0) {
+        return $difference->y . ' years ago';
+    } elseif ($difference->m > 0) {
+        return $difference->m . ' months ago';
+    } elseif ($difference->d > 0) {
+        return $difference->d . ' days ago';
+    } elseif ($difference->h > 0) {
+        return $difference->h . ' hours ago';
+    } elseif ($difference->i > 0) {
+        return $difference->i . ' minutes ago';
     } else {
-        return "Just now";
+        return 'just now';
     }
 }
-
