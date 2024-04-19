@@ -15,7 +15,7 @@ class Api extends Controller
     }
 
     // Load All job
-    public function jobs($page, $perPage, $sort, $timeCriterion, $selected_categories, $keyword = null)
+    public function jobs($page, $perPage, $sort, $timeCriterion, $selected_categories, $keyword = null, $isLocation = null)
     {
         // Sanitize and validate page number
         $page_no = filter_var($page, FILTER_VALIDATE_INT);
@@ -45,7 +45,7 @@ class Api extends Controller
 
         $criterion = isset($timeCriterion) ? $timeCriterion : 'all';
 
-        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword);
+        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword, $isLocation);
 
         // Pass page number, jobs, and per page to the view
         $data = [
@@ -57,7 +57,7 @@ class Api extends Controller
         $this->view('api/jobs', $data);
     }
 
-    public function jobsearch($page, $perPage, $sort, $timeCriterion, $selected_categories, $keyword = null)
+    public function jobsearch($page, $perPage, $sort, $timeCriterion, $selected_categories, $keyword = null, $isLocation = null)
     {
         // Sanitize and validate page number
         $page_no = filter_var($page, FILTER_VALIDATE_INT);
@@ -87,7 +87,7 @@ class Api extends Controller
 
         $criterion = isset($timeCriterion) ? $timeCriterion : 'all';
 
-        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword);
+        $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword, $isLocation);
 
         // Pass page number, jobs, and per page to the view
         $data = [

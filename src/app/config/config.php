@@ -7,6 +7,7 @@
 
   // App Root
   define('APPROOT', dirname(dirname(__FILE__)));
+  define('UPLOADROOT', '/var/www/joblinkup/public');
   // URL Root
   define('URLROOT', 'https://joblinkup.com');
   // Site Name
