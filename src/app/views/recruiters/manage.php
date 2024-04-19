@@ -19,7 +19,7 @@
                                                         <tr><th class="sorting sorting_asc" tabindex="0" aria-controls="jobs_bookmark_table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Job Title: activate to sort column descending" style="width: 144.365px;">Job Title</th><th class="sorting" tabindex="0" aria-controls="jobs_bookmark_table" rowspan="1" colspan="1" aria-label="Category: activate to sort column ascending" style="width: 88.6875px;">Category</th><th class="sorting" tabindex="0" aria-controls="jobs_bookmark_table" rowspan="1" colspan="1" aria-label="Job Types: activate to sort column ascending" style="width: 86.3646px;">Job Types</th><th class="sorting" tabindex="0" aria-controls="jobs_bookmark_table" rowspan="1" colspan="1" aria-label="Applications: activate to sort column ascending" style="width: 94.2292px;">Applications</th><th class="sorting" tabindex="0" aria-controls="jobs_bookmark_table" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 45.625px;">Date</th><th class="sorting" tabindex="0" aria-controls="jobs_bookmark_table" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 49.5625px;">Action</th></tr>
                                                     </thead>
                                                     <tbody>
-                                                    <?php foreach ($data['applications'] as $applications) : ?>
+                                                    <?php foreach ($data['jobs'] as $jobs) : ?>
                                                         <!--1-->
                                                         
                                                         <!--2-->
@@ -45,7 +45,7 @@
                                                                     
                                                                     <div class="twm-mid-content">
                                                                         <a href="#" class="twm-job-title">
-                                                                            <h4><?php echo $applications->topic;?>
+                                                                            <h4><?php echo $jobs->topic;?>
                                                                                 $jobModel->getJobs()->$twm-job-title</h4>
                                                                             <p class="twm-bookmark-address">
                                                                                 <i class="feather-map-pin"></i>$jobModel->getJobs()->$location
@@ -87,9 +87,9 @@
                                                                     
                                                                     <div class="twm-mid-content">
                                                                         <a href="#" class="twm-job-title">
-                                                                            <h4><?php echo $applications->type; ?>IT Department Manager</h4>
+                                                                            <h4><?php echo $job->type; ?>IT Department Manager</h4>
                                                                             <p class="twm-bookmark-address">
-                                                                                <i class="feather-map-pin"></i>Sacramento, California
+                                                                                <i class="feather-map-pin"></i>$jobs->location
                                                                             </p>
                                                                         </a>
                                                                         

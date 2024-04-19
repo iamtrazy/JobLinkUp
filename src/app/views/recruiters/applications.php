@@ -19,7 +19,7 @@
                                     <form>
 
                                         <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4">Category</h4>
+                                            <h4 class="section-head-small mb-4">$application->Category</h4>
                                             <div class="dropdown bootstrap-select wt-select-bar-large"><select class="wt-select-bar-large selectpicker" data-live-search="true" data-bv-field="size">
                                                 <option selected="">All Category</option>
                                                 <option>Web Designer</option>
@@ -245,15 +245,16 @@
                                              </div>
                                              <div class="twm-mid-content">
                                                  <a href="candidate-detail.html" class="twm-job-title">
-                                                     <h4>Wanda Montgomery </h4>
+                                                     <h4>$applications->title </h4>
                                                  </a>
-                                                 <p>Charted Accountant</p>
+                                                 <p>$applications->job_name</p>
                                                  <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
+                                                 <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">Download Resume</a>
                                                  
                                                  <div class="twm-fot-content">
                                                      <div class="twm-left-info">
-                                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                        <div class="twm-jobs-vacancies">$20<span>/ Day</span></div>
+                                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i><?php echo $job->location ?></p>
+                                                        <div class="twm-jobs-vacancies"><?php echo $job->salary ?><span>/ Day</span></div>
                                                      </div>
                                                     
                                                 </div>

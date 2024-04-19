@@ -163,7 +163,7 @@ class Recruiters extends Controller
 
                 // Validate Email
                 if (empty($data['login_email'])) {
-                    $data['login_email_err'] = 'Pleae enter email';
+                    $data['login_email_err'] = 'Please enter email';
                 }
 
                 // Validate Password
@@ -294,13 +294,10 @@ class Recruiters extends Controller
     }
     public function applications()
     {
-        $data = [
-            'style' => 'recruiter/applications.css',
-            'title' => 'Candidates',
-            'header_title' => 'Applications'
-        ];
 
-        $this->view('recruiters/applications', $data);
+
+       
+
     }
     public function editprofile()
     {
@@ -414,7 +411,18 @@ class Recruiters extends Controller
 
 
 
-    public function applications($id)
+    public function applications($id=null, $action =NULL)
+     if($action = NULL){
+        
+        $data = [
+            'style' => 'recruiter/applications.css',
+            'title' => 'Candidates',
+            'header_title' => 'Applications'
+        ];
+    
+        $this->view('recruiters/applications', $data);
+     }
+   
     {
       $job_id_str = trim(htmlspecialchars($id));
       $job_id = (int)$job_id_str;
