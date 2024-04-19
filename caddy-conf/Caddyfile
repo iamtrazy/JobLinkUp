@@ -13,6 +13,16 @@ https://joblinkup.com, https://www.joblinkup.com {
 	tls internal
 }
 
+https://chat.local {
+	root * /var/www/chat
+	php_fastcgi php:9000
+
+	@rewrites not file
+
+	file_server
+	tls internal
+}
+
 https://phpmyadmin.local {
 	root * /var/www/pma/html
 	php_fastcgi phpmyadmin:9000
