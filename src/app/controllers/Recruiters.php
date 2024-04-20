@@ -295,13 +295,12 @@ class Recruiters extends Controller
 
         $this->view('recruiters/myprofile', $data);
     }
-    public function applications()
-    {
+    
 
 
        
 
-    }
+    
     public function editprofile()
     {
         $data = [
