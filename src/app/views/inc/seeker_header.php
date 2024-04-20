@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
 <body style="transform: none;">
@@ -60,7 +61,7 @@
             </div>
         </header>
         <div class="page-content" style="transform: none">
-            <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image: url(<?php echo URLROOT?>/img/1.jpg)">
+            <div class="wt-bnr-inr overlay-wraper bg-center" style="background-image: url(<?php echo URLROOT ?>/img/1.jpg)">
                 <div class="overlay-main site-bg-white opacity-01"></div>
                 <div class="container">
                     <div class="wt-bnr-inr-entry">
@@ -94,7 +95,7 @@
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/jobseekers/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                                             <li><a href="<?php echo URLROOT ?>/jobseekers/profile"><i class="fa fa-user"></i>My profile</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/jobseekers/appliedjobs"><i class="fa fa-suitcase"></i>Applied jobs</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/jobseekers/applications/<?php echo $_SESSION['user_id'] ?>"><i class="fa fa-suitcase"></i>Applied jobs</a></li>
                                             <li><a href="<?php echo URLROOT ?>/jobseekers/wishlist/<?php echo $_SESSION['user_id'] ?>"><i class="fa fa-file-download"></i>Saved Jobs</a></li>
                                             <li><a href="<?php echo URLROOT ?>/jobseekers/jobalerts"><i class="fa fa-bell"></i>Job Alerts</a></li>
                                             <li><a href="<?php echo URLROOT ?>/jobseekers/chat"><i class="far fa-comments"></i>Chat</a></li>

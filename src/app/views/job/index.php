@@ -42,6 +42,12 @@ if (isset($_SESSION['business_id'])) {
 
 </div>
 
+<script>
+    function redirectToJobDetail(url) {
+        window.location.href = url;
+    }
+</script>
+
 <script src="<?php echo URLROOT ?>/js/jobs/pagination.js"></script>
 
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

@@ -92,7 +92,7 @@ class Job
         if ($sort_by == "created_at") {
             $query .= " ORDER BY created_at DESC";
         } elseif ($sort_by == "category") {
-            $query .= " ORDER BY category";
+            $query .= " ORDER BY type";
         } elseif ($sort_by == "rate") {
             $query .= " ORDER BY rate DESC";
         }
@@ -167,6 +167,16 @@ class Job
                         FROM wishlist
                         INNER JOIN jobs ON jobs.id=wishlist.job_id
                         WHERE wishlist.seeker_id = $id;");
+        $results = $this->db->resultset();
+        return $results;
+    }
+
+    public function getApplication($id)
+    {
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , jobs_applied.created_at
+        FROM jobs_applied
+        INNER JOIN jobs ON jobs.id=jobs_applied.job_id
+        WHERE jobs_applied.seeker_id = $id;");
         $results = $this->db->resultset();
         return $results;
     }

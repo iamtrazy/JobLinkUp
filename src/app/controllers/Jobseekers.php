@@ -5,12 +5,14 @@ class Jobseekers extends Controller
     public $jobseekerModel;
     public $jobModel;
     public $wishlistModel;
+    public $applicationModel;
 
     public function __construct()
     {
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
+        $this->applicationModel = $this->model('Application');
     }
 
     public function index()
@@ -52,10 +54,12 @@ class Jobseekers extends Controller
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
                     'email' => trim(htmlspecialchars($_POST['email'])),
+                    'gender' => trim(htmlspecialchars($_POST['gender'])),
                     'password' => trim(htmlspecialchars($_POST['password'])),
                     'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -79,6 +83,10 @@ class Jobseekers extends Controller
                     $data['name_err'] = 'Pleae enter name';
                 }
 
+                if (empty($data['gender'] || $data['gender'] !== 'male' || $data['gender'] !== 'female')) {
+                    $data['gender_err'] = 'Pleae select gender';
+                }
+
                 // Validate Password
                 if (empty($data['password'])) {
                     $data['password_err'] = 'Pleae enter password';
@@ -89,14 +97,14 @@ class Jobseekers extends Controller
                 // Validate Confirm Password
                 if (empty($data['confirm_password'])) {
                     $data['confirm_password_err'] = 'Pleae confirm password';
-                } else {
-                    if ($data['password'] != $data['confirm_password']) {
-                        $data['confirm_password_err'] = 'Passwords do not match';
-                    }
+                }
+
+                if ($data['password'] !== $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match';
                 }
 
                 // Make sure errors are empty
-                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['gender_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                     // Validated
 
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -121,6 +129,7 @@ class Jobseekers extends Controller
                     'confirm_password' => '',
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -206,6 +215,7 @@ class Jobseekers extends Controller
                     'confirm_password' => '',
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -312,17 +322,38 @@ class Jobseekers extends Controller
         }
     }
 
-    public function appliedJobs()
+    public function applications($id = null, $action = null)
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            if ($id == NULL) {
+                $this->dashboard();
+            }
+            // if ($action == 'withdraw') {
+
+            //     $job_id_str = trim(htmlspecialchars($id));
+            //     $job_id = (int)$job_id_str;
+
+            //     $data = [
+            //         'style' => 'jobseeker/wishlist.css',
+            //         'title' => 'Applied Jobs',
+            //         'header_title' => 'Applied Jobs',
+            //         'job_id' => $job_id,
+            //         'seeker_id' => $_SESSION['user_id']
+            //     ];
+            //     $this->wishlistModel->deleteFromList($data);
+            //     $this->view('wishlist/confirm', $data);
+            // }
+
+            $application = $this->jobModel->getApplication($id);
+
             $data = [
                 'style' => 'jobseeker/applied.css',
                 'title' => 'Applied Jobs',
                 'header_title' => 'Applied Jobs',
+                'application' => $application
             ];
-
             $this->view('jobseeker/jobs-applied', $data);
         }
     }
@@ -371,6 +402,43 @@ class Jobseekers extends Controller
             ];
 
             $this->view('jobseeker/chat', $data);
+        }
+    }
+
+    public function edit_profile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = array_map('trim', $_POST);
+            $_POST = array_map('htmlspecialchars', $_POST);
+
+            $data = [
+                'id' => $_SESSION['user_id'],
+                'username' => $_POST['username'],
+                'gender' => $_POST['gender'],
+                'website' => $_POST['website'],
+                'phone_no' => $_POST['phone_no'],
+                'location_rec' => $_POST['location_rec'],
+                'age' => $_POST['age'],
+                'address' => $_POST['address'],
+                'keywords' => $_POST['keywords'],
+                'linkedin_url' => $_POST['linkedin_url'],
+                'whatsapp_url' => $_POST['whatsapp_url'],
+            ];
+
+            // Call the model function to edit profile
+            if ($this->jobseekerModel->editProfile($data)) {
+                // Profile updated successfully
+                flash('profile_updated', 'Your profile has been updated successfully');
+                redirect('jobseekers/profile');
+            } else {
+                // Handle error
+                flash('profile_error', 'Sorry, something went wrong. Please try again.', 'alert alert-danger');
+                redirect('jobseekers/profile');
+            }
+        } else {
+            // If not a POST request, redirect to profile page
+            redirect('jobseekers/profile');
         }
     }
 }

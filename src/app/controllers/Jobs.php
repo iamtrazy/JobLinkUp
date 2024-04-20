@@ -5,6 +5,7 @@ class Jobs extends Controller
   public $jobseekerModel;
   public $jobModel;
   public $wishlistModel;
+  public $applicationModel;
 
   public function __construct()
   {
@@ -12,6 +13,7 @@ class Jobs extends Controller
     $this->jobModel = $this->model('Job');
     $this->jobseekerModel = $this->model('Jobseeker');
     $this->wishlistModel = $this->model('Wishlist');
+    $this->applicationModel = $this->model('Application');
   }
 
   // Load All job
@@ -104,6 +106,31 @@ class Jobs extends Controller
     }
     if (empty($data['data_err'])) {
       if ($this->wishlistModel->addtoList($data)) {
+        $this->view('job/alert', $data);
+      } else {
+        die('Something went wrong');
+      }
+    }
+  }
+
+  public function apply($id)
+  {
+    $job_id_str = trim(htmlspecialchars($id));
+    $job_id = (int)$job_id_str;
+
+    $data = [
+      'job_id' => $job_id,
+      'seeker_id' => $_SESSION['user_id'],
+      'data_err' => '',
+    ];
+
+    if ($this->applicationModel->isApplied($data['seeker_id'], $data['job_id'])) {
+      $data['data_err'] = 'You already applied to this job';
+      $this->view('job/alert', $data);
+    } else {
+    }
+    if (empty($data['data_err'])) {
+      if ($this->applicationModel->addtoList($data)) {
         $this->view('job/alert', $data);
       } else {
         die('Something went wrong');

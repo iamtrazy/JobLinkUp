@@ -43,7 +43,7 @@
                                 <label>Offered Salary</label>
                                 <div class="ls-inputicon-box">
                                     <input class="form-control" name="rate" type="text" placeholder="5000" required />
-                                    <i class="fs-input-icon fa fa-dollar-sign"></i>
+                                    <i class="fs-input-icon fa fas fa-coins"></i>
                                 </div>
                             </div>
                         </div>
