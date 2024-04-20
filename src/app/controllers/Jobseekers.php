@@ -83,7 +83,7 @@ class Jobseekers extends Controller
                     $data['name_err'] = 'Pleae enter name';
                 }
 
-                if (empty($data['gender'])) {
+                if (empty($data['gender'] || $data['gender'] !== 'male' || $data['gender'] !== 'female')) {
                     $data['gender_err'] = 'Pleae select gender';
                 }
 
@@ -215,6 +215,7 @@ class Jobseekers extends Controller
                     'confirm_password' => '',
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
