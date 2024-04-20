@@ -168,6 +168,7 @@
         $('#age').val(response.age === 0 ? '' : response.age); // If age is zero, leave the field empty
         $('#address').val(response.address);
         $('#locationCheckbox').prop('checked', response.location_rec == 1); // Check location_rec checkbox based on received boolean value
+        $('#keywords').val(response.keywords);
         $('#locationCheckbox').val(response.location_rec);
         $('#linkedin_url').val(response.linkedin_url); // Populate linkedin_url field
         $('#whatsapp_url').val(response.whatsapp_url); // Populate whatsapp_url field

@@ -420,6 +420,7 @@ class Jobseekers extends Controller
                 'location_rec' => $_POST['location_rec'],
                 'age' => $_POST['age'],
                 'address' => $_POST['address'],
+                'keywords' => $_POST['keywords'],
                 'linkedin_url' => $_POST['linkedin_url'],
                 'whatsapp_url' => $_POST['whatsapp_url'],
             ];
