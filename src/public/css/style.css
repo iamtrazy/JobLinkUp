@@ -41,18 +41,17 @@ input {
 
 /* Styles for the flash message */
 .flash-message {
-    padding: 10px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-bottom: 10px;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .flash-message.success {
-    background-color: #4CAF50; /* Green background color for success message */
+  background-color: #4caf50; /* Green background color for success message */
 }
-
 
 form {
   display: flex;
@@ -95,6 +94,16 @@ form.sign-in-form {
   position: relative;
 }
 
+.input-field select {
+  border: none; /* Remove the border */
+  width: 100%; /* Set width to 100% */
+  padding: 0; /* Remove padding */
+  margin: 0; /* Remove margin */
+  cursor: pointer; /* Set cursor to pointer */
+  background: transparent;
+  font-size: 1.1rem;
+}
+
 .input-field i {
   text-align: center;
   line-height: 55px;
@@ -120,11 +129,10 @@ form.sign-in-form {
 
 /* Style the error message for .input-field */
 .invalid-feedback {
-    color: #dc3545; /* Red text color for validation error message */
-    font-size: 0.875rem; /* Smaller font size */
-    margin-top: 0.25rem; /* Add spacing at the top */
-  }
-
+  color: #dc3545; /* Red text color for validation error message */
+  font-size: 0.875rem; /* Smaller font size */
+  margin-top: 0.25rem; /* Add spacing at the top */
+}
 
 .input-field input::placeholder {
   color: #aaa;
@@ -431,5 +439,4 @@ form.sign-in-form {
     font-size: 0.75rem; /* Adjust font size for smaller screens */
     margin-top: 0.2rem; /* Adjust spacing for smaller screens */
   }
-
 }

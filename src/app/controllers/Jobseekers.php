@@ -54,10 +54,12 @@ class Jobseekers extends Controller
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
                     'email' => trim(htmlspecialchars($_POST['email'])),
+                    'gender' => trim(htmlspecialchars($_POST['gender'])),
                     'password' => trim(htmlspecialchars($_POST['password'])),
                     'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -81,6 +83,10 @@ class Jobseekers extends Controller
                     $data['name_err'] = 'Pleae enter name';
                 }
 
+                if (empty($data['gender'])) {
+                    $data['gender_err'] = 'Pleae select gender';
+                }
+
                 // Validate Password
                 if (empty($data['password'])) {
                     $data['password_err'] = 'Pleae enter password';
@@ -91,14 +97,14 @@ class Jobseekers extends Controller
                 // Validate Confirm Password
                 if (empty($data['confirm_password'])) {
                     $data['confirm_password_err'] = 'Pleae confirm password';
-                } else {
-                    if ($data['password'] != $data['confirm_password']) {
-                        $data['confirm_password_err'] = 'Passwords do not match';
-                    }
+                }
+
+                if ($data['password'] !== $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match';
                 }
 
                 // Make sure errors are empty
-                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['gender_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                     // Validated
 
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -123,6 +129,7 @@ class Jobseekers extends Controller
                     'confirm_password' => '',
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',

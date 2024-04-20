@@ -11,11 +11,12 @@ class Jobseeker
   // Regsiter user
   public function register($data)
   {
-    $this->db->query('INSERT INTO jobseekers (username, email, password) VALUES(:name, :email, :password)');
+    $this->db->query('INSERT INTO jobseekers (username, email, gender, password) VALUES(:name, :email, :gender, :password)');
     // Bind values
     $this->db->bind(':name', $data['name']);
     $this->db->bind(':email', $data['email']);
     $this->db->bind(':password', $data['password']);
+    $this->db->bind(':gender', $data['gender']);
 
     // Execute
     if ($this->db->execute()) {

@@ -1,5 +1,9 @@
 <?php require APPROOT . '/views/inc/seeker_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
+  <div class="alert alert-info" role="alert">
+    <strong>Complete Your Profile:</strong> Please fill in the required fields below and add keywords to receive personalized job recommendations.
+  </div>
+
   <div class="twm-right-section-panel site-bg-gray">
     <form>
       <div class="panel panel-default">
@@ -48,16 +52,7 @@
               </div>
             </div>
 
-            <div class="col-xl-6 col-lg-6 col-md-12">
-              <div class="form-group">
-                <label>Qualification</label>
-                <div class="ls-inputicon-box">
-                  <input class="form-control" name="company_since" type="text" placeholder="BTech" />
-                  <i class="fs-input-icon fa fa-user-graduate"></i>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-12 col-md-12">
+            <div class="col-xl-4 col-lg-6 col-md-12">
               <div class="form-group city-outer-bx has-feedback">
                 <label>Age</label>
                 <div class="ls-inputicon-box">
@@ -66,6 +61,22 @@
                 </div>
               </div>
             </div>
+
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="form-group city-outer-bx has-feedback">
+                <label>Gender</label>
+                <div class="ls-inputicon-box">
+                  <select class="form-control" name="sender_gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <i class="fs-input-icon fa fa-venus-mars"></i>
+                </div>
+              </div>
+            </div>
+
+
 
             <div class="col-xl-12 col-lg-12 col-md-12">
               <div class="form-group city-outer-bx has-feedback">
@@ -79,60 +90,52 @@
 
             <div class="col-md-12">
               <div class="form-group">
-                <label>Description</label>
-                <textarea class="form-control" rows="3">Greetings! when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</textarea>
+                <label>Enter Keywords for Job Recommendations</label>
+                <textarea class="form-control" rows="3" placeholder="Please enter a comma-separated list of keywords related to your skills, experience, and interests. For example: software engineering, data analysis, project management"></textarea>
               </div>
-            </div>
 
-            <div class="col-lg-12 col-md-12">
-              <div class="text-left">
-                <button type="submit" class="site-button">
-                  Save Changes
-                </button>
+            </div>
+          </div>
+        </div>
+
+        <!--Social Network-->
+        <div class="panel panel-default">
+          <div class="panel-heading wt-panel-heading p-a20">
+            <h4 class="panel-tittle m-a0">Social Network</h4>
+          </div>
+          <div class="panel-body wt-panel-body p-a20 m-b30">
+            <div class="row">
+
+              <div class="col-xl-4 col-lg-6 col-md-12">
+                <div class="form-group">
+                  <label>linkedin</label>
+                  <div class="ls-inputicon-box">
+                    <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://in.linkedin.com/" />
+                    <i class="fs-input-icon fab fa-linkedin-in"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-4 col-lg-6 col-md-12">
+                <div class="form-group">
+                  <label>Whatsapp</label>
+                  <div class="ls-inputicon-box">
+                    <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.whatsapp.com/" />
+                    <i class="fs-input-icon fab fa-whatsapp"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12">
+                <div class="text-left">
+                  <button type="submit" class="site-button">
+                    Save Changes
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!--Social Network-->
-      <div class="panel panel-default">
-        <div class="panel-heading wt-panel-heading p-a20">
-          <h4 class="panel-tittle m-a0">Social Network</h4>
-        </div>
-        <div class="panel-body wt-panel-body p-a20 m-b30">
-          <div class="row">
-
-            <div class="col-xl-4 col-lg-6 col-md-12">
-              <div class="form-group">
-                <label>linkedin</label>
-                <div class="ls-inputicon-box">
-                  <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://in.linkedin.com/" />
-                  <i class="fs-input-icon fab fa-linkedin-in"></i>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-xl-4 col-lg-6 col-md-12">
-              <div class="form-group">
-                <label>Whatsapp</label>
-                <div class="ls-inputicon-box">
-                  <input class="form-control wt-form-control" name="company_name" type="text" placeholder="https://www.whatsapp.com/" />
-                  <i class="fs-input-icon fab fa-whatsapp"></i>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-12 col-md-12">
-              <div class="text-left">
-                <button type="submit" class="site-button">
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </form>
   </div>
 </div>
