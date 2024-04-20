@@ -179,4 +179,31 @@ class Job
         $results = $this->db->resultset();
         return $results;
     }
+
+    public function getRecruiterJobs($recruiter_id){
+
+        $this->db->query("SELECT jobs.id, jobs.topic,jobs.location, jobs.category, jobs.type,jobs.created_at
+        FROM jobs
+        WHERE jobs.recruiter_id = $recruiter_id;");
+        $results = $this->db->resultset();
+
+        forEach ($results as $result) {
+            $this->db->query('SELECT * FROM applications WHERE
+            recruiter_id = :recruiter_id AND job_id = :job_id');
+            
+            $this->db->bind(':recruiter_id', $recruiter_id);
+            $this->db->bind(':job_id', $result->id);
+            
+            $this->db->resultSet();
+                                        
+            $count = $this->db->rowCount();
+        
+            $result->appliedCount = $count;                                  
+                                        
+        }
+        return $results;
+
+
+    }
+    
 }
