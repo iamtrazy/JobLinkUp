@@ -403,4 +403,40 @@ class Jobseekers extends Controller
             $this->view('jobseeker/chat', $data);
         }
     }
+
+    public function edit_profile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = array_map('trim', $_POST);
+            $_POST = array_map('htmlspecialchars', $_POST);
+
+            $data = [
+                'id' => $_SESSION['user_id'],
+                'username' => $_POST['username'],
+                'gender' => $_POST['gender'],
+                'website' => $_POST['website'],
+                'phone_no' => $_POST['phone_no'],
+                'location_rec' => $_POST['location_rec'],
+                'age' => $_POST['age'],
+                'address' => $_POST['address'],
+                'linkedin_url' => $_POST['linkedin_url'],
+                'whatsapp_url' => $_POST['whatsapp_url'],
+            ];
+
+            // Call the model function to edit profile
+            if ($this->jobseekerModel->editProfile($data)) {
+                // Profile updated successfully
+                flash('profile_updated', 'Your profile has been updated successfully');
+                redirect('jobseekers/profile');
+            } else {
+                // Handle error
+                flash('profile_error', 'Sorry, something went wrong. Please try again.', 'alert alert-danger');
+                redirect('jobseekers/profile');
+            }
+        } else {
+            // If not a POST request, redirect to profile page
+            redirect('jobseekers/profile');
+        }
+    }
 }

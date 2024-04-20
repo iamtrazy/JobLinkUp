@@ -65,4 +65,25 @@ class Jobseeker
 
     return $this->db->single();
   }
+
+  public function editProfile($data)
+  {
+    $this->db->query('UPDATE jobseekers SET username = :username, gender = :gender, website = :website, age = :age, address = :address, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url WHERE id = :id');
+    // Bind values
+    $this->db->bind(':id', $data['id']);
+    $this->db->bind(':username', $data['username']);
+    $this->db->bind(':gender', $data['gender']);
+    $this->db->bind(':website', $data['website']);
+    $this->db->bind(':age', $data['age']);
+    $this->db->bind(':address', $data['address']);
+    $this->db->bind(':linkedin_url', $data['linkedin_url']);
+    $this->db->bind(':whatsapp_url', $data['whatsapp_url']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
