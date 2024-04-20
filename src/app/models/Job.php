@@ -170,6 +170,7 @@ class Job
         $results = $this->db->resultset();
         return $results;
     }
+<<<<<<< HEAD
 
     public function getApplication($id)
     {
@@ -177,6 +178,14 @@ class Job
         FROM jobs_applied
         INNER JOIN jobs ON jobs.id=jobs_applied.job_id
         WHERE jobs_applied.seeker_id = $id;");
+=======
+    public function getApplications($id)
+    {
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , applications.id
+                        FROM applications
+                        INNER JOIN jobs ON jobs.id=applications.job_id
+                        WHERE applications.recruiter_id = $id;");
+>>>>>>> origin/chamudi-new-dev
         $results = $this->db->resultset();
         return $results;
     }

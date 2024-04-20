@@ -1,7 +1,12 @@
 <?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
     <div class="twm-right-section-panel site-bg-gray">
+<<<<<<< HEAD
         <form action="<?php echo URLROOT; ?>/jobs/add" method="post" enctype="multipart/form-data">
+=======
+        <form action="<?php echo URLROOT; ?>/jobs/add" method="post" >
+
+>>>>>>> origin/chamudi-new-dev
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
                     <h4 class="panel-tittle m-a0">
