@@ -102,6 +102,28 @@
                 <textarea id="keywords" class="form-control" name="keywords" rows="3" minlength="2" maxlength="255" placeholder="Please enter keywords related to your skills, experience, and interests."></textarea>
               </div>
             </div>
+
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="form-group">
+                <label for="file-upload" class="custom-file-upload">
+                  <i class="fas fa-upload"></i> Profile Image
+                </label>
+                <input id="file-upload" type="file" />
+              </div>
+            </div>
+
+            <!-- New upload CV button -->
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="form-group">
+                <div class="custom-file">
+                  <label for="file-upload" class="custom-file-upload">
+                    <i class="fas fa-upload"></i> Your CV
+                  </label>
+                  <input id="file-upload" type="file" />
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
