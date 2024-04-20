@@ -5,12 +5,14 @@ class Jobseekers extends Controller
     public $jobseekerModel;
     public $jobModel;
     public $wishlistModel;
+    public $applicationModel;
 
     public function __construct()
     {
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
+        $this->applicationModel = $this->model('Application');
     }
 
     public function index()
@@ -312,17 +314,38 @@ class Jobseekers extends Controller
         }
     }
 
-    public function appliedJobs()
+    public function applications($id = null, $action = null)
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            if ($id == NULL) {
+                $this->dashboard();
+            }
+            // if ($action == 'withdraw') {
+
+            //     $job_id_str = trim(htmlspecialchars($id));
+            //     $job_id = (int)$job_id_str;
+
+            //     $data = [
+            //         'style' => 'jobseeker/wishlist.css',
+            //         'title' => 'Applied Jobs',
+            //         'header_title' => 'Applied Jobs',
+            //         'job_id' => $job_id,
+            //         'seeker_id' => $_SESSION['user_id']
+            //     ];
+            //     $this->wishlistModel->deleteFromList($data);
+            //     $this->view('wishlist/confirm', $data);
+            // }
+
+            $application = $this->jobModel->getApplication($id);
+
             $data = [
                 'style' => 'jobseeker/applied.css',
                 'title' => 'Applied Jobs',
                 'header_title' => 'Applied Jobs',
+                'application' => $application
             ];
-
             $this->view('jobseeker/jobs-applied', $data);
         }
     }

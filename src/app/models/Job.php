@@ -170,4 +170,14 @@ class Job
         $results = $this->db->resultset();
         return $results;
     }
+
+    public function getApplication($id)
+    {
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , jobs_applied.created_at
+        FROM jobs_applied
+        INNER JOIN jobs ON jobs.id=jobs_applied.job_id
+        WHERE jobs_applied.seeker_id = $id;");
+        $results = $this->db->resultset();
+        return $results;
+    }
 }

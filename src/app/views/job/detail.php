@@ -35,8 +35,8 @@ if (isset($_SESSION['user_id'])) {
                             <p class="twm-job-address"><i class="fas fa-map-marker-alt"></i><?php echo $data['job']->location; ?></p>
                             <div class="twm-job-self-mid">
                                 <div class="twm-job-self-mid-left">
-                                    <a href="<?php echo $data['job']->website; ?>" class="twm-job-websites site-text-primary"><?php echo $data['job']->website; ?></a>
-                                    <div class="twm-jobs-amount">$<?php echo $data['job']->rate; ?> <span>/ <?php echo $data['job']->rate_type; ?></span></div>
+                                    <a href="https://<?php echo $data['job']->website; ?>" class="twm-job-websites site-text-primary"><?php echo $data['job']->website; ?></a>
+                                    <div class="twm-jobs-amount">LKR <?php echo $data['job']->rate; ?> <span>/ <?php echo $data['job']->rate_type; ?></span></div>
                                 </div>
                                 <div class="twm-job-apllication-area">Application ends:
                                     <span class="twm-job-apllication-date">date</span>
