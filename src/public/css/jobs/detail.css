@@ -1,3 +1,4 @@
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/bootstrap.min.css */
 *,
 ::after,
 ::before {
@@ -65,6 +66,9 @@ ul {
 ul ul {
   margin-bottom: 0;
 }
+small {
+  font-size: 0.875em;
+}
 a {
   color: #0d6efd;
   text-decoration: underline;
@@ -114,6 +118,9 @@ textarea {
 [type="search"] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+}
+iframe {
+  border: 0;
 }
 .container,
 .container-fluid {
@@ -216,22 +223,6 @@ textarea {
   }
 }
 @media (min-width: 1200px) {
-  .col-xl-3 {
-    flex: 0 0 auto;
-    width: 25%;
-  }
-  .col-xl-4 {
-    flex: 0 0 auto;
-    width: 33.33333333%;
-  }
-  .col-xl-6 {
-    flex: 0 0 auto;
-    width: 50%;
-  }
-  .col-xl-9 {
-    flex: 0 0 auto;
-    width: 75%;
-  }
   .col-xl-12 {
     flex: 0 0 auto;
     width: 100%;
@@ -580,9 +571,17 @@ textarea.form-control {
 .mb-3 {
   margin-bottom: 1rem !important;
 }
-.text-center {
-  text-align: center !important;
+.mb-4 {
+  margin-bottom: 1.5rem !important;
 }
+.mb-5 {
+  margin-bottom: 3rem !important;
+}
+.bg-white {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+}
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/font-awesome.min.css */
 .fa,
 .fas,
 .fab {
@@ -607,38 +606,32 @@ textarea.form-control {
 .fa-at:before {
   content: "\f1fa";
 }
-.fa-bell:before {
-  content: "\f0f3";
-}
-.fa-border-all:before {
-  content: "\f84c";
-}
 .fa-building:before {
   content: "\f1ad";
 }
-.fa-child:before {
-  content: "\f1ae";
+.fa-calendar-alt:before {
+  content: "\f073";
+}
+.fa-clock:before {
+  content: "\f017";
 }
 .fa-cog:before {
   content: "\f013";
 }
-.fa-comments:before {
-  content: "\f086";
+.fa-desktop:before {
+  content: "\f108";
 }
-.fa-dollar-sign:before {
-  content: "\f155";
+.fa-eye:before {
+  content: "\f06e";
 }
 .fa-facebook-f:before {
   content: "\f39e";
 }
-.fa-file-download:before {
-  content: "\f56d";
+.fa-file-image:before {
+  content: "\f1c5";
 }
-.fa-fingerprint:before {
-  content: "\f577";
-}
-.fa-globe-americas:before {
-  content: "\f57d";
+.fa-file-signature:before {
+  content: "\f573";
 }
 .fa-google:before {
   content: "\f1a0";
@@ -646,41 +639,23 @@ textarea.form-control {
 .fa-instagram:before {
   content: "\f16d";
 }
-.fa-language:before {
-  content: "\f1ab";
-}
 .fa-linkedin-in:before {
   content: "\f0e1";
 }
 .fa-map-marker-alt:before {
   content: "\f3c5";
 }
-.fa-map-pin:before {
-  content: "\f276";
+.fa-mobile-alt:before {
+  content: "\f3cd";
+}
+.fa-money-bill-wave:before {
+  content: "\f53a";
 }
 .fa-paper-plane:before {
   content: "\f1d8";
 }
-.fa-paperclip:before {
-  content: "\f0c6";
-}
-.fa-phone-alt:before {
-  content: "\f879";
-}
-.fa-pinterest-p:before {
-  content: "\f231";
-}
-.fa-receipt:before {
-  content: "\f543";
-}
 .fa-suitcase:before {
   content: "\f0f2";
-}
-.fa-tachometer-alt:before {
-  content: "\f3fd";
-}
-.fa-tumblr:before {
-  content: "\f173";
 }
 .fa-twitter:before {
   content: "\f099";
@@ -688,17 +663,11 @@ textarea.form-control {
 .fa-user:before {
   content: "\f007";
 }
-.fa-user-edit:before {
-  content: "\f4ff";
-}
-.fa-user-graduate:before {
-  content: "\f501";
-}
 .fa-user-tie:before {
   content: "\f508";
 }
-.fa-whatsapp:before {
-  content: "\f232";
+.fa-venus-mars:before {
+  content: "\f228";
 }
 .fa-youtube:before {
   content: "\f167";
@@ -746,38 +715,32 @@ textarea.form-control {
 .fa-at:before {
   content: "\f1fa";
 }
-.fa-bell:before {
-  content: "\f0f3";
-}
-.fa-border-all:before {
-  content: "\f84c";
-}
 .fa-building:before {
   content: "\f1ad";
 }
-.fa-child:before {
-  content: "\f1ae";
+.fa-calendar-alt:before {
+  content: "\f073";
+}
+.fa-clock:before {
+  content: "\f017";
 }
 .fa-cog:before {
   content: "\f013";
 }
-.fa-comments:before {
-  content: "\f086";
+.fa-desktop:before {
+  content: "\f108";
 }
-.fa-dollar-sign:before {
-  content: "\f155";
+.fa-eye:before {
+  content: "\f06e";
 }
 .fa-facebook-f:before {
   content: "\f39e";
 }
-.fa-file-download:before {
-  content: "\f56d";
+.fa-file-image:before {
+  content: "\f1c5";
 }
-.fa-fingerprint:before {
-  content: "\f577";
-}
-.fa-globe-americas:before {
-  content: "\f57d";
+.fa-file-signature:before {
+  content: "\f573";
 }
 .fa-google:before {
   content: "\f1a0";
@@ -785,41 +748,23 @@ textarea.form-control {
 .fa-instagram:before {
   content: "\f16d";
 }
-.fa-language:before {
-  content: "\f1ab";
-}
 .fa-linkedin-in:before {
   content: "\f0e1";
 }
 .fa-map-marker-alt:before {
   content: "\f3c5";
 }
-.fa-map-pin:before {
-  content: "\f276";
+.fa-mobile-alt:before {
+  content: "\f3cd";
+}
+.fa-money-bill-wave:before {
+  content: "\f53a";
 }
 .fa-paper-plane:before {
   content: "\f1d8";
 }
-.fa-paperclip:before {
-  content: "\f0c6";
-}
-.fa-phone-alt:before {
-  content: "\f879";
-}
-.fa-pinterest-p:before {
-  content: "\f231";
-}
-.fa-receipt:before {
-  content: "\f543";
-}
 .fa-suitcase:before {
   content: "\f0f2";
-}
-.fa-tachometer-alt:before {
-  content: "\f3fd";
-}
-.fa-tumblr:before {
-  content: "\f173";
 }
 .fa-twitter:before {
   content: "\f099";
@@ -827,17 +772,11 @@ textarea.form-control {
 .fa-user:before {
   content: "\f007";
 }
-.fa-user-edit:before {
-  content: "\f4ff";
-}
-.fa-user-graduate:before {
-  content: "\f501";
-}
 .fa-user-tie:before {
   content: "\f508";
 }
-.fa-whatsapp:before {
-  content: "\f232";
+.fa-venus-mars:before {
+  content: "\f228";
 }
 .fa-youtube:before {
   content: "\f167";
@@ -866,7 +805,9 @@ textarea.form-control {
 .fas {
   font-weight: 900;
 }
-[class^="feather-"] {
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/feather.css */
+[class^="feather-"],
+[class*=" feather-"] {
   font-family: "feather" !important;
   speak: none;
   font-style: normal;
@@ -880,14 +821,49 @@ textarea.form-control {
 .feather-briefcase:before {
   content: "\e926";
 }
+.feather-check:before {
+  content: "\e92b";
+}
 .feather-log-in:before {
   content: "\e988";
+}
+.feather-map-pin:before {
+  content: "\e98c";
+}
+.feather-play:before {
+  content: "\e9af";
 }
 .feather-search:before {
   content: "\e9c1";
 }
-.site-bg-gray {
-  background-color: #f9fcff;
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/dropzone.css */
+.dropzone,
+.dropzone * {
+  box-sizing: border-box;
+}
+.dropzone {
+  min-height: 150px;
+  background: #f3f8fe;
+  padding: 20px 20px;
+  border-radius: 10px;
+}
+.dropzone.dz-clickable {
+  cursor: pointer;
+}
+.dropzone.dz-clickable * {
+  cursor: default;
+}
+.dropzone.dz-clickable .dz-message,
+.dropzone.dz-clickable .dz-message * {
+  cursor: pointer;
+}
+.dropzone .dz-message {
+  text-align: center;
+  margin: 2em 0;
+}
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/style.css */
+.site-text-primary {
+  color: #1967d2;
 }
 .site-bg-white {
   background-color: #fff;
@@ -966,9 +942,6 @@ h6 {
 .text-left {
   text-align: left;
 }
-.text-center {
-  text-align: center;
-}
 ul {
   list-style-position: outside;
   padding: 0px;
@@ -987,12 +960,6 @@ ul li {
 }
 .p-b90 {
   padding-bottom: 90px;
-}
-.m-a0 {
-  margin: 0px;
-}
-.m-b30 {
-  margin-bottom: 30px;
 }
 .bg-center {
   background-position: center;
@@ -1038,6 +1005,11 @@ ul li {
     font-size: 14px;
   }
 }
+.site-button.white {
+  background-color: #fff;
+  color: #1967d2;
+  text-shadow: 0 0 0 #1967d2, 400px 0 0 #1967d2;
+}
 .site-button {
   color: rgba(0, 0, 0, 0) !important;
   transition: all 0.3s ease !important;
@@ -1046,10 +1018,6 @@ ul li {
 .site-button:hover {
   text-shadow: -400px 0 0 #fff, 0 0 0 #fff;
   background-color: #171d28;
-}
-.button-sm {
-  padding: 5px 10px;
-  font-size: 12px;
 }
 .radius-xl {
   border-radius: 100px;
@@ -1998,6 +1966,41 @@ button.scroltop span {
 .form-group {
   margin-bottom: 30px;
 }
+.side-bar {
+  background-color: #fcfcfc;
+  padding: 30px;
+  border-radius: 10px;
+}
+@media (max-width: 991px) {
+  .side-bar {
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 575px) {
+  .side-bar {
+    padding: 15px;
+  }
+}
+.side-bar .widget:last-child {
+  margin-bottom: 0px;
+}
+.tw-sidebar-tags-wrap .tagcloud {
+  margin-top: -10px;
+}
+.tw-sidebar-tags-wrap .tagcloud a {
+  padding: 5px 15px;
+  margin-top: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  color: #1967d2;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #f0f6fe;
+}
+.tw-sidebar-tags-wrap .tagcloud a:hover {
+  background-color: #1967d2;
+  color: #fff;
+}
 @media (max-width: 991px) {
   .section-full.p-t120,
   .section-full.p-b90 {
@@ -2064,6 +2067,33 @@ button.scroltop span {
   top: 0px;
   left: 0px;
   animation-name: cssload-animation;
+}
+.description-list-2 {
+  margin: 30px 0px;
+}
+.description-list-2 li {
+  padding-left: 45px;
+  list-style: none;
+  position: relative;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 16px;
+}
+.description-list-2 li:last-child {
+  margin-bottom: 0px;
+}
+.description-list-2 li i {
+  color: #1967d2;
+  line-height: 26px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  text-align: center;
+  font-size: 22px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 50%;
 }
 .overlay-wraper {
   position: relative;
@@ -2182,6 +2212,158 @@ button.scroltop span {
 #search .close:hover:before {
   cursor: pointer;
 }
+.twm-two-part-section {
+  margin-bottom: 30px;
+}
+.tw-sidebar-gallery ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px;
+}
+.tw-sidebar-gallery ul li {
+  width: 25%;
+  border-right: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+}
+.tw-sidebar-gallery ul li .tw-service-gallery-thumb {
+  position: relative;
+  z-index: 1;
+  transition: 0.5s all ease;
+}
+.tw-sidebar-gallery ul li .tw-service-gallery-thumb:after {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  right: -3px;
+  bottom: -3px;
+  content: "";
+  border: 2px solid #1967d2;
+  border-radius: 10px;
+  opacity: 0;
+  z-index: -1;
+}
+.tw-sidebar-gallery ul li .tw-service-gallery-thumb:hover {
+  padding: 0px;
+}
+.tw-sidebar-gallery ul li .tw-service-gallery-thumb:hover:after {
+  opacity: 1;
+}
+.tw-sidebar-gallery ul li a {
+  display: block;
+  text-align: center;
+  position: relative;
+  background-color: #000;
+  border-radius: 10px;
+}
+.tw-sidebar-gallery ul li a img {
+  transition: 0.5s all ease;
+  border-radius: 10px;
+}
+.tw-sidebar-gallery ul li a i {
+  opacity: 0;
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.5s all ease;
+}
+.tw-sidebar-gallery ul li:hover a img {
+  opacity: 0.3;
+}
+.tw-sidebar-gallery ul li:hover a i {
+  opacity: 1;
+}
+.video-section-first {
+  height: 270px;
+  background-size: cover;
+  border-radius: 10px;
+  position: relative;
+}
+@media (max-width: 1199px) {
+  .video-section-first {
+    height: 236px;
+  }
+}
+@media (max-width: 991px) {
+  .video-section-first {
+    height: 266px;
+  }
+}
+.play-now-video .icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 78px;
+  width: 78px;
+  text-align: center;
+  line-height: 78px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  z-index: 1;
+  font-size: 32px;
+  padding-left: 0px;
+  display: block;
+  transform: translateX(-50%) translateY(-50%);
+  transform-origin: center center;
+  border-radius: 50%;
+  box-shadow: 0 5px 10px 0 rgba(255, 255, 255, 0.5);
+}
+.play-now-video .ripple,
+.play-now-video .ripple:before,
+.play-now-video .ripple:after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 78px;
+  width: 78px;
+  transform: translateX(-50%) translateY(-50%);
+  transform-origin: center center;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgb(255, 255, 255);
+  animation: ripple-video 3s infinite;
+  z-index: 1;
+}
+.play-now-video .ripple:before {
+  animation-delay: 0.9s;
+  content: "";
+  position: absolute;
+}
+.play-now-video .ripple:after {
+  animation-delay: 0.6s;
+  content: "";
+  position: absolute;
+}
+.twm-jobs-category span {
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .twm-jobs-category span {
+    display: inline-block;
+  }
+}
+.cabdidate-de-info .twm-jobs-category span {
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px 12px;
+}
+@media (max-width: 767px) {
+  .cabdidate-de-info .twm-jobs-category span {
+    margin-top: 0px;
+    display: inline-block;
+  }
+}
+.twm-bg-green {
+  background-color: #2db346;
+}
 .twm-tabs-style-2 .nav-tabs {
   margin-bottom: 20px;
   border: none;
@@ -2212,12 +2394,322 @@ button.scroltop span {
   background-color: #1967d2 !important;
   color: #fff;
 }
+.twm-advertisment {
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 50px 30px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  margin: 30px 0px;
+}
+.twm-advertisment .overlay {
+  background-color: #1967d2;
+  opacity: 0.8;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+}
+.twm-advertisment .twm-title {
+  color: #fff;
+  margin-bottom: 20px;
+}
+.twm-advertisment p {
+  margin-bottom: 30px;
+}
 .form-control:focus {
   box-shadow: none;
 }
 .form-check-input {
   width: 16px;
   height: 16px;
+}
+.twm-s-title {
+  margin: 30px 0px;
+}
+.twm-social-tags {
+  margin-top: -10px;
+}
+.twm-social-tags a {
+  padding: 5px 15px;
+  margin-top: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.twm-social-tags a:hover {
+  opacity: 0.9;
+}
+.fb-clr {
+  background-color: #4d69b2;
+}
+.tw-clr {
+  background-color: #38b2e1;
+}
+.link-clr {
+  background-color: #0579b6;
+}
+.whats-clr {
+  background-color: #2ca53b;
+}
+.pinte-clr {
+  background-color: #f03c41;
+}
+.twm-job-self-wrap {
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+.twm-job-self-wrap .twm-job-self-info {
+  position: relative;
+  z-index: 1;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top {
+  position: relative;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-media-bg img {
+  border-radius: 10px;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-jobs-category {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-media {
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  display: inline-block;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 40px rgba(56, 152, 226, 0.3);
+  position: absolute;
+  top: -40px;
+  left: 20px;
+  overflow: hidden;
+  margin-bottom: -20px;
+}
+@media (max-width: 420px) {
+  .twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-media {
+    left: auto;
+    top: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    position: inherit;
+  }
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-media img {
+  width: 100%;
+  display: block;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-job-title {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+.twm-job-self-wrap
+  .twm-job-self-info
+  .twm-job-self-top
+  .twm-job-title
+  .twm-job-post-duration {
+  color: #2db346;
+  font-size: 14px;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-job-address i {
+  padding-right: 3px;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-job-self-mid {
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 767px) {
+  .twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-job-self-mid {
+    display: block;
+  }
+}
+.twm-job-self-wrap
+  .twm-job-self-info
+  .twm-job-self-top
+  .twm-job-self-mid
+  .twm-job-apllication-area {
+  font-weight: 500;
+}
+.twm-job-self-wrap
+  .twm-job-self-info
+  .twm-job-self-top
+  .twm-job-self-mid
+  .twm-job-apllication-area
+  .twm-job-apllication-date {
+  color: #ff0000;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-jobs-amount {
+  font-weight: 500;
+  color: #17171d;
+  font-size: 14px;
+  display: inline-block;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-jobs-amount span {
+  color: #046c38;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-job-websites {
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-mid-content {
+  position: relative;
+  padding-top: 80px;
+}
+@media (max-width: 420px) {
+  .twm-job-self-wrap .twm-job-self-info .twm-job-self-top .twm-mid-content {
+    padding-top: 0px;
+  }
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-bottom {
+  position: absolute;
+  top: 20px;
+  right: 0px;
+}
+@media (max-width: 767px) {
+  .twm-job-self-wrap .twm-job-self-info .twm-job-self-bottom {
+    position: inherit;
+    top: inherit;
+    right: inherit;
+    margin-top: 10px;
+  }
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-bottom a {
+  margin-right: 10px;
+}
+.twm-job-self-wrap .twm-job-self-info .twm-job-self-bottom a:last-child {
+  margin-right: 0px;
+}
+.twm-m-map-iframe {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.twm-m-map-iframe iframe {
+  width: 100%;
+  border: 0px;
+  filter: grayscale(100%);
+}
+.twm-s-info3 {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 25px rgba(56, 152, 226, 0.3);
+  padding: 30px;
+  margin-top: 90px;
+}
+.twm-s-info3 .twm-s-info-logo-section {
+  position: relative;
+}
+.twm-s-info3 .twm-s-info-logo-section .twm-media {
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  display: inline-block;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 40px rgba(56, 152, 226, 0.3);
+  position: relative;
+  top: -80px;
+  left: 0px;
+  overflow: hidden;
+  margin-bottom: -50px;
+}
+.twm-s-info3 ul {
+  list-style: none;
+  margin-bottom: 30px;
+}
+.twm-s-info3 ul li {
+  margin-bottom: 10px;
+}
+.twm-s-info3 ul li:last-child {
+  margin-bottom: 0px;
+}
+.twm-s-info3 ul li .twm-s-info-inner {
+  position: relative;
+  padding-left: 40px;
+}
+.twm-s-info3 ul li .twm-s-info-inner i {
+  position: absolute;
+  left: 0px;
+  top: 15px;
+  font-size: 18px;
+  color: #1967d2;
+}
+.twm-s-info3 ul li .twm-s-info-inner .twm-title {
+  font-size: 14px;
+  color: #666666;
+}
+.twm-s-info3 ul li .twm-s-info-inner .twm-s-info-discription {
+  font-size: 16px;
+  color: #17171d;
+  word-break: break-word;
+}
+.twm-s-info3 .site-button {
+  display: block;
+  text-align: center;
+}
+.twm-job-hilites {
+  padding-bottom: 30px;
+}
+.twm-job-hilites li {
+  display: block;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 15px 15px 15px 50px;
+  position: relative;
+  color: #17171d;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.twm-job-hilites li:last-child {
+  margin-bottom: 0px;
+}
+.twm-job-hilites li i {
+  position: absolute;
+  left: 15px;
+  top: 19px;
+  font-size: 18px;
+  color: #1967d2;
+}
+.twm-s-info2 .twm-job-hilites2 {
+  list-style: none;
+  margin-bottom: 0px;
+  margin-left: 15px;
+}
+.twm-s-info2 .twm-job-hilites2 li {
+  margin-bottom: 10px;
+}
+.twm-s-info2 .twm-job-hilites2 li:last-child {
+  margin-bottom: 0px;
+}
+.twm-s-info2 .twm-job-hilites2 li .twm-s-info-inner {
+  position: relative;
+  padding-left: 40px;
+}
+.twm-s-info2 .twm-job-hilites2 li .twm-s-info-inner i {
+  position: absolute;
+  left: 0px;
+  top: 15px;
+  font-size: 18px;
+  color: #1967d2;
+}
+.twm-s-info2 .twm-job-hilites2 li .twm-s-info-inner .twm-title {
+  font-size: 14px;
+  color: #666666;
+}
+.twm-s-info2 .twm-job-hilites2 li .twm-s-info-inner .twm-s-info-discription {
+  font-size: 16px;
+  color: #17171d;
 }
 .twm-sign-up {
   margin-bottom: 10px;
@@ -2329,9 +2821,6 @@ button.scroltop span {
   color: #d8483d;
   border-color: #d8483d;
 }
-.wt-panel-heading {
-  border-bottom: 1px solid #ddd;
-}
 .ls-inputicon-box {
   position: relative;
 }
@@ -2350,21 +2839,6 @@ button.scroltop span {
 .ls-inputicon-box .form-control {
   padding-left: 35px;
 }
-.upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-.upload-btn-wrapper input[type="file"] {
-  font-size: 100%;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  display: block;
-}
 .main-bar {
   width: 100%;
   transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1) 0s;
@@ -2372,98 +2846,27 @@ button.scroltop span {
 .color-fill.main-bar {
   animation: 0.95s ease 0s normal forwards 1 running mainBar_on_scrollAnimatio;
 }
-.side-bar-st-1 {
-  background: #d4e6ff;
-  padding: 30px;
-  border-radius: 10px;
-}
-.twm-candidate-profile-pic {
-  position: relative;
-  display: block;
-  max-width: 150px;
-  margin: 0px auto 30px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-}
-.twm-candidate-profile-pic img {
-  border-radius: 10px;
-  margin: 10px;
-  display: block;
-  width: 128px;
-}
-.twm-candidate-profile-pic .upload-btn-wrapper {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-}
-.twm-candidate-profile-pic .upload-btn-wrapper button {
-  left: 50%;
-  transform: translateX(-50%);
-}
-#upload-image-grid {
-  width: 128px;
-  height: 128px;
-  overflow: hidden;
-  border-radius: 10px;
-  top: 30px;
-  position: relative;
-}
-.twm-nav-list-1 ul {
-  list-style: none;
-  margin: 0;
-  font-weight: 500;
-}
-.twm-nav-list-1 ul li {
-  float: none;
-}
-.twm-nav-list-1 ul li:last-child {
-  border-bottom: none;
-}
-.twm-nav-list-1 ul li a > i {
-  font-size: 18px;
-  margin-right: 25px;
-  position: absolute;
-  left: 10px;
-  top: 14px;
-  color: #1967d2;
-}
-.twm-nav-list-1 ul > li > a {
-  padding: 10px 15px 10px 40px;
-  color: #323232;
-  display: block;
-  font-size: 14px;
-  position: relative;
-  font-weight: 400;
-  transition: 0.5s all ease;
-}
-.twm-nav-list-1 ul > li > a:hover {
-  color: #1967d2;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 25px rgba(180, 205, 237, 0.7);
-}
-.twm-nav-list-1 ul > li.active > a {
-  color: #1967d2;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 25px rgba(180, 205, 237, 0.7);
-}
-.twm-right-section-panel {
-  padding: 30px;
+.apl-job-inpopup {
   border-radius: 10px;
 }
 @media (max-width: 540px) {
-  .twm-right-section-panel {
+  .apl-job-inpopup {
     padding: 15px;
   }
 }
-.twm-right-section-panel textarea.form-control {
+.apl-job-inpopup textarea.form-control {
   height: auto;
   resize: none;
 }
-.twm-right-section-panel .panel.panel-default {
+.apl-job-inpopup .panel.panel-default {
   border-radius: 10px;
   background: #fff;
+}
+.widget .section-head-small {
+  font-size: 22px;
+  font-weight: 500;
+  padding-left: 10px;
+  border-left: 3px solid #1967d2;
 }
 .has-mega-menu {
   position: inherit !important;
@@ -2561,6 +2964,7 @@ button.scroltop span {
     margin-top: 0px;
   }
 }
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/skins-type/skin-6.css */
 .footer-dark {
   background-color: #17171d;
 }
@@ -2591,6 +2995,7 @@ button.scroltop span {
 .has-mega-menu .mega-menu > li ul li:hover > a {
   color: #1967d2;
 }
+/*! CSS Used from: https://thewebmax.org/jobzilla/css/switcher.css */
 .styleswitcher .switcher-title {
   text-transform: uppercase;
   font-weight: 800;
@@ -2746,8 +3151,210 @@ button.scroltop span {
     transform: scale(2);
   }
 }
+@keyframes ripple-video {
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
 /*! CSS Used fontfaces */
 @font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot");
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2")
+      format("woff2"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff")
+      format("woff"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf")
+      format("truetype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome")
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot);
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2)
+      format("woff2"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff) format("woff"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf)
+      format("truetype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome)
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot");
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2")
+      format("woff2"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff")
+      format("woff"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf")
+      format("truetype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome")
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot");
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2")
+      format("woff2"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff") format("woff"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf")
+      format("truetype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome")
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot);
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2)
+      format("woff2"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff) format("woff"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf)
+      format("truetype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome)
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot);
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2) format("woff2"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff) format("woff"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf)
+      format("truetype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome)
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot");
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2")
+      format("woff2"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff")
+      format("woff"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf")
+      format("truetype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome")
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot);
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2)
+      format("woff2"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff) format("woff"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf)
+      format("truetype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome)
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot");
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2")
+      format("woff2"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff")
+      format("woff"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf")
+      format("truetype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome")
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot");
+  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2")
+      format("woff2"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff") format("woff"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf")
+      format("truetype"),
+    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome")
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot);
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2)
+      format("woff2"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff) format("woff"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf)
+      format("truetype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome)
+      format("svg");
+}
+@font-face {
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot);
+  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2) format("woff2"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff) format("woff"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf)
+      format("truetype"),
+    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome)
+      format("svg");
+}
+@font-face {
   font-family: "Rubik";
   font-style: normal;
   font-weight: 300;
@@ -2756,7 +3363,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -2794,7 +3407,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";
@@ -2816,7 +3429,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -2854,7 +3473,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";
@@ -2876,7 +3495,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -2914,7 +3539,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";
@@ -2936,7 +3561,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -2974,7 +3605,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";
@@ -2996,7 +3627,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -3034,7 +3671,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";
@@ -3056,7 +3693,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -3094,7 +3737,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";
@@ -3116,7 +3759,13 @@ button.scroltop span {
     format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1,
     U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF,
-    U+FE70-FE74, U+FE76-FEFC;
+    U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EFD-10EFF,
+    U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32,
+    U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B,
+    U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D,
+    U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77,
+    U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3,
+    U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
 }
 @font-face {
   font-family: "Rubik";
@@ -3154,7 +3803,7 @@ button.scroltop span {
   src: url(https://fonts.gstatic.com/s/rubik/v28/iJWKBXyIfDnIV7nPrXyi0A.woff2)
     format("woff2");
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF,
-    U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+    U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: "Rubik";

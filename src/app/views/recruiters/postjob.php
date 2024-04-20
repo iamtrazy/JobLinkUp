@@ -1,152 +1,125 @@
-<?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?>
-<?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <link rel="stylesheet" href="<?php echo URLROOT ?>/css/recruiter/postjob.css">
-    <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:ital@0;1&family=Maven+Pro:wght@600&family=Open+Sans:wght@500&display=swap');
-</style>
-</head>
-
-<body>
-    <div class="container">
-
-    <!-- <div class="content_container"><?php require APPROOT . '/views/inc/recruiter_top_bar.php'; ?> -->
-</div>
- <div class="content_container">
- <div class="wrapper">
-    <form action="">
-        <h1>Post Job</h1>
-        <div class="form-container">
-        
-            <label for="Job Title">
-            <i class="fs-input-icon fa fa-address-card">
-                Job Title:</label>
-        <input type="text" placeholder="Eg :Dog Sitting" required>
-        </div>
-
-        <div class="">
-        <label for="Job Category">Job Category
-        </label>
-        <select name="category" id="" placeholder="Data Entry">
-                                            <option>Art & Design</option>
-                                            <option>Art & Design</option>
-                                            <option>Data Entry</option>
+<?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
+<div class="col-xl-9 col-lg-8 col-md-12 m-b30">
+    <div class="twm-right-section-panel site-bg-gray">
+        <form action="<?php echo URLROOT; ?>/jobs/add" method="post" enctype="multipart/form-data">
+            <div class="panel panel-default">
+                <div class="panel-heading wt-panel-heading p-a20">
+                    <h4 class="panel-tittle m-a0">
+                        <i class="fa fa-suitcase"></i>Job Details
+                    </h4>
+                </div>
+                <div class="panel-body wt-panel-body p-a20 m-b30">
+                    <div class="row">
+                        <!--Job title-->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="topic" type="text" placeholder="Artist" required />
+                                    <i class="fs-input-icon fa fa-address-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Job Type-->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Job Type</label>
+                                <div class="ls-inputicon-box">
+                                    <div class="">
+                                        <select class="wt-select-box" name="type" data-live-search="true" title="" id="s-category" data-bv-field="size">
+                                            <option>Freelance</option>
+                                            <option>Internship</option>
+                                            <option>Part-Time</option>
                                             <option>Volunteer</option>
-                                            <option>IT and Computers</option>
-                                            <option>Miscellaneous</option>
-                                            <option>Other</option>                             
-        </select>
-        </div>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Job title-->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Offered Salary</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="rate" type="text" placeholder="5000" required />
+                                    <i class="fs-input-icon fa fas fa-coins"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Salary Type</label>
+                                <div class="ls-inputicon-box">
+                                    <div class="">
+                                        <select class="wt-select-box" name="rate_type" data-live-search="true" title="" id="s-category" data-bv-field="size">
+                                            <option>One-Time</option>
+                                            <option>Hourly</option>
+                                            <option>Weekly</option>
+                                            <option>Monthly</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Website-->
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Website</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="website" type="text" placeholder="https://..." />
+                                    <i class="fs-input-icon fa fa-globe-americas"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Keywords</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="keywords" type="text" placeholder="artist engineer..." id="hash-input" />
+                                    <i class="fs-input-icon fa fa-hashtag"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Complete Address-->
+                        <div class="col-xl-12 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Complete Address</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="location" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
+                                    <i class="fs-input-icon fa fa-home"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Banner Image</label>
+                                <div class="input-group">
+                                    <input type="file" name="banner_image" id="file-uploader" accept=".jpg, .jpeg, .png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        
-        <div class="form-container">
-        <i class="fs-input-icon fa fa-address-card">
-
-        <label for="">Job type:</label>
-
-        <input type="text" placeholder="Eg :Temporary" required>
-           
-                <select name="type" id="">
-                <option>Freelance</option>
-                <option>Part Time</option>
-                <option>Temporary</option>
-                </select>
-        </div>
-        
-        <div class="">
-        <i class="fs-input-icon fa fa-dollar-sign"></i>
-
-            <label for="Offered Salary">Offered Salary (Rs.)</label>
-        <input type="currency" placeholder="Eg :5000" required>
-            
-
-            <input type="radio">Negotiable
-        </div>
-
-
-<div class="form-container">
-<i class="fs-input-icon fa fa-globe-americas"></i>
-
-            <label for="Web site link">Enter your website link
-            </label>
-        <input type="text" placeholder="Eg :slt.lk" required>
-            
-            
-        </div>
-
-<div class="form-container">
-<i class="fs-input-icon fa fa-home"></i>
-
-            <label for="Complete address">Complete address</label>
-
-            
-        <input type="text" placeholder="707/3-B Station Road, Pannipitiya" required>
-            
-        </div>
-
-<div class="form-container">
-<i class="fs-input-icon fa fa-home"></i>
-
-            <label for="description">job description</label>
-        <textarea class="" rows="3" placeholder="Enter Job description here..." required></textarea>
-            
-        </div>
-
-<!--radio buttons-->
-
-<div class="radio-container">
-<i class="fs-input-icon fa fa-home"></i>
-
-            <label for="cv">Require CV? </label>
-        <input type="radio">
-        </div>
-
-<div class="radio-container">
-<i class="fs-input-icon fa fa-home"></i>
-
-            <label for="cv">Enable Quiz</label>
-        <input type="radio">
-            
-        </div>
-<!--when clicked on upload documents option the upload button should appear-->
-<div class="radio-container">
-<i class="fs-input-icon fa fa-home"></i>
-
-            <label for="documents">Upload additional Documents 
-            </label>
-        <input type="radio"> 
-</div>
-
-<!--submit buttons-->
-        <div class="button-container upload">
-            
-       <button type="submit" class="">Upload documents</button>
-        </div>
-
-
-<div class="button-container publish ">
-          
-       <button type="submit" class="">Publish Job</button>
-        </div>
+                    <!--Description-->
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" name="detail" rows="3" placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality." required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="text-left">
+                            <button type="submit" class="site-button m-r5">
+                                Publish Job
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
     </form>
-</div><!--wrapper-->
- </div>   <!--content-container-->
- </div> <!--container -->
-</body>
-</html>
-
-
-
-
-
-
-
-
-
+</div>
+</div>
+<script src="<?php echo URLROOT ?>/js/jobs/hashtags.js"></script>
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
