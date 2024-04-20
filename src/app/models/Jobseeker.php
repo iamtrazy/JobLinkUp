@@ -57,4 +57,12 @@ class Jobseeker
       return false;
     }
   }
+
+  public function getJobseekerById($id)
+  {
+    $this->db->query('SELECT * FROM jobseekers WHERE id = :id');
+    $this->db->bind(':id', $id);
+
+    return $this->db->single();
+  }
 }
