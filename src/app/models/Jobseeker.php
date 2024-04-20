@@ -68,14 +68,16 @@ class Jobseeker
 
   public function editProfile($data)
   {
-    $this->db->query('UPDATE jobseekers SET username = :username, gender = :gender, website = :website, age = :age, address = :address, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url WHERE id = :id');
+    $this->db->query('UPDATE jobseekers SET username = :username, phone_no = :phone_no, gender = :gender, website = :website, age = :age, address = :address, keywords= :kywords, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url WHERE id = :id');
     // Bind values
     $this->db->bind(':id', $data['id']);
     $this->db->bind(':username', $data['username']);
+    $this->db->bind(':phone_no', $data['phone_no']);
     $this->db->bind(':gender', $data['gender']);
     $this->db->bind(':website', $data['website']);
     $this->db->bind(':age', $data['age']);
     $this->db->bind(':address', $data['address']);
+    $this->db->bind(':keywords', $data['keywords']);
     $this->db->bind(':linkedin_url', $data['linkedin_url']);
     $this->db->bind(':whatsapp_url', $data['whatsapp_url']);
 
