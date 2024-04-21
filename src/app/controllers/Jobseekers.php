@@ -401,7 +401,7 @@ class Jobseekers extends Controller
                 'header_title' => 'Chat With Recruiters',
             ];
 
-            $this->view('jobseeker/chat', $data);
+            $this->view('chat/seeker/chat', $data);
         }
     }
 
