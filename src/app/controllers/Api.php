@@ -283,7 +283,22 @@ class Api extends Controller
 
                 if ($messages) {
                     // Prepare response data
-                    $data = $messages;
+
+                    foreach ($messages as $message) {
+                        $inverted_message = $message; // Create a copy of the original message
+                        if ($message['reply']) {
+                            $inverted_message['reply'] = false;
+                        } else {
+                            $inverted_message['reply'] = true;
+                        }
+                        // Append the modified message to the new array
+                        $messages_invert[] = $inverted_message;
+                    }
+
+                    //data variable should be created using the modified messages array in the above foreach loop
+                    $data = $messages_invert;
+
+                    // $data = $messages;
                     // Send chat messages data as JSON response
                     $this->view('api/json', $data);
                 } else {

@@ -82,129 +82,127 @@
         </div>
     </div>
 </div>
-<!-- <script>
-  $(document).ready(function() {
-    // Function to load messages for a specific thread
-    function loadMessages(threadId, recruiterName, businessName) {
-      // Function to send a message
-      function sendMessage() {
-        var message = $('.form-control').val(); // Get the message from the input field
-        $.ajax({
-          url: '<?php echo URLROOT . '/api/chat_send_message/' ?>' + threadId,
-          type: 'POST',
-          dataType: 'json',
-          data: {
-            text: message // Send the message in the POST request
-          },
-          success: function(response) {
-            // Reload messages after sending the message
-            loadMessages(threadId, recruiterName, businessName);
-            // Clear input field after sending the message
-            $('.form-control').val('');
-          },
-          error: function(xhr, status, error) {
-            console.error("Error sending message:", error);
-          }
-        });
-      }
+<script>
+    $(document).ready(function() {
+        // Function to load messages for a specific thread
+        function loadMessages(threadId, seekerName) {
+            // Function to send a message
+            function sendMessage() {
+                var message = $('.form-control').val(); // Get the message from the input field
+                $.ajax({
+                    url: '<?php echo URLROOT . '/api/chat_send_message/' ?>' + threadId,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        text: message // Send the message in the POST request
+                    },
+                    success: function(response) {
+                        // Reload messages after sending the message
+                        loadMessages(threadId, seekerName);
+                        // Clear input field after sending the message
+                        $('.form-control').val('');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error sending message:", error);
+                    }
+                });
+            }
 
-      // Clear existing messages
-      $('#msg-chat-wrap').empty();
-      // Iterate over each message in the response
-      $.ajax({
-        url: '<?php echo URLROOT . '/api/chat_thread_messages/' ?>' + threadId,
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-          // Iterate over each message in the response
-          $.each(response, function(index, message) {
-            // Determine message class based on whether it's a reply or not
-            var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
-            var rowClass = message.reply ? 'row justify-content-end' : 'row';
-            // Create HTML elements for each message and append to container
-            var messageHtml = `
-                        <div class="${rowClass}">
-                            <div class="col-xl-9 col-lg-12">
-                                <div class="${messageClass} clearfix">
-                                    <div class="single-user-com-pic">
-                                        <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+            // Clear existing messages
+            $('#msg-chat-wrap').empty();
+            // Iterate over each message in the response
+            $.ajax({
+                url: '<?php echo URLROOT . '/api/chat_thread_messages/' ?>' + threadId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // Iterate over each message in the response
+                    $.each(response, function(index, message) {
+                        // Determine message class based on whether it's a reply or not
+                        var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
+                        var rowClass = message.reply ? 'row justify-content-end' : 'row';
+                        // Create HTML elements for each message and append to container
+                        var messageHtml = `
+                            <div class="${rowClass}">
+                                <div class="col-xl-9 col-lg-12">
+                                    <div class="${messageClass} clearfix">
+                                        <div class="single-user-com-pic">
+                                            <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                                        </div>
+                                        <div class="single-user-com-text">
+                                            ${message.text}
+                                        </div>
+                                        <div class="single-user-msg-time">
+                                            ${message.created_at}
+                                        </div>
                                     </div>
-                                    <div class="single-user-com-text">
-                                        ${message.text}
-                                    </div>
-                                    <div class="single-user-msg-time">
-                                        ${message.created_at}
-                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        $('#msg-chat-wrap').append(messageHtml);
+                    });
+                    // Hide horizontal scrollbar for messages
+                    $('#msg-chat-wrap').css('overflow-x', 'hidden');
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching chat messages:", error);
+                }
+            });
+
+            // Update seeker name in conversation box
+            $('.single-msg-user-name').text(seekerName);
+
+            // Unbind previous event listeners before attaching new ones
+            $('button.btn').off('click').on('click', function() {
+                sendMessage();
+            });
+
+            $('.form-control').off('keypress').on('keypress', function(event) {
+                if (event.which === 13) {
+                    sendMessage();
+                }
+            });
+        }
+
+        // Ajax call to fetch chat threads from the API
+        $.ajax({
+            url: '<?php echo URLROOT . '/api/chat_threads' ?>',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Iterate over each chat thread in the response
+                $.each(response, function(index, thread) {
+                    // Create HTML elements for each chat thread and append to container
+                    var threadHtml = `
+                        <div class="wt-dashboard-msg-search-list-wrap" data-thread-id="${thread.thread_id}">
+                            <div class="msg-user-info clearfix">
+                                <div class="msg-user-timing">${thread.created_at}</div>
+                                <div class="msg-user-info-pic">
+                                    <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                                </div>
+                                <div class="msg-user-info-text">
+                                    <div class="msg-user-name">${thread.seeker_name}</div>
+                                    <div class="msg-user-discription">${thread.created_at}</div>
                                 </div>
                             </div>
                         </div>
                     `;
-            $('#msg-chat-wrap').append(messageHtml);
-          });
-          // Hide horizontal scrollbar for messages
-          $('#msg-chat-wrap').css('overflow-x', 'hidden');
-        },
-        error: function(xhr, status, error) {
-          console.error("Error fetching chat messages:", error);
-        }
-      });
+                    $('#msg-list-wrap').append(threadHtml);
+                });
 
-      // Update recruiter name and business name in conversation box
-      $('.single-msg-user-name').text(recruiterName);
-      $('.single-msg-business-name').text(businessName);
-
-      // Unbind previous event listeners before attaching new ones
-      $('button.btn').off('click').on('click', function() {
-        sendMessage();
-      });
-
-      $('.form-control').off('keypress').on('keypress', function(event) {
-        if (event.which === 13) {
-          sendMessage();
-        }
-      });
-    }
-
-    // Ajax call to fetch chat threads from the API
-    $.ajax({
-      url: '<?php echo URLROOT . '/api/chat_seeker_threads' ?>',
-      type: 'GET',
-      dataType: 'json',
-      success: function(response) {
-        // Iterate over each chat thread in the response
-        $.each(response, function(index, thread) {
-          // Create HTML elements for each chat thread and append to container
-          var threadHtml = `
-                    <div class="wt-dashboard-msg-search-list-wrap" data-thread-id="${thread.thread_id}">
-                        <div class="msg-user-info clearfix">
-                            <div class="msg-user-timing">${thread.created_at}</div>
-                            <div class="msg-user-info-pic">
-                                <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
-                            </div>
-                            <div class="msg-user-info-text">
-                                <div class="msg-user-name">${thread.recruiter_name}</div>
-                                <div class="msg-user-discription">${thread.business_name}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-          $('#msg-list-wrap').append(threadHtml);
+                // Event listener for clicking on a thread
+                $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
+                    var threadId = $(this).data('thread-id');
+                    var seekerName = $(this).find('.msg-user-name').text();
+                    loadMessages(threadId, seekerName);
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching chat threads:", error);
+            }
         });
-
-        // Event listener for clicking on a thread
-        $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
-          var threadId = $(this).data('thread-id');
-          var recruiterName = $(this).find('.msg-user-name').text();
-          var businessName = $(this).find('.msg-user-discription').text();
-          loadMessages(threadId, recruiterName, businessName);
-        });
-      },
-      error: function(xhr, status, error) {
-        console.error("Error fetching chat threads:", error);
-      }
     });
-  });
-</script> -->
+</script>
 
 
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
