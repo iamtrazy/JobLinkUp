@@ -9,21 +9,6 @@
             User Message
           </button>
         </div>
-        <div class="wt-dashboard-msg-search">
-          <div class="input-group">
-            <input class="form-control" placeholder="Search Messages" type="text" />
-            <button class="btn" type="button">
-              <i class="fa fa-search"></i>
-            </button>
-          </div>
-        </div>
-        <div class="msg-find-list">
-          <select class="wt-select-box bs-select-hidden">
-            <option selected="selected">Recent Chats</option>
-            <option>Short by Time</option>
-            <option>Short by Unread</option>
-          </select>
-        </div>
         <div class="scroll-wrapper wt-dashboard-msg-search-list scrollbar-macosx" style="position: relative">
           <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx scroll-content scroll-scrolly_visible" style="
                             height: auto;
@@ -31,161 +16,7 @@
                             margin-right: 0px;
                             max-height: 700px;
                           ">
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">Thu</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">
-                    Randall Henderson
-                  </div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
 
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">2 hours ago</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Rustin Duza</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">4 hours ago</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic2.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Peter Hawkins</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">Fri</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic3.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Ralph Johnson</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">16/07/2023</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Randall Warren</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">16/07/2023</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic2.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">
-                    Christina Fischer
-                  </div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">16/07/2023</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic3.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Wanda Willis</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">16/07/2023</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Peter Hawkins</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">16/07/2023</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">Kathleen Moreno</div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
-
-            <div class="wt-dashboard-msg-search-list-wrap">
-              <a href="javascript:;" class="msg-user-info clearfix">
-                <div class="msg-user-timing">16/07/2023</div>
-                <div class="msg-user-info-pic">
-                  <img src="<?php echo URLROOT ?>/img/pic2.jpg" alt="" />
-                </div>
-                <div class="msg-user-info-text">
-                  <div class="msg-user-name">
-                    Wanda Montgomery
-                  </div>
-                  <div class="msg-user-discription">
-                    All created by our Global
-                  </div>
-                </div>
-              </a>
-            </div>
           </div>
           <div class="scroll-element scroll-x scroll-scrolly_visible">
             <div class="scroll-element_outer">
@@ -262,90 +93,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="single-user-comment-wrap">
-              <div class="row">
-                <div class="col-xl-9 col-lg-12">
-                  <div class="single-user-comment-block clearfix">
-                    <div class="single-user-com-pic">
-                      <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="" />
-                    </div>
-                    <div class="single-user-com-text">
-                      Breaking the endless cycle of meaningless
-                      text message conversations starts with only
-                      talking to someone who offers interesting
-                      topics opinions.
-                    </div>
-                    <div class="single-user-msg-time">
-                      12:13 PM
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="single-user-comment-wrap sigle-user-reply">
-              <div class="row justify-content-end">
-                <div class="col-xl-9 col-lg-12">
-                  <div class="single-user-comment-block clearfix">
-                    <div class="single-user-com-pic">
-                      <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                    </div>
-                    <div class="single-user-com-text">
-                      There are many variations of passages of
-                      Lorem Ipsum available, but the majority have
-                      suffered alteration in some form, by
-                      injected humour.
-                    </div>
-                    <div class="single-user-msg-time">
-                      12:37 PM
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="single-user-comment-wrap">
-              <div class="row">
-                <div class="col-xl-9 col-lg-12">
-                  <div class="single-user-comment-block clearfix">
-                    <div class="single-user-com-pic">
-                      <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="" />
-                    </div>
-                    <div class="single-user-com-text">
-                      Breaking the endless cycle of meaningless
-                      text message conversations starts with only
-                      talking to someone who offers interesting
-                      topics opinions.
-                    </div>
-                    <div class="single-user-msg-time">
-                      12:13 PM
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="single-user-comment-wrap sigle-user-reply">
-              <div class="row justify-content-end">
-                <div class="col-xl-9 col-lg-12">
-                  <div class="single-user-comment-block clearfix">
-                    <div class="single-user-com-pic">
-                      <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                    </div>
-                    <div class="single-user-com-text">
-                      There are many variations of passages of
-                      Lorem Ipsum available, but the majority have
-                      suffered alteration in some form, by
-                      injected humour.
-                    </div>
-                    <div class="single-user-msg-time">
-                      12:37 PM
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <div class="scroll-element scroll-x scroll-scrolly_visible">
             <div class="scroll-element_outer">
@@ -374,4 +121,38 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    // Ajax call to fetch chat threads from the API
+    $.ajax({
+      url: '<?php echo URLROOT . '/api/chat_seeker_threads' ?>', // Replace with your API endpoint
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        // Iterate over each chat thread in the response
+        $.each(response, function(index, thread) {
+          // Create HTML elements for each chat thread and append to container
+          var thread_html = `
+          <div class="wt-dashboard-msg-search-list-wrap">
+            <div class="msg-user-info clearfix">
+              <div class="msg-user-timing">${thread.created_at}</div>
+              <div class="msg-user-info-pic">
+                <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+              </div>
+              <div class="msg-user-info-text">
+                <div class="msg-user-name">${thread.recruiter_name}</div>
+                <div class="msg-user-discription">${thread.business_name}</div>
+              </div>
+             </div> 
+          </div>
+          `;
+          $('#msg-list-wrap').append(thread_html);
+        });
+      },
+      error: function(xhr, status, error) {
+        console.error("Error fetching chat threads:", error);
+      }
+    });
+  });
+</script>
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>
