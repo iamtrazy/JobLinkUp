@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 20, 2024 at 06:59 PM
+-- Generation Time: Apr 21, 2024 at 06:24 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -45,30 +45,44 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chat`
+-- Table structure for table `chat_texts`
 --
 
-CREATE TABLE `chat` (
-  `chat_id` int(11) NOT NULL,
-  `posted_on` datetime NOT NULL,
-  `user_name` varchar(255) NOT NULL,
-  `message` text NOT NULL,
-  `color` char(7) DEFAULT '#000000'
+CREATE TABLE `chat_texts` (
+  `id` int(11) NOT NULL,
+  `thread_id` int(11) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `reply` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `chat`
+-- Dumping data for table `chat_texts`
 --
 
-INSERT INTO `chat` (`chat_id`, `posted_on`, `user_name`, `message`, `color`) VALUES
-(1, '2024-04-19 11:18:43', 'Guest346', 'hi', '#000000'),
-(2, '2024-04-19 11:18:52', 'Guest346', 'hello', '#000000'),
-(3, '2024-04-19 11:20:22', 'Guest996', 'hi', '#000000'),
-(4, '2024-04-19 11:20:24', 'Guest996', 'klkl', '#000000'),
-(5, '2024-04-19 11:20:25', 'Guest996', ';;k', '#000000'),
-(6, '2024-04-19 11:20:27', 'Guest996', ']k;k;', '#000000'),
-(7, '2024-04-19 11:20:28', 'Guest996', 'klk', '#000000'),
-(8, '2024-04-19 12:01:53', 'Guest24', 'tt', '#000000');
+INSERT INTO `chat_texts` (`id`, `thread_id`, `text`, `reply`, `created_at`) VALUES
+(1, 1, 'Hello', 0, '2024-04-21 07:41:19'),
+(2, 1, 'Hello back !', 1, '2024-04-21 07:41:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat_threads`
+--
+
+CREATE TABLE `chat_threads` (
+  `id` int(11) NOT NULL,
+  `seeker_id` int(11) NOT NULL,
+  `recruiter_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chat_threads`
+--
+
+INSERT INTO `chat_threads` (`id`, `seeker_id`, `recruiter_id`, `created_at`) VALUES
+(1, 16, 1, '2024-04-21 05:57:42');
 
 -- --------------------------------------------------------
 
@@ -131,7 +145,7 @@ CREATE TABLE `jobseekers` (
 
 INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
 (2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, 0, NULL, 0, 'hi hi hiii', NULL, NULL, 0),
-(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0702339061', 'https://iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', 'https://linkedin.com', 'https://web.whatsapp.com', 0),
+(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'https://iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', 'https://linkedin.com', 'https://web.whatsapp.com', 0),
 (18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
@@ -188,6 +202,7 @@ CREATE TABLE `recruiters` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `business_name` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -195,8 +210,9 @@ CREATE TABLE `recruiters` (
 -- Dumping data for table `recruiters`
 --
 
-INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `created_at`) VALUES
-(1, 'info@sanima.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'AT Softwares', '2023-11-02 09:06:43');
+INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `business_name`, `created_at`) VALUES
+(1, 'info@sanima.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'AT Softwares', 'Sanima Holdings', '2023-11-02 09:06:43'),
+(2, 'hello@business.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'Test Business', 'Test Company', '2024-04-21 06:34:39');
 
 -- --------------------------------------------------------
 
@@ -230,10 +246,19 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `chat`
+-- Indexes for table `chat_texts`
 --
-ALTER TABLE `chat`
-  ADD PRIMARY KEY (`chat_id`);
+ALTER TABLE `chat_texts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_CHAT_3` (`thread_id`);
+
+--
+-- Indexes for table `chat_threads`
+--
+ALTER TABLE `chat_threads`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_CHAT_1` (`recruiter_id`),
+  ADD KEY `FK_CHAT_2` (`seeker_id`);
 
 --
 -- Indexes for table `jobs`
@@ -284,10 +309,16 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `chat`
+-- AUTO_INCREMENT for table `chat_texts`
 --
-ALTER TABLE `chat`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `chat_texts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `chat_threads`
+--
+ALTER TABLE `chat_threads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -311,11 +342,24 @@ ALTER TABLE `moderators`
 -- AUTO_INCREMENT for table `recruiters`
 --
 ALTER TABLE `recruiters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `chat_texts`
+--
+ALTER TABLE `chat_texts`
+  ADD CONSTRAINT `FK_CHAT_3` FOREIGN KEY (`thread_id`) REFERENCES `chat_threads` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `chat_threads`
+--
+ALTER TABLE `chat_threads`
+  ADD CONSTRAINT `FK_CHAT_1` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_CHAT_2` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `jobs_applied`

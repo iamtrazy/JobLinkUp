@@ -1,5 +1,4 @@
 <?php require APPROOT . '/views/inc/seeker_header.php'; ?>
-//test commit
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
 <div class="twm-right-section-panel site-bg-gray">
     <div class="wt-admin-dashboard-msg-2 twm-dashboard-style-2">
