@@ -1,6 +1,6 @@
 <?php require APPROOT . '/views/inc/seeker_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
-  <div class="twm-right-section-panel site-bg-gray">
+<div class="twm-right-section-panel site-bg-gray">
     <div class="wt-admin-dashboard-msg-2 twm-dashboard-style-2">
       <div class="wt-dashboard-msg-user-list">
         <div class="user-msg-list-btn-outer">
@@ -10,14 +10,8 @@
           </button>
         </div>
         <div class="scroll-wrapper wt-dashboard-msg-search-list scrollbar-macosx" style="position: relative">
-          <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx scroll-content scroll-scrolly_visible" style="
-                            height: auto;
-                            margin-bottom: 0px;
-                            margin-right: 0px;
-                            max-height: 700px;
-                          ">
+          <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx scroll-content scroll-scrolly_visible" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 700px; overflow-x: hidden;">
             <!-- threads appear here dynamically -->
-
           </div>
           <div class="scroll-element scroll-x scroll-scrolly_visible">
             <div class="scroll-element_outer">
@@ -39,19 +33,14 @@
         <div class="single-msg-user-name-box">
           <div class="single-msg-short-discription">
             <h4 class="single-msg-user-name">
-              thread recruiter name should appear here
+              Welcome to the JobLinkUp chat portal.
             </h4>
             <div class="single-msg-business-name">
-              thread recruiter business_name should appear here</div>
+              Select a recruiter from the left thread to start chat.</div>
           </div>
         </div>
         <div class="scroll-wrapper single-user-msg-conversation scrollbar-macosx" style="position: relative">
-          <div id="msg-chat-wrap" class="single-user-msg-conversation scrollbar-macosx scroll-content scroll-scrolly_visible" style="
-                            height: auto;
-                            margin-bottom: 0px;
-                            margin-right: 0px;
-                            max-height: 550px;
-                          ">
+          <div id="msg-chat-wrap" class="single-user-msg-conversation scrollbar-macosx scroll-content scroll-scrolly_visible" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 550px; overflow-x: hidden; ">
             <div class="single-user-comment-wrap">
               <div class="row">
                 <div class="col-xl-9 col-lg-12">
@@ -60,11 +49,11 @@
                       <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
                     </div>
                     <div class="single-user-com-text">
-                      msg text should appear here
+                      Whoa 😮😮 !! how did i get here
                     </div>
-                    <div class="single-user-msg-time">
+                    <!-- <div class="single-user-msg-time">
                       msg date should appear here
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -78,11 +67,11 @@
                       <img src="https://joblinkup.com/img/pic1.jpg" alt="" />
                     </div>
                     <div class="single-user-com-text">
-                      if a msg is a reply it should appear here as a single-user-reply
+                      Welcome to the JobLinkUp 👏 ! Your portal for part time job needs.🪅
                     </div>
-                    <div class="single-user-msg-time">
+                    <!-- <div class="single-user-msg-time">
                       msg date should appear here
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -151,6 +140,8 @@
             `;
             $('#msg-chat-wrap').append(messageHtml);
           });
+          // Hide horizontal scrollbar for messages
+          $('#msg-chat-wrap').css('overflow-x', 'hidden');
         },
         error: function(xhr, status, error) {
           console.error("Error fetching chat messages:", error);
