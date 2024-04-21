@@ -20,23 +20,7 @@
                                                     </thead>
                                                     <tbody>
                                                     <?php foreach ($data['jobs'] as $jobs) : ?>
-                                                        <!--1-->
                                                         
-                                                        <!--2-->
-                                                        
-
-                                                        <!--3-->
-                                                        
-
-                                                        <!--4-->
-                                                        
-
-                                                        <!--5-->
-                                                        
-
-                                                        <!--6-->
-                                                        
-                                                        <!--7-->
                                                         
                                                         
                                                     <tr class="odd">
@@ -46,9 +30,9 @@
                                                                     <div class="twm-mid-content">
                                                                         <a href="#" class="twm-job-title">
                                                                             <h4><?php echo $jobs->topic;?>
-                                                                                $jobModel->getJobs()->$twm-job-title</h4>
+                                                                                </h4>
                                                                             <p class="twm-bookmark-address">
-                                                                                <i class="feather-map-pin"></i>$jobModel->getJobs()->$location
+                                                                                <i class="feather-map-pin"></i>$jobs->location
                                                                             </p>
                                                                         </a>
                                                                         

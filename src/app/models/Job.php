@@ -170,22 +170,27 @@ class Job
         $results = $this->db->resultset();
         return $results;
     }
-<<<<<<< HEAD
+
 
     public function getApplication($id)
     {
-        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , jobs_applied.created_at
-        FROM jobs_applied
-        INNER JOIN jobs ON jobs.id=jobs_applied.job_id
-        WHERE jobs_applied.seeker_id = $id;");
-=======
-    public function getApplications($id)
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , applications.created_at
+        FROM applications
+        INNER JOIN jobs ON jobs.id=applications.job_id
+        WHERE applications.seeker_id = $id;");
+
+        
+                    
+            $results = $this->db->resultset();
+            return $results;
+    }
+    public function getApplicationss($id)
     {
         $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , applications.id
                         FROM applications
                         INNER JOIN jobs ON jobs.id=applications.job_id
                         WHERE applications.recruiter_id = $id;");
->>>>>>> origin/chamudi-new-dev
+
         $results = $this->db->resultset();
         return $results;
     }

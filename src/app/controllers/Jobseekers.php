@@ -12,7 +12,7 @@ class Jobseekers extends Controller
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
-        $this->applicationModel = $this->model('Application');
+        $this->applicationModel = $this->model('applications');
     }
 
     public function index()
@@ -346,7 +346,7 @@ class Jobseekers extends Controller
             //     $this->view('wishlist/confirm', $data);
             // }
 
-            $application = $this->jobModel->getApplication($id);
+            $application = $this->jobModel->getApplication($_SESSION['user_id']);
 
             $data = [
                 'style' => 'jobseeker/applied.css',
