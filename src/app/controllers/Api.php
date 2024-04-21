@@ -206,10 +206,11 @@ class Api extends Controller
 
     public function chat_thread_messages($thread_id)
     {
-        // Check if the user is logged in
-        if (!isset($_SESSION['user_id'])) {
-            redirect('jobseekers/login');
-        } else {
+        // Check if the user is logged in as a job seeker or recruiter
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['business_id'])) {
+            $data = ['error' => 'Unauthorized'];
+            $this->view('api/json', $data);
+        } else if (isset($_SESSION['user_id'])) {
             // Get the current user's ID
             $user_id = $_SESSION['user_id'];
 
@@ -232,6 +233,92 @@ class Api extends Controller
                     $data = ['error' => 'No chat messages found for the thread'];
                     $this->view('api/json', $data);
                 }
+            } else {
+                // Thread does not belong to the current user, return error response
+                $data = ['error' => 'Unauthorized access to chat thread'];
+                $this->view('api/json', $data);
+            }
+        } else if (isset($_SESSION['business_id'])) {
+            // Get the current user's ID
+            $user_id = $_SESSION['business_id'];
+
+            // Load the Chat model
+            // Assuming $this->chatModel was initialized in the constructor
+
+            // Check if the thread belongs to the current user
+            if ($this->chatModel->isThreadBelongsToRecruiter($thread_id, $user_id)) {
+                // Get chat messages for the specified thread ID
+                $messages = $this->chatModel->getChatMessages($thread_id);
+
+                if ($messages) {
+                    // Prepare response data
+                    $data = $messages;
+                    // Send chat messages data as JSON response
+                    $this->view('api/json', $data);
+                } else {
+                    // No chat messages found for the thread, return error response
+                    $data = ['error' => 'No chat messages found for the thread'];
+                    $this->view('api/json', $data);
+                }
+            } else {
+                // Thread does not belong to the current user, return error response
+                $data = ['error' => 'Unauthorized access to chat thread'];
+                $this->view('api/json', $data);
+            }
+        }
+    }
+
+    public function chat_send_message($thread_id)
+    {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['business_id'])) {
+            $data = ['error' => 'Unauthorized'];
+            $this->view('api/json', $data);
+        } else if (isset($_SESSION['user_id'])) {
+            // Get the current user's ID
+            $user_id = $_SESSION['user_id'];
+
+            // Load the Chat model
+            // Assuming $this->chatModel was initialized in the constructor
+
+            // Check if the thread belongs to the current user
+            if ($this->chatModel->isThreadBelongsToUser($thread_id, $user_id)) {
+                // Get the message text from the POST request
+                $text = $_POST['text'];
+
+                // Insert the message into the chat_texts table
+                $this->chatModel->insertMessage($thread_id, $text, 0);
+
+                // Prepare success response
+                $data = ['message' => 'Message sent successfully'];
+
+                // Send success response as JSON
+                $this->view('api/json', $data);
+            } else {
+                // Thread does not belong to the current user, return error response
+                $data = ['error' => 'Unauthorized access to chat thread'];
+                $this->view('api/json', $data);
+            }
+        } else if (isset($_SESSION['business_id'])) {
+            // Get the current user's ID
+            $user_id = $_SESSION['business_id'];
+
+            // Load the Chat model
+            // Assuming $this->chatModel was initialized in the constructor
+
+            // Check if the thread belongs to the current user
+            if ($this->chatModel->isThreadBelongsToRecruiter($thread_id, $user_id)) {
+                // Get the message text from the POST request
+                $text = $_POST['text'];
+
+                // Insert the message into the chat_texts table
+                $this->chatModel->insertMessage($thread_id, $text, 1);
+
+                // Prepare success response
+                $data = ['message' => 'Message sent successfully'];
+
+                // Send success response as JSON
+                $this->view('api/json', $data);
             } else {
                 // Thread does not belong to the current user, return error response
                 $data = ['error' => 'Unauthorized access to chat thread'];

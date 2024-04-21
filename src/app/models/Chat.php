@@ -52,4 +52,30 @@ class Chat
             return false;
         }
     }
+    public function isThreadBelongsToRecruiter($thread_id, $recruiter_id)
+    {
+        $this->db->query('SELECT COUNT(*) AS count FROM chat_threads WHERE id = :thread_id AND recruiter_id = :recruiter_id');
+        $this->db->bind(':thread_id', $thread_id);
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function insertMessage($thread_id, $text, $reply)
+    {
+        $this->db->query('INSERT INTO chat_texts (thread_id, text, reply) VALUES (:thread_id, :text, :reply)');
+        $this->db->bind(':thread_id', $thread_id);
+        $this->db->bind(':text', $text);
+        $this->db->bind(':reply', $reply);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
