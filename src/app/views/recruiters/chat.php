@@ -1,82 +1,88 @@
-<?php require APPROOT . '/views/inc/seeker_header.php'; ?>
+<?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
-  <div class="twm-right-section-panel site-bg-gray">
-    <div class="wt-admin-dashboard-msg-2 twm-dashboard-style-2">
-      <div class="wt-dashboard-msg-user-list">
-        <div class="user-msg-list-btn-outer">
-          <button class="user-msg-list-btn-close">Close</button>
-          <button class="user-msg-list-btn-open">
-            User Message
-          </button>
-        </div>
-        <div class="scroll-wrapper wt-dashboard-msg-search-list scrollbar-macosx" style="position: relative">
-          <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx scroll-content scroll-scrolly_visible" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 700px; overflow-x: hidden;">
-            <!-- threads appear here dynamically -->
-          </div>
-        </div>
-      </div>
-      <div class="wt-dashboard-msg-box">
-        <div class="single-msg-user-name-box">
-          <div class="single-msg-short-discription">
-            <h4 class="single-msg-user-name">
-              Welcome to the JobLinkUp chat portal.
-            </h4>
-            <div class="single-msg-business-name">
-              Select a recruiter from the left thread to start chat.</div>
-          </div>
-        </div>
-        <div class="scroll-wrapper single-user-msg-conversation scrollbar-macosx" style="position: relative">
-          <div id="msg-chat-wrap" class="single-user-msg-conversation scroll-y" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 550px; overflow-x: hidden; ">
-            <div class="single-user-comment-wrap">
-              <div class="row">
-                <div class="col-xl-9 col-lg-12">
-                  <div class="single-user-comment-block clearfix">
-                    <div class="single-user-com-pic">
-                      <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+    <div class="twm-right-section-panel site-bg-gray">
+        <div class="wt-admin-dashboard-msg-2 twm-dashboard-style-2">
+            <div class="wt-dashboard-msg-user-list">
+                <div class="user-msg-list-btn-outer">
+                    <button class="user-msg-list-btn-close">Close</button>
+                    <button class="user-msg-list-btn-open">
+                        User Message
+                    </button>
+                </div>
+                <div class="scroll-wrapper wt-dashboard-msg-search-list scrollbar-macosx" style="position: relative">
+                    <div id="msg-list-wrap" class="wt-dashboard-msg-search-list scrollbar-macosx scroll-content scroll-scrolly_visible" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 700px; overflow-x: hidden;">
+                        <!-- threads appear here dynamically -->
                     </div>
-                    <div class="single-user-com-text">
-                      Whoa 😮😮 !! how did i get here
+                    <div class="scroll-element scroll-x scroll-scrolly_visible">
+                        <div class="scroll-element_outer">
+                            <div class="scroll-element_size"></div>
+                            <div class="scroll-element_track"></div>
+                            <div class="scroll-bar" style="width: 0px"></div>
+                        </div>
                     </div>
-                    <!-- <div class="single-user-msg-time">
+                </div>
+            </div>
+            <div class="wt-dashboard-msg-box">
+                <div class="single-msg-user-name-box">
+                    <div class="single-msg-short-discription">
+                        <h4 class="single-msg-user-name">
+                            Welcome to the JobLinkUp chat portal.
+                        </h4>
+                        <div class="single-msg-business-name">
+                            Select a Job Seeker from the left thread to start chat.</div>
+                    </div>
+                </div>
+                <div class="scroll-wrapper single-user-msg-conversation scrollbar-macosx" style="position: relative">
+                    <div id="msg-chat-wrap" class="single-user-msg-conversation scroll-y" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 550px; overflow-x: hidden; ">
+                        <div class="single-user-comment-wrap">
+                            <div class="row">
+                                <div class="col-xl-9 col-lg-12">
+                                    <div class="single-user-comment-block clearfix">
+                                        <div class="single-user-com-pic">
+                                            <img src="https://joblinkup.com/img/pic1.jpg" alt="" />
+                                        </div>
+                                        <div class="single-user-com-text">
+                                            Welcome to the JobLinkUp 👏 ! Join with us for your Part-Time Job Needs🪅
+                                        </div>
+                                        <!-- <div class="single-user-msg-time">
                       msg date should appear here
                     </div> -->
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="single-user-comment-wrap sigle-user-reply">
-              <div class="row justify-content-end">
-                <div class="col-xl-9 col-lg-12">
-                  <div class="single-user-comment-block clearfix">
-                    <div class="single-user-com-pic">
-                      <img src="https://joblinkup.com/img/pic1.jpg" alt="" />
-                    </div>
-                    <div class="single-user-com-text">
-                      Welcome to the JobLinkUp 👏 ! Your portal for part time job needs.🪅
-                    </div>
-                    <!-- <div class="single-user-msg-time">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="single-user-comment-wrap sigle-user-reply">
+                            <div class="row justify-content-end">
+                                <div class="col-xl-9 col-lg-12">
+                                    <div class="single-user-comment-block clearfix">
+                                        <div class="single-user-com-pic">
+                                            <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                                        </div>
+                                        <div class="single-user-com-text">
+                                            Whoa 😮😮 !! sure ! How can i get started.
+                                        </div>
+                                        <!-- <div class="single-user-msg-time">
                       msg date should appear here
                     </div> -->
-                  </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <div class="single-msg-reply-comment">
+                    <div class="input-group">
+                        <textarea class="form-control" placeholder="Type a message here"></textarea>
+                        <button class="btn" type="button">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="single-msg-reply-comment">
-          <div class="input-group">
-            <textarea class="form-control" placeholder="Type a message here"></textarea>
-            <button class="btn" type="button">
-              <i class="fa fa-paper-plane"></i>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </div>
-<script>
+<!-- <script>
   $(document).ready(function() {
     // Function to load messages for a specific thread
     function loadMessages(threadId, recruiterName, businessName) {
@@ -161,7 +167,7 @@
 
     // Ajax call to fetch chat threads from the API
     $.ajax({
-      url: '<?php echo URLROOT . '/api/chat_threads' ?>',
+      url: '<?php echo URLROOT . '/api/chat_seeker_threads' ?>',
       type: 'GET',
       dataType: 'json',
       success: function(response) {
@@ -198,7 +204,7 @@
       }
     });
   });
-</script>
+</script> -->
 
 
-<?php require APPROOT . '/views/inc/seeker_footer.php'; ?>
+<?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

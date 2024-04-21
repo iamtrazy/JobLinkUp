@@ -19,6 +19,17 @@ class Chat
         return $this->db->resultSet();
     }
 
+    public function recruiterGetSeekers($recruiter_id)
+    {
+        $this->db->query('SELECT chat_threads.id, jobseekers.username, chat_threads.created_at 
+                    FROM chat_threads 
+                    INNER JOIN jobseekers ON chat_threads.seeker_id = seekers.id 
+                    WHERE chat_threads.recruiter_id = :recruiter_id');
+        $this->db->bind(':recruiter_id', $recruiter_id);
+
+        return $this->db->resultSet();
+    }
+
     public function getChatMessages($thread_id)
     {
         $this->db->query('SELECT * FROM chat_texts WHERE thread_id = :thread_id ORDER BY created_at');

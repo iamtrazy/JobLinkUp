@@ -269,4 +269,15 @@ class Recruiters extends Controller
 
         $this->view('recruiters/postjob', $data);
     }
+
+    public function chat()
+    {
+        $data = [
+            'style' => 'recruiter/chat.css',
+            'title' => 'Chat',
+            'header_title' => 'Chat With Job Seekers'
+        ];
+
+        $this->view('recruiters/chat', $data);
+    }
 }

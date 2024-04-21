@@ -98,6 +98,7 @@
                                             <li><a href="#"><i class="fa fa-user"></i> Company Profile</a></li>
                                             <li><a href="#"><i class="fa fa-suitcase"></i> Manage Jobs</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Jobs</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/chat"><i class="far fa-comments"></i>Chat</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
                                             <li><a href="#"><i class="fa fa-user-check"></i> Browse Candidates</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Passeord</a></li>

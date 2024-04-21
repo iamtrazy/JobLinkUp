@@ -164,13 +164,14 @@ class Api extends Controller
         }
     }
 
-    public function chat_seeker_threads()
+    public function chat_threads()
     {
 
         // Check if the user is logged in, if not, set as guest
-        if (!isset($_SESSION['user_id'])) {
-            redirect('jobseekers/login');
-        } else {
+        if (!isset($_SESSION['user_id']) && !isset($_SESSION['business_id'])) {
+            $data = ['error' => 'No chat threads found for the job seeker'];
+            $this->view('api/json', $data);;
+        } else if (isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
             // Load the Chat model
             // Assuming $this->chatModel was initialized in the constructor
@@ -199,6 +200,36 @@ class Api extends Controller
             } else {
                 // No chat threads found for the job seeker, return error response
                 $data = ['error' => 'No chat threads found for the job seeker'];
+                $this->view('api/json', $data);
+            }
+        } else if (isset($_SESSION['business_id'])) {
+            $id = $_SESSION['business_id'];
+            // Load the Chat model
+            // Assuming $this->chatModel was initialized in the constructor
+
+            // Get chat threads associated with the recruiter by ID
+            $threads = $this->chatModel->recruiterGetSeekers($id);
+
+            if ($threads) {
+                // Format the threads data as needed
+                $formatted_threads = [];
+
+                foreach ($threads as $thread) {
+                    $formatted_threads[] = [
+                        'thread_id' => $thread->id,
+                        'seeker_name' => $thread->username,
+                        'created_at' => $thread->created_at
+                    ];
+                }
+
+                // Prepare response data
+                $data = $formatted_threads;
+
+                // Send chat threads data as JSON response
+                $this->view('api/json', $data);
+            } else {
+                // No chat threads found for the recruiter, return error response
+                $data = ['error' => 'No chat threads found for the recruiter'];
                 $this->view('api/json', $data);
             }
         }
