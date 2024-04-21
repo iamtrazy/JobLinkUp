@@ -56,36 +56,27 @@ class Recruiter
       return false;
     }
   }
-  public function loadform(){
-    //load more comments
+  public function applyBR($data){
+    
+    $this->db->query('INSERT INTO business_profiles_uploaded VALUES(:recruiter_id, :business_name, :business_email, :business_address :);
+    $this->db->query('INSERT into business_profiles_uploaded VALUES (NULL, 2,3,'2023-05-01',true)');
+    // Bind values
+    $this->db->bind(':business_name', $data['name']);
+    $this->db->bind(':recruiter_id', $data['recruiter_id']);
+    $this->db->bind(':business_email', $data['business_email']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+
+    
   }
   
- //public function jseditrecruiterdetails($email){
   
   
-  
-  
-  // Prepare SQL statement
-  //$database->query('SELECT * FROM recruiters WHERE email = :email');
-  
-  // Bind parameter
- // $database->bind(':email', $email);
-  
-  // Execute the query
-  //$database->execute();
-  
-  // Check if user exists
- // if ($database->rowCount() > 0) {
-      // User exists
-  //    echo json_encode(array('exists' => true));
-  //} else {
-      // User does not exist
-  //    echo json_encode(array('exists' => false));
-  //}
-
- 
-  
-    // Login User
   
 
 

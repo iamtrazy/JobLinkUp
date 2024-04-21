@@ -1,13 +1,12 @@
 <?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
     <div class="twm-right-section-panel site-bg-gray">
-        <form action="<?php echo URLROOT; ?>/jobs/add" method="post" enctype="multipart/form-data">
-
-
+        <form action="<?php echo URLROOT; ?>/recruiters/applyForBR" method="post" enctype="multipart/form-data">
+                <?php echo flash('registerBR_success'); ?>
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
                     <h4 class="panel-tittle m-a0">
-                        <i class="fa fa-suitcase"></i>Job Details
+                        <i class="fa fa-suitcase"></i>Business Details
                     </h4>
                 </div>
                 <div class="panel-body wt-panel-body p-a20 m-b30">
@@ -15,9 +14,9 @@
                         <!--Job title-->
                         <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
-                                <label>Job Title</label>
+                                <label>Business name</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="topic" type="text" placeholder="Artist" required />
+                                    <input class="form-control" name="name" type="text" placeholder="Business name" required />
                                     <i class="fs-input-icon fa fa-address-card"></i>
                                 </div>
                             </div>
@@ -44,7 +43,7 @@
                             <div class="form-group">
                                 <label>Offered Salary</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="rate" type="text" placeholder="5000" required />
+                                    <input class="form-control" name="rate" type="text" placeholder="5000" value="<?php echo $data['salary']; ?>" />
                                     <i class="fs-input-icon fa fas fa-coins"></i>
                                 </div>
                             </div>
@@ -103,6 +102,8 @@
                         </div>
                     </div>
 
+
+    
                     <!--Description-->
                     <div class="col-md-12">
                         <div class="form-group">
@@ -110,10 +111,18 @@
                             <textarea class="form-control" name="detail" rows="3" placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality." required></textarea>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Upload Payment Receipt</label>
+                            <div class="input-group">
+                                    <input type="file" name="payment_receipt" id="file-uploader" accept=".jpg, .jpeg, .png .pdf">
+                                </div>
+                        </div>
+                    </div>
                     <div class="col-lg-12 col-md-12">
                         <div class="text-left">
                             <button type="submit" class="site-button m-r5">
-                                Publish Job
+                                Apply for BR
                             </button>
                         </div>
                     </div>

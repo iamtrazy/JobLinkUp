@@ -39,103 +39,7 @@ class Recruiters extends Controller
         $this->dashboard();
     }
 
-    public function register()
-    {
-
-        if (isset($_SESSION['business_id'])) {
-            $this->dashboard();
-        } else {
-            // Check for POST
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                // Process form
-
-
-                // Init data
-                $data = [
-                    'name' => trim(htmlspecialchars($_POST['name'])),
-                    'email' => trim(htmlspecialchars($_POST['email'])),
-                    'password' => trim(htmlspecialchars($_POST['password'])),
-                    'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
-                    'name_err' => '',
-                    'email_err' => '',
-                    'password_err' => '',
-                    'confirm_password_err' => '',
-                    'login_email' => '',
-                    'login_password' => '',
-                    'login_email_err' => '',
-                    'login_password_err' => '',
-                ];
-
-                // Validate Email
-                if (empty($data['email'])) {
-                    $data['email_err'] = 'Pleae enter email';
-                } else {
-                    // Check email
-                    if ($this->recruiterModel->findUserByEmail($data['email'])) {
-                        $data['email_err'] = 'Email is already taken';
-                    }
-                }
-
-                // Validate Name
-                if (empty($data['name'])) {
-                    $data['name_err'] = 'Pleae enter name';
-                }
-
-                // Validate Password
-                if (empty($data['password'])) {
-                    $data['password_err'] = 'Pleae enter password';
-                } elseif (strlen($data['password']) < 6) {
-                    $data['password_err'] = 'Password must be at least 6 characters';
-                }
-
-                // Validate Confirm Password
-                if (empty($data['confirm_password'])) {
-                    $data['confirm_password_err'] = 'Pleae confirm password';
-                } else {
-                    if ($data['password'] != $data['confirm_password']) {
-                        $data['confirm_password_err'] = 'Passwords do not match';
-                    }
-                }
-
-                // Make sure errors are empty
-                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
-                    // Validated
-
-                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-                    // Register User
-                    if ($this->recruiterModel->register($data)) {
-                        flash('register_success', 'You are registered and can log in');
-                        redirect('recruiters/login');
-                    } else {
-                        die('Something went wrong');
-                    }
-                } else {
-                    // Load view with errors
-                    $this->view('recruiters/register', $data);
-                }
-            } else {
-                // Init data
-                $data = [
-                    'name' => '',
-                    'email' => '',
-                    'password' => '',
-                    'confirm_password' => '',
-                    'name_err' => '',
-                    'email_err' => '',
-                    'password_err' => '',
-                    'confirm_password_err' => '',
-                    'login_email' => '',
-                    'login_password' => '',
-                    'login_email_err' => '',
-                    'login_password_err' => '',
-                ];
-
-                // Load view
-                $this->view('recruiters/register', $data);
-            }
-        }
-    }
+    
 
     public function login()
     {
@@ -313,6 +217,139 @@ class Recruiters extends Controller
 
         $this->view('recruiters/editprofile', $data);
     }
-   
     
+    public function register()
+    {
+
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
+        } else {
+            // Check for POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Process form
+
+
+                // Init data
+                $data = [
+                    'name' => trim(htmlspecialchars($_POST['name'])),
+                    'email' => trim(htmlspecialchars($_POST['email'])),
+                    'password' => trim(htmlspecialchars($_POST['password'])),
+                    'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
+                    'name_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'login_email' => '',
+                    'login_password' => '',
+                    'login_email_err' => '',
+                    'login_password_err' => '',
+                ];
+
+                // Validate Email
+                if (empty($data['email'])) {
+                    $data['email_err'] = 'Pleae enter email';
+                } else {
+                    // Check email
+                    if ($this->recruiterModel->findUserByEmail($data['email'])) {
+                        $data['email_err'] = 'Email is already taken';
+                    }
+                }
+
+                // Validate Name
+                if (empty($data['name'])) {
+                    $data['name_err'] = 'Pleae enter name';
+                }
+
+                // Validate Password
+                if (empty($data['password'])) {
+                    $data['password_err'] = 'Pleae enter password';
+                } elseif (strlen($data['password']) < 6) {
+                    $data['password_err'] = 'Password must be at least 6 characters';
+                }
+
+                // Validate Confirm Password
+                if (empty($data['confirm_password'])) {
+                    $data['confirm_password_err'] = 'Pleae confirm password';
+                } else {
+                    if ($data['password'] != $data['confirm_password']) {
+                        $data['confirm_password_err'] = 'Passwords do not match';
+                    }
+                }
+
+                // Make sure errors are empty
+                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                    // Validated
+
+                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+
+                    // Register User
+                    if ($this->recruiterModel->register($data)) {
+                        flash('register_success', 'You are registered and can log in');
+                        redirect('recruiters/login');
+                    } else {
+                        die('Something went wrong');
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('recruiters/register', $data);
+                }
+            } else {
+                // Init data
+                $data = [
+                    'name' => '',
+                    'email' => '',
+                    'password' => '',
+                    'confirm_password' => '',
+                    'name_err' => '',
+                    'email_err' => '',
+                    'password_err' => '',
+                    'confirm_password_err' => '',
+                    'login_email' => '',
+                    'login_password' => '',
+                    'login_email_err' => '',
+                    'login_password_err' => '',
+                ];
+
+                // Load view
+                $this->view('recruiters/register', $data);
+            }
+        }
+    }
+
+    
+    public function transactions()
+    {
+        $this->applyForBR();
+        $data = [
+            'style' => 'recruiter/transactions.css',
+            'title' => 'Verify Business Profile',
+            'header_title' => 'BR Verification'
+        ];
+
+        $this->view('recruiters/transactions', $data);
+    }
+    public function applyForBR()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $data = [
+                'recruiter_id' => $_SESSION['business_id'],
+                'website' => trim(htmlspecialchars($_POST['website'])),
+                'name' => trim(htmlspecialchars($_POST['name'])),
+                'business_email' => trim(htmlspecialchars($_POST['email'])),
+                'business_contact_no' => trim(htmlspecialchars($_POST['contact_no'])),
+            ];
+        
+          
+        if ($this->recruiterModel->applyForBR($data)) {
+            flash('Your Application was successfully submitted', 'You will be verified after your application is reviewed.');
+            redirect('recruiters/dashboard');
+        } else {
+            die('Something went wrong');
+        }
+    } else {
+        //init data
+    
+        }
+}  
 } 
