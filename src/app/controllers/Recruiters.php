@@ -276,7 +276,9 @@ class Recruiters extends Controller
 
     public function manage()
     {
-        $jobs = $this->jobModel->getApplicationss($_SESSION['business_id']);
+    
+
+        $jobs = $this->jobModel->getRecruiterJobs($_SESSION['business_id']);
 
         $data = [
             'jobs' => $jobs,
