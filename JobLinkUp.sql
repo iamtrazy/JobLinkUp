@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 20, 2024 at 06:38 AM
+-- Generation Time: Apr 20, 2024 at 06:59 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -111,17 +111,28 @@ CREATE TABLE `jobseekers` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `gender` enum('male','female') NOT NULL,
   `password` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `phone_no` char(10) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `age` int(3) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `location_rec` tinyint(1) NOT NULL DEFAULT 0,
+  `keywords` varchar(255) DEFAULT NULL,
+  `linkedin_url` varchar(255) DEFAULT NULL,
+  `whatsapp_url` varchar(255) DEFAULT NULL,
+  `is_complete` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `jobseekers`
 --
 
-INSERT INTO `jobseekers` (`id`, `username`, `email`, `password`, `created_at`) VALUES
-(2, 'iamtrazy', 'iamtrazy@proton.me', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49'),
-(16, 'Kasun Hansamal', 'kasun@gmail.com', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14');
+INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
+(2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, 0, NULL, 0, 'hi hi hiii', NULL, NULL, 0),
+(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0702339061', 'https://iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', 'https://linkedin.com', 'https://web.whatsapp.com', 0),
+(18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -142,7 +153,8 @@ CREATE TABLE `jobs_applied` (
 INSERT INTO `jobs_applied` (`seeker_id`, `job_id`, `created_at`) VALUES
 (16, 62, '2024-04-20 04:36:16'),
 (16, 63, '2024-04-19 16:24:31'),
-(16, 64, '2024-04-20 04:35:58');
+(16, 64, '2024-04-20 04:35:58'),
+(18, 63, '2024-04-20 12:00:08');
 
 -- --------------------------------------------------------
 
@@ -287,7 +299,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `jobseekers`
 --
 ALTER TABLE `jobseekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `moderators`

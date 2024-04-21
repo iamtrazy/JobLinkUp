@@ -43,6 +43,7 @@
                 <div class="input-field">
                     <i class="fas fa-venus-mars"></i>
                     <select name="gender" class="form-control">
+                        <option value="select">Select</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>

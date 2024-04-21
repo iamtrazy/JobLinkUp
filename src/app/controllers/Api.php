@@ -119,4 +119,46 @@ class Api extends Controller
 
         $this->view('api/json', $data);
     }
+
+    public function seeker_profile($id)
+    {
+        // Check if the user is logged in, if not, set as guest
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['guest_id'] = '1';
+            $_SESSION['user_name'] = 'Guest User';
+        }
+
+        // Load the JobseekerModel
+
+        // Get job seeker details by ID
+        $jobseeker = $this->jobseekerModel->getJobseekerById($id);
+
+        // Check if job seeker exists
+        if ($jobseeker) {
+            // Prepare response data
+            $data = [
+                'id' => $jobseeker->id,
+                'username' => $jobseeker->username,
+                'email' => $jobseeker->email,
+                'gender' => $jobseeker->gender,
+                'created_at' => $jobseeker->created_at,
+                'phone_no' => $jobseeker->phone_no,
+                'website' => $jobseeker->website,
+                'age' => $jobseeker->age,
+                'address' => $jobseeker->address,
+                'location_rec' => $jobseeker->location_rec,
+                'keywords' => $jobseeker->keywords,
+                'linkedin_url' => $jobseeker->linkedin_url,
+                'whatsapp_url' => $jobseeker->whatsapp_url,
+                'is_complete' => $jobseeker->is_complete
+            ];
+
+            // Send job seeker details as JSON response
+            $this->view('api/json', $data);
+        } else {
+            // Job seeker not found, return error response
+            $data = ['error' => 'Job seeker not found'];
+            $this->view('api/json', $data);
+        }
+    }
 }
