@@ -16,6 +16,7 @@
                             margin-right: 0px;
                             max-height: 700px;
                           ">
+            <!-- threads appear here dynamically -->
 
           </div>
           <div class="scroll-element scroll-x scroll-scrolly_visible">
@@ -38,12 +39,11 @@
         <div class="single-msg-user-name-box">
           <div class="single-msg-short-discription">
             <h4 class="single-msg-user-name">
-              Randall Henderson
+              thread recruiter name should appear here
             </h4>
-            IT Contractor
+            <div class="single-msg-business-name">
+              thread recruiter business_name should appear here</div>
           </div>
-          <a href="#" class="message-action"><i class="far fa-trash-alt"></i> Delete
-            Conversation</a>
         </div>
         <div class="scroll-wrapper single-user-msg-conversation scrollbar-macosx" style="position: relative">
           <div id="msg-chat-wrap" class="single-user-msg-conversation scrollbar-macosx scroll-content scroll-scrolly_visible" style="
@@ -57,16 +57,13 @@
                 <div class="col-xl-9 col-lg-12">
                   <div class="single-user-comment-block clearfix">
                     <div class="single-user-com-pic">
-                      <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="" />
+                      <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
                     </div>
                     <div class="single-user-com-text">
-                      Breaking the endless cycle of meaningless
-                      text message conversations starts with only
-                      talking to someone who offers interesting
-                      topics opinions.
+                      msg text should appear here
                     </div>
                     <div class="single-user-msg-time">
-                      12:13 PM
+                      msg date should appear here
                     </div>
                   </div>
                 </div>
@@ -78,16 +75,13 @@
                 <div class="col-xl-9 col-lg-12">
                   <div class="single-user-comment-block clearfix">
                     <div class="single-user-com-pic">
-                      <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
+                      <img src="https://joblinkup.com/img/pic1.jpg" alt="" />
                     </div>
                     <div class="single-user-com-text">
-                      There are many variations of passages of
-                      Lorem Ipsum available, but the majority have
-                      suffered alteration in some form, by
-                      injected humour.
+                      if a msg is a reply it should appear here as a single-user-reply
                     </div>
                     <div class="single-user-msg-time">
-                      12:37 PM
+                      msg date should appear here
                     </div>
                   </div>
                 </div>
@@ -123,30 +117,84 @@
 </div>
 <script>
   $(document).ready(function() {
+    // Function to load messages for a specific thread
+    function loadMessages(threadId, recruiterName, businessName) {
+      $.ajax({
+        url: '<?php echo URLROOT . '/api/chat_thread_messages/' ?>' + threadId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          // Clear existing messages
+          $('#msg-chat-wrap').empty();
+          // Iterate over each message in the response
+          $.each(response, function(index, message) {
+            // Determine message class based on whether it's a reply or not
+            var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
+            var rowClass = message.reply ? 'row justify-content-end' : 'row';
+            // Create HTML elements for each message and append to container
+            var messageHtml = `
+              <div class="${rowClass}">
+                <div class="col-xl-9 col-lg-12">
+                  <div class="${messageClass} clearfix">
+                    <div class="single-user-com-pic">
+                      <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                    </div>
+                    <div class="single-user-com-text">
+                      ${message.text}
+                    </div>
+                    <div class="single-user-msg-time">
+                      ${message.created_at}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            $('#msg-chat-wrap').append(messageHtml);
+          });
+        },
+        error: function(xhr, status, error) {
+          console.error("Error fetching chat messages:", error);
+        }
+      });
+
+      // Update recruiter name and business name in conversation box
+      $('.single-msg-user-name').text(recruiterName);
+      $('.single-msg-business-name').text(businessName);
+    }
+
     // Ajax call to fetch chat threads from the API
     $.ajax({
-      url: '<?php echo URLROOT . '/api/chat_seeker_threads' ?>', // Replace with your API endpoint
+      url: '<?php echo URLROOT . '/api/chat_seeker_threads' ?>',
       type: 'GET',
       dataType: 'json',
       success: function(response) {
         // Iterate over each chat thread in the response
         $.each(response, function(index, thread) {
           // Create HTML elements for each chat thread and append to container
-          var thread_html = `
-          <div class="wt-dashboard-msg-search-list-wrap">
-            <div class="msg-user-info clearfix">
-              <div class="msg-user-timing">${thread.created_at}</div>
-              <div class="msg-user-info-pic">
-                <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+          var threadHtml = `
+            <div class="wt-dashboard-msg-search-list-wrap" data-thread-id="${thread.thread_id}">
+              <div class="msg-user-info clearfix">
+                <div class="msg-user-timing">${thread.created_at}</div>
+                <div class="msg-user-info-pic">
+                  <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                </div>
+                <div class="msg-user-info-text">
+                  <div class="msg-user-name">${thread.recruiter_name}</div>
+                  <div class="msg-user-discription">${thread.business_name}</div>
+                </div>
               </div>
-              <div class="msg-user-info-text">
-                <div class="msg-user-name">${thread.recruiter_name}</div>
-                <div class="msg-user-discription">${thread.business_name}</div>
-              </div>
-             </div> 
-          </div>
+            </div>
           `;
-          $('#msg-list-wrap').append(thread_html);
+          $('#msg-list-wrap').append(threadHtml);
+
+        });
+
+        // Event listener for clicking on a thread
+        $('.wt-dashboard-msg-search-list-wrap').on('click', function() {
+          var threadId = $(this).data('thread-id');
+          var recruiterName = $(this).find('.msg-user-name').text();
+          var businessName = $(this).find('.msg-user-discription').text();
+          loadMessages(threadId, recruiterName, businessName);
         });
       },
       error: function(xhr, status, error) {
@@ -155,4 +203,6 @@
     });
   });
 </script>
+
+
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

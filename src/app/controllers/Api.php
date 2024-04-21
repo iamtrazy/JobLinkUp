@@ -184,7 +184,7 @@ class Api extends Controller
 
                 foreach ($threads as $thread) {
                     $formatted_threads[] = [
-                        'recruiter_id' => $thread->id,
+                        'thread_id' => $thread->id,
                         'recruiter_name' => $thread->name,
                         'business_name' => $thread->business_name,
                         'created_at' => $thread->created_at
@@ -199,6 +199,42 @@ class Api extends Controller
             } else {
                 // No chat threads found for the job seeker, return error response
                 $data = ['error' => 'No chat threads found for the job seeker'];
+                $this->view('api/json', $data);
+            }
+        }
+    }
+
+    public function chat_thread_messages($thread_id)
+    {
+        // Check if the user is logged in
+        if (!isset($_SESSION['user_id'])) {
+            redirect('jobseekers/login');
+        } else {
+            // Get the current user's ID
+            $user_id = $_SESSION['user_id'];
+
+            // Load the Chat model
+            // Assuming $this->chatModel was initialized in the constructor
+
+            // Check if the thread belongs to the current user
+            if ($this->chatModel->isThreadBelongsToUser($thread_id, $user_id)) {
+                // Get chat messages for the specified thread ID
+                $messages = $this->chatModel->getChatMessages($thread_id);
+
+                if ($messages) {
+                    // Prepare response data
+                    $data = $messages;
+
+                    // Send chat messages data as JSON response
+                    $this->view('api/json', $data);
+                } else {
+                    // No chat messages found for the thread, return error response
+                    $data = ['error' => 'No chat messages found for the thread'];
+                    $this->view('api/json', $data);
+                }
+            } else {
+                // Thread does not belong to the current user, return error response
+                $data = ['error' => 'Unauthorized access to chat thread'];
                 $this->view('api/json', $data);
             }
         }
