@@ -143,35 +143,33 @@ class Jobs extends Controller
   {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // Check if a file is uploaded
-      $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/");
-      // Sanitize and validate other form data
       $data = [
         'recruiter_id' => $_SESSION['business_id'],
-        'location' => trim(htmlspecialchars($_POST['location'])),
-        'topic' => trim(htmlspecialchars($_POST['topic'])),
-        'website' => trim(htmlspecialchars($_POST['website'])),
-        'rate' => trim(htmlspecialchars($_POST['rate'])),
-        'rate_type' => trim(htmlspecialchars($_POST['rate_type'])),
-        'type' => trim(htmlspecialchars($_POST['type'])),
-        'detail' => trim(htmlspecialchars($_POST['detail'])),
-        'keywords' => trim(htmlspecialchars($_POST['keywords'])),
+        'location' => '',
+        'topic' => '',
+        'website' => '',
+        'rate' => '',
+        'rate_type' => '',
+        'type' => '',
+        'detail' => '',
+        'keywords' => '',
         'data_err' => '',
       ];
 
-      if (isset($bannerImagePath)) {
-        $data = [
-          'recruiter_id' => $_SESSION['business_id'],
-          'location' => trim(htmlspecialchars($_POST['location'])),
-          'topic' => trim(htmlspecialchars($_POST['topic'])),
-          'website' => trim(htmlspecialchars($_POST['website'])),
-          'rate' => trim(htmlspecialchars($_POST['rate'])),
-          'rate_type' => trim(htmlspecialchars($_POST['rate_type'])),
-          'type' => trim(htmlspecialchars($_POST['type'])),
-          'detail' => trim(htmlspecialchars($_POST['detail'])),
-          'keywords' => trim(htmlspecialchars($_POST['keywords'])),
-          'data_err' => '',
-          'banner_image' => $bannerImagePath
-        ];
+      // Sanitize and validate form data
+      $filteredData = array_map('trim', array_map('htmlspecialchars', $_POST));
+
+      // Update $data with sanitized values from $_POST
+      $data = array_merge($data, $filteredData);
+
+      // Check if banner image is uploaded
+      if (isset($_FILES['banner_image'])) {
+        $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
+
+        // If banner image is uploaded, add it to $data
+        if ($bannerImagePath) {
+          $data['banner_image'] = $bannerImagePath;
+        }
       } else {
         $data['data_err'] = 'Image upload failed (check image extension or size)';
       }

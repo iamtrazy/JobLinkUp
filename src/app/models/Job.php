@@ -150,7 +150,14 @@ class Job
         $this->db->bind(':website', $data['website']);
         $this->db->bind(':keywords', $data['keywords']);
         $this->db->bind(':detail', $data['detail']);
-        $this->db->bind(':banner_image', $data['banner_image']); // Bind the image path
+        if (array_key_exists('banner_image', $data)) {
+            // If 'banner_image' key exists, bind it to the database statement
+            $this->db->bind(':banner_image', $data['banner_image']);
+        } else {
+            // If 'banner_image' key does not exist, bind NULL to the database statement
+            $this->db->bind(':banner_image', "job-detail-bg.jpg");
+        }
+
 
         //Execute
         if ($this->db->execute()) {

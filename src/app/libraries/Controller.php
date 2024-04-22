@@ -27,7 +27,7 @@ class Controller
     }
   }
 
-  public function upload_media($image_name, $file, $path)
+  public function upload_media($image_name, $file, $path, $allowed_types = ['jpg', 'jpeg', 'png'], $size_limit = 1000000)
   {
     $info = new SplFileInfo($file[$image_name]['name']);
     $uniqueFilename = uniqid('', true) . '.' . $info->getExtension();
@@ -35,13 +35,13 @@ class Controller
     // Move the uploaded file
     if (move_uploaded_file($file[$image_name]['tmp_name'], $target_file)) {
       //allow only 100 mega bytes
-      if ($file[$image_name]["size"] > 1000000) {
+      if ($file[$image_name]["size"] > $size_limit) {
         unlink($target_file); // Delete the uploaded file if it exceeds the file size limit
         return false;
       }
       // Check file type
       $FileType = strtolower($info->getExtension());
-      if (!in_array($FileType, ["jpg", "jpeg", "png"])) {
+      if (!in_array($FileType, $allowed_types)) {
         unlink($target_file); // Delete the uploaded file if it has an invalid file type
         return false;
       }
