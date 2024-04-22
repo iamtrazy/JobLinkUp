@@ -449,5 +449,19 @@ class Recruiters extends Controller
     //   }
     // }
 
+
+
+
+    public function transactions()
+    {
+        $data = [
+            'style' => 'recruiter/transactions.css',
+            'title' => 'Verify Business Profile',
+            'header_title' => 'BR Verification'
+        ];
+
+        $this->view('recruiters/transactions', $data);
+    }
+
     }
 
