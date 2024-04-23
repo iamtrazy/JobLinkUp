@@ -187,6 +187,16 @@ class Job
     //     return $results;
     // }
 
+    public function getApplication($id)
+    {
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , applications.created_at
+        FROM applications
+        INNER JOIN jobs ON jobs.id=applications.job_id
+        WHERE applications.seeker_id = $id;");
+        $results = $this->db->resultset();
+        return $results;
+    }
+
     public function getRecruiterIdByJobId($job_id)
     {
         $this->db->query("SELECT recruiter_id FROM jobs WHERE id = :job_id");

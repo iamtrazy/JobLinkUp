@@ -356,7 +356,7 @@ class Jobseekers extends Controller
             //     $this->view('wishlist/confirm', $data);
             // }
 
-            $application = $this->applicationModel->getApplications($id);
+            $application = $this->jobModel->getApplication($id);
 
             $data = [
                 'style' => 'jobseeker/applied.css',
