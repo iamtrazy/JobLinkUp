@@ -256,6 +256,12 @@ class Jobseekers extends Controller
         }
     }
 
+    public function getJobSeekerProfileImage($id)
+    {
+        $profileImage = $this->jobseekerModel->getJobSeekerProfileImage($id);
+        return $profileImage->profile_image;
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['user_id'])) {
@@ -264,7 +270,8 @@ class Jobseekers extends Controller
             $data = [
                 'style' => 'jobseeker/dashboard.css',
                 'title' => 'Dashboard',
-                'header_title' => 'Dashboard'
+                'header_title' => 'Dashboard',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/dashboard', $data);
@@ -279,7 +286,8 @@ class Jobseekers extends Controller
             $data = [
                 'style' => 'jobseeker/profile.css',
                 'title' => 'Profile',
-                'header_title' => 'Profile'
+                'header_title' => 'Profile',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/profile', $data);
@@ -304,7 +312,8 @@ class Jobseekers extends Controller
                     'title' => 'Wishlist',
                     'header_title' => 'Wishlist',
                     'job_id' => $job_id,
-                    'seeker_id' => $_SESSION['user_id']
+                    'seeker_id' => $_SESSION['user_id'],
+
                 ];
                 $this->wishlistModel->deleteFromList($data);
                 $this->view('wishlist/confirm', $data);
@@ -316,7 +325,8 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/wishlist.css',
                 'title' => 'Wishlist',
                 'header_title' => 'Wishlist',
-                'wishlist' => $wishlist
+                'wishlist' => $wishlist,
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
             $this->view('wishlist/index', $data);
         }
@@ -352,7 +362,8 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/applied.css',
                 'title' => 'Applied Jobs',
                 'header_title' => 'Applied Jobs',
-                'application' => $application
+                'application' => $application,
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
             $this->view('jobseeker/jobs-applied', $data);
         }
@@ -368,6 +379,7 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/alerts.css',
                 'title' => 'Jobs Alerts',
                 'header_title' => 'Job Alerts',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/jobalerts', $data);
@@ -384,6 +396,7 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/pass.css',
                 'title' => 'Change Password',
                 'header_title' => 'Change Password',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/changepassword', $data);
@@ -399,6 +412,7 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/chat.css',
                 'title' => 'Chat',
                 'header_title' => 'Chat With Recruiters',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/chat', $data);
@@ -409,32 +423,55 @@ class Jobseekers extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Sanitize POST data
-            $_POST = array_map('trim', $_POST);
-            $_POST = array_map('htmlspecialchars', $_POST);
-
             $data = [
                 'id' => $_SESSION['user_id'],
-                'username' => $_POST['username'],
-                'gender' => $_POST['gender'],
-                'website' => $_POST['website'],
-                'phone_no' => $_POST['phone_no'],
-                'location_rec' => $_POST['location_rec'],
-                'age' => $_POST['age'],
-                'address' => $_POST['address'],
-                'keywords' => $_POST['keywords'],
-                'linkedin_url' => $_POST['linkedin_url'],
-                'whatsapp_url' => $_POST['whatsapp_url'],
+                'username' => '',
+                'gender' => '',
+                'website' => '',
+                'phone_no' => '',
+                'location_rec' => '',
+                'age' => '',
+                'address' => '',
+                'keywords' => '',
+                'linkedin_url' => '',
+                'whatsapp_url' => '',
             ];
 
+            $filteredData = array_map('trim', array_map('htmlspecialchars', $_POST));
+            // Update $data with sanitized values from $_POST
+            $data = array_merge($data, $filteredData);
+
+            if (!empty($_FILES['profile_image']['name'])) {
+                $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
+
+                // If profile image is uploaded, add it to $data
+                if ($profileImagePath) {
+                    $data['profile_image'] = $profileImagePath;
+                } else {
+                    $data['data_err'] = 'Image upload failed (check image extension or size)';
+                }
+            } else {
+                $data['profile_image'] = '';
+            }
+
+            if (!empty($_FILES['cv']['name'])) {
+                $cvPath = $this->upload_media("cv", $_FILES, "/assets/cvs/", ['pdf'], 2000000);
+                // If cv is uploaded, add it to $data
+                if ($cvPath) {
+                    $data['cv'] = $cvPath;
+                } else {
+                    $data['data_err'] = 'CV upload failed (check file extension or size)';
+                }
+            } else {
+                $data['cv'] = '';
+            }
             // Call the model function to edit profile
             if ($this->jobseekerModel->editProfile($data)) {
                 // Profile updated successfully
-                flash('profile_updated', 'Your profile has been updated successfully');
-                redirect('jobseekers/profile');
+                jsflash('Profile Updated', 'jobseekers/profile');
             } else {
                 // Handle error
-                flash('profile_error', 'Sorry, something went wrong. Please try again.', 'alert alert-danger');
-                redirect('jobseekers/profile');
+                jsflash($data['data_err'], 'jobseekers/profile');
             }
         } else {
             // If not a POST request, redirect to profile page

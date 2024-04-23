@@ -80,12 +80,12 @@
                             <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; left: 531px; top: 0px;">
                                 <div class="side-bar-st-1">
                                     <div class="twm-candidate-profile-pic">
-                                        <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="">
-                                        <div class="upload-btn-wrapper">
+                                        <img src="<?php echo URLROOT . '/img/profile/' . $data['profile_image'] ?>" alt="">
+                                        <!-- <div class="upload-btn-wrapper">
                                             <div id="upload-image-grid"></div>
                                             <button class="site-button button-sm">Upload Photo</button>
                                             <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="twm-mid-content text-center">
                                         <h4><?php echo $_SESSION['user_name'] ?></h4>

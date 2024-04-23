@@ -5,7 +5,7 @@
   </div>
 
   <div class="twm-right-section-panel site-bg-gray">
-    <form method="post" action="<?php echo URLROOT . '/jobseekers/edit_profile' ?>">
+    <form method="post" action="<?php echo URLROOT . '/jobseekers/edit_profile' ?>" enctype="multipart/form-data">
       <div class="panel panel-default">
         <div class="panel-heading wt-panel-heading p-a20">
           <h4 class="panel-tittle m-a0">Basic Informations</h4>
@@ -105,10 +105,10 @@
 
             <div class="col-xl-4 col-lg-6 col-md-12">
               <div class="form-group">
-                <label for="file-upload" class="custom-file-upload">
+                <label for="profile-upload" class="custom-profile-upload">
                   <i class="fas fa-upload"></i> Profile Image
                 </label>
-                <input id="file-upload" type="file" />
+                <input id="profile-upload" type="file" name="profile_image" accept=".jpg, .jpeg, .png" />
               </div>
             </div>
 
@@ -116,10 +116,10 @@
             <div class="col-xl-4 col-lg-6 col-md-12">
               <div class="form-group">
                 <div class="custom-file">
-                  <label for="file-upload" class="custom-file-upload">
+                  <label for="cv-upload" class="custom-cv-upload">
                     <i class="fas fa-upload"></i> Your CV
                   </label>
-                  <input id="file-upload" type="file" />
+                  <input id="cv-upload" type="file" name="cv" accept=".pdf" />
                 </div>
               </div>
             </div>

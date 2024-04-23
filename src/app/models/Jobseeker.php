@@ -58,6 +58,14 @@ class Jobseeker
     }
   }
 
+  public function getJobSeekerProfileImage($id)
+  {
+    $this->db->query('SELECT profile_image FROM jobseekers WHERE id = :id');
+    $this->db->bind(':id', $id);
+
+    return $this->db->single();
+  }
+
   public function getJobseekerById($id)
   {
     $this->db->query('SELECT * FROM jobseekers WHERE id = :id');
@@ -68,8 +76,21 @@ class Jobseeker
 
   public function editProfile($data)
   {
-    $this->db->query('UPDATE jobseekers SET username = :username, phone_no = :phone_no, gender = :gender, website = :website, age = :age, address = :address, keywords = :keywords, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url WHERE id = :id');
-    // Bind values
+    $query = 'UPDATE jobseekers SET username = :username, phone_no = :phone_no, gender = :gender, website = :website, age = :age, address = :address, keywords = :keywords, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url';
+
+    // Conditionally add profile_image and cv columns to the query and bind values
+    if (!empty($data['profile_image'])) {
+      $query .= ', profile_image = :profile_image';
+    }
+    if (!empty($data['cv'])) {
+      $query .= ', cv = :cv';
+    }
+
+    $query .= ' WHERE id = :id';
+
+    $this->db->query($query);
+
+    // Bind common values
     $this->db->bind(':id', $data['id']);
     $this->db->bind(':username', $data['username']);
     $this->db->bind(':phone_no', $data['phone_no']);
@@ -80,6 +101,13 @@ class Jobseeker
     $this->db->bind(':keywords', $data['keywords']);
     $this->db->bind(':linkedin_url', $data['linkedin_url']);
     $this->db->bind(':whatsapp_url', $data['whatsapp_url']);
+
+    if (!empty($data['profile_image'])) {
+      $this->db->bind(':profile_image', $data['profile_image']);
+    }
+    if (!empty($data['cv'])) {
+      $this->db->bind(':cv', $data['cv']);
+    }
 
     // Execute
     if ($this->db->execute()) {
