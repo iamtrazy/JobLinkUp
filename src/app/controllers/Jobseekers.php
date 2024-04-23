@@ -6,14 +6,12 @@ class Jobseekers extends Controller
     public $jobModel;
     public $wishlistModel;
     public $applicationModel;
-    public $applicationModel;
 
     public function __construct()
     {
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
-        $this->applicationModel = $this->model('applications');
         $this->applicationModel = $this->model('Application');
     }
 
@@ -358,7 +356,7 @@ class Jobseekers extends Controller
             //     $this->view('wishlist/confirm', $data);
             // }
 
-            $application = $this->jobModel->getApplication($id);
+            $application = $this->applicationModel->getApplications($id);
 
             $data = [
                 'style' => 'jobseeker/applied.css',

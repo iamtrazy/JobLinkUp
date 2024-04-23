@@ -10,7 +10,7 @@ class Recruiters extends Controller
     {
         $this->recruiterModel = $this->model('Recruiter');
         $this->jobModel = $this->model('Job');
-        $this->applicationModel = $this->model('applications');
+        $this->applicationModel = $this->model('Application');
     }
 
     public function index()
@@ -30,12 +30,11 @@ class Recruiters extends Controller
             'login_password_err' => '',
         ];
 
-        // if (isset($_SESSION['business_id'])) {
-        //     $this->dashboard();
-        // } else {
-        //     $this->view('recruiters/register', $data);
-        // }
-        $this->dashboard();
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
+        } else {
+            $this->view('recruiters/register', $data);
+        }
     }
 
     public function register()
@@ -47,8 +46,6 @@ class Recruiters extends Controller
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Process form
-
-
                 // Init data
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
@@ -249,18 +246,19 @@ class Recruiters extends Controller
 
     public function dashboard()
     {
-        // if (!isset($_SESSION['business_id'])) {
-        //     $this->login();
-        // } else {
+        if (!isset($_SESSION['business_id'])) {
+            $this->login();
+        } else {
             $data = [
                 'style' => 'recruiter/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard'
             ];
-
-            $this->view('recruiters/dashboard', $data);
         }
-    
+
+        $this->view('recruiters/dashboard', $data);
+    }
+
 
     public function postjob()
     {
@@ -306,12 +304,7 @@ class Recruiters extends Controller
 
         $this->view('recruiters/myprofile', $data);
     }
-    
 
-
-       
-
-    
     public function editprofile()
     {
         $data = [
@@ -322,8 +315,8 @@ class Recruiters extends Controller
 
         $this->view('recruiters/editprofile', $data);
     }
-   
-        
+
+
     // public function applications($id = null, $action = null)
     // {
     //     if (!isset($_SESSION['user_id'])) {
@@ -426,26 +419,26 @@ class Recruiters extends Controller
 
     // public function applications($id=null, $action =NULL)
     //  if($action = NULL){
-        
+
     //     $data = [
     //         'style' => 'recruiter/applications.css',
     //         'title' => 'Candidates',
     //         'header_title' => 'Applications'
     //     ];
-    
+
     //     $this->view('recruiters/applications', $data);
     //  }
-   
+
     // {
     //   $job_id_str = trim(htmlspecialchars($id));
     //   $job_id = (int)$job_id_str;
-  
+
     //   $data = [
     //     'job_id' => $job_id,
     //     'seeker_id' => $_SESSION['user_id'],
     //     'data_err' => '',
     //   ];
-  
+
     //   if ($this->applicationsModel->deleteFromApplications($data['seeker_id'], $data['job_id'])) {
     //     $data['data_err'] = 'Error Occured';
     //     $this->view('job/alert', $data);
@@ -460,9 +453,6 @@ class Recruiters extends Controller
     //   }
     // }
 
-
-
-
     public function transactions()
     {
         $data = [
@@ -473,6 +463,4 @@ class Recruiters extends Controller
 
         $this->view('recruiters/transactions', $data);
     }
-
-    }
-
+}

@@ -1,5 +1,5 @@
 <?php
-class Applications
+class Application
 {
     private $db;
 
@@ -8,7 +8,7 @@ class Applications
         $this->db = new Database;
     }
 
-    
+
 
     // Find user by email
     public function findApplications($seeker_id, $job_id)
@@ -27,7 +27,7 @@ class Applications
         }
     }
 
-    
+
 
     public function deleteFromApplications($data)
     {
@@ -42,10 +42,11 @@ class Applications
             return false;
         }
     }
-    public function viewApplications($data){
+    public function viewApplications($data)
+    {
         $this->db->query('SELECT * FROM applications
         WHERE job_id = :job_id
-        AND '); 
+        AND ');
         $this->db->bind(':job_id', $data['job_id']);
         if ($this->db->execute()) {
             return true;
@@ -55,12 +56,11 @@ class Applications
     }
     public function getApplications($id)
     {
-        $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , application.created_at
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , applications.created_at
                         FROM applications
                         INNER JOIN jobs ON jobs.id=applications.job_id
                         WHERE applications.seeker_id = $id;");
         $results = $this->db->resultset();
         return $results;
     }
-
 }
