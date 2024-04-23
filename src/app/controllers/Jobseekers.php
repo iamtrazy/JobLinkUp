@@ -5,12 +5,14 @@ class Jobseekers extends Controller
     public $jobseekerModel;
     public $jobModel;
     public $wishlistModel;
+    public $applicationModel;
 
     public function __construct()
     {
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
+        $this->applicationModel = $this->model('applications');
     }
 
     public function index()

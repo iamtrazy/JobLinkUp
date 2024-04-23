@@ -4,12 +4,13 @@ class Recruiters extends Controller
 
     public $recruiterModel;
     public $jobModel;
+    public $applicationModel;
 
     public function __construct()
     {
         $this->recruiterModel = $this->model('Recruiter');
         $this->jobModel = $this->model('Job');
-        // $this->applicationsModel = $this->model('Applications');
+        $this->applicationModel = $this->model('applications');
     }
 
     public function index()
@@ -275,8 +276,7 @@ class Recruiters extends Controller
     public function manage()
     {
         $jobs  = $this->jobModel->getRecruiterJobs($_SESSION['business_id']);
-        
-         $data = [
+        $data = [
             'jobs' => $jobs,
             'style' => 'recruiter/manage.css',
             'title' => 'Manage',
