@@ -86,7 +86,7 @@ class Application
     public function getApplications($job_id)
     {
 
-        $this->db->query("SELECT jobs.id, jobseekers.id, jobseekers.address,jobseekers.username, jobseekers.profile_image
+        $this->db->query("SELECT jobs.id, jobseekers.id, jobseekers.address, jobseekers.username, jobseekers.email, jobseekers.profile_image, applications.created_at
         FROM applications
         INNER JOIN jobs ON jobs.id = applications.job_id
         INNER JOIN jobseekers ON jobseekers.id = applications.seeker_id
