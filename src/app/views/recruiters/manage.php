@@ -50,7 +50,10 @@
                                                         <td><?php echo $job->type; ?></td>
                                                             <td><a href="javascript:;" class="site-text-primary">
                                                            <?php echo $job->appliedCount;?>
-                                                            </a></td>
+
+                                                            </a> <br>
+                                                            <a href="<?php echo URLROOT;?>/recruiters/applications/<?php echo $job->id?>">View</a>
+                                                        </td>
                                                             <td>
                                                                 <span class="text-clr-green2"><?php echo $job->created_at;?></span>
                                                             </td>

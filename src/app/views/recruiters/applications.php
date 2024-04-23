@@ -1,35 +1,46 @@
 <?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
 
-<div class="section-full p-t120  p-b90 site-bg-white" style="transform: none;">
+<body>
+
+<?php print_r($data['applications']); ?>
+
+      
+<!--row--> 
+	
+      
+        <!-- CONTENT START -->
+        <div class="page-content">
+
+            
+
+
+            <!-- OUR BLOG START -->
+            <div class="section-full p-t120  p-b90 site-bg-white">
                 
 
-                <div class="container" style="transform: none;">
-                    <div class="row" style="transform: none;">
+                <div class="container">
+                    <div class="row">
                         
-                        <div class="col-lg-4 col-md-12 rightSidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
+                        <div class="col-lg-4 col-md-12 rightSidebar">
 
-                            
-
-                            
-
-                        <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; left: 58.6667px; top: 0px;"><div class="side-bar">
+                            <div class="side-bar">
 
                                 <div class="sidebar-elements search-bx">
                                                                             
                                     <form>
 
                                         <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4">$application->Category</h4>
-                                            <div class="dropdown bootstrap-select wt-select-bar-large"><select class="wt-select-bar-large selectpicker" data-live-search="true" data-bv-field="size">
-                                                <option selected="">All Category</option>
+                                            <h4 class="section-head-small mb-4">Category</h4>
+                                            <select class="wt-select-bar-large selectpicker"  data-live-search="true" data-bv-field="size">
+                                                <option selected>All Category</option>
                                                 <option>Web Designer</option>
                                                 <option>Developer</option>
                                                 <option>Acountant</option>
-                                            </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox" aria-expanded="false" title="All Category"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">All Category</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-1" aria-autocomplete="list"></div><div class="inner show" role="listbox" id="bs-select-1" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+                                            </select>
                                         </div>
 
                                         <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4"><wdautohl-customtag style="font-weight:bold;color:red;font-size:inherit;display:inline;" id="wdautohl_id_1" class="wdautohl_a2V5d29yZA__">Keyword</wdautohl-customtag></h4>
+                                            <h4 class="section-head-small mb-4">Keyword</h4>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Job Title or Keyword">
                                                 <button class="btn" type="button"><i class="feather-search"></i></button>
@@ -37,7 +48,7 @@
                                         </div>
 
                                         <div class="form-group mb-4">
-                                            <h4 class="section-head-small mb-4"></h4>
+                                            <h4 class="section-head-small mb-4">Location</h4>
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Search location">
                                                 <button class="btn" type="button"><i class="feather-map-pin"></i></button>
@@ -143,7 +154,7 @@
                                                 </li>
                              
                                             </ul>
-                                        </div>
+                                        </div> <!--sidebar ele filter-->
 
                                         <div class="twm-sidebar-ele-filter">
                                             <h4 class="section-head-small mb-4">Type of employment</h4>
@@ -176,7 +187,7 @@
                                                 </li>
                              
                                             </ul>
-                                        </div>
+                                        </div> <!--sidebar ele filter-->
                                         
                                     </form>
                                     
@@ -195,17 +206,21 @@
                                         <a href="job-list.html">Employer</a>
                                         <a href="job-list.html">Income</a>
                                         <a href="job-list.html">Tips</a>
-                                    </div>
-                                </div>
+                                    </div><!--tagcloud-->
+                                </div> <!--tag wrap-->
 
                                 
-                            </div><div class="twm-advertisment" style="background-image:url(images/add-bg.jpg);">
+                            </div><!--sidebar-->
+
+                            <div class="twm-advertisment" style="background-image:url(images/add-bg.jpg);">
                                <div class="overlay"></div>
                                <h4 class="twm-title">Recruiting?</h4>
                                <p>Get Best Matched Jobs On your <br>
                                 Email. Add Resume NOW!</p>
                                 <a href="about-1.html" class="site-button white">Read More</a> 
-                            </div></div></div>
+                            </div> <!--advertisement-->
+
+                        </div><!--right sidebar-->
 
                         <div class="col-lg-8 col-md-12">
                             <!--Filter Short By-->
@@ -214,27 +229,29 @@
                                
                                 <form class="woocommerce-ordering twm-filter-select" method="get">
                                     <span class="woocommerce-result-count">Short By</span>
-                                    <div class="dropdown bootstrap-select wt-select-bar-2"><select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
+                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
                                         <option>Most Recent</option>
                                         <option>Freelance</option>
                                         <option>Full Time</option>
                                         <option>Internship</option>
                                         <option>Part Time</option>
                                         <option>Temporary</option>
-                                    </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" title="Most Recent"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Most Recent</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-2" aria-autocomplete="list"></div><div class="inner show" role="listbox" id="bs-select-2" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
-                                    <div class="dropdown bootstrap-select wt-select-bar-2"><select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
+                                    </select>
+                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
                                         <option>Show 10</option>
                                         <option>Show 20</option>
                                         <option>Show 30</option>
                                         <option>Show 40</option>
                                         <option>Show 50</option>
                                         <option>Show 60</option>
-                                    </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-3" aria-haspopup="listbox" aria-expanded="false" title="Show 10"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Show 10</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-3" aria-autocomplete="list"></div><div class="inner show" role="listbox" id="bs-select-3" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+                                    </select>
                                 </form>
 
                             </div>
 
                             <div class="twm-candidates-grid-wrap">
+                            <?php foreach ($data['applications'] as $application) : ?>
+
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                          <div class="twm-candidates-grid-style1 mb-5">
@@ -242,250 +259,29 @@
                                                  <div class="twm-media-pic">
                                                     <img src="images/candidates/pic1.jpg" alt="#">
                                                  </div>
+                                                 <div class="twm-candidates-tag"><span>Featured</span></div>
                                              </div>
                                              <div class="twm-mid-content">
                                                  <a href="candidate-detail.html" class="twm-job-title">
-                                                     <h4>$applications->title </h4>
+                                                     <h4> <img src="" alt=""> </h4>
                                                  </a>
-                                                 <p>$applications->job_name</p>
+                                                 <p><?php echo $application->username;?></p>
                                                  <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                 <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">Download Resume</a>
                                                  
                                                  <div class="twm-fot-content">
                                                      <div class="twm-left-info">
-                                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i><?php echo $job->location ?></p>
-                                                        <div class="twm-jobs-vacancies"><?php echo $job->salary ?><span>/ Day</span></div>
+                                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i><?php echo $application->location;?></p>
+                                                        <div class="twm-jobs-vacancies">blah</div>
                                                      </div>
                                                     
                                                 </div>
                                              </div>
                                              
                                          </div>
-                                    </div>
+                                    </div> <!--card finish-->
 
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic2.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Peter Hawkins</h4>
-                                                </a>
-                                                <p>Medical <wdautohl-customtag style="font-weight:bold;color:red;font-size:inherit;display:inline;" id="wdautohl_id_2" class="wdautohl_cHJvZmVzcw__">Professed</wdautohl-customtag></p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$7<span>/ Hour</span></div>
-                                                    </div>
-                                                   
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
 
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic3.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Ralph Johnson  </h4>
-                                                </a>
-                                                <p>Bank <wdautohl-customtag style="font-weight:bold;color:red;font-size:inherit;display:inline;" id="wdautohl_id_3" class="wdautohl_bWFuZ2Vy">Manger</wdautohl-customtag></p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">Downlaod Resume</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$180<span>/ Day</span></div>
-                                                    </div>
-                                                   
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic4.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4> </h4>
-                                                </a>
-                                                <p>IT Contractor</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$90<span>/ Week</span></div>
-                                                    </div>
-                                                  
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic5.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Randall Warren</h4>
-                                                </a>
-                                                <p>Digital &amp; Creative</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$95<span>/ Day</span></div>
-                                                    </div>
-                                                    
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic6.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Christina Fischer </h4>
-                                                </a>
-                                                <p>Charity &amp; Voluntary</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$19<span>/ Hour</span></div>
-                                                    </div>
-                                                    
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic7.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Wanda Willis </h4>
-                                                </a>
-                                                <p>Marketing &amp; PR</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$12<span>/ Day</span></div>
-                                                    </div>
-                                                   
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic8.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Peter Hawkins</h4>
-                                                </a>
-                                                <p>Public Sector</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$7<span>/ Hour</span></div>
-                                                    </div>
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic9.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Kathleen Moreno </h4>
-                                                </a>
-                                                <p>Sales &amp; Marketing</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$125<span>/ Week</span></div>
-                                                    </div>
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="twm-candidates-grid-style1 mb-5">
-                                            <div class="twm-media">
-                                                <div class="twm-media-pic">
-                                                   <img src="images/candidates/pic10.jpg" alt="#">
-                                                </div>
-                                            </div>
-                                            <div class="twm-mid-content">
-                                                <a href="candidate-detail.html" class="twm-job-title">
-                                                    <h4>Kathleen Moreno </h4>
-                                                </a>
-                                                <p>Sales &amp; Marketing</p>
-                                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                                                <div class="twm-fot-content">
-                                                    <div class="twm-left-info">
-                                                       <p class="twm-candidate-address"><i class="feather-map-pin"></i>New York</p>
-                                                       <div class="twm-jobs-vacancies">$125<span>/ Week</span></div>
-                                                    </div>
-                                               </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                   
+                                    
                                 </div>
                             </div>
 
@@ -503,8 +299,24 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> <!--product filter grid start-->
+                        <?php endforeach;?>
 
-                    </div>
-                </div>
-            </div>
+                    </div><!--col-lg-8 col-m8--><!--row-->
+                </div><!--container-->
+            </div>   <!--section-->
+            <!-- OUR BLOG END -->
+    
+        </div>
+        <!-- CONTENT END -->
+
+
+        
+     
+ 	</div>
+
+
+
+</body>
+
+</html>

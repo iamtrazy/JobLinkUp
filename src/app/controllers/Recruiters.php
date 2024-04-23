@@ -273,18 +273,7 @@ class Recruiters extends Controller
         $this->view('recruiters/postjob', $data);
     }
 
-    public function manage()
-    {
-        $jobs  = $this->jobModel->getRecruiterJobs($_SESSION['business_id']);
-        $data = [
-            'jobs' => $jobs,
-            'style' => 'recruiter/manage.css',
-            'title' => 'Manage',
-            'header_title' => 'Manage jobs'
-        ];
-
-        $this->view('recruiters/manage', $data);
-    }
+    
     public function profile()
     {
         $data = [
@@ -461,6 +450,42 @@ class Recruiters extends Controller
         ];
 
         $this->view('recruiters/transactions', $data);
+    }
+
+    public function manage()
+    {
+        $jobs  = $this->jobModel->getRecruiterJobs($_SESSION['business_id']);
+        $data = [
+            'jobs' => $jobs,
+            'style' => 'recruiter/manage.css',
+            'title' => 'Manage',
+            'header_title' => 'Manage jobs'
+        ];
+
+        $this->view('recruiters/manage', $data);
+    }
+
+
+    public function applications($job_id = null){
+        if($job_id){
+            $data = [
+                'style' => 'recruiter/applications.css',
+                'title' => 'Candidates',
+                'header_title' => 'Candidates'
+            ];
+    
+            $this->view('recruiters/applications', $data);
+        }
+
+        $applications = $this->applicationModel->getApplication($job_id);
+        $data = [
+            'applications'=>$applications,
+            'style' => 'recruiter/applications.css',
+            'title' => 'Candidates',
+            'header_title' => 'Candidates'
+        ];
+
+        $this->view('recruiters/applications', $data);
     }
 
     }
