@@ -206,6 +206,7 @@ class Jobs extends Controller
       // Sanitize and validate form data
       $job_id = trim(htmlspecialchars($_POST['job_id'] ?? ''));
       $reason = trim(htmlspecialchars($_POST['reason'] ?? ''));
+      $otherReason = trim(htmlspecialchars($_POST['otherReason'] ?? '')); // Retrieve otherReason if provided
 
       // Check if the job ID is provided
       if (empty($job_id)) {
@@ -234,9 +235,14 @@ class Jobs extends Controller
         exit; // Stop further execution
       }
 
+      // Set the reason to otherReason if reason is "other"
+      if ($reason === 'other') {
+        $reason = $otherReason;
+      }
+
       // Additional validation if necessary
       if (empty($reason)) {
-        $response['error'] = 'Please select a reason for reporting the job';
+        $response['error'] = 'Please provide a reason for reporting the job';
         echo json_encode($response);
         exit; // Stop further execution
       }
