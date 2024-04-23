@@ -571,6 +571,10 @@
       font-size: 14px;
     }
   }
+  .pay{
+    background-color: greenyellow;
+    margin: 10px;
+  }
   .site-button {
     color: rgba(0, 0, 0, 0) !important;
     transition: all 0.3s ease !important;
@@ -1027,6 +1031,14 @@
     padding: 30px;
     border-radius: 10px;
   }
+
+  .terms_content {
+        height: 200px; 
+        overflow-y: auto; 
+        border: 1px solid #ccc;
+        padding: 10px; 
+  }
+
   @media (max-width: 540px) {
     .twm-right-section-panel {
       padding: 15px;

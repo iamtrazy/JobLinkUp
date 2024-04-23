@@ -338,6 +338,15 @@ class Recruiters extends Controller
                 'name' => trim(htmlspecialchars($_POST['name'])),
                 'business_email' => trim(htmlspecialchars($_POST['email'])),
                 'business_contact_no' => trim(htmlspecialchars($_POST['contact_no'])),
+
+                'business_name' => trim(htmlspecialchars($_POST['business_name'])),
+                'business_type' => trim(htmlspecialchars($_POST['business_type'])),
+                'business_reg_no' => trim(htmlspecialchars($_POST['business_reg_no'])),
+                'business_address' => trim(htmlspecialchars($_POST['business_address'])),
+                'contact_person'=> trim(htmlspecialchars($_POST['contact_person'])),
+                'contact_email' => trim(htmlspecialchars($_POST['contact_email'])),
+                'contact_number' => trim(htmlspecialchars($_POST['contact_number'])),
+                'agree_to_terms' => trim(htmlspecialchars($_POST['agree_to_terms']))
             ];
         
           

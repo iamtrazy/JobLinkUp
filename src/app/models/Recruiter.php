@@ -56,14 +56,21 @@ class Recruiter
       return false;
     }
   }
-  public function applyBR($data){
-    
-    $this->db->query('INSERT INTO business_profiles_uploaded VALUES(:recruiter_id, :business_name, :business_email, :business_address :);
-    $this->db->query('INSERT into business_profiles_uploaded VALUES (NULL, 2,3,'2023-05-01',true)');
+  public function addBRDetails($data){
+    $this->db->query('INSERT INTO BRDetails VALUES (:recruiter_id,:website,:business_email,:business_contact_no,:business_name,:business_type,:business_reg_no,:business_address,:contact_person,:contact_email,:contact_number,:agree_to_terms)');
     // Bind values
-    $this->db->bind(':business_name', $data['name']);
     $this->db->bind(':recruiter_id', $data['recruiter_id']);
+    $this->db->bind(':website', $data['website']);
     $this->db->bind(':business_email', $data['business_email']);
+    $this->db->bind(':business_contact_no', $data['business_contact_no']);
+    $this->db->bind(':business_name', $data['business_name']);
+    $this->db->bind(':business_type', $data['business_type']);
+    $this->db->bind(':business_reg_no', $data['business_reg_no']);
+    $this->db->bind(':business_address', $data['business_address']);
+    $this->db->bind(':contact_person', $data['contact_person']);
+    $this->db->bind(':contact_email', $data['contact_email']);
+    $this->db->bind(':contact_number', $data['contact_number']);
+    $this->db->bind(':agree_to_terms', $data['agree_to_terms']);
 
     // Execute
     if ($this->db->execute()) {
@@ -71,9 +78,11 @@ class Recruiter
     } else {
       return false;
     }
+  }
+  
 
     
-  }
+  
   
   
   
