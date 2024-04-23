@@ -187,4 +187,43 @@ class Job
         $results = $this->db->resultset();
         return $results;
     }
+
+    public function getRecruiterIdByJobId($job_id)
+    {
+        $this->db->query("SELECT recruiter_id FROM jobs WHERE id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $result = $this->db->single();
+        return $result->recruiter_id;
+    }
+
+    public function reportJob($seeker_id, $job_id, $recruiter_id, $reason)
+    {
+        // Check if the user has already reported the same job
+        $this->db->query('SELECT * FROM disputes WHERE seeker_id = :seeker_id AND job_id = :job_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':job_id', $job_id);
+        $existingReport = $this->db->single();
+
+        // If the user has already reported the job, return false
+        if ($existingReport) {
+            return false;
+        }
+
+        // Prepare Query
+        $this->db->query('INSERT INTO disputes (seeker_id, job_id, recruiter_id, reason) 
+        VALUES (:seeker_id, :job_id, :recruiter_id, :reason)');
+
+        // Bind Values
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':job_id', $job_id);
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $this->db->bind(':reason', $reason);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

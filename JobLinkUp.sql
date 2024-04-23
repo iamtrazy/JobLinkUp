@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 23, 2024 at 04:27 AM
+-- Generation Time: Apr 23, 2024 at 08:22 AM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -88,6 +88,26 @@ INSERT INTO `chat_threads` (`id`, `seeker_id`, `recruiter_id`, `created_at`) VAL
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `disputes`
+--
+
+CREATE TABLE `disputes` (
+  `seeker_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  `recruiter_id` int(11) NOT NULL,
+  `reason` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `disputes`
+--
+
+INSERT INTO `disputes` (`seeker_id`, `job_id`, `recruiter_id`, `reason`) VALUES
+(16, 69, 1, 'inappropriate');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -134,7 +154,7 @@ CREATE TABLE `jobseekers` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `phone_no` char(10) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
-  `age` int(3) NOT NULL,
+  `age` int(3) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `location_rec` tinyint(1) NOT NULL DEFAULT 0,
   `keywords` varchar(255) DEFAULT NULL,
@@ -150,9 +170,11 @@ CREATE TABLE `jobseekers` (
 --
 
 INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `profile_image`, `cv`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
-(2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, 0, NULL, 0, 'hi hi hiii', 'default.jpg', NULL, NULL, NULL, 0),
-(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'https://iamtrazy.eu.org', 20, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', '66272be6bc5958.80982323.jpg', NULL, 'https://linkedin.com', 'https://web.whatsapp.com', 0),
-(18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, 0, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0);
+(2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, NULL, NULL, 0, 'hi hi hiii', 'default.jpg', NULL, NULL, NULL, 0),
+(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'https://iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', '66272be6bc5958.80982323.jpg', NULL, 'https://linkedin.com', 'https://web.whatsapp.com', 0),
+(18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, NULL, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0),
+(19, 'Test User', 'kavishkafoodshop@gmail.com', 'male', '$2y$10$B/LhTinqMGoAITZZI021uu8Cae/yR9hKciCleqcLjpKch/SdbP8WW', '2024-04-23 05:01:12', NULL, NULL, NULL, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0),
+(20, 'Test User', 'discord.cmn24@simplelogin.com', 'male', '$2y$10$VbS4Kj0O0mBhauy2271DGeJ0nVF/bBKWxqh6RT.Fh3Jyj1F90DKly', '2024-04-23 05:01:59', NULL, NULL, NULL, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -267,6 +289,14 @@ ALTER TABLE `chat_threads`
   ADD KEY `FK_CHAT_2` (`seeker_id`);
 
 --
+-- Indexes for table `disputes`
+--
+ALTER TABLE `disputes`
+  ADD PRIMARY KEY (`seeker_id`,`job_id`),
+  ADD KEY `DISPUTE_1` (`job_id`),
+  ADD KEY `DISPUTE_3` (`recruiter_id`);
+
+--
 -- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
@@ -336,7 +366,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `jobseekers`
 --
 ALTER TABLE `jobseekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `moderators`
@@ -366,6 +396,14 @@ ALTER TABLE `chat_texts`
 ALTER TABLE `chat_threads`
   ADD CONSTRAINT `FK_CHAT_1` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_CHAT_2` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `disputes`
+--
+ALTER TABLE `disputes`
+  ADD CONSTRAINT `DISPUTE_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `DISPUTE_2` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `DISPUTE_3` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `jobs_applied`

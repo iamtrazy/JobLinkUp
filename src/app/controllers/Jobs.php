@@ -196,4 +196,61 @@ class Jobs extends Controller
       }
     }
   }
+
+  public function report()
+  {
+    // Check if the request is a POST request
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $response = []; // Initialize response array
+
+      // Sanitize and validate form data
+      $job_id = trim(htmlspecialchars($_POST['job_id'] ?? ''));
+      $reason = trim(htmlspecialchars($_POST['reason'] ?? ''));
+
+      // Check if the job ID is provided
+      if (empty($job_id)) {
+        $response['error'] = 'Job ID is required';
+        echo json_encode($response);
+        exit; // Stop further execution
+      }
+
+      // Check if the user is logged in
+      if (!isset($_SESSION['user_id'])) {
+        $response['error'] = 'Please log in to report a job';
+        echo json_encode($response);
+        exit; // Stop further execution
+      }
+
+      // Get the logged-in user's ID (seeker ID)
+      $seeker_id = $_SESSION['user_id'];
+
+      // Get the recruiter ID associated with the job ID
+      $recruiter_id = $this->jobModel->getRecruiterIdByJobId($job_id);
+
+      // Check if the recruiter ID is retrieved successfully
+      if (!$recruiter_id) {
+        $response['error'] = 'Invalid job ID';
+        echo json_encode($response);
+        exit; // Stop further execution
+      }
+
+      // Additional validation if necessary
+      if (empty($reason)) {
+        $response['error'] = 'Please select a reason for reporting the job';
+        echo json_encode($response);
+        exit; // Stop further execution
+      }
+
+      // Report the job using the Job model's reportJob method
+      if ($this->jobModel->reportJob($seeker_id, $job_id, $recruiter_id, $reason)) {
+        $response['error'] = 'Job reported successfully';
+        echo json_encode($response);
+        exit; // Stop further execution
+      } else {
+        $response['error'] = 'Job already reported';
+        echo json_encode($response);
+        exit; // Stop further execution
+      }
+    }
+  }
 }
