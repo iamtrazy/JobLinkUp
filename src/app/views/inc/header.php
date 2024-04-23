@@ -9,5 +9,6 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="<?php echo URLROOT; ?>/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>

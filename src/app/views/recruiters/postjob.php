@@ -43,7 +43,7 @@
                                 <label>Offered Salary</label>
                                 <div class="ls-inputicon-box">
                                     <input class="form-control" name="rate" type="text" placeholder="5000" required />
-                                    <i class="fs-input-icon fa fa-dollar-sign"></i>
+                                    <i class="fs-input-icon fa fas fa-coins"></i>
                                 </div>
                             </div>
                         </div>
@@ -93,10 +93,18 @@
                         </div>
                         <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
-                                <label>Banner Image</label>
-                                <div class="input-group">
-                                    <input type="file" name="banner_image" id="file-uploader" accept=".jpg, .jpeg, .png">
+                                <div class="custom-file">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="fas fa-upload"></i> Banner Image
+                                    </label>
+                                    <input id="file-upload" type="file" name="banner_image" accept=".jpg, .jpeg, .png" />
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+
                             </div>
                         </div>
                     </div>

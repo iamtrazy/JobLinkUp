@@ -34,11 +34,22 @@
                     <input type="text" name="name" placeholder="Username" value="<?php echo $data['name']; ?>">
                 </div>
                 <span class="invalid-feedback"><?php echo $data['name_err']; ?></span>
+
                 <div class="input-field <?php echo (!empty($data['email_err'])) ? 'is-invalid' : ''; ?>">
                     <i class="fas fa-envelope"></i>
                     <input type="email" name="email" placeholder="Email" value="<?php echo $data['email']; ?>">
                 </div>
                 <span class="invalid-feedback"><?php echo $data['email_err']; ?></span>
+                <div class="input-field">
+                    <i class="fas fa-venus-mars"></i>
+                    <select name="gender" class="form-control">
+                        <option value="select">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <!-- Handle errors for Gender field -->
+                <span class="invalid-feedback"><?php echo $data['gender_err']; ?></span>
                 <div class="input-field <?php echo (!empty($data['password_err'])) ? 'is-invalid' : ''; ?>">
                     <i class="fas fa-lock"></i>
                     <input type="password" name="password" placeholder="Password" value="<?php echo $data['password']; ?>">
