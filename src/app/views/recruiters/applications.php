@@ -2,7 +2,7 @@
 <div class="col-lg-8 col-md-12 my-section-2">
     <!--Filter Short By-->
     <div class="product-filter-wrap justify-content-between align-items-right m-b30">
-        <span class="woocommerce-result-count-left" style="float: right;">Showing 3 Candidates</span>
+        <span class="woocommerce-result-count-left" style="float: right;">Showing <?php echo count($data['applications']) ?> Candidates</span>
     </div>
     <div class="twm-candidates-list-wrap">
         <ul>
