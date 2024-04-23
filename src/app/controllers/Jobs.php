@@ -118,11 +118,16 @@ class Jobs extends Controller
     $job_id_str = trim(htmlspecialchars($id));
     $job_id = (int)$job_id_str;
 
+    $recruiter_id = $this->jobModel->getRecruiterIdByJobId($job_id);
+
     $data = [
       'job_id' => $job_id,
       'seeker_id' => $_SESSION['user_id'],
+      'recruiter_id' => $recruiter_id,
       'data_err' => '',
     ];
+
+
 
     if ($this->applicationModel->isApplied($data['seeker_id'], $data['job_id'])) {
       $data['data_err'] = 'You already applied to this job';
