@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 21, 2024 at 06:24 PM
+-- Generation Time: Apr 23, 2024 at 04:27 AM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -61,8 +61,9 @@ CREATE TABLE `chat_texts` (
 --
 
 INSERT INTO `chat_texts` (`id`, `thread_id`, `text`, `reply`, `created_at`) VALUES
-(1, 1, 'Hello', 0, '2024-04-21 07:41:19'),
-(2, 1, 'Hello back !', 1, '2024-04-21 07:41:55');
+(38, 1, 'hi', 1, '2024-04-21 21:48:35'),
+(46, 1, 'hi', 1, '2024-04-22 07:38:09'),
+(47, 1, 'test', 0, '2024-04-22 07:38:24');
 
 -- --------------------------------------------------------
 
@@ -101,7 +102,7 @@ CREATE TABLE `jobs` (
   `type` enum('Freelance','Internship','Part-Time','Volunteer','Other') NOT NULL DEFAULT 'Other',
   `detail` varchar(255) NOT NULL,
   `keywords` varchar(255) NOT NULL,
-  `banner_img` varchar(255) NOT NULL DEFAULT '/img/job-detail-bg.jpg',
+  `banner_img` varchar(255) NOT NULL DEFAULT 'job-detail-bg.jpg',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `is_varified` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -113,7 +114,10 @@ CREATE TABLE `jobs` (
 INSERT INTO `jobs` (`id`, `recruiter_id`, `topic`, `location`, `website`, `rate`, `rate_type`, `type`, `detail`, `keywords`, `banner_img`, `created_at`, `is_varified`) VALUES
 (62, 1, 'Article Writer', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello !', 'artist engineer', '66222261cca6d4.62846650.png', '2024-04-19 07:50:57', 0),
 (63, 1, 'Article Writer', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello', 'artist engineer', '662226cbc8f1c6.88433449.jpg', '2024-04-19 08:09:47', 0),
-(64, 1, 'Badminton coaching', '1156 High St, Santa Cruz, CA 95064', '', 9500, 'One-Time', 'Freelance', 'Hello !', 'artist engineer', '662344fb1d42e0.98090963.jpg', '2024-04-20 04:30:51', 0);
+(64, 1, 'Badminton coaching', '1156 High St, Santa Cruz, CA 95064', '', 9500, 'One-Time', 'Freelance', 'Hello !', 'artist engineer', '662344fb1d42e0.98090963.jpg', '2024-04-20 04:30:51', 0),
+(65, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'https://iamtrazy.eu.org', 5000, 'One-Time', 'Part-Time', 'jaokoaiuaoiaoiuiauiauia', 'test\nkeyword', '662575e0080b06.61876525.jpg', '2024-04-21 20:24:00', 0),
+(68, 1, 'Badminton coaching', '1156 High St, Santa Cruz, CA 95064', 'example.com', 9500, 'One-Time', 'Freelance', 'Test Description', 'artist engineer', 'job-detail-bg.jpg', '2024-04-22 04:40:26', 0),
+(69, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Test', 'artist engineer', '66265e8505b4d2.86228966.png', '2024-04-22 12:56:37', 0);
 
 -- --------------------------------------------------------
 
@@ -134,6 +138,8 @@ CREATE TABLE `jobseekers` (
   `address` varchar(255) DEFAULT NULL,
   `location_rec` tinyint(1) NOT NULL DEFAULT 0,
   `keywords` varchar(255) DEFAULT NULL,
+  `profile_image` varchar(255) NOT NULL DEFAULT 'default.jpg',
+  `cv` varchar(255) DEFAULT NULL,
   `linkedin_url` varchar(255) DEFAULT NULL,
   `whatsapp_url` varchar(255) DEFAULT NULL,
   `is_complete` tinyint(1) NOT NULL DEFAULT 0
@@ -143,10 +149,10 @@ CREATE TABLE `jobseekers` (
 -- Dumping data for table `jobseekers`
 --
 
-INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
-(2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, 0, NULL, 0, 'hi hi hiii', NULL, NULL, 0),
-(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'https://iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', 'https://linkedin.com', 'https://web.whatsapp.com', 0),
-(18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 0);
+INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `profile_image`, `cv`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
+(2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, 0, NULL, 0, 'hi hi hiii', 'default.jpg', NULL, NULL, NULL, 0),
+(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'https://iamtrazy.eu.org', 20, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', '66272be6bc5958.80982323.jpg', NULL, 'https://linkedin.com', 'https://web.whatsapp.com', 0),
+(18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, 0, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -312,7 +318,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `chat_texts`
 --
 ALTER TABLE `chat_texts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `chat_threads`
@@ -324,7 +330,7 @@ ALTER TABLE `chat_threads`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `jobseekers`
