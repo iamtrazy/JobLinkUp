@@ -282,7 +282,7 @@ class Recruiters extends Controller
         $this->view('recruiters/chat', $data);
     }
 
-    
+
     public function transactions()
     {
         $data = [
@@ -308,20 +308,21 @@ class Recruiters extends Controller
     }
 
 
-    public function applications($job_id = null){
-        if($job_id){
+    public function applications($job_id = null)
+    {
+        if ($job_id) {
             $data = [
                 'style' => 'recruiter/applications.css',
                 'title' => 'Candidates',
                 'header_title' => 'Candidates'
             ];
-    
+
             $this->view('recruiters/applications', $data);
         }
 
-        $applications = $this->applicationModel->getApplication($job_id);
+        $applications = $this->applicationModel->getApplications($job_id);
         $data = [
-            'applications'=>$applications,
+            'applications' => $applications,
             'style' => 'recruiter/applications.css',
             'title' => 'Candidates',
             'header_title' => 'Candidates'

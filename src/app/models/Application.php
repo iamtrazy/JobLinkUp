@@ -59,7 +59,8 @@ class Application
         $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , applications.created_at
                         FROM applications
                         INNER JOIN jobs ON jobs.id=applications.job_id
-                        WHERE applications.seeker_id = $id;");
+                        WHERE applications.seeker_id = :id;");
+        $this->db->bind(':id', $id);
         $results = $this->db->resultset();
         return $results;
     }
