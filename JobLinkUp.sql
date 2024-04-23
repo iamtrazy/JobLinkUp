@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 23, 2024 at 08:22 AM
+-- Generation Time: Apr 23, 2024 at 01:30 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -45,6 +45,41 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `applications`
+--
+
+CREATE TABLE `applications` (
+  `seeker_id` int(11) NOT NULL,
+  `job_id` int(11) NOT NULL,
+  `recruiter_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `br_details`
+--
+
+CREATE TABLE `br_details` (
+  `application_id` int(11) NOT NULL,
+  `recruiter_id` int(11) NOT NULL,
+  `website` varchar(20) NOT NULL,
+  `business_email` varchar(20) NOT NULL,
+  `business_contact_no` int(10) NOT NULL,
+  `business_name` varchar(20) NOT NULL,
+  `business_type` varchar(20) NOT NULL,
+  `business_reg_no` varchar(10) NOT NULL,
+  `business_address` varchar(20) NOT NULL,
+  `contact_person` varchar(20) NOT NULL,
+  `contact_email` varchar(20) NOT NULL,
+  `contact_number` varchar(10) NOT NULL,
+  `agree_to_terms` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `chat_texts`
 --
 
@@ -63,7 +98,8 @@ CREATE TABLE `chat_texts` (
 INSERT INTO `chat_texts` (`id`, `thread_id`, `text`, `reply`, `created_at`) VALUES
 (38, 1, 'hi', 1, '2024-04-21 21:48:35'),
 (46, 1, 'hi', 1, '2024-04-22 07:38:09'),
-(47, 1, 'test', 0, '2024-04-22 07:38:24');
+(47, 1, 'test', 0, '2024-04-22 07:38:24'),
+(48, 1, 'hi', 0, '2024-04-23 12:08:27');
 
 -- --------------------------------------------------------
 
@@ -103,6 +139,8 @@ CREATE TABLE `disputes` (
 --
 
 INSERT INTO `disputes` (`seeker_id`, `job_id`, `recruiter_id`, `reason`) VALUES
+(16, 62, 1, 'inappropriate'),
+(16, 68, 1, 'inappropriate'),
 (16, 69, 1, 'inappropriate');
 
 -- --------------------------------------------------------
@@ -179,28 +217,6 @@ INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `crea
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jobs_applied`
---
-
-CREATE TABLE `jobs_applied` (
-  `seeker_id` int(11) NOT NULL,
-  `job_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `jobs_applied`
---
-
-INSERT INTO `jobs_applied` (`seeker_id`, `job_id`, `created_at`) VALUES
-(16, 62, '2024-04-20 04:36:16'),
-(16, 63, '2024-04-19 16:24:31'),
-(16, 64, '2024-04-20 04:35:58'),
-(18, 63, '2024-04-20 12:00:08');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `moderators`
 --
 
@@ -255,15 +271,6 @@ CREATE TABLE `wishlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `wishlist`
---
-
-INSERT INTO `wishlist` (`seeker_id`, `job_id`, `created_at`) VALUES
-(16, 62, '2024-04-20 06:15:10'),
-(16, 63, '2024-04-19 15:15:32'),
-(16, 64, '2024-04-20 04:36:33');
-
---
 -- Indexes for dumped tables
 --
 
@@ -272,6 +279,20 @@ INSERT INTO `wishlist` (`seeker_id`, `job_id`, `created_at`) VALUES
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `applications`
+--
+ALTER TABLE `applications`
+  ADD PRIMARY KEY (`seeker_id`,`job_id`),
+  ADD KEY `FK3` (`job_id`),
+  ADD KEY `FK5` (`recruiter_id`);
+
+--
+-- Indexes for table `br_details`
+--
+ALTER TABLE `br_details`
+  ADD PRIMARY KEY (`application_id`);
 
 --
 -- Indexes for table `chat_texts`
@@ -309,13 +330,6 @@ ALTER TABLE `jobseekers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `jobs_applied`
---
-ALTER TABLE `jobs_applied`
-  ADD PRIMARY KEY (`seeker_id`,`job_id`),
-  ADD KEY `FK3` (`job_id`);
-
---
 -- Indexes for table `moderators`
 --
 ALTER TABLE `moderators`
@@ -345,10 +359,16 @@ ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `br_details`
+--
+ALTER TABLE `br_details`
+  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `chat_texts`
 --
 ALTER TABLE `chat_texts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `chat_threads`
@@ -385,6 +405,14 @@ ALTER TABLE `recruiters`
 --
 
 --
+-- Constraints for table `applications`
+--
+ALTER TABLE `applications`
+  ADD CONSTRAINT `FK3` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`),
+  ADD CONSTRAINT `FK4` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`),
+  ADD CONSTRAINT `FK5` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
+
+--
 -- Constraints for table `chat_texts`
 --
 ALTER TABLE `chat_texts`
@@ -404,13 +432,6 @@ ALTER TABLE `disputes`
   ADD CONSTRAINT `DISPUTE_1` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `DISPUTE_2` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `DISPUTE_3` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `jobs_applied`
---
-ALTER TABLE `jobs_applied`
-  ADD CONSTRAINT `FK3` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`),
-  ADD CONSTRAINT `FK4` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`);
 
 --
 -- Constraints for table `wishlist`
