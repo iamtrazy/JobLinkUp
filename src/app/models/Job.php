@@ -150,7 +150,14 @@ class Job
         $this->db->bind(':website', $data['website']);
         $this->db->bind(':keywords', $data['keywords']);
         $this->db->bind(':detail', $data['detail']);
-        $this->db->bind(':banner_image', $data['banner_image']); // Bind the image path
+        if (array_key_exists('banner_image', $data)) {
+            // If 'banner_image' key exists, bind it to the database statement
+            $this->db->bind(':banner_image', $data['banner_image']);
+        } else {
+            // If 'banner_image' key does not exist, bind NULL to the database statement
+            $this->db->bind(':banner_image', "job-detail-bg.jpg");
+        }
+
 
         //Execute
         if ($this->db->execute()) {
@@ -180,30 +187,65 @@ class Job
     //     return $results;
     // }
 
-    public function getRecruiterJobs($recruiter_id){
+    public function getRecruiterIdByJobId($job_id)
+    {
+        $this->db->query("SELECT recruiter_id FROM jobs WHERE id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $result = $this->db->single();
+        return $result->recruiter_id;
+    }
 
-        $this->db->query("SELECT jobs.id, jobs.topic,jobs.location, jobs.category, jobs.type,jobs.created_at
+    public function reportJob($seeker_id, $job_id, $recruiter_id, $reason)
+    {
+        // Check if the user has already reported the same job
+        $this->db->query('SELECT * FROM disputes WHERE seeker_id = :seeker_id AND job_id = :job_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':job_id', $job_id);
+        $existingReport = $this->db->single();
+
+        // If the user has already reported the job, return false
+        if ($existingReport) {
+            return false;
+        }
+
+        // Prepare Query
+        $this->db->query('INSERT INTO disputes (seeker_id, job_id, recruiter_id, reason) 
+        VALUES (:seeker_id, :job_id, :recruiter_id, :reason)');
+
+        // Bind Values
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':job_id', $job_id);
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $this->db->bind(':reason', $reason);
+
+        // Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getRecruiterJobs($recruiter_id)
+    {
+        $this->db->query("SELECT jobs.id, jobs.topic,jobs.location, jobs.type,jobs.created_at
         FROM jobs
         WHERE jobs.recruiter_id = $recruiter_id;");
         $results = $this->db->resultset();
 
-        forEach ($results as $result) {
+        foreach ($results as $result) {
             $this->db->query('SELECT * FROM applications WHERE
             recruiter_id = :recruiter_id AND job_id = :job_id');
-            
+
             $this->db->bind(':recruiter_id', $recruiter_id);
             $this->db->bind(':job_id', $result->id);
-            
+
             $this->db->resultSet();
-                                        
+
             $count = $this->db->rowCount();
-        
-            $result->appliedCount = $count;                                  
-                                        
+
+            $result->appliedCount = $count;
         }
         return $results;
-
-
     }
-    
 }

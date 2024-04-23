@@ -10,7 +10,7 @@ class Recruiters extends Controller
     {
         $this->recruiterModel = $this->model('Recruiter');
         $this->jobModel = $this->model('Job');
-        $this->applicationModel = $this->model('applications');
+        $this->applicationModel = $this->model('Application');
     }
 
     public function index()
@@ -30,12 +30,11 @@ class Recruiters extends Controller
             'login_password_err' => '',
         ];
 
-        // if (isset($_SESSION['business_id'])) {
-        //     $this->dashboard();
-        // } else {
-        //     $this->view('recruiters/register', $data);
-        // }
-        $this->dashboard();
+        if (isset($_SESSION['business_id'])) {
+            $this->dashboard();
+        } else {
+            $this->view('recruiters/register', $data);
+        }
     }
 
     public function register()
@@ -47,8 +46,6 @@ class Recruiters extends Controller
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Process form
-
-
                 // Init data
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
@@ -249,18 +246,19 @@ class Recruiters extends Controller
 
     public function dashboard()
     {
-        // if (!isset($_SESSION['business_id'])) {
-        //     $this->login();
-        // } else {
+        if (!isset($_SESSION['business_id'])) {
+            $this->login();
+        } else {
             $data = [
                 'style' => 'recruiter/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard'
             ];
-
-            $this->view('recruiters/dashboard', $data);
         }
-    
+
+        $this->view('recruiters/dashboard', $data);
+    }
+
 
     public function postjob()
     {
@@ -273,174 +271,18 @@ class Recruiters extends Controller
         $this->view('recruiters/postjob', $data);
     }
 
-    
-    public function profile()
+    public function chat()
     {
         $data = [
-            'style' => 'recruiter/myprofile.css',
-            'title' => 'profile',
-            'header_title' => 'Chamudi Siriwardhane'
+            'style' => 'recruiter/chat.css',
+            'title' => 'Chat',
+            'header_title' => 'Chat With Job Seekers'
         ];
 
-        $this->view('recruiters/myprofile', $data);
+        $this->view('recruiters/chat', $data);
     }
-    
-
-
-       
 
     
-    public function editprofile()
-    {
-        $data = [
-            'style' => 'recruiter/editprofile.css',
-            'title' => 'Edit profile',
-            'header_title' => 'Edit Profile'
-        ];
-
-        $this->view('recruiters/editprofile', $data);
-    }
-   
-        
-    // public function applications($id = null, $action = null)
-    // {
-    //     if (!isset($_SESSION['user_id'])) {
-    //         $this->login();
-    //     } else {
-    //         if ($id == NULL) {
-    //             $this->dashboard();
-    //         }
-    //         if ($action == 'delete') {
-
-    //             $job_id_str = trim(htmlspecialchars($id));
-    //             $job_id = (int)$job_id_str;
-
-    //             $data = [
-    //                 'style' => 'jobrecruiter/applications.css',
-    //                 'title' => 'Job Applications',
-    //                 'header_title' => 'Job Applications',
-    //                 'job_id' => $job_id,
-    //                 'seeker_id' => $_SESSION['user_id']
-    //             ];
-    //             $this->applicationModel->deleteFromApplications($data);
-    //             $this->view('applications/confirm', $data);
-    //         }
-
-    //         $applications = $this->applicationModel->getApplication($id);
-
-    //         $data = [
-    //             'style' => 'jobseeker/wishlist.css',
-    //             'title' => 'Wishlist',
-    //             'header_title' => 'Wishlist',
-    //             'wishlist' => $wishlist
-    //         ];
-    //         $this->view('application/index', $data);
-    //     }
-    // }
-
-    // public function appliedJobs()
-    // {
-    //     if (!isset($_SESSION['user_id'])) {
-    //         $this->login();
-    //     } else {
-    //         $data = [
-    //             'style' => 'jobseeker/applied.css',
-    //             'title' => 'Applied Jobs',
-    //             'header_title' => 'Applied Jobs',
-    //         ];
-
-    //         $this->view('jobseeker/jobs-applied', $data);
-    //     }
-    // }
-
-
-    // public function applicationalerts()
-    // {
-    //     if (!isset($_SESSION['user_id'])) {
-    //         $this->login();
-    //     } else {
-    //         $data = [
-    //             'style' => 'jobrecruiter/alerts.css',
-    //             'title' => 'Pending applications',
-    //             'header_title' => 'Job Alerts',
-    //         ];
-
-    //         $this->view('jobseeker/jobalerts', $data);
-    //     }
-    // }
-
-
-    // public function changePassword()
-    // {
-    //     if (!isset($_SESSION['user_id'])) {
-    //         $this->login();
-    //     } else {
-    //         $data = [
-    //             'style' => 'jobrecruiter/pass.css',
-    //             'title' => 'Change Password',
-    //             'header_title' => 'Change Password',
-    //         ];
-
-    //         $this->view('jobrecruiter/changepassword', $data);
-    //     }
-    // }
-
-    // public function chat()
-    // {
-    //     if (!isset($_SESSION['user_id'])) {
-    //         $this->login();
-    //     } else {
-    //         $data = [
-    //             'style' => 'jobrecruiter/chat.css',
-    //             'title' => 'Chat',
-    //             'header_title' => 'Chat With Seekers',
-    //         ];
-
-    //         $this->view('jobrecruiter/chat', $data);
-    //     }
-    // }
-
-
-
-    // public function applications($id=null, $action =NULL)
-    //  if($action = NULL){
-        
-    //     $data = [
-    //         'style' => 'recruiter/applications.css',
-    //         'title' => 'Candidates',
-    //         'header_title' => 'Applications'
-    //     ];
-    
-    //     $this->view('recruiters/applications', $data);
-    //  }
-   
-    // {
-    //   $job_id_str = trim(htmlspecialchars($id));
-    //   $job_id = (int)$job_id_str;
-  
-    //   $data = [
-    //     'job_id' => $job_id,
-    //     'seeker_id' => $_SESSION['user_id'],
-    //     'data_err' => '',
-    //   ];
-  
-    //   if ($this->applicationsModel->deleteFromApplications($data['seeker_id'], $data['job_id'])) {
-    //     $data['data_err'] = 'Error Occured';
-    //     $this->view('job/alert', $data);
-    //   } else {
-    //   }
-    //   if (empty($data['data_err'])) {
-    //     if ($this->wishlistModel->addtoList($data)) {
-    //       $this->view('job/alert', $data);
-    //     } else {
-    //       die('Something went wrong');
-    //     }
-    //   }
-    // }
-
-
-
-
     public function transactions()
     {
         $data = [
@@ -487,6 +329,4 @@ class Recruiters extends Controller
 
         $this->view('recruiters/applications', $data);
     }
-
-    }
-
+}

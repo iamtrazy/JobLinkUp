@@ -29,13 +29,27 @@ function flash($name = '', $message = '', $class = 'flash-message success')
 
 function jsflash($message = '', $path = '')
 {
-
+    echo '<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+    <body>
+    ';
     echo '<script type="text/javascript">';
 
-    if (!empty($message && $path)) {
-        echo 'window.alert("' . $message . '");';
-        echo 'window.location.href = "' . URLROOT . '/' . $path . '";';
+    if (!empty($message) && !empty($path)) { // Fix: Corrected the condition to properly check both variables
+        echo 'Swal.fire({';
+        echo '  icon: "success",';
+        echo '  title: "' . $message . '",';
+        echo '}).then((result) => {';
+        echo '  if (result.isConfirmed) {';
+        echo '    window.location.href = "' . URLROOT . '/' . $path . '";';
+        echo '  }';
+        echo '});';
     }
-
     echo '</script>';
+    echo '</body>';
+    echo '</html>';
 }

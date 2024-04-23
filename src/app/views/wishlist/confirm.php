@@ -1,12 +1,38 @@
-<?php
-echo '<script type="text/javascript">';
+<!DOCTYPE html>
+<html lang="en">
 
-if (!empty($data['data_err'])) {
-    echo 'window.alert("' . $data['data_err'] . '");';
-    echo 'window.location.href = "' . URLROOT . '/jobs";';
-} else {
-    echo 'window.alert("Job Removed from Wishlist");';
-    echo 'window.location.href = "' . URLROOT . '/jobseekers/wishlist/' . $data['seeker_id'] . '";';
-}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
 
-echo '</script>';
+<body>
+
+    <?php
+    echo '<script type="text/javascript">';
+
+    if (!empty($data['data_err'])) {
+        echo 'Swal.fire({';
+        echo '  icon: "error",';
+        echo '  title: "' . $data['data_err'] . '",';
+        echo '}).then((result) => {';
+        echo '  if (result.isConfirmed) {';
+        echo '    window.location.href = "' . URLROOT . '/jobs";';
+        echo '  }';
+        echo '});';
+    } else {
+        echo 'Swal.fire({';
+        echo '  icon: "success",';
+        echo '  title: "Job Removed from Wishlist",';
+        echo '}).then((result) => {';
+        echo '  if (result.isConfirmed) {';
+        echo '    window.location.href = "' . URLROOT . '/jobseekers/wishlist/' . $data['seeker_id'] . '";';
+        echo '  }';
+        echo '});';
+    }
+
+    echo '</script>';
+    ?>
+
+</body>
+
+</html>

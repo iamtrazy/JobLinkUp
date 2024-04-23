@@ -2,7 +2,7 @@
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
     <div class="twm-right-section-panel site-bg-gray">
         <form action="<?php echo URLROOT; ?>/recruiters/applyForBR" method="post" enctype="multipart/form-data">
-                <?php echo flash('registerBR_success'); ?>
+            <?php echo flash('registerBR_success'); ?>
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
                     <h4 class="panel-tittle m-a0">
@@ -32,13 +32,12 @@
                                             <option>Sole Proprietership</option>
                                             <option>Partnership</option>
                                             <option>co-operation</option>
-                                            
+
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                         <!--Complete Address-->
                         <div class="col-xl-12 col-lg-6 col-md-12">
                             <div class="form-group">
@@ -58,65 +57,9 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
-    
-                    
                 </div>
             </div>
-
-
-            <div class="panel panel-default">
-                <div class="panel-heading wt-panel-heading p-a20">
-                    <h4 class="panel-tittle m-a0">
-                        <i class="fa fa-suitcase"></i>Contact Information
-                    </h4>
-                </div>
-                <div class="panel-body wt-panel-body p-a20 m-b30">
-                    <div class="row">
-                        <!--Job title-->
-                        <div class="col-xl-4 col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Contact person</label>
-                                <div class="ls-inputicon-box">
-                                    <input class="form-control" name="contact_name" type="text" placeholder="contact person name" required="">
-                                    <i class="fs-input-icon fa fa-address-card"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xl-4 col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Contact Email</label>
-                                <div class="ls-inputicon-box">
-                                    <input class="form-control" name="contact_name" type="text" placeholder="contact person name" required="">
-                                    <i class="fs-input-icon fa fa-address-card"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-xl-4 col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Contact number</label>
-                                <div class="ls-inputicon-box">
-                                    <input class="form-control" name="contact_name" type="text" placeholder="contact person name" required="">
-                                    <i class="fs-input-icon fa fa-address-card"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                        
-                        </div>
-                    </div>
-
-                    
-                    </div>
-
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
                     <h4 class="panel-tittle m-a0">
@@ -125,38 +68,17 @@
                 </div>
                 <div class="panel-body wt-panel-body p-a20 m-b30">
                     <div class="row">
-                        
                         <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
-                                <label>Upload Documents</label>
-                                <div class="input-group">
-                                    <input type="file" name="banner_image" id="file-uploader" accept=".jpg, .jpeg, .png" class="">
-                                </div>
+                                <label for="br-upload" class="custom-br-upload">
+                                    <i class="fas fa-upload"></i> Business Registration
+                                </label>
+                                <input id="br-upload" type="file" name="br" accept=".pdf" />
                             </div>
-                        </div>
-                    </div>
-
-                
-</form>
-
-
-                  
-                    <div class="col-lg-12 col-md-12">
-                        <div class="text-left">
-                            <button type="submit" class="site-button m-r5 pay">
-                                Pay
-                            </button>
-                        </div>
-                        <div class="text-left">
-                            <button type="submit" class="site-button m-r5">
-                                Upload BR documents here
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-
-
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
                     <h4 class="panel-tittle m-a0">
@@ -164,58 +86,57 @@
                     </h4>
                 </div>
                 <div class="panel-heading p-a20">
-                <h4 class="panel-tittle ">
-                         Terms and conditions
-                </h4>
+                    <h4 class="panel-tittle ">
+                        Terms and conditions
+                    </h4>
                 </div>
-                
-
-                
                 <div class="panel-body wt-panel-body p-a20 m-b30 terms_content">
 
-<p><strong>Verification Process:</strong> The Recruiter agrees to undergo a verification process to confirm the business status on the <em>JobLinkUp</em> platform. This process may include providing necessary documentation and information as requested by the Company.</p>
+                    <p><strong>Verification Process:</strong> The Recruiter agrees to undergo a verification process to confirm the business status on the <em>JobLinkUp</em> platform. This process may include providing necessary documentation and information as requested by the Company.</p>
 
-<p><strong>Accuracy of Information:</strong> The Recruiter certifies that all information provided during the verification process is accurate, complete, and up-to-date to the best of their knowledge. Any false or misleading information provided may result in the rejection of the verification application and may lead to further actions as deemed necessary by the Company.</p>
+                    <p><strong>Accuracy of Information:</strong> The Recruiter certifies that all information provided during the verification process is accurate, complete, and up-to-date to the best of their knowledge. Any false or misleading information provided may result in the rejection of the verification application and may lead to further actions as deemed necessary by the Company.</p>
 
-<p><strong>Verification Fee:</strong> The Recruiter acknowledges that a verification fee may be required to undergo the verification process. This fee is non-refundable and is subject to change at the discretion of the Company.</p>
+                    <p><strong>Verification Fee:</strong> The Recruiter acknowledges that a verification fee may be required to undergo the verification process. This fee is non-refundable and is subject to change at the discretion of the Company.</p>
 
-<p><strong>Duration of Verification:</strong> The verification of the Recruiter's business status is valid for a specified duration, as determined by the Company. The Recruiter agrees to renew the verification status upon expiration, subject to the terms and conditions in effect at the time of renewal.</p>
+                    <p><strong>Duration of Verification:</strong> The verification of the Recruiter's business status is valid for a specified duration, as determined by the Company. The Recruiter agrees to renew the verification status upon expiration, subject to the terms and conditions in effect at the time of renewal.</p>
 
-<p><strong>Verification Results:</strong> The Company reserves the right to approve or reject the verification application at its sole discretion. The Recruiter understands that the decision of the Company regarding verification status is final and binding.</p>
+                    <p><strong>Verification Results:</strong> The Company reserves the right to approve or reject the verification application at its sole discretion. The Recruiter understands that the decision of the Company regarding verification status is final and binding.</p>
 
-<p><strong>Consequences of Non-Compliance:</strong> The Recruiter acknowledges that failure to comply with the terms and conditions outlined in this Agreement may result in the suspension or termination of their account on the <em>JobLinkUp</em> platform, without refund or compensation.</p>
+                    <p><strong>Consequences of Non-Compliance:</strong> The Recruiter acknowledges that failure to comply with the terms and conditions outlined in this Agreement may result in the suspension or termination of their account on the <em>JobLinkUp</em> platform, without refund or compensation.</p>
 
                 </div>
 
                 <div class="panel-body wt-panel-body p-a20 m-b30">
 
-                <input type="checkbox">
-                I hereby acknowledge  that I have read, understood, and agree to abide by the terms and conditions set forth in this Verification Agreement. 
-        
+                    <input type="checkbox">
+                    I hereby acknowledge that I have read, understood, and agree to abide by the terms and conditions set forth in this Verification Agreement.
+
                 </div>
             </div>
-
-
-
-
             <div class="panel panel-default">
-            <div class="col-lg-12 col-md-12">
-                        
-                        <div class="text-left">
-                            <button type="submit" class="site-button m-r5">
-                                    Save changes and continue
-                            </button>
-                        </div>
+                <div class="col-lg-12 col-md-12">
+
+                    <div class="text-left">
+                        <button type="submit" class="site-button m-r5">
+                            Verify Your Business
+                        </button>
                     </div>
+                </div>
             </div>
-
+        </form>
+        <!-- <div class="col-lg-12 col-md-12">
+            <div class="text-left">
+                <button type="submit" class="site-button m-r5 pay">
+                    Pay
+                </button>
+            </div>
+            <div class="text-left">
+                <button type="submit" class="site-button m-r5">
+                    Upload BR documents here
+                </button>
+            </div>
+        </div> -->
     </div>
-    </form>
 </div>
-</div>
-
-</div><!-- right side-->
-</div> <!--right section panel-->
-
 <script src="<?php echo URLROOT ?>/js/jobs/hashtags.js"></script>
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
