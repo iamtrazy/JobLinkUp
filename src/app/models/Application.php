@@ -83,13 +83,16 @@ class Application
             return false;
         }
     }
-    public function getApplications($id)
+    public function getApplications($job_id)
     {
-        $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , applications.created_at
-                        FROM applications
-                        INNER JOIN jobs ON jobs.id=applications.job_id
-                        WHERE applications.seeker_id = :id;");
-        $this->db->bind(':id', $id);
+
+        $this->db->query("SELECT jobs.id, jobseekers.id, jobseekers.address,jobseekers.username, jobseekers.profile_image
+        FROM applications
+        INNER JOIN jobs ON jobs.id = applications.job_id
+        INNER JOIN jobseekers ON jobseekers.id = applications.seeker_id
+        WHERE applications.job_id = :job_id;");
+
+        $this->db->bind(':job_id', $job_id);
         $results = $this->db->resultset();
         return $results;
     }

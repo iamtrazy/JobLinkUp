@@ -310,22 +310,12 @@ class Recruiters extends Controller
 
     public function applications($job_id = null)
     {
-        if ($job_id) {
-            $data = [
-                'style' => 'recruiter/applications.css',
-                'title' => 'Candidates',
-                'header_title' => 'Candidates'
-            ];
-
-            $this->view('recruiters/applications', $data);
-        }
-
         $applications = $this->applicationModel->getApplications($job_id);
         $data = [
-            'applications' => $applications,
             'style' => 'recruiter/applications.css',
             'title' => 'Candidates',
-            'header_title' => 'Candidates'
+            'header_title' => 'Candidates',
+            'applications' => $applications
         ];
 
         $this->view('recruiters/applications', $data);
