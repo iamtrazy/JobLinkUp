@@ -169,17 +169,29 @@ if (isset($_SESSION['user_id'])) {
                     console.log(response);
                     // Parse JSON response
                     var jsonResponse = JSON.parse(response);
-                    // Show response in alert
-                    alert(jsonResponse.error);
-                    // Close popup and overlay
-                    reportFormPopup.hide();
-                    overlay.hide();
+                    // Show response using SweetAlert
+                    Swal.fire({
+                        icon: jsonResponse.error ? 'error' : 'success',
+                        title: jsonResponse.error,
+                        timer: 3000, // Adjust the timer as needed
+                        showConfirmButton: false
+                    }).then(() => {
+                        // Close popup and overlay
+                        reportFormPopup.hide();
+                        overlay.hide();
+                    });
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
                     console.error(xhr.responseText);
-                    // Show error message in alert
-                    alert("Error: Unable to process your request. Please try again later.");
+                    // Show error message using SweetAlert
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Error",
+                        text: "Unable to process your request. Please try again later.",
+                        timer: 3000, // Adjust the timer as needed
+                        showConfirmButton: false
+                    });
                 }
             });
         });

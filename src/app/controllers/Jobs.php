@@ -249,7 +249,7 @@ class Jobs extends Controller
 
       // Report the job using the Job model's reportJob method
       if ($this->jobModel->reportJob($seeker_id, $job_id, $recruiter_id, $reason)) {
-        $response['error'] = 'Job reported successfully';
+        $response['success'] = 'Job reported successfully';
         echo json_encode($response);
         exit; // Stop further execution
       } else {
