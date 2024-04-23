@@ -13,7 +13,7 @@ class Jobs extends Controller
     $this->jobModel = $this->model('Job');
     $this->jobseekerModel = $this->model('Jobseeker');
     $this->wishlistModel = $this->model('Wishlist');
-    $this->applicationModel = $this->model('applications');
+    $this->applicationModel = $this->model('Application');
   }
 
   // Load All job
