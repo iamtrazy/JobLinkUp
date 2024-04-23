@@ -187,6 +187,14 @@ class Job
     //     return $results;
     // }
 
+    public function getRecruiterIdByJobId($job_id)
+    {
+        $this->db->query("SELECT recruiter_id FROM jobs WHERE id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $result = $this->db->single();
+        return $result->recruiter_id;
+    }
+
     public function getRecruiterJobs($recruiter_id)
     {
         $this->db->query("SELECT jobs.id, jobs.topic,jobs.location, jobs.type,jobs.created_at
