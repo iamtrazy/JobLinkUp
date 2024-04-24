@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 </head>
 
 <body style="transform: none;">
@@ -45,9 +43,14 @@
                                     </li>
                                     <li class="has-child">
                                         <a href="<?php echo URLROOT ?>/jobseekers">Job Seekers</a>
+                                        <div class="fa submenu-toogle"></div>
+
+
                                         <ul class="sub-menu">
-                                        <li><a href="<?php echo URLROOT ?>/jobseekers/Explore">Explore Seekers</a></li>
+                                        <li><a href="employer-grid.html">Employers Grid</a></li>
+                                        
                                         </ul>
+
                                     </li>
                                     <li>
                                         <a href="<?php echo URLROOT ?>/recruiters">Job Recruiters</a>
@@ -110,6 +113,7 @@
                                             <li><a href="<?php echo URLROOT ?>/recruiters/applications"><i class="fa fa-user-check"></i> Browse Applications</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/logout"><i class="fa fa-share-square"></i> Logout</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/jobseekers/explore"><i class="fa fa-share-square"></i> explore seekers</a></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -479,14 +479,15 @@ class Jobseekers extends Controller
         }
     }
     public function explore(){
-        $all_seekers = $this->jobseekerModel->get_all();
+        // $all_seekers = $this->jobseekerModel->get_all();
         $data=[
-            'all_seekers'=> $all_seekers,
+            // 'all_seekers'=> $all_seekers,
             'style' => 'jobseeker/explore.css',
-            'title' => 'Explore',
-            'header_title' => 'Job Seekers | Explore',
+            'title' => 'Job Seekers | Explore',
+            'header_title' => 'Explore',
 
         ];
+        $this->view('jobseeker/explore', $data);
 
     }
 }

@@ -2,8 +2,7 @@
 
 <body>
 
-<?php print_r($data['applications']); ?>
-
+<!--debug statement-->
       
 <!--row--> 
 	
@@ -20,7 +19,7 @@
 
                 <div class="container">
                     <div class="row">
-                        
+<!--                         
                         <div class="col-lg-4 col-md-12 rightSidebar">
 
                             <div class="side-bar">
@@ -155,7 +154,7 @@
                              
                                             </ul>
                                         </div> <!--sidebar ele filter-->
-
+<!-- 
                                         <div class="twm-sidebar-ele-filter">
                                             <h4 class="section-head-small mb-4">Type of employment</h4>
                                             <ul>
@@ -188,7 +187,7 @@
                              
                                             </ul>
                                         </div> <!--sidebar ele filter-->
-                                        
+<!--                                         
                                     </form>
                                     
                                 </div>
@@ -208,70 +207,76 @@
                                         <a href="job-list.html">Tips</a>
                                     </div><!--tagcloud-->
                                 </div> <!--tag wrap-->
-
+<!-- 
                                 
-                            </div><!--sidebar-->
+                            </div><!--sidebar -->
 
-                            <div class="twm-advertisment" style="background-image:url(images/add-bg.jpg);">
+                            <!-- <div class="twm-advertisment" style="background-image:url(images/add-bg.jpg);">
                                <div class="overlay"></div>
                                <h4 class="twm-title">Recruiting?</h4>
                                <p>Get Best Matched Jobs On your <br>
                                 Email. Add Resume NOW!</p>
                                 <a href="about-1.html" class="site-button white">Read More</a> 
-                            </div> <!--advertisement-->
+                            </div> advertisement -->
 
-                        </div><!--right sidebar-->
+                        <!-- </div> -->
 
-                        <div class="col-lg-8 col-md-12">
+                        <div class="col-lg-8 col-md-12 my-section-2">
                             <!--Filter Short By-->
                             <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
                                 <span class="woocommerce-result-count-left">Showing 2,150 Candidates</span>
                                
+                                
+
+
                                 <form class="woocommerce-ordering twm-filter-select" method="get">
-                                    <span class="woocommerce-result-count">Short By</span>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
+                                    <span class="woocommerce-result-count">Sort By</span>
+                                    <div class="dropdown bootstrap-select wt-select-bar-2"><select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
                                         <option>Most Recent</option>
                                         <option>Freelance</option>
                                         <option>Full Time</option>
                                         <option>Internship</option>
                                         <option>Part Time</option>
                                         <option>Temporary</option>
-                                    </select>
-                                    <select class="wt-select-bar-2 selectpicker"  data-live-search="true" data-bv-field="size">
+                                    </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-2" aria-haspopup="listbox" aria-expanded="false" title="Most Recent"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Most Recent</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-2" aria-autocomplete="list"></div><div class="inner show" role="listbox" id="bs-select-2" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
+                                    <div class="dropdown bootstrap-select wt-select-bar-2"><select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="size">
                                         <option>Show 10</option>
                                         <option>Show 20</option>
                                         <option>Show 30</option>
                                         <option>Show 40</option>
                                         <option>Show 50</option>
                                         <option>Show 60</option>
-                                    </select>
+                                    </select><button type="button" tabindex="-1" class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown" role="combobox" aria-owns="bs-select-3" aria-haspopup="listbox" aria-expanded="false" title="Show 10"><div class="filter-option"><div class="filter-option-inner"><div class="filter-option-inner-inner">Show 10</div></div> </div></button><div class="dropdown-menu "><div class="bs-searchbox"><input type="search" class="form-control" autocomplete="off" role="combobox" aria-label="Search" aria-controls="bs-select-3" aria-autocomplete="list"></div><div class="inner show" role="listbox" id="bs-select-3" tabindex="-1"><ul class="dropdown-menu inner show" role="presentation"></ul></div></div></div>
                                 </form>
 
                             </div>
 
                             <div class="twm-candidates-grid-wrap">
-                            <?php foreach ($data['applications'] as $application) : ?>
+                            <!-- php for each -->
 
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6">
                                          <div class="twm-candidates-grid-style1 mb-5">
                                              <div class="twm-media">
                                                  <div class="twm-media-pic">
-                                                    <img src="images/candidates/pic1.jpg" alt="#">
+                                                 <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="">
                                                  </div>
-                                                 <div class="twm-candidates-tag"><span>Featured</span></div>
+                                                 <!-- <div class="twm-candidates-tag"><span>10 jobs</span></div> -->
                                              </div>
                                              <div class="twm-mid-content">
                                                  <a href="candidate-detail.html" class="twm-job-title">
-                                                     <h4> <img src="" alt=""> </h4>
+                                                     <h4> Trazy </h4>
                                                  </a>
-                                                 <p><?php echo $application->username;?></p>
+                                                 <div class="mid-mid-content">
                                                  <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
+                                                 <a href="candidate-detail.html" class="twm-download-resume site-text-primary">Resume</a>
+                                                 
+                                                 </div>
                                                  
                                                  <div class="twm-fot-content">
                                                      <div class="twm-left-info">
-                                                        <p class="twm-candidate-address"><i class="feather-map-pin"></i><?php echo $application->location;?></p>
-                                                        <div class="twm-jobs-vacancies">blah</div>
+                                                        <p class="twm-candidate-address"><i class="fa-solid fa-location-dot"></i>malabe</p>
+                                                        <div class="twm-jobs-vacancies">10 employments </div>
                                                      </div>
                                                     
                                                 </div>
@@ -300,7 +305,7 @@
                             </div>
 
                         </div> <!--product filter grid start-->
-                        <?php endforeach;?>
+                        <!--end for each-->
 
                     </div><!--col-lg-8 col-m8--><!--row-->
                 </div><!--container-->
