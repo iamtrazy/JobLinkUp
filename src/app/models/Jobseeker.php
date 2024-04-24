@@ -116,10 +116,13 @@ class Jobseeker
       return false;
     }
   }
-  public function get_all(){
+  public function getAll($data){
     $this->db->query('SELECT * FROM jobseekers');
 
     return $this->db->resultSet();
+}
+public function getJobCount(){
+  
 }
 
 }

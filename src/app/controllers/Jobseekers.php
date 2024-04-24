@@ -478,10 +478,10 @@ class Jobseekers extends Controller
             redirect('jobseekers/profile');
         }
     }
-    public function explore($data){
-        // $all_seekers = $this->jobseekerModel->get_all($data);
+    public function explore(){
+        $all_seekers = $this->jobseekerModel->getAll($data);
         $data=[
-            // 'all_seekers'=> $all_seekers,
+            'all_seekers'=> $all_seekers,
             'style' => 'jobseeker/explore.css',
             'title' => 'Job Seekers | Explore',
             'header_title' => 'Explore',

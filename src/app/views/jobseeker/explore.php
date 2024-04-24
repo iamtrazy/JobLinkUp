@@ -3,7 +3,6 @@
 <body>
 
 <!--debug statement-->
-<?php print_r($data['all_seekers']); ?>
 
 <!--row--> 
 	
@@ -277,7 +276,7 @@
                                                  
                                                  <div class="twm-fot-content">
                                                      <div class="twm-left-info">
-                                                        <p class="twm-candidate-address"><i class="fa-solid fa-location-dot"></i>malabe</p>
+                                                        <p class="twm-candidate-address"><i class="fa-solid fa-location-dot"></i><?php echo $seeker->address;?></p>
                                                         <div class="twm-jobs-vacancies">10 employments </div>
                                                      </div>
                                                     
@@ -291,6 +290,8 @@
                                     
                                 </div>
                             </div>
+                            <?php endforeach;?>
+
 
                             <div class="pagination-outer">
                                 <div class="pagination-style1">
@@ -308,7 +309,6 @@
 
                         </div> <!--product filter grid start-->
                         <!--end for each-->
-                        <?php endforeach;?>
 
                     </div><!--col-lg-8 col-m8--><!--row-->
                 </div><!--container-->
