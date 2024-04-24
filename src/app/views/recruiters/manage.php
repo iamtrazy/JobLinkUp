@@ -12,53 +12,61 @@
                             <thead>
                                 <tr>
                                     <th>Job Title</th>
-                                    <th>Category</th>
                                     <th>Job Types</th>
+                                    <th>Rate</th>
                                     <th>Applications</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="twm-bookmark-list">
-                                            <div class="twm-mid-content">
-                                                <a href="#" class="twm-job-title">
-                                                    <h4>Senior Web Designer</h4>
-                                                    <p class="twm-bookmark-address">
-                                                        <i class="feather-map-pin"></i>Sacramento, California
-                                                    </p>
-                                                </a>
+                                <?php foreach ($data['jobs'] as $job) : ?>
+                                    <tr>
+                                        <td>
+                                            <div class="twm-bookmark-list">
+                                                <div class="twm-mid-content">
+                                                    <a href="#" class="twm-job-title">
+                                                        <h4><?php echo $job->topic ?></h4>
+                                                        <p class="twm-bookmark-address">
+                                                            <i class="fas fa-map-marker-alt"></i><?php echo $job->location; ?>
+                                                        </p>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>Web Designer</td>
-                                    <td>
-                                        <div class="twm-jobs-category"><span class="twm-bg-green">Part Time</span></div>
-                                    </td>
-                                    <td><a href="javascript:;" class="site-text-primary">03 Applied</a></td>
-                                    <td>
-                                        <span class="text-clr-green2">Active</span>
-                                    </td>
-                                    <td>
-                                        <div class="twm-table-controls">
-                                            <ul class="twm-DT-controls-icon list-unstyled">
-                                                <li>
-                                                    <button title="View profile" type="button" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                        <span class="fa fa-eye"></span>
-                                                    </button>
-                                                </li>
+                                        </td>
+                                        <td><?php echo $job->type; ?></td>
+                                        <td>
+                                            <?php echo $job->rate ?>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary"><?php echo $job->appliedCount; ?></span>
+                                            <a href="<?php echo URLROOT . '/recruiters/applications/' . $job->id ?>" class="view-applicants" style="margin-left: 10px;">
+                                                View Applicants
+                                            </a>
+                                        </td>
 
-                                                <li>
-                                                    <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
-                                                        <span class="far fa-trash-alt"></span>
-                                                    </button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        <td>
+                                            <span class="text-clr-green2"><?php echo time_elapsed_string($job->created_at); ?></span>
+                                        </td>
+                                        <td>
+                                            <div class="twm-table-controls">
+                                                <ul class="twm-DT-controls-icon list-unstyled">
+                                                    <li>
+                                                        <button title="View profile" type="button" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                            <span class="fa fa-eye"></span>
+                                                        </button>
+                                                    </li>
+
+                                                    <li>
+                                                        <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                            <span class="far fa-trash-alt"></span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
