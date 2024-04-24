@@ -3,7 +3,7 @@ if (isset($_SESSION['user_id'])) {
     require APPROOT . '/views/inc/jobs_header.php';
 } else
 if (isset($_SESSION['business_id'])) {
-    require APPROOT . '/views/inc/recruiter_header.php';
+    require APPROOT . '/views/inc/jobs_header.php';
 } else {
     require APPROOT . '/views/inc/jobs_header.php';
 }
