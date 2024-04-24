@@ -82,29 +82,24 @@
                                 <div class="side-bar-st-1">
                                     <div class="twm-candidate-profile-pic">
                                         <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="">
-                                        <div class="upload-btn-wrapper">
-                                            <div id="upload-image-grid"></div>
-                                            <button class="site-button button-sm">Upload Photo</button>
-                                            <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
-                                        </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
                                         <h4><?php echo $_SESSION['business_name'] ?></h4>
                                         <p>Recruiter</p>
-                                        <p>Joined on 2017 June</p>
+                                        <!-- <p>Joined on 2017 June</p>
                                         <p>Verified</p>
-                                        <p>Zavolt Ltd.</p>
+                                        <p>Zavolt Ltd.</p> -->
                                     </div>
 
                                     <div class="twm-nav-list-1">
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> My Profile</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/manage"><i class="fa fa-suitcase"></i> Manage Job Listings</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> Candidate Profile</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Job</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/manage"><i class="fa fa-suitcase"></i> Manage Job Listings</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/explore"><i class="fa fa-user-check"></i> Browse Applications</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/chat"><i class="far fa-comments"></i>Chat</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transactions</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/applications"><i class="fa fa-user-check"></i> Browse Applications</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 23, 2024 at 01:30 PM
+-- Generation Time: Apr 24, 2024 at 03:59 AM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -55,6 +55,14 @@ CREATE TABLE `applications` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `applications`
+--
+
+INSERT INTO `applications` (`seeker_id`, `job_id`, `recruiter_id`, `created_at`) VALUES
+(16, 68, 1, '2024-04-24 03:37:38'),
+(16, 69, 1, '2024-04-23 14:14:45');
+
 -- --------------------------------------------------------
 
 --
@@ -99,7 +107,8 @@ INSERT INTO `chat_texts` (`id`, `thread_id`, `text`, `reply`, `created_at`) VALU
 (38, 1, 'hi', 1, '2024-04-21 21:48:35'),
 (46, 1, 'hi', 1, '2024-04-22 07:38:09'),
 (47, 1, 'test', 0, '2024-04-22 07:38:24'),
-(48, 1, 'hi', 0, '2024-04-23 12:08:27');
+(48, 1, 'hi', 0, '2024-04-23 12:08:27'),
+(49, 1, 'test', 1, '2024-04-23 17:05:34');
 
 -- --------------------------------------------------------
 
@@ -209,7 +218,7 @@ CREATE TABLE `jobseekers` (
 
 INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `profile_image`, `cv`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
 (2, 'kasun kasun', 'iamtrazy@proton.me', 'male', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-09-30 12:46:49', '0702339061', NULL, NULL, NULL, 0, 'hi hi hiii', 'default.jpg', NULL, NULL, NULL, 0),
-(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'https://iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', '66272be6bc5958.80982323.jpg', NULL, 'https://linkedin.com', 'https://web.whatsapp.com', 0),
+(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$5hh0IYThhv3iWgp6hYU7iezxYCWFqcY/fhdri2RDH4NFBiNhUFPyS', '2023-11-01 01:56:14', '0772339061', 'iamtrazy.eu.org', 22, '38/4, Mihindu Mw, Malabe', 1, 'test test test test', '662839648f8af1.92268016.jpg', NULL, 'linkedin.com', 'web.whatsapp.com', 0),
 (18, 'kasun2@gmail.com', 'kasun2@gmail.com', 'male', '$2y$10$mS/x8mV7JVw./B7ofLbiqeupp.hptGzG3tl2VgA.axen9uPGwJ/Wi', '2024-04-20 11:01:55', NULL, NULL, NULL, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0),
 (19, 'Test User', 'kavishkafoodshop@gmail.com', 'male', '$2y$10$B/LhTinqMGoAITZZI021uu8Cae/yR9hKciCleqcLjpKch/SdbP8WW', '2024-04-23 05:01:12', NULL, NULL, NULL, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0),
 (20, 'Test User', 'discord.cmn24@simplelogin.com', 'male', '$2y$10$VbS4Kj0O0mBhauy2271DGeJ0nVF/bBKWxqh6RT.Fh3Jyj1F90DKly', '2024-04-23 05:01:59', NULL, NULL, NULL, NULL, 0, NULL, 'default.jpg', NULL, NULL, NULL, 0);
@@ -269,6 +278,15 @@ CREATE TABLE `wishlist` (
   `job_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `wishlist`
+--
+
+INSERT INTO `wishlist` (`seeker_id`, `job_id`, `created_at`) VALUES
+(16, 63, '2024-04-23 19:18:29'),
+(16, 68, '2024-04-23 14:33:58'),
+(16, 69, '2024-04-23 14:33:55');
 
 --
 -- Indexes for dumped tables
@@ -368,7 +386,7 @@ ALTER TABLE `br_details`
 -- AUTO_INCREMENT for table `chat_texts`
 --
 ALTER TABLE `chat_texts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `chat_threads`
