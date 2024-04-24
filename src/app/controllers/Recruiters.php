@@ -320,4 +320,17 @@ class Recruiters extends Controller
 
         $this->view('recruiters/applications', $data);
     }
+
+    public function explore()
+    {
+        $all_seekers = $this->recruiterModel->getAll();
+        $data = [
+            'style' => 'recruiter/explore.css',
+            'title' => 'Candidates Grid',
+            'header_title' => 'Candidates Grid',
+            'all_seekers' => $all_seekers
+
+        ];
+        $this->view('recruiters/explore', $data);
+    }
 }
