@@ -117,12 +117,9 @@ class Jobseeker
     }
   }
   public function get_all(){
-    $this->db->query('SELECT id = :id,
-    FROM jobseekers');
+    $this->db->query('SELECT * FROM jobseekers');
 
-    $this->db->bind(':id', );
-    return $this->db->single();
+    return $this->db->resultSet();
+}
 
-
-  }
 }
