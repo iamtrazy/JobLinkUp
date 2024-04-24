@@ -101,7 +101,7 @@
                                     <div class="twm-nav-list-1">
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> Candidate Profile</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> Recruiter Profile</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Job</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/manage"><i class="fa fa-suitcase"></i> Manage Job Listings</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Job</a></li>
