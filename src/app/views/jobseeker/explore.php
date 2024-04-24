@@ -3,8 +3,7 @@
 <body>
 
 <!--debug statement-->
-<?php print_r($data['all_seekers']); ?>
-
+      
 <!--row--> 
 	
       
@@ -254,9 +253,8 @@
 
                             <div class="twm-candidates-grid-wrap">
                             <!-- php for each -->
-                            <?php foreach ($data['all_seekers'] as $seeker) : ?>
+
                                 <div class="row">
-                                        
                                     <div class="col-lg-6 col-md-6">
                                          <div class="twm-candidates-grid-style1 mb-5">
                                              <div class="twm-media">
@@ -267,7 +265,7 @@
                                              </div>
                                              <div class="twm-mid-content">
                                                  <a href="candidate-detail.html" class="twm-job-title">
-                                                     <h4> <?php echo $seeker->username;?> </h4>
+                                                     <h4> Trazy </h4>
                                                  </a>
                                                  <div class="mid-mid-content">
                                                  <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
@@ -308,7 +306,6 @@
 
                         </div> <!--product filter grid start-->
                         <!--end for each-->
-                        <?php endforeach;?>
 
                     </div><!--col-lg-8 col-m8--><!--row-->
                 </div><!--container-->
