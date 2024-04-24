@@ -33,7 +33,7 @@
                           </div>
                         </div>
                         <div class="twm-mid-content">
-                          <a href="#" class="twm-job-title">
+                          <a href="<?php echo URLROOT ?>/jobs/detail/<?php echo $wishlist->id; ?>" class="twm-job-title">
                             <h4><?php echo $wishlist->topic; ?></h4>
                           </a>
                         </div>

@@ -1,4 +1,4 @@
-/*! CSS Used from: https://thewebmax.org/jobzilla/css/bootstrap.min.css */
+
 *,
 ::after,
 ::before {
@@ -476,7 +476,6 @@ button:not(:disabled) {
 .mb-3 {
   margin-bottom: 1rem !important;
 }
-/*! CSS Used from: https://thewebmax.org/jobzilla/css/font-awesome.min.css */
 .fa,
 .fas,
 .fab {
@@ -596,7 +595,6 @@ button:not(:disabled) {
 .fas {
   font-weight: 900;
 }
-/*! CSS Used from: https://thewebmax.org/jobzilla/css/style.css */
 .site-text-primary {
   color: #1967d2;
 }
@@ -1304,7 +1302,6 @@ button.scroltop span {
     padding: 20px;
   }
 }
-/*! CSS Used from: https://thewebmax.org/jobzilla/css/skins-type/skin-6.css */
 .footer-dark {
   background-color: #17171d;
 }
@@ -1332,7 +1329,6 @@ button.scroltop span {
 .footer-dark .widget_services ul li a:hover {
   color: #1967d2;
 }
-/*! CSS Used from: https://thewebmax.org/jobzilla/css/switcher.css */
 .styleswitcher .switcher-title {
   text-transform: uppercase;
   font-weight: 800;
@@ -1483,200 +1479,6 @@ button.scroltop span {
   }
 }
 /*! CSS Used fontfaces */
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot");
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2")
-      format("woff2"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff")
-      format("woff"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf")
-      format("truetype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome")
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot);
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix)
-      format("embedded-opentype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2)
-      format("woff2"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff) format("woff"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf)
-      format("truetype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome)
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot");
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2")
-      format("woff2"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff")
-      format("woff"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf")
-      format("truetype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome")
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot");
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2")
-      format("woff2"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff") format("woff"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf")
-      format("truetype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome")
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot);
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix)
-      format("embedded-opentype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2)
-      format("woff2"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff) format("woff"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf)
-      format("truetype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome)
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot);
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix)
-      format("embedded-opentype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2) format("woff2"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff) format("woff"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf)
-      format("truetype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome)
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot");
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2")
-      format("woff2"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff")
-      format("woff"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf")
-      format("truetype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome")
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot);
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.eot?#iefix)
-      format("embedded-opentype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff2)
-      format("woff2"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.woff) format("woff"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.ttf)
-      format("truetype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-brands-400.svg#fontawesome)
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot");
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2")
-      format("woff2"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff")
-      format("woff"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf")
-      format("truetype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome")
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot");
-  src: url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix")
-      format("embedded-opentype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2")
-      format("woff2"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff") format("woff"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf")
-      format("truetype"),
-    url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome")
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 400;
-  font-display: block;
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot);
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix)
-      format("embedded-opentype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2)
-      format("woff2"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff) format("woff"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf)
-      format("truetype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome)
-      format("svg");
-}
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot);
-  src: url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix)
-      format("embedded-opentype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2) format("woff2"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff) format("woff"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf)
-      format("truetype"),
-    url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome)
-      format("svg");
-}
 @font-face {
   font-family: "Rubik";
   font-style: normal;

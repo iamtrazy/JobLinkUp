@@ -5,12 +5,14 @@ class Jobseekers extends Controller
     public $jobseekerModel;
     public $jobModel;
     public $wishlistModel;
+    public $applicationModel;
 
     public function __construct()
     {
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
+        $this->applicationModel = $this->model('Application');
     }
 
     public function index()
@@ -52,10 +54,12 @@ class Jobseekers extends Controller
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
                     'email' => trim(htmlspecialchars($_POST['email'])),
+                    'gender' => trim(htmlspecialchars($_POST['gender'])),
                     'password' => trim(htmlspecialchars($_POST['password'])),
                     'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -79,6 +83,10 @@ class Jobseekers extends Controller
                     $data['name_err'] = 'Pleae enter name';
                 }
 
+                if (empty($data['gender'] || $data['gender'] !== 'male' || $data['gender'] !== 'female')) {
+                    $data['gender_err'] = 'Pleae select gender';
+                }
+
                 // Validate Password
                 if (empty($data['password'])) {
                     $data['password_err'] = 'Pleae enter password';
@@ -89,14 +97,14 @@ class Jobseekers extends Controller
                 // Validate Confirm Password
                 if (empty($data['confirm_password'])) {
                     $data['confirm_password_err'] = 'Pleae confirm password';
-                } else {
-                    if ($data['password'] != $data['confirm_password']) {
-                        $data['confirm_password_err'] = 'Passwords do not match';
-                    }
+                }
+
+                if ($data['password'] !== $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match';
                 }
 
                 // Make sure errors are empty
-                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
+                if (empty($data['email_err']) && empty($data['name_err']) && empty($data['gender_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                     // Validated
 
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -121,6 +129,7 @@ class Jobseekers extends Controller
                     'confirm_password' => '',
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -206,6 +215,7 @@ class Jobseekers extends Controller
                     'confirm_password' => '',
                     'name_err' => '',
                     'email_err' => '',
+                    'gender_err' => '',
                     'password_err' => '',
                     'confirm_password_err' => '',
                     'login_email' => '',
@@ -246,6 +256,12 @@ class Jobseekers extends Controller
         }
     }
 
+    public function getJobSeekerProfileImage($id)
+    {
+        $profileImage = $this->jobseekerModel->getJobSeekerProfileImage($id);
+        return $profileImage->profile_image;
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['user_id'])) {
@@ -254,7 +270,8 @@ class Jobseekers extends Controller
             $data = [
                 'style' => 'jobseeker/dashboard.css',
                 'title' => 'Dashboard',
-                'header_title' => 'Dashboard'
+                'header_title' => 'Dashboard',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/dashboard', $data);
@@ -269,7 +286,8 @@ class Jobseekers extends Controller
             $data = [
                 'style' => 'jobseeker/profile.css',
                 'title' => 'Profile',
-                'header_title' => 'Profile'
+                'header_title' => 'Profile',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/profile', $data);
@@ -294,7 +312,8 @@ class Jobseekers extends Controller
                     'title' => 'Wishlist',
                     'header_title' => 'Wishlist',
                     'job_id' => $job_id,
-                    'seeker_id' => $_SESSION['user_id']
+                    'seeker_id' => $_SESSION['user_id'],
+
                 ];
                 $this->wishlistModel->deleteFromList($data);
                 $this->view('wishlist/confirm', $data);
@@ -306,23 +325,46 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/wishlist.css',
                 'title' => 'Wishlist',
                 'header_title' => 'Wishlist',
-                'wishlist' => $wishlist
+                'wishlist' => $wishlist,
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
             $this->view('wishlist/index', $data);
         }
     }
 
-    public function appliedJobs()
+    public function applications($id = null, $action = null)
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            if ($id == NULL) {
+                $this->dashboard();
+            }
+            // if ($action == 'withdraw') {
+
+            //     $job_id_str = trim(htmlspecialchars($id));
+            //     $job_id = (int)$job_id_str;
+
+            //     $data = [
+            //         'style' => 'jobseeker/wishlist.css',
+            //         'title' => 'Applied Jobs',
+            //         'header_title' => 'Applied Jobs',
+            //         'job_id' => $job_id,
+            //         'seeker_id' => $_SESSION['user_id']
+            //     ];
+            //     $this->wishlistModel->deleteFromList($data);
+            //     $this->view('wishlist/confirm', $data);
+            // }
+
+            $application = $this->jobModel->getApplication($id);
+
             $data = [
                 'style' => 'jobseeker/applied.css',
                 'title' => 'Applied Jobs',
                 'header_title' => 'Applied Jobs',
+                'application' => $application,
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
-
             $this->view('jobseeker/jobs-applied', $data);
         }
     }
@@ -337,6 +379,7 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/alerts.css',
                 'title' => 'Jobs Alerts',
                 'header_title' => 'Job Alerts',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/jobalerts', $data);
@@ -353,6 +396,7 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/pass.css',
                 'title' => 'Change Password',
                 'header_title' => 'Change Password',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/changepassword', $data);
@@ -368,9 +412,70 @@ class Jobseekers extends Controller
                 'style' => 'jobseeker/chat.css',
                 'title' => 'Chat',
                 'header_title' => 'Chat With Recruiters',
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
 
             $this->view('jobseeker/chat', $data);
+        }
+    }
+
+    public function edit_profile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $data = [
+                'id' => $_SESSION['user_id'],
+                'username' => '',
+                'gender' => '',
+                'website' => '',
+                'phone_no' => '',
+                'location_rec' => '',
+                'age' => '',
+                'address' => '',
+                'keywords' => '',
+                'linkedin_url' => '',
+                'whatsapp_url' => '',
+            ];
+
+            $filteredData = array_map('trim', array_map('htmlspecialchars', $_POST));
+            // Update $data with sanitized values from $_POST
+            $data = array_merge($data, $filteredData);
+
+            if (!empty($_FILES['profile_image']['name'])) {
+                $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
+
+                // If profile image is uploaded, add it to $data
+                if ($profileImagePath) {
+                    $data['profile_image'] = $profileImagePath;
+                } else {
+                    $data['data_err'] = 'Image upload failed (check image extension or size)';
+                }
+            } else {
+                $data['profile_image'] = '';
+            }
+
+            if (!empty($_FILES['cv']['name'])) {
+                $cvPath = $this->upload_media("cv", $_FILES, "/assets/cvs/", ['pdf'], 2000000);
+                // If cv is uploaded, add it to $data
+                if ($cvPath) {
+                    $data['cv'] = $cvPath;
+                } else {
+                    $data['data_err'] = 'CV upload failed (check file extension or size)';
+                }
+            } else {
+                $data['cv'] = '';
+            }
+            // Call the model function to edit profile
+            if ($this->jobseekerModel->editProfile($data)) {
+                // Profile updated successfully
+                jsflash('Profile Updated', 'jobseekers/profile');
+            } else {
+                // Handle error
+                jsflash($data['data_err'], 'jobseekers/profile');
+            }
+        } else {
+            // If not a POST request, redirect to profile page
+            redirect('jobseekers/profile');
         }
     }
 }

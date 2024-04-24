@@ -56,4 +56,11 @@ class Recruiter
       return false;
     }
   }
+
+  public function getAll()
+  {
+    $this->db->query('SELECT * FROM jobseekers');
+
+    return $this->db->resultSet();
+  }
 }

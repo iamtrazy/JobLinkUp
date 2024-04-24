@@ -4,11 +4,13 @@ class Recruiters extends Controller
 
     public $recruiterModel;
     public $jobModel;
+    public $applicationModel;
 
     public function __construct()
     {
         $this->recruiterModel = $this->model('Recruiter');
         $this->jobModel = $this->model('Job');
+        $this->applicationModel = $this->model('Application');
     }
 
     public function index()
@@ -44,8 +46,6 @@ class Recruiters extends Controller
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Process form
-
-
                 // Init data
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
@@ -161,7 +161,7 @@ class Recruiters extends Controller
 
                 // Validate Email
                 if (empty($data['login_email'])) {
-                    $data['login_email_err'] = 'Pleae enter email';
+                    $data['login_email_err'] = 'Please enter email';
                 }
 
                 // Validate Password
@@ -254,10 +254,11 @@ class Recruiters extends Controller
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard'
             ];
-
-            $this->view('recruiters/dashboard', $data);
         }
+
+        $this->view('recruiters/dashboard', $data);
     }
+
 
     public function postjob()
     {
@@ -268,5 +269,68 @@ class Recruiters extends Controller
         ];
 
         $this->view('recruiters/postjob', $data);
+    }
+
+    public function chat()
+    {
+        $data = [
+            'style' => 'recruiter/chat.css',
+            'title' => 'Chat',
+            'header_title' => 'Chat With Job Seekers'
+        ];
+
+        $this->view('recruiters/chat', $data);
+    }
+
+
+    public function transactions()
+    {
+        $data = [
+            'style' => 'recruiter/transactions.css',
+            'title' => 'Verify Business Profile',
+            'header_title' => 'BR Verification'
+        ];
+
+        $this->view('recruiters/transactions', $data);
+    }
+
+    public function manage()
+    {
+        $jobs  = $this->jobModel->getRecruiterJobs($_SESSION['business_id']);
+        $data = [
+            'jobs' => $jobs,
+            'style' => 'recruiter/manage.css',
+            'title' => 'Manage',
+            'header_title' => 'Manage jobs'
+        ];
+
+        $this->view('recruiters/manage', $data);
+    }
+
+
+    public function applications($job_id = null)
+    {
+        $applications = $this->applicationModel->getApplications($job_id);
+        $data = [
+            'style' => 'recruiter/applications.css',
+            'title' => 'Candidates',
+            'header_title' => 'Candidates',
+            'applications' => $applications
+        ];
+
+        $this->view('recruiters/applications', $data);
+    }
+
+    public function explore()
+    {
+        $all_seekers = $this->recruiterModel->getAll();
+        $data = [
+            'style' => 'recruiter/explore.css',
+            'title' => 'Candidates Grid',
+            'header_title' => 'Candidates Grid',
+            'all_seekers' => $all_seekers
+
+        ];
+        $this->view('recruiters/explore', $data);
     }
 }
