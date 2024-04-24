@@ -9,8 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body style="transform: none;">
@@ -42,8 +43,11 @@
                                     <li>
                                         <a href="<?php echo URLROOT ?>/jobs">Jobs</a>
                                     </li>
-                                    <li>
+                                    <li class="has-child">
                                         <a href="<?php echo URLROOT ?>/jobseekers">Job Seekers</a>
+                                        <ul class="sub-menu">
+                                        <li><a href="<?php echo URLROOT ?>/jobseekers/Explore">Explore Seekers</a></li>
+                                        </ul>
                                     </li>
                                     <li>
                                         <a href="<?php echo URLROOT ?>/recruiters">Job Recruiters</a>
@@ -89,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4><?php echo $_SESSION['business_name'] ?></h4>
+                                        <h4>Chamudi Siriwardhane</h4>
                                         <p>Recruiter</p>
                                         <p>Joined on 2017 June</p>
                                         <p>Verified</p>
@@ -102,7 +106,6 @@
                                             <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> My Profile</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/manage"><i class="fa fa-suitcase"></i> Manage Job Listings</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Job</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/chat"><i class="far fa-comments"></i>Chat</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transactions</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/applications"><i class="fa fa-user-check"></i> Browse Applications</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
