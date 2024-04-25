@@ -62,6 +62,15 @@ class Recruiter
     $this->db->query('SELECT * FROM recruiters');
 
     return $this->db->resultSet();
+
+
+     // $this->db->query("        
+        // SELECT jobs.id, jobs.topic, jobs.location, jobs.type, jobs.rate, jobs.rate_type, jobs.created_at,
+        // ($this->RecruiterModel->getRecruitementCount($recruiter_id)) AS recruitement_count
+        // (SELECT COUNT(*) FROM applications WHERE recruiter_id = :recruiter_id AND job_id = jobs.id) AS appliedCount
+        // FROM jobs
+        // WHERE jobs.recruiter_id = :recruiter_id
+        // ORDER BY appliedCount DESC;");
   }
 
   public function applyForBR($data){
@@ -88,4 +97,18 @@ class Recruiter
 
 }
 
+public function getRecruitementCount($recruiter_id){
+  $this->db->query('SELECT COUNT(*) FROM jobs
+  JOIN recruiters ON jobs.recruiter_id = recruiters.id 
+WHERE recruiters.id = :recruiter_id');
+
+
+$this->db->bind(':recruiter_id', $recruiter_id);
+// $recruiter_id = $_SESSION['business_id'];
+ if($this->db->execute()){
+  return true;
+}
+return false;
+
+}
 }

@@ -333,13 +333,13 @@ class Recruiters extends Controller
         $this->view('recruiters/profile', $data);
     }
     public function explore()
-    {
+    {   
         $all_seekers = $this->recruiterModel->getAll();
         $data = [
             'style' => 'recruiter/explore.css',
             'title' => 'Recruiters Grid',
             'header_title' => 'Explore',
-            'all_seekers' => $all_seekers
+            'all_seekers' => $all_seekers,
 
         ];
         $this->view('recruiters/explore', $data);
@@ -418,7 +418,7 @@ class Recruiters extends Controller
         //if the request methid is not post
         else{
         $data = [
-        'application_id'=> 
+                'application_id'=> 
                 'recruiter_id'=> '',
                 'website'=>'',
                 'business_email'=> '',
@@ -437,8 +437,12 @@ class Recruiters extends Controller
                 'agree_to_terms_err'=> '',
         ];
         //load view
-        $this->view('recruiters/applyForBr',$data);
+        $this->view('recruiters/applyForBR',$data);
     }
+
+    }
+
+    getRecruitementCount(){
 
     }
 

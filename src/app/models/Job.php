@@ -206,10 +206,18 @@ class Job
             WHERE jobs.recruiter_id = :recruiter_id
             ORDER BY appliedCount DESC;");
 
+       
+    
+
         $this->db->bind(':recruiter_id', $recruiter_id);
 
         $results = $this->db->resultset();
 
         return $results;
     }
+
+
+
+
+
 }

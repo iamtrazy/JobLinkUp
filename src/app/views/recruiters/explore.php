@@ -76,7 +76,7 @@
                             <div class="twm-fot-content">
                                 <div class="twm-left-info">
                                     <p class="twm-candidate-address"><i class="fa-solid fa-location-dot"></i>malabe</p>
-                                    <div class="twm-jobs-vacancies">10 Recruitments </div>
+                                    <div class="twm-jobs-vacancies"><?php echo $seeker->getRecruitementCount?> Recruitments </div>
                                 </div>
                             </div>
                         </div>
