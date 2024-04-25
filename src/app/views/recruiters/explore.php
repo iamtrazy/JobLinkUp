@@ -57,7 +57,7 @@
                 </div>
             </div> -->
 
-            <?php foreach ($data['all_seekers'] as $seeker) : ?>
+            <?php foreach ($data['all_recruiters'] as $recruiter) : ?>
                 <div class="col-lg-6 col-md-6">
                     <div class="twm-candidates-grid-style1 mb-5">
                         <div class="twm-media">
@@ -67,7 +67,7 @@
                         </div>
                         <div class="twm-mid-content">
                             <a href="candidate-detail.html" class="twm-job-title">
-                                <h4> <?php echo $seeker->username; ?> </h4>
+                                <h4> <?php echo $recruiter->name; ?> </h4>
                             </a>
                             <div class="mid-mid-content">
                                 <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Business Profile</a>
@@ -76,7 +76,7 @@
                             <div class="twm-fot-content">
                                 <div class="twm-left-info">
                                     <p class="twm-candidate-address"><i class="fa-solid fa-location-dot"></i>malabe</p>
-                                    <div class="twm-jobs-vacancies"><?php echo $seeker->getRecruitementCount?> Recruitments </div>
+                                    <div class="twm-jobs-vacancies"><?php echo $recruiter->job_count?> Recruitments </div>
                                 </div>
                             </div>
                         </div>

@@ -334,12 +334,12 @@ class Recruiters extends Controller
     }
     public function explore()
     {   
-        $all_seekers = $this->recruiterModel->getAll();
+        $all_recruiters = $this->recruiterModel->getAll();
         $data = [
             'style' => 'recruiter/explore.css',
             'title' => 'Recruiters Grid',
             'header_title' => 'Explore',
-            'all_seekers' => $all_seekers,
+            'all_recruiters' => $all_recruiters,
 
         ];
         $this->view('recruiters/explore', $data);
@@ -418,7 +418,7 @@ class Recruiters extends Controller
         //if the request methid is not post
         else{
         $data = [
-                'application_id'=> 
+                'application_id'=> '',
                 'recruiter_id'=> '',
                 'website'=>'',
                 'business_email'=> '',
@@ -442,8 +442,6 @@ class Recruiters extends Controller
 
     }
 
-    getRecruitementCount(){
 
-    }
 
 }

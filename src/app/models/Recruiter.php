@@ -59,7 +59,11 @@ class Recruiter
 
   public function getAll()
   {
-    $this->db->query('SELECT * FROM recruiters');
+    $this->db->query('SELECT recruiters.*, COUNT(jobs.id) AS job_count 
+    FROM recruiters 
+    LEFT JOIN jobs ON jobs.recruiter_id = recruiters.id 
+    GROUP BY recruiters.id
+    ');
 
     return $this->db->resultSet();
 
