@@ -27,8 +27,11 @@
                     <h4> <?php echo $seeker->username; ?> </h4>
                 </a>
                 <div class="mid-mid-content">
-                    <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
-                    <a href="candidate-detail.html" class="twm-download-resume site-text-primary">Resume</a>
+                    <a href="<?php echo URLROOT . '/candidates/profile/' . $seeker->id ?>" class="twm-view-prifile site-text-primary">View Profile</a>
+                    <?php
+                    if (isset($seeker->cv)) {
+                        echo '<a href="' . URLROOT . '/assets/cvs/' . $seeker->cv . '" target="_blank" class="twm-download-resume site-text-primary"> View Resume</a>';
+                    } ?>
                 </div>
                 <div class="twm-fot-content">
                     <div class="twm-left-info">

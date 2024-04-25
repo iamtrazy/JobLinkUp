@@ -138,19 +138,10 @@ class Job
         $results = $this->db->resultset();
         return $results;
     }
-    // public function getApplications($id)
-    // {
-    //     $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , applications.id
-    //                     FROM applications
-    //                     INNER JOIN jobs ON jobs.id=applications.job_id
-    //                     WHERE applications.recruiter_id = $id;");
-    //     $results = $this->db->resultset();
-    //     return $results;
-    // }
 
     public function getApplication($id)
     {
-        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , applications.created_at
+        $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , applications.created_at, applications.status
         FROM applications
         INNER JOIN jobs ON jobs.id=applications.job_id
         WHERE applications.seeker_id = $id;");

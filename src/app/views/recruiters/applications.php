@@ -14,7 +14,7 @@
                         </div>
                         <?php $time_elapsed = time_elapsed_string($application->created_at);
 
-                        if (strpos($time_elapsed, 'hours') !== false || strpos($time_elapsed, 'hour') !== false || strpos($time_elapsed, 'now') !== false) {
+                        if (strpos($time_elapsed, 'hours') !== false || strpos($time_elapsed, 'hour') !== false || strpos($time_elapsed, 'minutes') !== false || strpos($time_elapsed, 'minute') !== false || strpos($time_elapsed, 'now') !== false) {
                             echo '
                         <div class="twm-candidates-tag"><span>New Candidate</span></div>';
                         } ?>
@@ -30,7 +30,7 @@
                                 <div class="twm-jobs-vacancies"><span><?php echo 'Applied ' . time_elapsed_string($application->created_at) ?></span></div>
                             </div>
                             <div class="twm-right-btn">
-                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
+                                <a href="<?php echo URLROOT . '/candidates/profile/' . $application->seeker_id ?>" class="twm-view-prifile site-text-primary">View Profile</a>
                             </div>
                         </div>
                     </div>
