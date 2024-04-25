@@ -64,7 +64,6 @@ class Recruiter
     return $this->db->resultSet();
   }
 
-
   public function applyForBR($data){
     $this->db->query('INSERT INTO br_details (application_id,recruiter_id,website,business_email,business_contact_no,business_name,business_type,business_reg_no,business_address,contact_person,contact_email,contact_number,agree_to_terms) 
     VALUES (:application_id,:recruiter_id,:website,:business_email,:business_contact_no,:business_name,:business_type,:business_reg_no,:business_address,:contact_person,:contact_email,:contact_number,:agree_to_terms)');
@@ -88,4 +87,5 @@ class Recruiter
   return false;
 
 }
+
 }

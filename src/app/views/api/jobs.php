@@ -20,7 +20,7 @@ foreach ($data['jobs'] as $job) : ?>
             </div>
             <div class="twm-right-content" style="margin-top: 3%;">
                 <div class="twm-jobs-amount">
-                    LKR <?php echo $job->rate; ?> <span>/ Month</span>
+                    LKR <?php echo $job->rate; ?><?php if ($job->rate_type !== 'One-Time') echo ' <span>/ ' . $job->rate_type . '</span>'; ?>
                 </div>
                 <?php if (isset($_SESSION['user_id'])) : ?>
                     <button type="button" class="apply-now-btn">

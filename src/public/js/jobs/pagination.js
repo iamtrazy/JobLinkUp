@@ -122,6 +122,27 @@ $(document).ready(function () {
       }
     }
 
+    var apiJurl =
+      "api/jobsearch/" +
+      page +
+      "/" +
+      perPage +
+      "/" +
+      sortBy +
+      "/" +
+      timeCriterion +
+      "/" +
+      selectedCategories;
+
+    // Add keyword parameter if provided
+    if (keyword) {
+      if (isLocation == 0) {
+        apiJurl += "/" + encodeURIComponent(keyword) + "/0";
+      } else if (isLocation == 1) {
+        apiJurl += "/" + encodeURIComponent(keyword) + "/1";
+      }
+    }
+
     $.ajax({
       url: apiUrl,
       type: "GET",
@@ -129,7 +150,7 @@ $(document).ready(function () {
         $("#jobs").html(response);
 
         // Update pagination links
-        fetchTotalJobsCount();
+        fetchTotalJobsCount(apiJurl);
       },
       error: function (xhr, status, error) {
         console.error(xhr.responseText);
@@ -340,16 +361,16 @@ $(document).ready(function () {
     }
   });
   // Function to fetch total job count
-  function fetchTotalJobsCount() {
+  function fetchTotalJobsCount(apiUrl) {
     selectedCategories = selectedCategories || "all";
 
     $.ajax({
-      url: "api/jobcount/" + selectedCategories + "/" + timeCriterion,
+      url: apiUrl,
       type: "GET",
       dataType: "json",
       success: function (response) {
-        totaljobs = response.total_jobs;
-        updatePagination(response.total_jobs);
+        totaljobs = response.job_count;
+        updatePagination(response.job_count);
       },
       error: function (xhr, status, error) {
         console.error(xhr.responseText);
