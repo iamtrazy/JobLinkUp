@@ -56,6 +56,49 @@ p {
   margin-top: 0;
   margin-bottom: 1rem;
 }
+
+/* Custom styles for the searching dropdown */
+
+#searchResults .dropdown-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+#searchResults .dropdown-item:hover,
+#searchResults .dropdown-item:focus {
+  background-color: #f8f9fa; /* Bootstrap hover background color */
+}
+
+#searchResults .dropdown-item.selected {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: #ffffff; /* Bootstrap primary text color */
+}
+
+/* Custom styles for the searching dropdown */
+#searchDropdown {
+  width: 100%;
+}
+
+#searchResults {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#searchResults .dropdown-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+#searchResults .dropdown-item:hover,
+#searchResults .dropdown-item:focus {
+  background-color: #f8f9fa; /* Bootstrap hover background color */
+}
+
+#searchResults .dropdown-item.selected {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: #ffffff; /* Bootstrap primary text color */
+}
+
 ul {
   padding-left: 2rem;
 }
@@ -450,7 +493,6 @@ button:not(:disabled) {
   margin-left: 0;
 }
 .dropdown-menu {
-  position: absolute;
   z-index: 1000;
   display: none;
   min-width: 10rem;

@@ -57,10 +57,12 @@ class Recruiter
     }
   }
 
-  public function getAll()
-  {
-    $this->db->query('SELECT * FROM jobseekers');
+  // public function getAll()
+  // {
+  //   $this->db->query('SELECT * FROM jobseekers');
 
-    return $this->db->resultSet();
-  }
+  //   return $this->db->resultSet();
+  // }
+
+
 }

@@ -321,16 +321,14 @@ class Recruiters extends Controller
         $this->view('recruiters/applications', $data);
     }
 
-    public function explore()
+    public function profile()
     {
-        $all_seekers = $this->recruiterModel->getAll();
         $data = [
-            'style' => 'recruiter/explore.css',
-            'title' => 'Candidates Grid',
-            'header_title' => 'Candidates Grid',
-            'all_seekers' => $all_seekers
-
+            'style' => 'recruiter/profile.css',
+            'title' => 'Profile',
+            'header_title' => 'Recruiter Profile'
         ];
-        $this->view('recruiters/explore', $data);
+
+        $this->view('recruiters/profile', $data);
     }
 }
