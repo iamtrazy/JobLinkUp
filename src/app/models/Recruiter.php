@@ -59,7 +59,7 @@ class Recruiter
 
   public function getAll()
   {
-    $this->db->query('SELECT * FROM jobseekers');
+    $this->db->query('SELECT * FROM recruiters');
 
     return $this->db->resultSet();
   }
