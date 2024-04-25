@@ -113,7 +113,7 @@ class Jobs extends Controller
     }
   }
 
-  public function apply($id)
+  public function apply($id, $confirm = "no")
   {
     $job_id_str = trim(htmlspecialchars($id));
     $job_id = (int)$job_id_str;
@@ -125,20 +125,31 @@ class Jobs extends Controller
       'seeker_id' => $_SESSION['user_id'],
       'recruiter_id' => $recruiter_id,
       'data_err' => '',
+      'confirmation' => 'no',
     ];
 
-
-
-    if ($this->applicationModel->isApplied($data['seeker_id'], $data['job_id'])) {
-      $data['data_err'] = 'You already applied to this job';
-      $this->view('job/alert', $data);
+    if ($this->applicationModel->appliedForMoreThanFiveJobs($data['seeker_id'])) {
+      $data['data_err'] = 'You have already applied for maximum number of jobs';
+      $this->view('job/confirm', $data);
     } else {
-    }
-    if (empty($data['data_err'])) {
-      if ($this->applicationModel->addtoList($data)) {
-        $this->view('job/alert', $data);
+      if ($this->applicationModel->isApplied($data['seeker_id'], $data['job_id'])) {
+        $data['data_err'] = 'You already applied to this job';
+        $this->view('job/confirm', $data);
       } else {
-        die('Something went wrong');
+        // Ask for confirmation to apply
+        if ($data['confirmation'] === 'no') {
+          $data['confirmation'] = $confirm; // Set a flag for confirmation
+          $this->view('job/confirm', $data);
+        }
+        if ($data['confirmation'] === 'yes') {
+          if (empty($data['data_err'])) {
+            if ($this->applicationModel->addtoList($data)) {
+              $this->view('job/confirm', $data);
+            } else {
+              die('Something went wrong');
+            }
+          }
+        }
       }
     }
   }

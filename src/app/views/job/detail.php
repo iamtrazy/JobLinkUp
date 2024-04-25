@@ -67,7 +67,7 @@ if (isset($_SESSION['user_id'])) {
                             </div>
 
                             <div class="twm-job-self-bottom">
-                                <a class="site-button" data-bs-toggle="modal" href="#apply_job_popup" role="button">
+                                <a class="site-button" data-bs-toggle="modal" href="<?php echo URLROOT . '/jobs/apply/' . $data['job']->id ?>" role="button">
                                     Apply Now
                                 </a>
                             </div>

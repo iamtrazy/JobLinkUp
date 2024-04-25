@@ -27,6 +27,13 @@ h6 {
 h2 {
   font-size: calc(1.325rem + 0.9vw);
 }
+
+.status-label {
+  padding: 4px 8px;
+  border-radius: 20px;
+  color: rgb(10, 0, 0);
+}
+
 @media (min-width: 1200px) {
   h2 {
     font-size: 2rem;

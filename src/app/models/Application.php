@@ -39,6 +39,36 @@ class Application
         }
     }
 
+    public function appliedJobCount($seeker_id)
+    {
+        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications WHERE seeker_id = :seeker_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $row = $this->db->single();
+
+        // Check if total applications is retrieved successfully
+        if ($row) {
+            return $row->total_applications;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function appliedForMoreThanFiveJobs($seeker_id)
+    {
+        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications WHERE seeker_id = :seeker_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $row = $this->db->single();
+
+        // Check if total applications is greater than 5
+        if ($row->total_applications > 5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     // Find user by email
     public function findApplications($seeker_id, $job_id)
     {
@@ -86,7 +116,7 @@ class Application
     public function getApplications($job_id)
     {
 
-        $this->db->query("SELECT jobs.id, jobseekers.id, jobseekers.address, jobseekers.username, jobseekers.email, jobseekers.profile_image, applications.created_at
+        $this->db->query("SELECT jobs.id, jobseekers.id AS seeker_id, jobseekers.address, jobseekers.username, jobseekers.email, jobseekers.profile_image, applications.created_at
         FROM applications
         INNER JOIN jobs ON jobs.id = applications.job_id
         INNER JOIN jobseekers ON jobseekers.id = applications.seeker_id

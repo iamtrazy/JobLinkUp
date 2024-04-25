@@ -150,7 +150,7 @@ if (!empty($city) && !empty($country)) {
                                 <div class="twm-s-info-inner">
                                     <i class="fas fa-globe"></i>
                                     <span class="twm-title">Website</sepan>
-                                    <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="text-blue"> Visit </a>' ?> </div>
+                                    <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
                                 </div>
                             </li>
                         <?php endif; ?>
