@@ -285,6 +285,7 @@ class Recruiters extends Controller
 
     public function transactions()
     {
+        //applyForBR
         $data = [
             'style' => 'recruiter/transactions.css',
             'title' => 'Verify Business Profile',
@@ -326,11 +327,108 @@ class Recruiters extends Controller
         $all_seekers = $this->recruiterModel->getAll();
         $data = [
             'style' => 'recruiter/explore.css',
-            'title' => 'Candidates Grid',
-            'header_title' => 'Candidates Grid',
+            'title' => 'Recruiters Grid',
+            'header_title' => 'Explore',
             'all_seekers' => $all_seekers
 
         ];
         $this->view('recruiters/explore', $data);
+    }
+
+
+    public function applyForBR(){
+        if ($_SERVER['REQUEST_METHOD']== 'POST'){
+            $data = [
+                'application_id'=> trim(htmlspecialchars($_POST['application_id'])),
+                'recruiter_id'=> $_SESSION['business_id'],
+                'website'=> trim(htmlspecialchars($_POST['website'])),
+                'business_email'=> trim(htmlspecialchars($_POST['business_email'])),
+                'business_contact_no'=> trim(htmlspecialchars($_POST['business_contact_no'])),
+                'business_name'=> trim(htmlspecialchars($_POST['business_name'])),
+                'business_type'=> trim(htmlspecialchars($_POST['business_type'])),
+                'business_reg_no'=> trim(htmlspecialchars($_POST['business_reg_no'])),
+                'business_address'=> trim(htmlspecialchars($_POST['business_address'])),
+                'contact_person'=> trim(htmlspecialchars($_POST['contact_person'])),
+                'contact_email'=> trim(htmlspecialchars($_POST['contact_email'])),
+                'contact_number'=> trim(htmlspecialchars($_POST['contact_number'])),
+                'agree_to_terms'=> trim(htmlspecialchars($_POST['agree_to_terms'])),
+                'empty_err'=>'',
+                'contact_number_err'=>'',
+                'business_reg_no_err' => '',
+                'agree_to_terms_err'=> '',
+            ];
+
+                //validate business email and contact email
+                if(empty($data['business_email']) || empty($data['contact_email']) || empty($data['business_name']) || empty($data['business_type'])){
+                    $data['empty_err'] = 'this is a required field';
+                }
+
+                //validate business_contact_no and contact person's number
+                if (strlen($data['business_contact_no']) != 10 || strlen($data['contact_number']) != 10) {
+                            $data['contact_number_err'] = 'invalid number format';
+                }
+
+
+                
+                //validate business_reg_no
+                if(strlen($data['business_reg_no']) != 10){
+                        $data['business_reg_no_err'] = 'this is not a valid business registration numeber';
+                }
+
+                //validate business _address
+                //validate contact-person
+                //validate contact_email
+                //validate contact_number
+
+                //validate agree_to_terms
+                if ($data['agree_to_terms'] == false) {
+                    $data['agree_to_terms_err'] = "Please agree to the terms and conditions.";
+                } else {
+                    // Checkbox is checked
+                    // Proceed with other form processing
+                }
+
+                    //make sure errors are empty
+                    if(empty($data['empty_err'] && empty($data['contact_number_err']) && empty($data['agree_to_terms_err'])) && empty($data['business_reg_no_err'])){
+                        //validate
+                        if($this->recruiterModel->applyForBR($data)){
+                            flash('register_success','please choose a payment method');
+                            redirect('recruiters/payment');
+
+                        }else{
+                            die('you changes couldnt be saved');
+                        }
+                    }
+                    else{
+                        //load view with errors
+                        $this->view('recruiters/applyForBR',$data);
+                    }
+                   
+        }
+        //if the request methid is not post
+        else{
+        $data = [
+        'application_id'=> 
+                'recruiter_id'=> '',
+                'website'=>'',
+                'business_email'=> '',
+                'business_contact_no'=> '',
+                'business_name'=>'',
+                'business_type'=> '',
+                'business_reg_no'=> '',
+                'business_address'=> '',
+                'contact_person'=>'',
+                'contact_email'=> '',
+                'contact_number'=> '',
+                'agree_to_terms'=> '',
+                'empty_err'=>'',
+                'contact_number_err'=>'',
+                'business_reg_no_err' => '',
+                'agree_to_terms_err'=> '',
+        ];
+        //load view
+        $this->view('recruiters/applyForBr',$data);
+    }
+
     }
 }

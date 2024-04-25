@@ -4,7 +4,7 @@
 <div class="col-lg-8 col-md-12">
     <!--Filter Short By-->
     <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-        <span class="woocommerce-result-count-left">Showing 2,150 Recruiters</span>
+        <span class="woocommerce-result-count-left">Showing 2,150 Seekers</span>
 
         <form class="woocommerce-ordering twm-filter-select" method="get">
             <span class="woocommerce-result-count">Short By</span>
@@ -70,13 +70,13 @@
                                 <h4> <?php echo $seeker->username; ?> </h4>
                             </a>
                             <div class="mid-mid-content">
-                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Business Profile</a>
+                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Profile</a>
                                 <a href="candidate-detail.html" class="twm-download-resume site-text-primary">Resume</a>
                             </div>
                             <div class="twm-fot-content">
                                 <div class="twm-left-info">
                                     <p class="twm-candidate-address"><i class="fa-solid fa-location-dot"></i>malabe</p>
-                                    <div class="twm-jobs-vacancies">10 Recruitments </div>
+                                    <div class="twm-jobs-vacancies">10 jobs </div>
                                 </div>
                             </div>
                         </div>

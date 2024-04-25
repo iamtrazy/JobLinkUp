@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label>Business Registration number</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="location" type="text" placeholder="" required />
+                                    <input class="form-control" name="business_reg_no" type="text" placeholder="" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label>Business Address</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="location" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
+                                    <input class="form-control" name="business_address" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
 
                 <div class="panel-body wt-panel-body p-a20 m-b30">
 
-                    <input type="checkbox">
+                    <input type="checkbox" name="agree_to_terms">
                     I hereby acknowledge that I have read, understood, and agree to abide by the terms and conditions set forth in this Verification Agreement.
 
                 </div>
