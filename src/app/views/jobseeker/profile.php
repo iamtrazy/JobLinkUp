@@ -98,6 +98,13 @@
 
             <div class="col-md-12">
               <div class="form-group">
+                <label>About Me</label>
+                <textarea id="about" class="form-control" name="about" rows="3" minlength="2" maxlength="255" placeholder="Enter your description about yourself."></textarea>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="form-group">
                 <label>Enter Keywords for Job Recommendations</label>
                 <textarea id="keywords" class="form-control" name="keywords" rows="3" minlength="2" maxlength="255" placeholder="Please enter keywords related to your skills, experience, and interests."></textarea>
               </div>
@@ -189,6 +196,7 @@
         $('#age').val(response.age === 0 ? '' : response.age); // If age is zero, leave the field empty
         $('#address').val(response.address);
         $('#locationCheckbox').prop('checked', response.location_rec == 1); // Check location_rec checkbox based on received boolean value
+        $('#about').val(response.about);
         $('#keywords').val(response.keywords);
         $('#locationCheckbox').val(response.location_rec);
         $('#linkedin_url').val(response.linkedin_url); // Populate linkedin_url field

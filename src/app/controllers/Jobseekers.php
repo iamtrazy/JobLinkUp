@@ -432,6 +432,7 @@ class Jobseekers extends Controller
                 'location_rec' => '',
                 'age' => '',
                 'address' => '',
+                'about' => '',
                 'keywords' => '',
                 'linkedin_url' => '',
                 'whatsapp_url' => '',
