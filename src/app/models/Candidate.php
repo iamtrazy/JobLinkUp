@@ -8,6 +8,16 @@ class Candidate
         $this->db = new Database;
     }
 
+    public function getCandidateById($id)
+    {
+        $this->db->query('SELECT * FROM jobseekers WHERE id = :id');
+        $this->db->bind(':id', $id);
+
+        $row = $this->db->single();
+
+        return $row;
+    }
+
     public function getCandidates($page, $perPage, $sortBy, $searchKeyword = null, $isLocation = null)
     {
         // Calculate the offset based on the page number and records per page

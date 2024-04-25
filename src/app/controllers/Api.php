@@ -242,6 +242,7 @@ class Api extends Controller
                 'age' => $jobseeker->age,
                 'address' => $jobseeker->address,
                 'location_rec' => $jobseeker->location_rec,
+                'about' => $jobseeker->about,
                 'keywords' => $jobseeker->keywords,
                 'linkedin_url' => $jobseeker->linkedin_url,
                 'whatsapp_url' => $jobseeker->whatsapp_url,
