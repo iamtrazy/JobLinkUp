@@ -5,12 +5,14 @@ class Recruiters extends Controller
     public $recruiterModel;
     public $jobModel;
     public $applicationModel;
+    public $chatModel;
 
     public function __construct()
     {
         $this->recruiterModel = $this->model('Recruiter');
         $this->jobModel = $this->model('Job');
         $this->applicationModel = $this->model('Application');
+        $this->chatModel = $this->model('Chat');
     }
 
     public function index()
@@ -271,6 +273,92 @@ class Recruiters extends Controller
         $this->view('recruiters/postjob', $data);
     }
 
+    public function editjob($job_id = null)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'topic' => trim(htmlspecialchars($_POST['topic'])),
+                'location' => trim(htmlspecialchars($_POST['location'])),
+                'type' => trim(htmlspecialchars($_POST['type'])),
+                'rate' => trim(htmlspecialchars($_POST['rate'])),
+                'rate_type' => trim(htmlspecialchars($_POST['rate_type'])),
+                'website' => trim(htmlspecialchars($_POST['website'])),
+                'keywords' => trim(htmlspecialchars($_POST['keywords'])),
+                'detail' => trim(htmlspecialchars($_POST['detail'])),
+                'job_id' => $job_id
+            ];
+
+            // Check if the current user is authorized to edit this job
+            $job = $this->jobModel->getJobById($job_id);
+            if ($job->recruiter_id !== $_SESSION['business_id']) {
+                $response = ['status' => 'error', 'message' => 'You are not authorized to edit this job'];
+            } else {
+                // Handle file upload if banner image is set
+                if (isset($_FILES['banner_image'])) {
+                    $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
+
+                    // If banner image is uploaded, add it to $data
+                    if ($bannerImagePath) {
+                        $data['banner_image'] = $bannerImagePath;
+                    } else {
+                        $response = ['status' => 'error', 'message' => 'Image upload failed (check image extension or size)'];
+                    }
+                }
+
+                // Validate required fields
+                if (empty($data['rate']) || empty($data['location']) || empty($data['topic']) || empty($data['type']) || empty($data['detail'])) {
+                    $response = ['status' => 'error', 'message' => 'Please enter all details'];
+                } else {
+                    // Update the job
+                    if ($this->jobModel->updateJob($data)) {
+                        $response = ['status' => 'success', 'message' => 'Job Updated Successfully'];
+                    } else {
+                        $response = ['status' => 'error', 'message' => 'Failed to update job'];
+                    }
+                }
+            }
+
+            // Return JSON response
+            $this->view('api/json', $response);
+        } else {
+            // If GET request, load the job data for editing
+            if ($job = $this->jobModel->getJobById($job_id)) {
+                $data = [
+                    'job' => $job,
+                    'style' => 'recruiter/postjob.css',
+                    'title' => 'Edit Job',
+                    'header_title' => 'Edit Job'
+                ];
+                $this->view('recruiters/edit-job', $data);
+            } else {
+                $data = [
+                    'style' => 'recruiter/postjob.css',
+                    'title' => 'Edit Job',
+                    'header_title' => 'Edit Job'
+                ];
+                $this->view('recruiters/postjob', $data);
+            }
+        }
+    }
+
+    public function deletejob($job_id = null)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $job = $this->jobModel->getJobById($job_id);
+            if ($job->recruiter_id !== $_SESSION['business_id']) {
+                $response = ['status' => 'error', 'message' => 'You are not authorized to delete this job'];
+            } else {
+                if ($this->jobModel->deleteJob($job_id)) {
+                    $response = ['status' => 'success', 'message' => 'Job Deleted Successfully'];
+                } else {
+                    $response = ['status' => 'error', 'message' => 'Failed to delete job'];
+                }
+            }
+
+            $this->view('api/json', $response);
+        }
+    }
+
     public function chat()
     {
         $data = [
@@ -321,16 +409,149 @@ class Recruiters extends Controller
         $this->view('recruiters/applications', $data);
     }
 
-    public function explore()
+    public function profile()
     {
-        $all_seekers = $this->recruiterModel->getAll();
         $data = [
-            'style' => 'recruiter/explore.css',
-            'title' => 'Candidates Grid',
-            'header_title' => 'Candidates Grid',
-            'all_seekers' => $all_seekers
-
+            'style' => 'recruiter/profile.css',
+            'title' => 'Profile',
+            'header_title' => 'Recruiter Profile'
         ];
-        $this->view('recruiters/explore', $data);
+
+        $this->view('recruiters/profile', $data);
+    }
+
+    public function acceptApplication()
+    {
+        // Check if request is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = $_POST['job_id'];
+                $seeker_id = $_POST['seeker_id'];
+
+                // Perform accept action
+                if ($this->applicationModel->acceptApplication($seeker_id, $job_id)) {
+                    // Return success message
+                    $message = 'Application accepted successfully';
+                    if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
+                        $this->chatModel->startThread($seeker_id, $_SESSION['business_id']);
+                    }
+                } else {
+                    // Return error message
+                    $message = 'Failed to accept application';
+                }
+            } else {
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
+            }
+        } else {
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
+        }
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
+    }
+
+    public function rejectApplication()
+    {
+        // Check if request is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $seeker_id = $_POST['seeker_id'];
+                $job_id = $_POST['job_id'];
+
+                // Perform reject action
+                if ($this->applicationModel->rejectApplication($seeker_id, $job_id)) {
+                    // Return success message
+                    if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
+                        $thread_id = $this->chatModel->getThreadId($seeker_id, $_SESSION['business_id']);
+                        $this->chatModel->deleteThread($thread_id);
+                    }
+                    $message = 'Application rejected successfully';
+                } else {
+                    // Return error message
+                    $message = 'Failed to reject application';
+                }
+            } else {
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
+            }
+        } else {
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
+        }
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
+    }
+
+    public function applyForBR()
+    {
+        // Check if the request method is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Initialize an empty array to store response data
+            $response = [];
+
+            // Check if the user is logged in
+            if ($this->isLoggedIn()) {
+                // Validate and process the form data
+                // You can access the form fields using $_POST superglobal
+                // For example:
+                if ($_POST['agree_tos'] == 1) {
+                    // Sanitize and validate the form data (business name, type, registration number, business address, and BR file
+                    $business_name = trim($_POST['business_name']);
+                    $business_type = trim($_POST['type']);
+                    $registration_number = trim($_POST['reg_no']);
+                    $business_address = trim($_POST['location']);
+                    $recruiter_id = $_SESSION['business_id'];
+
+                    if (!empty($_FILES['br'])) {
+                        $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
+
+                        // If profile image is uploaded, add it to $data
+                        if ($br_path) {
+                            $br = $br_path;
+                        } else {
+                            $response['status'] = 'error';
+                            $response['message'] = 'BR upload failed (check file extension or size)';
+                        }
+                    } else {
+                        $br = '';
+                    }
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Please agree to the terms of service';
+                }
+                if (empty($business_name) || empty($business_type) || empty($registration_number) || empty($business_address) || empty($br)) {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Please enter all details';
+                } else {
+                    // Save the business registration data
+                    if ($this->recruiterModel->applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br)) {
+                        $response['status'] = 'success';
+                        $response['message'] = 'Business registration request submitted successfully';
+                    } else {
+                        $response['status'] = 'error';
+                        $response['message'] = 'Failed to submit business registration request';
+                    }
+                }
+            } else {
+                // If the user is not logged in, return an error message
+                $response['status'] = 'error';
+                $response['message'] = 'User not logged in';
+            }
+        } else {
+            // If the request method is not POST, return an error message
+            $response['status'] = 'error';
+            $response['message'] = 'Invalid request method';
+        }
+
+
+        // Send the JSON response
+        $this->view('api/json', $response);
     }
 }

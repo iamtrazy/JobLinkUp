@@ -79,7 +79,7 @@
 <script>
   $(document).ready(function() {
     // Function to load messages for a specific thread
-    function loadMessages(threadId, recruiterName, businessName) {
+    function loadMessages(threadId, recruiterName) {
       // Function to send a message
       function sendMessage() {
         var message = $('.form-control').val(); // Get the message from the input field
@@ -92,7 +92,7 @@
           },
           success: function(response) {
             // Reload messages after sending the message
-            loadMessages(threadId, recruiterName, businessName);
+            loadMessages(threadId, recruiterName);
             // Clear input field after sending the message
             $('.form-control').val('');
           },
@@ -110,13 +110,14 @@
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-          // Iterate over each message in the response
-          $.each(response, function(index, message) {
-            // Determine message class based on whether it's a reply or not
-            var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
-            var rowClass = message.reply ? 'row justify-content-end' : 'row';
-            // Create HTML elements for each message and append to container
-            var messageHtml = `
+          if (response && response.length > 0) {
+            // Iterate over each message in the response
+            $.each(response, function(index, message) {
+              // Determine message class based on whether it's a reply or not
+              var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
+              var rowClass = message.reply ? 'row justify-content-end' : 'row';
+              // Create HTML elements for each message and append to container
+              var messageHtml = `
                         <div class="${rowClass}">
                             <div class="col-xl-9 col-lg-12">
                                 <div class="${messageClass} clearfix">
@@ -133,10 +134,14 @@
                             </div>
                         </div>
                     `;
-            $('#msg-chat-wrap').append(messageHtml);
-          });
-          // Hide horizontal scrollbar for messages
-          $('#msg-chat-wrap').css('overflow-x', 'hidden');
+              $('#msg-chat-wrap').append(messageHtml);
+            });
+            // Hide horizontal scrollbar for messages
+            $('#msg-chat-wrap').css('overflow-x', 'hidden');
+          } else {
+            // If there are no messages, display a message
+            $('#msg-chat-wrap').html('<p>No messages available</p>');
+          }
         },
         error: function(xhr, status, error) {
           console.error("Error fetching chat messages:", error);
@@ -145,7 +150,6 @@
 
       // Update recruiter name and business name in conversation box
       $('.single-msg-user-name').text(recruiterName);
-      $('.single-msg-business-name').text(businessName);
 
       // Unbind previous event listeners before attaching new ones
       $('button.btn').off('click').on('click', function() {
@@ -165,10 +169,11 @@
       type: 'GET',
       dataType: 'json',
       success: function(response) {
-        // Iterate over each chat thread in the response
-        $.each(response, function(index, thread) {
-          // Create HTML elements for each chat thread and append to container
-          var threadHtml = `
+        if (response && response.length > 0) {
+          // Iterate over each chat thread in the response
+          $.each(response, function(index, thread) {
+            // Create HTML elements for each chat thread and append to container
+            var threadHtml = `
                     <div class="wt-dashboard-msg-search-list-wrap" data-thread-id="${thread.thread_id}">
                         <div class="msg-user-info clearfix">
                             <div class="msg-user-timing">${thread.created_at}</div>
@@ -177,26 +182,36 @@
                             </div>
                             <div class="msg-user-info-text">
                                 <div class="msg-user-name">${thread.recruiter_name}</div>
-                                <div class="msg-user-discription">${thread.business_name}</div>
+                                <div class="msg-user-discription">${thread.created_at}</div>
                             </div>
                         </div>
                     </div>
                 `;
-          $('#msg-list-wrap').append(threadHtml);
-        });
+            $('#msg-list-wrap').append(threadHtml);
+          });
 
-        // Event listener for clicking on a thread
-        $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
-          var threadId = $(this).data('thread-id');
-          var recruiterName = $(this).find('.msg-user-name').text();
-          var businessName = $(this).find('.msg-user-discription').text();
-          loadMessages(threadId, recruiterName, businessName);
-        });
+          // Event listener for clicking on a thread
+          $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
+            var threadId = $(this).data('thread-id');
+            var recruiterName = $(this).find('.msg-user-name').text();
+            loadMessages(threadId, recruiterName);
+            // loadMessagesPeriodically(threadId, recruiterName);
+          });
+        } else {
+          // If there are no threads, display a message
+          $('#msg-list-wrap').html('<p>No threads available</p>');
+        }
       },
       error: function(xhr, status, error) {
         console.error("Error fetching chat threads:", error);
       }
     });
+
+    function loadMessagesPeriodically(threadId, recruiterName) {
+      setInterval(function() {
+        loadMessages(threadId, recruiterName);
+      }, 3000); // 3000 milliseconds = 3 seconds
+    }
   });
 </script>
 

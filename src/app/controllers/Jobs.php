@@ -45,6 +45,8 @@ class Jobs extends Controller
     if ($id !== null) {
       // Retrieve job details for the given $id
       $job = $this->jobModel->getJobById($id);
+      $appliedCount = $this->jobModel->appliedCount($id);
+      $this->jobModel->increaseViewCount($id);
 
       // Check if job details are retrieved successfully
       if ($job) {
@@ -53,7 +55,8 @@ class Jobs extends Controller
           'style' => 'jobs/detail.css',
           'title' => 'Jobs Details',
           'header_title' => 'The Most Exciting Jobs',
-          'job' => $job // Pass job details to the view
+          'job' => $job, // Pass job details to the view
+          'appliedCount' => $appliedCount // Pass applied count to the view
         ];
 
         // Load the detail view with job details
@@ -113,7 +116,7 @@ class Jobs extends Controller
     }
   }
 
-  public function apply($id)
+  public function apply($id, $confirm = "no")
   {
     $job_id_str = trim(htmlspecialchars($id));
     $job_id = (int)$job_id_str;
@@ -125,20 +128,31 @@ class Jobs extends Controller
       'seeker_id' => $_SESSION['user_id'],
       'recruiter_id' => $recruiter_id,
       'data_err' => '',
+      'confirmation' => 'no',
     ];
 
-
-
-    if ($this->applicationModel->isApplied($data['seeker_id'], $data['job_id'])) {
-      $data['data_err'] = 'You already applied to this job';
-      $this->view('job/alert', $data);
+    if ($this->applicationModel->appliedForMoreThanFiveJobs($data['seeker_id'])) {
+      $data['data_err'] = 'You have already applied for maximum number of jobs';
+      $this->view('job/confirm', $data);
     } else {
-    }
-    if (empty($data['data_err'])) {
-      if ($this->applicationModel->addtoList($data)) {
-        $this->view('job/alert', $data);
+      if ($this->applicationModel->isApplied($data['seeker_id'], $data['job_id'])) {
+        $data['data_err'] = 'You already applied to this job';
+        $this->view('job/confirm', $data);
       } else {
-        die('Something went wrong');
+        // Ask for confirmation to apply
+        if ($data['confirmation'] === 'no') {
+          $data['confirmation'] = $confirm; // Set a flag for confirmation
+          $this->view('job/confirm', $data);
+        }
+        if ($data['confirmation'] === 'yes') {
+          if (empty($data['data_err'])) {
+            if ($this->applicationModel->addtoList($data)) {
+              $this->view('job/confirm', $data);
+            } else {
+              die('Something went wrong');
+            }
+          }
+        }
       }
     }
   }

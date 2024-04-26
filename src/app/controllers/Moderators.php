@@ -217,7 +217,13 @@ class Moderators extends Controller
     }
 public function verifiedRecruiters(){
     $data =[
-        'style'=> ''
-    ]
+         
+                    'style' => 'moderators/verifiedRecruiters.css',
+                    'title' => 'verified recruiters list',
+                    'header_title' => 'verified recruiters list',
+                     
+                ];
+   
+                $this->view('moderator/verifiedRecruiters', $data);             
 }
 }

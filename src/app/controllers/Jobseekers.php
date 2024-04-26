@@ -294,17 +294,17 @@ class Jobseekers extends Controller
         }
     }
 
-    public function wishlist($id = null, $action = null)
+    public function wishlist($job_id = null, $action = null)
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
-            if ($id == NULL) {
-                $this->dashboard();
-            }
+
+            $id = $_SESSION['user_id'];
+
             if ($action == 'delete') {
 
-                $job_id_str = trim(htmlspecialchars($id));
+                $job_id_str = trim(htmlspecialchars($job_id));
                 $job_id = (int)$job_id_str;
 
                 $data = [
@@ -332,42 +332,31 @@ class Jobseekers extends Controller
         }
     }
 
-    public function applications($id = null, $action = null)
+    public function applications()
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
-            if ($id == NULL) {
-                $this->dashboard();
-            }
-            // if ($action == 'withdraw') {
+            $id = $_SESSION['user_id'];
 
-            //     $job_id_str = trim(htmlspecialchars($id));
-            //     $job_id = (int)$job_id_str;
+            // Get the count of applied jobs for the current user
+            $appliedCount = $this->applicationModel->appliedJobCount($id);
 
-            //     $data = [
-            //         'style' => 'jobseeker/wishlist.css',
-            //         'title' => 'Applied Jobs',
-            //         'header_title' => 'Applied Jobs',
-            //         'job_id' => $job_id,
-            //         'seeker_id' => $_SESSION['user_id']
-            //     ];
-            //     $this->wishlistModel->deleteFromList($data);
-            //     $this->view('wishlist/confirm', $data);
-            // }
-
-            $application = $this->jobModel->getApplication($id);
+            // Fetch the list of applied jobs
+            $applications = $this->jobModel->getApplication($id);
 
             $data = [
                 'style' => 'jobseeker/applied.css',
                 'title' => 'Applied Jobs',
                 'header_title' => 'Applied Jobs',
-                'application' => $application,
+                'application' => $applications,
+                'applied_count' => $appliedCount, // Pass the applied job count to the view
                 'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
             ];
             $this->view('jobseeker/jobs-applied', $data);
         }
     }
+
 
 
     public function jobalerts()
@@ -432,6 +421,7 @@ class Jobseekers extends Controller
                 'location_rec' => '',
                 'age' => '',
                 'address' => '',
+                'about' => '',
                 'keywords' => '',
                 'linkedin_url' => '',
                 'whatsapp_url' => '',

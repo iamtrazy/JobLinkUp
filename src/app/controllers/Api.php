@@ -6,6 +6,8 @@ class Api extends Controller
     public $jobModel;
     public $wishlistModel;
     public $chatModel;
+    public $recruiterModel;
+    public $candidateModel;
 
     public function __construct()
     {
@@ -14,6 +16,8 @@ class Api extends Controller
         $this->jobseekerModel = $this->model('Jobseeker');
         $this->wishlistModel = $this->model('Wishlist');
         $this->chatModel = $this->model('Chat');
+        $this->recruiterModel = $this->model('Recruiter');
+        $this->candidateModel = $this->model('Candidate');
     }
 
     // Load All job
@@ -91,33 +95,122 @@ class Api extends Controller
 
         $jobs = $this->jobModel->getJobs($page_no, $per_page, $sort_by, $criterion, $categories, $keyword, $isLocation);
 
-        // Pass page number, jobs, and per page to the view
+        // Count the number of jobs
+        $job_count = count($jobs);
+
+        // Pass page number, jobs, and per page to the view along with job count
         $data = [
             'page_no' => $page_no,
             'jobs' => $jobs,
-            'per_page' => $per_page
+            'per_page' => $per_page,
+            'job_count' => $job_count
         ];
 
         $this->view('api/json', $data);
     }
 
 
-
-
-    public function jobcount($selected_categories, $timeCriterion)
+    public function candidates($page, $perPage, $sort, $keyword = null, $isLocation = null)
     {
-        if (!isset($_SESSION['user_id'])) {
-            $_SESSION['guest_id'] = '1';
-            $_SESSION['user_name'] = 'Guest User';
+        // Sanitize and validate page number
+        $page_no = filter_var($page, FILTER_VALIDATE_INT);
+        if ($page_no === false || $page_no <= 0) {
+            $page_no = 1;
         }
 
-        $categories = isset($selected_categories) ? explode(",", $selected_categories) : ['all'];
-        $criterion = isset($timeCriterion) ? $timeCriterion : "";
+        // Sanitize and validate records per page
+        $per_page = filter_var($perPage, FILTER_VALIDATE_INT);
+        if ($per_page === false || $per_page <= 0) {
+            $per_page = 10; // Default to 10 records per page if invalid value provided
+        }
 
-        $totalCount = $this->jobModel->totalJobs($categories, $criterion);
+        // Fetch candidates for the current page
+        if ($sort === "date_joined") {
+            $sortBy = "date_joined";
+        } else {
+            $sortBy = "profile_completion"; // Default sorting by created_at
+        }
 
-        // Prepare response data
-        $data = $totalCount;
+        // Call the recruiterModel's getCandidates method to fetch candidates
+        $candidates = $this->candidateModel->getCandidates($page_no, $per_page, $sortBy, $keyword, $isLocation);
+
+
+        foreach ($candidates as &$seeker) {
+
+            if (($seeker->address) !== null) {
+                $locationData = gelocate($seeker->address);
+                if ($locationData === null) {
+                    $seeker->country = 'unknown';
+                    $seeker->city = 'unknown';
+                    continue;
+                }
+                $seeker->country = $locationData['country'];
+                $seeker->city = $locationData['city'];
+            } else {
+                $seeker->country = 'unknown';
+                $seeker->city = 'unknown';
+            }
+        }
+
+        // Pass page number, candidates, and per page to the view
+        $data = [
+            'page_no' => $page_no,
+            'candidates' => $candidates,
+            'per_page' => $per_page
+        ];
+
+        $this->view('api/candidates', $data);
+    }
+
+    public function candidates_search($page, $perPage, $sort, $keyword = null, $isLocation = null)
+    {
+        // Sanitize and validate page number
+        $page_no = filter_var($page, FILTER_VALIDATE_INT);
+        if ($page_no === false || $page_no <= 0) {
+            $page_no = 1;
+        }
+
+        // Sanitize and validate records per page
+        $per_page = filter_var($perPage, FILTER_VALIDATE_INT);
+        if ($per_page === false || $per_page <= 0) {
+            $per_page = 10; // Default to 10 records per page if invalid value provided
+        }
+
+        // Fetch candidates for the current page
+        if ($sort === "date_joined") {
+            $sortBy = "date_joined";
+        } else {
+            $sortBy = "profile_completion"; // Default sorting by created_at
+        }
+
+        // Call the recruiterModel's getCandidates method to fetch candidates
+        $candidates = $this->candidateModel->getCandidates($page_no, $per_page, $sortBy, $keyword, $isLocation);
+        $candidate_count = count($candidates);
+
+        foreach ($candidates as &$seeker) {
+
+            if (($seeker->address) !== null) {
+                $locationData = gelocate($seeker->address);
+                if ($locationData === null) {
+                    $seeker->country = 'unknown';
+                    $seeker->city = 'unknown';
+                    continue;
+                }
+                $seeker->country = $locationData['country'];
+                $seeker->city = $locationData['city'];
+            } else {
+                $seeker->country = 'unknown';
+                $seeker->city = 'unknown';
+            }
+        }
+
+        // Pass page number, candidates, and per page to the view
+        $data = [
+            'page_no' => $page_no,
+            'candidates' => $candidates,
+            'per_page' => $per_page,
+            'candidate_count' => $candidate_count
+        ];
 
         $this->view('api/json', $data);
     }
@@ -149,6 +242,7 @@ class Api extends Controller
                 'age' => $jobseeker->age,
                 'address' => $jobseeker->address,
                 'location_rec' => $jobseeker->location_rec,
+                'about' => $jobseeker->about,
                 'keywords' => $jobseeker->keywords,
                 'linkedin_url' => $jobseeker->linkedin_url,
                 'whatsapp_url' => $jobseeker->whatsapp_url,
@@ -187,7 +281,6 @@ class Api extends Controller
                     $formatted_threads[] = [
                         'thread_id' => $thread->id,
                         'recruiter_name' => $thread->name,
-                        'business_name' => $thread->business_name,
                         'created_at' => $thread->created_at
                     ];
                 }
