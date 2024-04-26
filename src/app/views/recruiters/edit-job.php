@@ -15,7 +15,7 @@
                             <div class="form-group">
                                 <label>Job Title</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="topic" type="text" placeholder="Artist" required />
+                                    <input class="form-control" name="topic" type="text" value="<?php echo $data['job']->topic ?>" placeholder="Artist" required />
                                     <i class="fs-input-icon fa fa-address-card"></i>
                                 </div>
                             </div>
@@ -27,11 +27,11 @@
                                 <div class="ls-inputicon-box">
                                     <div class="">
                                         <select class="wt-select-box" name="type" data-live-search="true" title="" id="s-category" data-bv-field="size">
-                                            <option>Freelance</option>
-                                            <option>Internship</option>
-                                            <option>Part-Time</option>
-                                            <option>Volunteer</option>
-                                            <option>Other</option>
+                                            <option <?php echo ($data['job']->type == 'Freelance') ? 'selected' : ''; ?>>Freelance</option>
+                                            <option <?php echo ($data['job']->type == 'Internship') ? 'selected' : ''; ?>>Internship</option>
+                                            <option <?php echo ($data['job']->type == 'Part-Time') ? 'selected' : ''; ?>>Part-Time</option>
+                                            <option <?php echo ($data['job']->type == 'Volunteer') ? 'selected' : ''; ?>>Volunteer</option>
+                                            <option <?php echo ($data['job']->type == 'Other') ? 'selected' : ''; ?>>Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label>Offered Salary</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="rate" type="text" placeholder="5000" required />
+                                    <input class="form-control" name="rate" type="text" placeholder="5000" value="<?php echo $data['job']->rate ?>" required />
                                     <i class="fs-input-icon fa fas fa-coins"></i>
                                 </div>
                             </div>
@@ -53,11 +53,12 @@
                                 <div class="ls-inputicon-box">
                                     <div class="">
                                         <select class="wt-select-box" name="rate_type" data-live-search="true" title="" id="s-category" data-bv-field="size">
-                                            <option>One-Time</option>
-                                            <option>Hourly</option>
-                                            <option>Weekly</option>
-                                            <option>Monthly</option>
+                                            <option <?php echo ($data['job']->rate_type == 'One-Time') ? 'selected' : ''; ?>>One-Time</option>
+                                            <option <?php echo ($data['job']->rate_type == 'Hour') ? 'selected' : ''; ?>>Hourly</option>
+                                            <option <?php echo ($data['job']->rate_type == 'Week') ? 'selected' : ''; ?>>Weekly</option>
+                                            <option <?php echo ($data['job']->rate_type == 'Month') ? 'selected' : ''; ?>>Monthly</option>
                                         </select>
+
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +68,7 @@
                             <div class="form-group">
                                 <label>Website</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="website" type="text" placeholder="https://..." />
+                                    <input class="form-control" name="website" type="text" placeholder="https://..." value="<?php echo $data['job']->website ?>" />
                                     <i class="fs-input-icon fa fa-globe-americas"></i>
                                 </div>
                             </div>
@@ -76,7 +77,7 @@
                             <div class="form-group">
                                 <label>Keywords</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="keywords" type="text" placeholder="artist engineer..." id="hash-input" />
+                                    <input class="form-control" name="keywords" type="text" placeholder="artist engineer..." id="hash-input" value="<?php echo $data['job']->keywords ?>" />
                                     <i class="fs-input-icon fa fa-hashtag"></i>
                                 </div>
                             </div>
@@ -86,7 +87,7 @@
                             <div class="form-group">
                                 <label>Complete Address</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="location" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
+                                    <input class="form-control" name="location" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" value="<?php echo $data['job']->location ?>" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -113,7 +114,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea class="form-control" name="detail" rows="3" placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality." required></textarea>
+                            <textarea class="form-control" name="detail" rows="3" placeholder="Greetings! We are Galaxy Software Development Company. We hope you enjoy our services and quality." required><?php echo $data['job']->detail ?></textarea>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12">
@@ -128,4 +129,55 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        // Submit form data via AJAX when form is submitted
+        $('form').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Display SweetAlert2 confirm dialog
+            Swal.fire({
+                title: 'Are you sure you want to update the job?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) { // If user confirms
+                    var formData = new FormData($(this)[0]); // Get form data
+
+                    $.ajax({
+                        url: '<?php echo URLROOT; ?>/recruiters/editjob/<?php echo $data['job']->id ?>',
+                        type: 'POST',
+                        data: formData,
+                        processData: false, // Prevent jQuery from automatically processing data
+                        contentType: false, // Prevent jQuery from automatically setting contentType
+                        success: function(response) {
+                            // Handle successful response using SweetAlert2
+                            Swal.fire({
+                                title: 'Success!',
+                                text: response.message,
+                                icon: 'success'
+                            }).then(() => {
+                                window.location.href = '<?php echo URLROOT; ?>/recruiters/manage';
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error using SweetAlert2
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Failed to update job. Please try again later.',
+                                icon: 'error'
+                            });
+                            console.error("Error:", error);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

@@ -273,6 +273,68 @@ class Recruiters extends Controller
         $this->view('recruiters/postjob', $data);
     }
 
+    public function editjob($job_id = null)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'topic' => trim(htmlspecialchars($_POST['topic'])),
+                'location' => trim(htmlspecialchars($_POST['location'])),
+                'type' => trim(htmlspecialchars($_POST['type'])),
+                'rate' => trim(htmlspecialchars($_POST['rate'])),
+                'rate_type' => trim(htmlspecialchars($_POST['rate_type'])),
+                'website' => trim(htmlspecialchars($_POST['website'])),
+                'keywords' => trim(htmlspecialchars($_POST['keywords'])),
+                'detail' => trim(htmlspecialchars($_POST['detail'])),
+                'job_id' => $job_id
+            ];
+
+            // Check if the current user is authorized to edit this job
+            $job = $this->jobModel->getJobById($job_id);
+            if ($job->recruiter_id !== $_SESSION['business_id']) {
+                $response = ['status' => 'error', 'message' => 'You are not authorized to edit this job'];
+            } else {
+                // Handle file upload if banner image is set
+                if (isset($_FILES['banner_image'])) {
+                    $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
+
+                    // If banner image is uploaded, add it to $data
+                    if ($bannerImagePath) {
+                        $data['banner_image'] = $bannerImagePath;
+                    } else {
+                        $response = ['status' => 'error', 'message' => 'Image upload failed (check image extension or size)'];
+                    }
+                }
+
+                // Validate required fields
+                if (empty($data['rate']) || empty($data['location']) || empty($data['topic']) || empty($data['type']) || empty($data['detail'])) {
+                    $response = ['status' => 'error', 'message' => 'Please enter all details'];
+                } else {
+                    // Update the job
+                    if ($this->jobModel->updateJob($data)) {
+                        $response = ['status' => 'success', 'message' => 'Job Updated Successfully'];
+                    } else {
+                        $response = ['status' => 'error', 'message' => 'Failed to update job'];
+                    }
+                }
+            }
+
+            // Return JSON response
+            $this->view('api/json', $response);
+        } else {
+            // If GET request, load the job data for editing
+            $job = $this->jobModel->getJobById($job_id);
+            $data = [
+                'job' => $job,
+                'style' => 'recruiter/postjob.css',
+                'title' => 'Edit Job',
+                'header_title' => 'Edit Job'
+            ];
+
+            $this->view('recruiters/edit-job', $data);
+        }
+    }
+
+
     public function chat()
     {
         $data = [

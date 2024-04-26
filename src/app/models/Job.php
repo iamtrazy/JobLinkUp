@@ -128,6 +128,36 @@ class Job
         }
     }
 
+    public function updateJob($data)
+    {
+        // Prepare Query
+        $this->db->query('UPDATE jobs SET location = :location, rate = :rate, topic = :topic, type = :type, website = :website, keywords = :keywords, detail = :detail, banner_img = :banner_image WHERE id = :job_id');
+
+        // Bind Values
+        $this->db->bind(':job_id', $data['job_id']);
+        $this->db->bind(':location', $data['location']);
+        $this->db->bind(':rate', $data['rate']);
+        $this->db->bind(':topic', $data['topic']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':website', $data['website']);
+        $this->db->bind(':keywords', $data['keywords']);
+        $this->db->bind(':detail', $data['detail']);
+        if (array_key_exists('banner_image', $data)) {
+            // If 'banner_image' key exists, bind it to the database statement
+            $this->db->bind(':banner_image', $data['banner_image']);
+        } else {
+            // If 'banner_image' key does not exist, bind NULL to the database statement
+            $this->db->bind(':banner_image', "job-detail-bg.jpg");
+        }
+
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     public function getWishlist($id)
     {
