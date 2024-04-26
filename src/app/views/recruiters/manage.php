@@ -15,6 +15,7 @@
                                     <th>Job Types</th>
                                     <th>Rate</th>
                                     <th>Applications</th>
+                                    <th>Status</th>
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -44,6 +45,7 @@
                                                 View Applicants
                                             </a>
                                         </td>
+                                        <td><?php echo $job->status?></td>
 
                                         <td>
                                             <span class="text-clr-green2"><?php echo time_elapsed_string($job->created_at); ?></span>
@@ -58,7 +60,7 @@
                                                     </li>
 
                                                     <li>
-                                                        <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top">
+                                                        <button title="Delete" data-bs-toggle="tooltip" data-bs-placement="top" id="deleteJobByJobId">
                                                             <span class="far fa-trash-alt"></span>
                                                         </button>
                                                     </li>
@@ -75,7 +77,7 @@
         </form>
     </div>
 </div>
-
+<script src=""></script>
 
 
 

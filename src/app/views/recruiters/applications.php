@@ -32,6 +32,8 @@
                             <div class="twm-right-btn">
                                 <a href="<?php echo URLROOT . '/candidates/profile/' . $application->seeker_id ?>" class="twm-view-prifile site-text-primary">View Profile</a>
                             </div>
+                            <button class="approve">approve</button>
+                            <button class="reject">reject</button>
                         </div>
                     </div>
                 </div>
