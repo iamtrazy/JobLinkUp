@@ -130,7 +130,7 @@ class Admins extends Controller
             $this->index();
         } else {
             $data = [
-                'style' => 'jobseeker/dashboard.css',
+                'style' => 'admin/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard'
             ];
@@ -227,4 +227,14 @@ class Admins extends Controller
             $this->view('admin/addadmin', $data);
         }
     }
-}
+    public function transactions()
+    {$data =[
+        'style' => 'admin/dashboard.css',
+        'title' => 'transactions',
+        'header_title' => 'transactions',
+    ];
+    // Load view
+    $this->view('admin/transactions', $data);
+    }
+
+}    
