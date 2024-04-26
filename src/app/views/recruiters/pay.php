@@ -40,33 +40,32 @@
     </div>
 </div>
 <script>
+    function handlePaymentSuccess() {
+        $.post("<?php echo URLROOT ?>/recruiters/pay_success", function(data, status) {
+            if (status === 'success' && data.status === 'success') {
+                window.location.href = '<?php echo URLROOT ?>/recruiters/transactions';
+            }
+        });
+    }
+
     payhere.onCompleted = function onCompleted() {
-        // Create a FormData object and append the data you want to send
-        var formData = new FormData();
-        formData.append('status', 'ok');
-        // Make a POST request using the fetch API
-        fetch('<?= URLROOT ?>/student/purchase_premium', {
-                method: 'POST',
-                body: formData,
-                // Add any headers if needed (e.g., content-type)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message == 'ok') {
-                    window.location.href = "<?= URLROOT ?>/student";
-                }
-            })
+        handlePaymentSuccess();
     };
+
     payhere.onDismissed = function onDismissed() {
         console.log("Payment dismissed");
     };
+
     payhere.onError = function onError(error) {
         console.log("Error:" + error);
     };
-    var payment = <?php echo  $data['price']; ?>;
+
+    var payment = <?php echo $data['payment']; ?>;
 
     function pay() {
         payhere.startPayment(payment);
     }
 </script>
+</script>
+
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

@@ -6,6 +6,7 @@ class Recruiters extends Controller
     public $jobModel;
     public $applicationModel;
     public $chatModel;
+    public $payhereModel;
 
     public function __construct()
     {
@@ -13,6 +14,7 @@ class Recruiters extends Controller
         $this->jobModel = $this->model('Job');
         $this->applicationModel = $this->model('Application');
         $this->chatModel = $this->model('Chat');
+        $this->payhereModel = $this->model('Payhere');
     }
 
     public function index()
@@ -373,16 +375,25 @@ class Recruiters extends Controller
 
     public function transactions()
     {
-        if ($this->recruiterModel->isBrUploaded($_SESSION['business_id'])) {
-            redirect('recruiters/pay');
-        }
-        $data = [
-            'style' => 'recruiter/transactions.css',
-            'title' => 'Verify Business Profile',
-            'header_title' => 'Verify Your Business'
-        ];
 
-        $this->view('recruiters/transactions', $data);
+        if ($this->recruiterModel->isVerified($_SESSION['business_id'])) {
+            $data = [
+                'style' => 'recruiter/pay.css',
+                'title' => 'Verified Business',
+                'header_title' => 'Varified Business'
+            ];
+            $this->view('recruiters/verified', $data);;
+        } else if ($this->recruiterModel->isBrUploaded($_SESSION['business_id'])) {
+            $this->pay();
+        } else {
+            $data = [
+                'style' => 'recruiter/transactions.css',
+                'title' => 'Verify Business Profile',
+                'header_title' => 'Verify Your Business'
+            ];
+
+            $this->view('recruiters/transactions', $data);
+        }
     }
 
     public function manage()
@@ -511,6 +522,12 @@ class Recruiters extends Controller
                     $registration_number = trim($_POST['reg_no']);
                     $business_address = trim($_POST['location']);
                     $recruiter_id = $_SESSION['business_id'];
+                    $first_name = trim($_POST['first_name']);
+                    $last_name = trim($_POST['last_name']);
+                    $phone = trim($_POST['phone']);
+                    $city = trim($_POST['city']);
+                    $address = trim($_POST['address']);
+
 
                     if (!empty($_FILES['br'])) {
                         $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
@@ -529,12 +546,12 @@ class Recruiters extends Controller
                     $response['status'] = 'error';
                     $response['message'] = 'Please agree to the terms of service';
                 }
-                if (empty($business_name) || empty($business_type) || empty($registration_number) || empty($business_address) || empty($br)) {
+                if (empty($business_name) || empty($business_type) || empty($registration_number) || empty($business_address) || empty($br || empty($first_name) || empty($last_name) || empty($phone) || empty($city) || empty($address))) {
                     $response['status'] = 'error';
                     $response['message'] = 'Please enter all details';
                 } else {
                     // Save the business registration data
-                    if ($this->recruiterModel->applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br)) {
+                    if ($this->recruiterModel->applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br, $first_name, $last_name, $phone, $city, $address)) {
                         $response['status'] = 'success';
                         $response['message'] = 'Business registration request submitted successfully';
                     } else {
@@ -561,16 +578,31 @@ class Recruiters extends Controller
     public function pay()
     {
         $br = $this->recruiterModel->getBrDetails($_SESSION['business_id']);
+        $email = $this->recruiterModel->getRecruiterEmail($_SESSION['business_id']);
+        $payment = $this->payhereModel->premium($br->phone, $br->address, $br->city, $br->first_name, $br->last_name, $email);
+
         // $recruiter = $this->recruiterModel->getRecruiterById($_SESSION['business_id']);
         $data = [
             'style' => 'recruiter/pay.css',
             'title' => 'Verify Your Business',
             'header_title' => 'Verify Your Business',
-            'br' => $br,
-            'price' => 1500,
+            'payment' => $payment,
 
         ];
 
         $this->view('recruiters/pay', $data);
+    }
+
+    public function pay_success()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $recruiter_id = $_SESSION['business_id'];
+            if ($this->recruiterModel->paySuccess($recruiter_id)) {
+                $response = ['status' => 'success', 'message' => 'Payment successful'];
+            } else {
+                $response = ['status' => 'error', 'message' => 'Failed to update payment status'];
+            }
+            $this->view('api/json', $response);
+        }
     }
 }
