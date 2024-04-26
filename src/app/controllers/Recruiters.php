@@ -5,12 +5,14 @@ class Recruiters extends Controller
     public $recruiterModel;
     public $jobModel;
     public $applicationModel;
+    public $chatModel;
 
     public function __construct()
     {
         $this->recruiterModel = $this->model('Recruiter');
         $this->jobModel = $this->model('Job');
         $this->applicationModel = $this->model('Application');
+        $this->chatModel = $this->model('Chat');
     }
 
     public function index()
@@ -330,5 +332,74 @@ class Recruiters extends Controller
         ];
 
         $this->view('recruiters/profile', $data);
+    }
+
+    public function acceptApplication()
+    {
+        // Check if request is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = $_POST['job_id'];
+                $seeker_id = $_POST['seeker_id'];
+
+                // Perform accept action
+                if ($this->applicationModel->acceptApplication($seeker_id, $job_id)) {
+                    // Return success message
+                    $message = 'Application accepted successfully';
+                    if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
+                        $this->chatModel->startThread($seeker_id, $_SESSION['business_id']);
+                    }
+                } else {
+                    // Return error message
+                    $message = 'Failed to accept application';
+                }
+            } else {
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
+            }
+        } else {
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
+        }
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
+    }
+
+    public function rejectApplication()
+    {
+        // Check if request is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $seeker_id = $_POST['seeker_id'];
+                $job_id = $_POST['job_id'];
+
+                // Perform reject action
+                if ($this->applicationModel->rejectApplication($seeker_id, $job_id)) {
+                    // Return success message
+                    if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
+                        $thread_id = $this->chatModel->getThreadId($seeker_id, $_SESSION['business_id']);
+                        $this->chatModel->deleteThread($thread_id);
+                    }
+                    $message = 'Application rejected successfully';
+                } else {
+                    // Return error message
+                    $message = 'Failed to reject application';
+                }
+            } else {
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
+            }
+        } else {
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
+        }
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
     }
 }

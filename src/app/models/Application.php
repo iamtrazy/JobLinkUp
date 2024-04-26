@@ -61,7 +61,7 @@ class Application
         $row = $this->db->single();
 
         // Check if total applications is greater than 5
-        if ($row->total_applications > 5) {
+        if ($row->total_applications >= 5) {
             return true;
         } else {
             return false;
@@ -116,7 +116,7 @@ class Application
     public function getApplications($job_id)
     {
 
-        $this->db->query("SELECT jobs.id, jobseekers.id AS seeker_id, jobseekers.address, jobseekers.username, jobseekers.email, jobseekers.profile_image, applications.created_at
+        $this->db->query("SELECT jobs.id, jobseekers.id AS seeker_id, jobseekers.address, jobseekers.username, jobseekers.email, jobseekers.profile_image, applications.created_at, applications.status
         FROM applications
         INNER JOIN jobs ON jobs.id = applications.job_id
         INNER JOIN jobseekers ON jobseekers.id = applications.seeker_id
@@ -126,78 +126,32 @@ class Application
         $results = $this->db->resultset();
         return $results;
     }
+
+
+    public function acceptApplication($seeker_id, $job_id)
+    {
+        $this->db->query('UPDATE applications SET status = :status WHERE seeker_id = :seeker_id AND job_id = :job_id');
+        $this->db->bind(':status', 'approved');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':job_id', $job_id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Method to reject an application
+    public function rejectApplication($seeker_id, $job_id)
+    {
+        $this->db->query('UPDATE applications SET status = :status WHERE seeker_id = :seeker_id AND job_id = :job_id');
+        $this->db->bind(':status', 'rejected');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':job_id', $job_id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
-
-
-// <?php
-// class Application
-// {
-//     private $db;
-
-//     public function __construct()
-//     {
-//         $this->db = new Database;
-//     }
-
-//     public function apply($data)
-//     {
-//         // Prepare Query
-//         $this->db->query('INSERT INTO jobs_applied (seeker_id, job_id) 
-//         VALUES (:seeker_id, :job_id)');
-
-//         // Bind Values
-//         $this->db->bind(':seeker_id', $data['seeker_id']);
-//         $this->db->bind(':job_id', $data['job_id']);
-
-//         //Execute
-//         if ($this->db->execute()) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     }
-
-//     // Find user by email
-//     public function isApplied($seeker_id, $job_id)
-//     {
-//         $this->db->query('SELECT * FROM jobs_applied WHERE seeker_id = :seeker_id AND job_id = :job_id');
-//         $this->db->bind(':seeker_id', $seeker_id);
-//         $this->db->bind(':job_id', $job_id);
-
-//         $row = $this->db->single();
-
-//         // Check row
-//         if ($this->db->rowCount() > 0) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     }
-
-//     public function addtoList($data)
-//     {
-//         $this->db->query('INSERT INTO jobs_applied (seeker_id, job_id) 
-//                         VALUES (:seeker_id, :job_id)');
-//         $this->db->bind(':seeker_id', $data['seeker_id']);
-//         $this->db->bind(':job_id', $data['job_id']);
-//         if ($this->db->execute()) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     }
-
-//     public function deleteFromList($data)
-//     {
-//         $this->db->query('DELETE FROM jobs_applied
-//                         WHERE seeker_id= :seeker_id 
-//                         AND job_id = :job_id');
-//         $this->db->bind(':seeker_id', $data['seeker_id']);
-//         $this->db->bind(':job_id', $data['job_id']);
-//         if ($this->db->execute()) {
-//             return true;
-//         } else {
-//             return false;
-//         }
-//     }
-// }
