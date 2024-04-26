@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label>Business Registration number</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="location" type="text" placeholder="" required />
+                                    <input class="form-control" name="reg_no" type="text" placeholder="" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -105,12 +105,11 @@
                     <p><strong>Consequences of Non-Compliance:</strong> The Recruiter acknowledges that failure to comply with the terms and conditions outlined in this Agreement may result in the suspension or termination of their account on the <em>JobLinkUp</em> platform, without refund or compensation.</p>
 
                 </div>
-
                 <div class="panel-body wt-panel-body p-a20 m-b30">
-
-                    <input type="checkbox">
-                    I hereby acknowledge that I have read, understood, and agree to abide by the terms and conditions set forth in this Verification Agreement.
-
+                    <!-- Add the required attribute to the checkbox -->
+                    <input type="checkbox" name="agree_tos" value="1" required>
+                    <!-- Add a label for the checkbox -->
+                    <label for="agree_tos">I hereby acknowledge that I have read, understood, and agree to abide by the terms and conditions set forth in this Verification Agreement.</label>
                 </div>
             </div>
             <div class="panel panel-default">
@@ -124,19 +123,70 @@
                 </div>
             </div>
         </form>
-        <!-- <div class="col-lg-12 col-md-12">
-            <div class="text-left">
-                <button type="submit" class="site-button m-r5 pay">
-                    Pay
-                </button>
-            </div>
-            <div class="text-left">
-                <button type="submit" class="site-button m-r5">
-                    Upload BR documents here
-                </button>
-            </div>
-        </div> -->
     </div>
 </div>
-<script src="<?php echo URLROOT ?>/js/jobs/hashtags.js"></script>
+<script>
+    $(document).ready(function() {
+        // Event listener for form submission
+        $('form').submit(function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+
+            // Display confirmation dialog
+            Swal.fire({
+                icon: 'question',
+                title: 'Confirmation',
+                text: 'Are you sure you want to submit the form?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                // If user confirms, proceed with form submission
+                if (result.isConfirmed) {
+                    // Create FormData object to store form data
+                    var formData = new FormData(this);
+
+                    // Send AJAX request to the controller
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?php echo URLROOT; ?>/recruiters/applyForBR',
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false, // Prevent jQuery from setting content type
+                        processData: false, // Prevent jQuery from processing data
+                        success: function(response) {
+                            // Display SweetAlert2 alert based on the JSON response
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: response.message
+                                }).then((result) => {
+                                    // Redirect to dashboard or any other page
+                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/dashboard';
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            // Display error alert if AJAX request fails
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Failed to submit the form. Please try again later.'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

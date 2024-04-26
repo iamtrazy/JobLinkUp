@@ -488,4 +488,70 @@ class Recruiters extends Controller
         // Load 'api/json' view with the message
         $this->view('api/json', ['message' => $message]);
     }
+
+    public function applyForBR()
+    {
+        // Check if the request method is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Initialize an empty array to store response data
+            $response = [];
+
+            // Check if the user is logged in
+            if ($this->isLoggedIn()) {
+                // Validate and process the form data
+                // You can access the form fields using $_POST superglobal
+                // For example:
+                if ($_POST['agree_tos'] == 1) {
+                    // Sanitize and validate the form data (business name, type, registration number, business address, and BR file
+                    $business_name = trim($_POST['business_name']);
+                    $business_type = trim($_POST['type']);
+                    $registration_number = trim($_POST['reg_no']);
+                    $business_address = trim($_POST['location']);
+                    $recruiter_id = $_SESSION['business_id'];
+
+                    if (!empty($_FILES['br'])) {
+                        $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
+
+                        // If profile image is uploaded, add it to $data
+                        if ($br_path) {
+                            $br = $br_path;
+                        } else {
+                            $response['status'] = 'error';
+                            $response['message'] = 'BR upload failed (check file extension or size)';
+                        }
+                    } else {
+                        $br = '';
+                    }
+                } else {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Please agree to the terms of service';
+                }
+                if (empty($business_name) || empty($business_type) || empty($registration_number) || empty($business_address) || empty($br)) {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Please enter all details';
+                } else {
+                    // Save the business registration data
+                    if ($this->recruiterModel->applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br)) {
+                        $response['status'] = 'success';
+                        $response['message'] = 'Business registration request submitted successfully';
+                    } else {
+                        $response['status'] = 'error';
+                        $response['message'] = 'Failed to submit business registration request';
+                    }
+                }
+            } else {
+                // If the user is not logged in, return an error message
+                $response['status'] = 'error';
+                $response['message'] = 'User not logged in';
+            }
+        } else {
+            // If the request method is not POST, return an error message
+            $response['status'] = 'error';
+            $response['message'] = 'Invalid request method';
+        }
+
+
+        // Send the JSON response
+        $this->view('api/json', $response);
+    }
 }
