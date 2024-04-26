@@ -215,4 +215,9 @@ class Moderators extends Controller
             }
         }
     }
+public function verifiedRecruiters(){
+    $data =[
+        'style'=> ''
+    ]
+}
 }
