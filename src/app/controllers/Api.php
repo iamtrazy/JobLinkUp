@@ -281,7 +281,6 @@ class Api extends Controller
                     $formatted_threads[] = [
                         'thread_id' => $thread->id,
                         'recruiter_name' => $thread->name,
-                        'business_name' => $thread->business_name,
                         'created_at' => $thread->created_at
                     ];
                 }
