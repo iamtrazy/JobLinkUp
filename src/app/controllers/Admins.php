@@ -3,10 +3,12 @@ class Admins extends Controller
 {
 
     public $adminModel;
+    public $moderatorsModel;
 
     public function __construct()
     {
         $this->adminModel = $this->model('Admin');
+        $this->moderatorsModel = $this->model('Moderator');
     }
 
     public function index()
@@ -17,7 +19,7 @@ class Admins extends Controller
             'login_email' => '',
             'login_password' => '',
             'login_email_err' => '',
-            'login_password_err' => '',
+            'login_password_err' => ''
         ];
 
         if (isset($_SESSION['admin_id'])) {
@@ -235,6 +237,19 @@ class Admins extends Controller
     ];
     // Load view
     $this->view('admin/transactions', $data);
+    }
+    public function managemoderators()
+    {
+        $moderators =$this->adminModel-> getModeratorDetails();
+        $data =[
+        'style' => 'admin/dashboard.css',
+        'title' => 'managemoderators',
+        'header_title' => 'managemoderators',
+        'moderators' => $moderators
+    ];
+
+    // Load view
+    $this->view('admin/managemoderators', $data);
     }
 
 }    

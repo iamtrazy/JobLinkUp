@@ -14,33 +14,19 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Full Name</th>
-            <th scope="col">Role</th>
-            <th scope="col">Last Activity</th>
+            <th scope="col">ID</th>
             <th scope="col">Handle</th>
           </tr>
         </thead>
         <tbody>
+          <?php foreach ($data['moderators'] as $moderators): ?>
           <tr>
             <th scope="row">1</th>
-            <td>Mark Otto</td>
-            <td>Moderator L1</td>
-            <td>Few minutes Ago</td>
+            <td><?php echo $moderators-> name ?> </td>
+            <td><?php echo $moderators-> id ?></td>
             <td><button type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td>
           </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark Otto</td>
-            <td>Moderator L1</td>
-            <td>Few minutes Ago</td>
-            <td><button type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark Otto</td>
-            <td>Moderator L1</td>
-            <td>Few minutes Ago</td>
-            <td><button type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td>
-          </tr>
+          <?php endforeach ?>
         </tbody>
       </table>
     </div>
