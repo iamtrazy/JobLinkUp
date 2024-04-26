@@ -116,13 +116,14 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
-                    // Iterate over each message in the response
-                    $.each(response, function(index, message) {
-                        // Determine message class based on whether it's a reply or not
-                        var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
-                        var rowClass = message.reply ? 'row justify-content-end' : 'row';
-                        // Create HTML elements for each message and append to container
-                        var messageHtml = `
+                    if (response && response.length > 0) {
+                        // Iterate over each message in the response
+                        $.each(response, function(index, message) {
+                            // Determine message class based on whether it's a reply or not
+                            var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
+                            var rowClass = message.reply ? 'row justify-content-end' : 'row';
+                            // Create HTML elements for each message and append to container
+                            var messageHtml = `
                             <div class="${rowClass}">
                                 <div class="col-xl-9 col-lg-12">
                                     <div class="${messageClass} clearfix">
@@ -139,10 +140,14 @@
                                 </div>
                             </div>
                         `;
-                        $('#msg-chat-wrap').append(messageHtml);
-                    });
-                    // Hide horizontal scrollbar for messages
-                    $('#msg-chat-wrap').css('overflow-x', 'hidden');
+                            $('#msg-chat-wrap').append(messageHtml);
+                        });
+                        // Hide horizontal scrollbar for messages
+                        $('#msg-chat-wrap').css('overflow-x', 'hidden');
+                    } else {
+                        // If there are no messages, display a message
+                        $('#msg-chat-wrap').html('<p>No messages available</p>');
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching chat messages:", error);
@@ -170,10 +175,11 @@
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                // Iterate over each chat thread in the response
-                $.each(response, function(index, thread) {
-                    // Create HTML elements for each chat thread and append to container
-                    var threadHtml = `
+                if (response && response.length > 0) {
+                    // Iterate over each chat thread in the response
+                    $.each(response, function(index, thread) {
+                        // Create HTML elements for each chat thread and append to container
+                        var threadHtml = `
                         <div class="wt-dashboard-msg-search-list-wrap" data-thread-id="${thread.thread_id}">
                             <div class="msg-user-info clearfix">
                                 <div class="msg-user-timing">${thread.created_at}</div>
@@ -187,20 +193,31 @@
                             </div>
                         </div>
                     `;
-                    $('#msg-list-wrap').append(threadHtml);
-                });
+                        $('#msg-list-wrap').append(threadHtml);
+                    });
 
-                // Event listener for clicking on a thread
-                $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
-                    var threadId = $(this).data('thread-id');
-                    var seekerName = $(this).find('.msg-user-name').text();
-                    loadMessages(threadId, seekerName);
-                });
+                    // Event listener for clicking on a thread
+                    $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
+                        var threadId = $(this).data('thread-id');
+                        var seekerName = $(this).find('.msg-user-name').text();
+                        loadMessages(threadId, seekerName);
+                        // loadMessagesPeriodically(threadId, seekerName);
+                    });
+                } else {
+                    // If there are no threads, display a message
+                    $('#msg-list-wrap').html('<p>No threads available</p>');
+                }
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching chat threads:", error);
             }
         });
+
+        function loadMessagesPeriodically(threadId, seekerName) {
+            setInterval(function() {
+                loadMessages(threadId, seekerName);
+            }, 3000); // 3000 milliseconds = 3 seconds
+        }
     });
 </script>
 

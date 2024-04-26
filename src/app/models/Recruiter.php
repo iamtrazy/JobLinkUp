@@ -57,6 +57,27 @@ class Recruiter
     }
   }
 
+  public function applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br)
+  {
+    $this->db->query('INSERT INTO br_details (recruiter_id, business_name, business_type, business_reg_no, business_address, br_path) VALUES(:recruiter_id, :business_name, :business_type, :business_reg_no, :business_address, :br_path)');
+    // Bind values
+    $this->db->bind(':recruiter_id', $recruiter_id);
+    $this->db->bind(':business_name', $business_name);
+    $this->db->bind(':business_type', $business_type);
+    $this->db->bind(':business_reg_no', $registration_number);
+    $this->db->bind(':business_address', $business_address);
+    $this->db->bind(':br_path', $br);
+
+    if (empty($br)) {
+      return false;
+    } else {
+      if ($this->db->execute()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
   public function getAll()
   {
     $this->db->query('SELECT recruiters.*, COUNT(jobs.id) AS job_count 
@@ -76,43 +97,19 @@ class Recruiter
         // WHERE jobs.recruiter_id = :recruiter_id
         // ORDER BY appliedCount DESC;");
   }
-
-  public function applyForBR($data){
-    $this->db->query('INSERT INTO br_details (application_id,recruiter_id,website,business_email,business_contact_no,business_name,business_type,business_reg_no,business_address,contact_person,contact_email,contact_number,agree_to_terms) 
-    VALUES (:application_id,:recruiter_id,:website,:business_email,:business_contact_no,:business_name,:business_type,:business_reg_no,:business_address,:contact_person,:contact_email,:contact_number,:agree_to_terms)');
-    $this->db->bind(':application_id', $data['application_id']);
-    $this->db->bind(':recruiter_id', $data['recruiter_id']);
-    $this->db->bind(':website', $data['website']);
-    $this->db->bind(':business_email', $data['business_email']);
-    $this->db->bind(':business_contact_no', $data['business_contact_no']);
-    $this->db->bind(':business_name', $data['business_name']);
-    $this->db->bind(':business_type', $data['business_type']);
-    $this->db->bind(':business_reg_no', $data['business_reg_no']);
-    $this->db->bind(':business_address', $data['business_address']);
-    $this->db->bind(':contact_person', $data['contact_person']);
-    $this->db->bind(':contact_email', $data['contact_email']);
-    $this->db->bind(':contact_number', $data['contact_number']);
-    $this->db->bind(':agree_to_terms', $data['agree_to_terms']);
-    if($this->db->execute()){
-      return true;
-
+  public function getRecruitementCount($recruiter_id){
+    $this->db->query('SELECT COUNT(*) FROM jobs
+    JOIN recruiters ON jobs.recruiter_id = recruiters.id 
+  WHERE recruiters.id = :recruiter_id');
+  
+  
+  $this->db->bind(':recruiter_id', $recruiter_id);
+  // $recruiter_id = $_SESSION['business_id'];
+   if($this->db->execute()){
+    return true;
   }
   return false;
+  
+  }
 
-}
-
-public function getRecruitementCount($recruiter_id){
-  $this->db->query('SELECT COUNT(*) FROM jobs
-  JOIN recruiters ON jobs.recruiter_id = recruiters.id 
-WHERE recruiters.id = :recruiter_id');
-
-
-$this->db->bind(':recruiter_id', $recruiter_id);
-// $recruiter_id = $_SESSION['business_id'];
- if($this->db->execute()){
-  return true;
-}
-return false;
-
-}
 }

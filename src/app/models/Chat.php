@@ -76,6 +76,55 @@ class Chat
         }
     }
 
+    public function checkThreadExists($seeker_id, $recruiter_id)
+    {
+        $this->db->query('SELECT COUNT(*) AS count FROM chat_threads WHERE seeker_id = :seeker_id AND recruiter_id = :recruiter_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function startThread($seeker_id, $recruiter_id)
+    {
+        $this->db->query('INSERT INTO chat_threads (seeker_id, recruiter_id) VALUES (:seeker_id, :recruiter_id)');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':recruiter_id', $recruiter_id);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getThreadId($seeker_id, $recruiter_id)
+    {
+        $this->db->query('SELECT id FROM chat_threads WHERE seeker_id = :seeker_id AND recruiter_id = :recruiter_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':recruiter_id', $recruiter_id);
+
+        $row = $this->db->single();
+
+        return $row->id;
+    }
+
+    public function deleteThread($thread_id)
+    {
+        $this->db->query('DELETE FROM chat_threads WHERE id = :thread_id');
+        $this->db->bind(':thread_id', $thread_id);
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function insertMessage($thread_id, $text, $reply)
     {
         $this->db->query('INSERT INTO chat_texts (thread_id, text, reply) VALUES (:thread_id, :text, :reply)');

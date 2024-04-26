@@ -14,15 +14,15 @@ class Job
         $offset = ($page - 1) * $perPage;
 
         // Prepare the SQL query with LIMIT, OFFSET, and ORDER BY
-        $query = "SELECT * FROM jobs";
+        $query = "SELECT * FROM jobs WHERE is_deleted = 0";
 
         // If selected categories are provided and not empty, filter by them
         if (!($selectedCategories[0] == 'all')) {
-            $query .= " WHERE type IN ('" . implode("', '", $selectedCategories) . "')";
+            $query .= " AND type IN ('" . implode("', '", $selectedCategories) . "')";
         } else if ($timeCriterion == 'all') {
-            $query .= " WHERE 1";
+            $query .= " AND 1";
         } else {
-            $query .= " WHERE 1";
+            $query .= " AND 1";
         }
 
         // Add search filter if search keyword is provided
@@ -34,9 +34,8 @@ class Job
             $query .= " AND (location LIKE :searchKeyword)";
         }
 
-
+        // Filter jobs based on the time criterion
         if (!($timeCriterion == 'all')) {
-            // Filter jobs based on the time criterion
             if ($timeCriterion == '1') {
                 $query .= " AND created_at >= NOW() - INTERVAL 1 HOUR";
             } elseif ($timeCriterion == '24') {
@@ -68,6 +67,7 @@ class Job
             $searchKeyword = '%' . $searchKeyword . '%';
             $this->db->bind(':searchKeyword', $searchKeyword);
         }
+
         // Execute the query
         $results = $this->db->resultset();
 
@@ -78,7 +78,7 @@ class Job
     public function getJobById($job_id)
     {
         // Prepare the SQL query to fetch job details by ID
-        $query = "SELECT * FROM jobs WHERE id = :job_id";
+        $query = "SELECT * FROM jobs WHERE id = :job_id AND is_deleted = 0";
 
         // Bind the job ID parameter
         $this->db->query($query);
@@ -93,6 +93,21 @@ class Job
         } else {
             return false; // Return false if job not found
         }
+    }
+
+    public function appliedCount($job_id)
+    {
+        $this->db->query("SELECT COUNT(*) AS count FROM applications WHERE job_id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $result = $this->db->single();
+        return $result;
+    }
+
+    public function increaseViewCount($job_id)
+    {
+        $this->db->query("UPDATE jobs SET view_count = view_count + 1 WHERE id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $this->db->execute();
     }
 
 
@@ -119,6 +134,53 @@ class Job
             $this->db->bind(':banner_image', "job-detail-bg.jpg");
         }
 
+
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateJob($data)
+    {
+        // Prepare Query
+        $this->db->query('UPDATE jobs SET location = :location, rate = :rate, topic = :topic, type = :type, website = :website, keywords = :keywords, detail = :detail, banner_img = :banner_image WHERE id = :job_id');
+
+        // Bind Values
+        $this->db->bind(':job_id', $data['job_id']);
+        $this->db->bind(':location', $data['location']);
+        $this->db->bind(':rate', $data['rate']);
+        $this->db->bind(':topic', $data['topic']);
+        $this->db->bind(':type', $data['type']);
+        $this->db->bind(':website', $data['website']);
+        $this->db->bind(':keywords', $data['keywords']);
+        $this->db->bind(':detail', $data['detail']);
+        if (array_key_exists('banner_image', $data)) {
+            // If 'banner_image' key exists, bind it to the database statement
+            $this->db->bind(':banner_image', $data['banner_image']);
+        } else {
+            // If 'banner_image' key does not exist, bind NULL to the database statement
+            $this->db->bind(':banner_image', "job-detail-bg.jpg");
+        }
+
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function deleteJob($job_id)
+    {
+        // Prepare Query
+        $this->db->query('UPDATE jobs SET is_deleted = 1 WHERE id = :job_id');
+
+        // Bind Values
+        $this->db->bind(':job_id', $job_id);
 
         //Execute
         if ($this->db->execute()) {
@@ -195,7 +257,7 @@ class Job
             SELECT jobs.id, jobs.topic, jobs.location, jobs.type, jobs.rate, jobs.rate_type, jobs.created_at,
             (SELECT COUNT(*) FROM applications WHERE recruiter_id = :recruiter_id AND job_id = jobs.id) AS appliedCount
             FROM jobs
-            WHERE jobs.recruiter_id = :recruiter_id
+            WHERE jobs.recruiter_id = :recruiter_id AND jobs.is_deleted = 0
             ORDER BY appliedCount DESC;");
 
         $this->db->bind(':recruiter_id', $recruiter_id);

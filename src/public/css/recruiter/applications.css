@@ -27,6 +27,13 @@ h5 {
 h2 {
   font-size: calc(1.325rem + 0.9vw);
 }
+
+.status-label {
+  padding: 4px 8px;
+  border-radius: 20px;
+  color: rgb(10, 0, 0);
+}
+
 @media (min-width: 1200px) {
   h2 {
     font-size: 2rem;
@@ -96,6 +103,43 @@ button:not(:disabled) {
   margin-right: auto;
   margin-left: auto;
 }
+
+/* Accept and reject button styles */
+.twm-btn {
+  display: inline-block;
+  padding: 8px 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.twm-btn-accept {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.twm-btn-reject {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Font Awesome icon styles */
+.twm-btn i {
+  margin-right: 5px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .twm-right-btn {
+    text-align: center;
+  }
+  .twm-btn {
+    display: block;
+    width: 100%;
+  }
+}
+
 @media (min-width: 576px) {
   .container {
     max-width: 540px;

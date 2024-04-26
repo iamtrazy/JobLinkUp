@@ -4,8 +4,8 @@ function getStatusColor($status)
   switch ($status) {
     case 'pending':
       return 'yellow';
-    case 'accepted':
-      return 'green';
+    case 'approved':
+      return 'lightgreen';
     case 'rejected':
       return 'red';
     default:
@@ -18,7 +18,7 @@ function getStatusText($status)
   switch ($status) {
     case 'pending':
       return 'Pending';
-    case 'accepted':
+    case 'approved':
       return 'Accepted';
     case 'rejected':
       return 'Rejected';
