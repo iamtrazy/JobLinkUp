@@ -22,6 +22,8 @@ $(document).ready(function () {
         sortBy = "category";
       } else if (selectedOption === "Price") {
         sortBy = "price";
+      } else if (selectedOption === "Most Recent") { 
+        sortBy = "created_at";
       }
 
       currentPage = 1; // Assuming we always start from page 1 when sorting changes

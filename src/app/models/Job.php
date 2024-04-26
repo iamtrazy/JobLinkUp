@@ -14,15 +14,15 @@ class Job
         $offset = ($page - 1) * $perPage;
 
         // Prepare the SQL query with LIMIT, OFFSET, and ORDER BY
-        $query = "SELECT * FROM jobs";
+        $query = "SELECT * FROM jobs WHERE is_deleted = 0";
 
         // If selected categories are provided and not empty, filter by them
         if (!($selectedCategories[0] == 'all')) {
-            $query .= " WHERE type IN ('" . implode("', '", $selectedCategories) . "')";
+            $query .= " AND type IN ('" . implode("', '", $selectedCategories) . "')";
         } else if ($timeCriterion == 'all') {
-            $query .= " WHERE 1";
+            $query .= " AND 1";
         } else {
-            $query .= " WHERE 1";
+            $query .= " AND 1";
         }
 
         // Add search filter if search keyword is provided
@@ -34,9 +34,8 @@ class Job
             $query .= " AND (location LIKE :searchKeyword)";
         }
 
-
+        // Filter jobs based on the time criterion
         if (!($timeCriterion == 'all')) {
-            // Filter jobs based on the time criterion
             if ($timeCriterion == '1') {
                 $query .= " AND created_at >= NOW() - INTERVAL 1 HOUR";
             } elseif ($timeCriterion == '24') {
@@ -68,6 +67,7 @@ class Job
             $searchKeyword = '%' . $searchKeyword . '%';
             $this->db->bind(':searchKeyword', $searchKeyword);
         }
+
         // Execute the query
         $results = $this->db->resultset();
 
@@ -78,7 +78,7 @@ class Job
     public function getJobById($job_id)
     {
         // Prepare the SQL query to fetch job details by ID
-        $query = "SELECT * FROM jobs WHERE id = :job_id";
+        $query = "SELECT * FROM jobs WHERE id = :job_id AND is_deleted = 0";
 
         // Bind the job ID parameter
         $this->db->query($query);
@@ -159,6 +159,23 @@ class Job
     }
 
 
+    public function deleteJob($job_id)
+    {
+        // Prepare Query
+        $this->db->query('UPDATE jobs SET is_deleted = 1 WHERE id = :job_id');
+
+        // Bind Values
+        $this->db->bind(':job_id', $job_id);
+
+        //Execute
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public function getWishlist($id)
     {
         $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , wishlist.created_at
@@ -224,7 +241,7 @@ class Job
             SELECT jobs.id, jobs.topic, jobs.location, jobs.type, jobs.rate, jobs.rate_type, jobs.created_at,
             (SELECT COUNT(*) FROM applications WHERE recruiter_id = :recruiter_id AND job_id = jobs.id) AS appliedCount
             FROM jobs
-            WHERE jobs.recruiter_id = :recruiter_id
+            WHERE jobs.recruiter_id = :recruiter_id AND jobs.is_deleted = 0
             ORDER BY appliedCount DESC;");
 
         $this->db->bind(':recruiter_id', $recruiter_id);

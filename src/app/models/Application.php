@@ -113,14 +113,14 @@ class Application
             return false;
         }
     }
+
     public function getApplications($job_id)
     {
-
         $this->db->query("SELECT jobs.id, jobseekers.id AS seeker_id, jobseekers.address, jobseekers.username, jobseekers.email, jobseekers.profile_image, applications.created_at, applications.status
-        FROM applications
-        INNER JOIN jobs ON jobs.id = applications.job_id
-        INNER JOIN jobseekers ON jobseekers.id = applications.seeker_id
-        WHERE applications.job_id = :job_id;");
+    FROM applications
+    INNER JOIN jobs ON jobs.id = applications.job_id AND jobs.is_deleted = 0
+    INNER JOIN jobseekers ON jobseekers.id = applications.seeker_id
+    WHERE applications.job_id = :job_id;");
 
         $this->db->bind(':job_id', $job_id);
         $results = $this->db->resultset();

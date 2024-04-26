@@ -322,18 +322,42 @@ class Recruiters extends Controller
             $this->view('api/json', $response);
         } else {
             // If GET request, load the job data for editing
-            $job = $this->jobModel->getJobById($job_id);
-            $data = [
-                'job' => $job,
-                'style' => 'recruiter/postjob.css',
-                'title' => 'Edit Job',
-                'header_title' => 'Edit Job'
-            ];
-
-            $this->view('recruiters/edit-job', $data);
+            if ($job = $this->jobModel->getJobById($job_id)) {
+                $data = [
+                    'job' => $job,
+                    'style' => 'recruiter/postjob.css',
+                    'title' => 'Edit Job',
+                    'header_title' => 'Edit Job'
+                ];
+                $this->view('recruiters/edit-job', $data);
+            } else {
+                $data = [
+                    'style' => 'recruiter/postjob.css',
+                    'title' => 'Edit Job',
+                    'header_title' => 'Edit Job'
+                ];
+                $this->view('recruiters/postjob', $data);
+            }
         }
     }
 
+    public function deletejob($job_id = null)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $job = $this->jobModel->getJobById($job_id);
+            if ($job->recruiter_id !== $_SESSION['business_id']) {
+                $response = ['status' => 'error', 'message' => 'You are not authorized to delete this job'];
+            } else {
+                if ($this->jobModel->deleteJob($job_id)) {
+                    $response = ['status' => 'success', 'message' => 'Job Deleted Successfully'];
+                } else {
+                    $response = ['status' => 'error', 'message' => 'Failed to delete job'];
+                }
+            }
+
+            $this->view('api/json', $response);
+        }
+    }
 
     public function chat()
     {
