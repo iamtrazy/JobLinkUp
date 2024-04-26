@@ -62,7 +62,7 @@ if (isset($_SESSION['user_id'])) {
                                     <div class="twm-jobs-amount">LKR <?php echo $data['job']->rate; ?> <span>/ <?php echo $data['job']->rate_type; ?></span></div>
                                 </div>
                                 <div class="twm-job-apllication-area">Application ends:
-                                    <span class="twm-job-apllication-date">date</span>
+                                    <span class="twm-job-apllication-date"><?php echo $data['job']->expire_in; ?></span>
                                 </div>
                             </div>
 
@@ -101,12 +101,12 @@ if (isset($_SESSION['user_id'])) {
                             </li>
                             <li>
                                 <i class="fas fa-eye"></i>
-                                <span class="twm-title">8160 Views</span>
+                                <span class="twm-title"><?php echo $data['job'] -> view_count ?> Views</span>
                                 <!-- You need to add dynamic data here -->
                             </li>
                             <li>
                                 <i class="fas fa-file-signature"></i>
-                                <span class="twm-title">6 Applicants</span>
+                                <span class="twm-title"><?php echo $data['appliedCount']->count . '  Applicants' ?></span>
                                 <!-- You need to add dynamic data here -->
                             </li>
                             <li>

@@ -45,6 +45,8 @@ class Jobs extends Controller
     if ($id !== null) {
       // Retrieve job details for the given $id
       $job = $this->jobModel->getJobById($id);
+      $appliedCount = $this->jobModel->appliedCount($id);
+      $this->jobModel->increaseViewCount($id);
 
       // Check if job details are retrieved successfully
       if ($job) {
@@ -53,7 +55,8 @@ class Jobs extends Controller
           'style' => 'jobs/detail.css',
           'title' => 'Jobs Details',
           'header_title' => 'The Most Exciting Jobs',
-          'job' => $job // Pass job details to the view
+          'job' => $job, // Pass job details to the view
+          'appliedCount' => $appliedCount // Pass applied count to the view
         ];
 
         // Load the detail view with job details

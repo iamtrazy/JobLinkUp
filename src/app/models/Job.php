@@ -95,6 +95,21 @@ class Job
         }
     }
 
+    public function appliedCount($job_id)
+    {
+        $this->db->query("SELECT COUNT(*) AS count FROM applications WHERE job_id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $result = $this->db->single();
+        return $result;
+    }
+
+    public function increaseViewCount($job_id)
+    {
+        $this->db->query("UPDATE jobs SET view_count = view_count + 1 WHERE id = :job_id");
+        $this->db->bind(':job_id', $job_id);
+        $this->db->execute();
+    }
+
 
     public function addJob($data)
     {
