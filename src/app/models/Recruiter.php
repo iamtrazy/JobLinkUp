@@ -56,4 +56,86 @@ class Recruiter
       return false;
     }
   }
+
+  public function applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br, $first_name, $last_name, $phone, $city, $address)
+  {
+    $this->db->query('INSERT INTO br_details (recruiter_id, business_name, business_type, business_reg_no, business_address, br_path, first_name, last_name, phone, city, address) VALUES(:recruiter_id, :business_name, :business_type, :business_reg_no, :business_address, :br_path, :first_name, :last_name, :phone, :city, :address)');
+    // Bind values
+    $this->db->bind(':recruiter_id', $recruiter_id);
+    $this->db->bind(':business_name', $business_name);
+    $this->db->bind(':business_type', $business_type);
+    $this->db->bind(':business_reg_no', $registration_number);
+    $this->db->bind(':business_address', $business_address);
+    $this->db->bind(':br_path', $br);
+    $this->db->bind(':first_name', $first_name);
+    $this->db->bind(':last_name', $last_name);
+    $this->db->bind(':phone', $phone);
+    $this->db->bind(':city', $city);
+    $this->db->bind(':address', $address);
+    if (empty($br)) {
+      return false;
+    } else {
+      if ($this->db->execute()) {
+
+        $this->db->query('UPDATE recruiters SET br_uploaded = 1 WHERE id = :recruiter_id');
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $this->db->execute();
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  public function isBrUploaded($recruiter_id)
+  {
+    $this->db->query('SELECT br_uploaded FROM recruiters WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    if ($this->db->single()->br_uploaded == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public function getBrDetails($recruiter_id)
+  {
+    $this->db->query('SELECT * FROM br_details WHERE recruiter_id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single();
+  }
+
+  public function paySuccess($recruiter_id)
+  {
+    $this->db->query('UPDATE recruiters SET is_varified = 1 WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function getRecruiterEmail($recruiter_id)
+  {
+    $this->db->query('SELECT email FROM recruiters WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single()->email;
+  }
+
+  public function isVerified($recruiter_id)
+  {
+    $this->db->query('SELECT is_varified FROM recruiters WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    if ($this->db->single()->is_varified == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

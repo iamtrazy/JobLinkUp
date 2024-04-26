@@ -93,10 +93,18 @@
                         </div>
                         <div class="col-xl-4 col-lg-6 col-md-12">
                             <div class="form-group">
-                                <label>Banner Image</label>
-                                <div class="input-group">
-                                    <input type="file" name="banner_image" id="file-uploader" accept=".jpg, .jpeg, .png">
+                                <div class="custom-file">
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="fas fa-upload"></i> Banner Image
+                                    </label>
+                                    <input id="file-upload" type="file" name="banner_image" accept=".jpg, .jpeg, .png" />
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <div class="form-group">
+
                             </div>
                         </div>
                     </div>
@@ -117,9 +125,7 @@
                     </div>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 </div>
-</div>
-<script src="<?php echo URLROOT ?>/js/jobs/hashtags.js"></script>
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

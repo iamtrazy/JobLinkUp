@@ -3,14 +3,14 @@ if (isset($_SESSION['user_id'])) {
     require APPROOT . '/views/inc/jobs_header.php';
 } else
 if (isset($_SESSION['business_id'])) {
-    require APPROOT . '/views/inc/recruiter_header.php';
+    require APPROOT . '/views/inc/jobs_header.php';
 } else {
     require APPROOT . '/views/inc/jobs_header.php';
 }
 ?>
 <div class="col-lg-8 col-md-12">
     <div class="product-filter-wrap d-flex justify-content-between align-items-center m-b30">
-        <span class="woocommerce-result-count-left">Showing 10 jobs</span>
+        <span class="woocommerce-result-count-left">Showing jobs</span>
         <form class="woocommerce-ordering twm-filter-select" method="get">
             <span class="woocommerce-result-count">Sort By</span>
 
@@ -29,12 +29,14 @@ if (isset($_SESSION['business_id'])) {
         </form>
     </div>
     <div class="row" id="jobs">
+        <!-- Jobs will be dynamically generated here -->
     </div>
 
     <div class="pagination-outer">
         <div class="pagination-style1">
             <ul class="pagination-list clearfix">
                 <!-- Pagination links will be dynamically generated here -->
+                
             </ul>
         </div>
     </div>
