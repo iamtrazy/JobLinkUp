@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 26, 2024 at 05:30 AM
+-- Generation Time: Apr 26, 2024 at 06:39 AM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -76,17 +76,11 @@ INSERT INTO `applications` (`seeker_id`, `job_id`, `recruiter_id`, `created_at`,
 CREATE TABLE `br_details` (
   `application_id` int(11) NOT NULL,
   `recruiter_id` int(11) NOT NULL,
-  `website` varchar(20) NOT NULL,
-  `business_email` varchar(20) NOT NULL,
-  `business_contact_no` int(10) NOT NULL,
-  `business_name` varchar(20) NOT NULL,
-  `business_type` varchar(20) NOT NULL,
-  `business_reg_no` varchar(10) NOT NULL,
-  `business_address` varchar(20) NOT NULL,
-  `contact_person` varchar(20) NOT NULL,
-  `contact_email` varchar(20) NOT NULL,
-  `contact_number` varchar(10) NOT NULL,
-  `agree_to_terms` tinyint(1) NOT NULL
+  `business_name` varchar(255) NOT NULL,
+  `business_type` varchar(255) NOT NULL,
+  `business_reg_no` varchar(50) NOT NULL,
+  `business_address` varchar(255) NOT NULL,
+  `br_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -302,7 +296,8 @@ ALTER TABLE `applications`
 -- Indexes for table `br_details`
 --
 ALTER TABLE `br_details`
-  ADD PRIMARY KEY (`application_id`);
+  ADD PRIMARY KEY (`application_id`),
+  ADD KEY `FK_BR_1` (`recruiter_id`);
 
 --
 -- Indexes for table `chat_texts`
@@ -372,7 +367,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `br_details`
 --
 ALTER TABLE `br_details`
-  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `chat_texts`
@@ -421,6 +416,12 @@ ALTER TABLE `applications`
   ADD CONSTRAINT `FK3` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`),
   ADD CONSTRAINT `FK4` FOREIGN KEY (`seeker_id`) REFERENCES `jobseekers` (`id`),
   ADD CONSTRAINT `FK5` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
+
+--
+-- Constraints for table `br_details`
+--
+ALTER TABLE `br_details`
+  ADD CONSTRAINT `FK_BR_1` FOREIGN KEY (`recruiter_id`) REFERENCES `recruiters` (`id`);
 
 --
 -- Constraints for table `chat_texts`
