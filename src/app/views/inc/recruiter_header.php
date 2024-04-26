@@ -13,6 +13,52 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
 
+<style>
+    /* Default styles */
+    .col-xl-3,
+    .col-lg-4 {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+
+    .col-xl-9,
+    .col-lg-8 {
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+
+    /* Media queries for responsiveness */
+    @media (max-width: 1200px) {
+
+        .col-xl-3,
+        .col-lg-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .col-xl-9,
+        .col-lg-8 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+
+    @media (max-width: 992px) {
+
+        .col-xl-3,
+        .col-lg-4 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .col-xl-9,
+        .col-lg-8 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+
 <body style="transform: none;">
 
     <div class="page-wraper" style="transform: none;">
@@ -94,12 +140,12 @@
                                     <div class="twm-nav-list-1">
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> Recruiter Profile</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/myprofile"><i class="fa fa-user"></i> Business Profile</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/postjob"><i class="fa fa-book-reader"></i> Post A Job</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/manage"><i class="fa fa-suitcase"></i> Manage Job Listings</a></li>
                                             <li><a href="<?php echo URLROOT ?>/candidates"><i class="fa fa-user-check"></i> Browse Applications</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/chat"><i class="far fa-comments"></i>Chat</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/recruiters/transactions"><i class="fa fa-credit-card"></i>Verify Your Business</a></li<?php echo URLROOT ?>/recruiters/chat">
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/transactions"><i class="fa fa-credit-card"></i>Verify Your Business</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>

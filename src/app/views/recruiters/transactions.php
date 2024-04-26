@@ -32,7 +32,6 @@
                                             <option>Sole Proprietership</option>
                                             <option>Partnership</option>
                                             <option>co-operation</option>
-
                                         </select>
                                     </div>
                                 </div>
@@ -43,7 +42,7 @@
                             <div class="form-group">
                                 <label>Business Registration number</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="reg_no" type="text" placeholder="" required />
+                                    <input class="form-control" name="reg_no" type="text" placeholder="ABC-1234-DEF" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -163,7 +162,7 @@
                                     text: response.message
                                 }).then((result) => {
                                     // Redirect to dashboard or any other page
-                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/dashboard';
+                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/pay';
                                 });
                             } else {
                                 Swal.fire({

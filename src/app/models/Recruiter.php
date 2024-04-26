@@ -67,15 +67,50 @@ class Recruiter
     $this->db->bind(':business_reg_no', $registration_number);
     $this->db->bind(':business_address', $business_address);
     $this->db->bind(':br_path', $br);
-
     if (empty($br)) {
       return false;
     } else {
       if ($this->db->execute()) {
+
+        $this->db->query('UPDATE recruiters SET br_uploaded = 1 WHERE id = :recruiter_id');
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $this->db->execute();
+
         return true;
       } else {
         return false;
       }
+    }
+  }
+
+  public function isBrUploaded($recruiter_id)
+  {
+    $this->db->query('SELECT br_uploaded FROM recruiters WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    if ($this->db->single()->br_uploaded == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public function getBrDetails($recruiter_id)
+  {
+    $this->db->query('SELECT * FROM br_details WHERE recruiter_id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single();
+  }
+
+  public function paySuccess($recruiter_id)
+  {
+    $this->db->query('UPDATE recruiters SET is_verified = 1 WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

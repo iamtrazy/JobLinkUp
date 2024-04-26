@@ -373,10 +373,13 @@ class Recruiters extends Controller
 
     public function transactions()
     {
+        if ($this->recruiterModel->isBrUploaded($_SESSION['business_id'])) {
+            redirect('recruiters/pay');
+        }
         $data = [
             'style' => 'recruiter/transactions.css',
             'title' => 'Verify Business Profile',
-            'header_title' => 'BR Verification'
+            'header_title' => 'Verify Your Business'
         ];
 
         $this->view('recruiters/transactions', $data);
@@ -553,5 +556,21 @@ class Recruiters extends Controller
 
         // Send the JSON response
         $this->view('api/json', $response);
+    }
+
+    public function pay()
+    {
+        $br = $this->recruiterModel->getBrDetails($_SESSION['business_id']);
+        // $recruiter = $this->recruiterModel->getRecruiterById($_SESSION['business_id']);
+        $data = [
+            'style' => 'recruiter/pay.css',
+            'title' => 'Verify Your Business',
+            'header_title' => 'Verify Your Business',
+            'br' => $br,
+            'price' => 1500,
+
+        ];
+
+        $this->view('recruiters/pay', $data);
     }
 }
