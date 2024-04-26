@@ -1,4 +1,3 @@
-hello 
 <?php require APPROOT . '/views/inc/admin_header.php'; ?>
 <!-- table to view transactions -->
 <table class="table table-hover">

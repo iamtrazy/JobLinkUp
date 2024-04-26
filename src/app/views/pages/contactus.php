@@ -63,8 +63,8 @@
                                 <div class="c-info-column">
                                     <div class="c-info-icon"><i class="fas fa-envelope"></i></div>
                                     <h3 class="twm-title">Support</h3>
-                                    <p>infohelp@gmail.com</p>
-                                    <p>support12@gmail.com</p>
+                                    <p>joblinkup@gmail.com</p>
+                                    <p>help.joblinkup@gmail.com</p>
                                 </div>
                             </div>
                         </div>
