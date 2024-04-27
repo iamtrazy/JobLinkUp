@@ -315,7 +315,8 @@ class Api extends Controller
                     $formatted_threads[] = [
                         'thread_id' => $thread->id,
                         'recruiter_name' => $thread->name,
-                        'created_at' => $thread->created_at
+                        'created_at' => $thread->created_at,
+                        'profile_image' => $thread->profile_image
                     ];
                 }
 
@@ -345,7 +346,8 @@ class Api extends Controller
                     $formatted_threads[] = [
                         'thread_id' => $thread->id,
                         'seeker_name' => $thread->username,
-                        'created_at' => $thread->created_at
+                        'created_at' => $thread->created_at,
+                        'profile_image' => $thread->profile_image
                     ];
                 }
 
