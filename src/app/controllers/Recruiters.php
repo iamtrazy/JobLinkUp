@@ -119,7 +119,7 @@ class Recruiters extends Controller
                         $id = $this->recruiterModel->getUserId($data['email']);
                         $this->verify_code($id->id, 'recruiter', $data['email'], $data['name']);
                         $_SESSION['verify_id'] = $id->id;
-                        $_SESSION['verify_emial'] = $data['email'];
+                        $_SESSION['verify_email'] = $data['email'];
                         $data['code_err'] = 'Please verify your account';
                         $this->view('recruiters/verify', $data);
                     } else {
