@@ -215,13 +215,84 @@ class Moderators extends Controller
             }
         }
     }
-    public function disputes(){
+    public function disputes($dispute_id = null){
+        $disputes = $this->moderatorModel->getAlldisputes();
         $data = [
             'style' => 'moderators/disputes.css',
             'title' => 'Disputes',
+            'disputes' => $disputes
+
         ];
         $this->view('moderator/disputes', $data);
     }
 
+    public function acceptDispute()
+{
+    // Check if request is POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Check if user is logged in
+        if ($this->isLoggedIn()) {
+            // Get application ID from POST data
+            $moderator_id = $_POST['moderator_id'];
+            $dispute_id = $_POST['dispute_id'];
+
+            // Perform accept action
+            if ($this->moderatorModel->acceptDispute($dispute_id)) {
+                // Return success message
+                $message = 'Dispute accepted successfully';
+                // $disputes = $this->moderatorModel->getAlldisputes();
+
+                // redirect('moderator/disputes');
+            
+            } else {
+                // Return error message
+                $message = 'Failed to accept dispute';
+            }
+        } else {
+            // Return error message if user is not logged in
+            $message = 'User not logged in';
+        }
+    } else {
+        // Return error message if request method is not POST
+        $message = 'Invalid request method';
+    }
+
+    // Load 'api/json' view with the message
+    $this->view('api/json', ['message' => $message]);
+}
+
+
+public function rejectDispute()
+{
+    // Check if request is POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Check if user is logged in
+        if ($this->isLoggedIn()) {
+            // Get dispute ID from POST data
+            $dispute_id = $_POST['dispute_id'];
+            $seeker_id = $_POST['seeker_id'];
+            $recruiter_id = $_POST['recruiter_id'];
+
+            // Perform reject action
+            if ($this->moderatorModel->rejectDispute($dispute_id)) {
+                // Return success message
+             
+                $message = 'dispute rejected successfully';
+            } else {
+                // Return error message
+                $message = 'Failed to reject dispute';
+            }
+        } else {
+            // Return error message if user is not logged in
+            $message = 'User not logged in';
+        }
+    } else {
+        // Return error message if request method is not POST
+        $message = 'Invalid request method';
+    }
+
+    // Load 'api/json' view with the message
+    $this->view('api/json', ['message' => $message]);
+}
     
 }
