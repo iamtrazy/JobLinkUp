@@ -25,6 +25,73 @@ class Recruiter
     }
   }
 
+  public function generateVerificationCode($role_id, $role)
+  {
+    $code = mt_rand(100000, 999999); // Generate a random 6-digit code
+
+    $this->db->query('INSERT INTO verification_codes (role_id, role, code) VALUES(:role_id, :role, :code)');
+    $this->db->bind(':role_id', $role_id);
+    $this->db->bind(':role', $role);
+    $this->db->bind(':code', $code);
+
+    if ($this->db->execute()) {
+      return $code; // Return the generated code
+    } else {
+      return false;
+    }
+  }
+
+  public function getVerificationCode($role_id, $role)
+  {
+    $this->db->query('SELECT code FROM verification_codes WHERE role_id = :role_id AND role = :role ORDER BY created_at DESC LIMIT 1');
+    $this->db->bind(':role_id', $role_id);
+    $this->db->bind(':role', $role);
+
+    return $this->db->single();
+  }
+
+  public function checkVerificationCode($role_id, $role, $code)
+  {
+    $verify = $this->getVerificationCode($role_id, $role);
+    if ($verify) {
+      if ($verify->code == $code) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  public function setVerified($id)
+  {
+    $this->db->query('UPDATE recruiters SET code_verified = 1 WHERE id = :id');
+    $this->db->bind(':id', $id);
+
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function getUserID($email)
+  {
+    $this->db->query('SELECT id FROM recruiters WHERE email = :email');
+    $this->db->bind(':email', $email);
+
+    return $this->db->single();
+  }
+
+  public function getRecruiterById($id)
+  {
+    $this->db->query('SELECT * FROM recruiters WHERE id = :id');
+    $this->db->bind(':id', $id);
+
+    return $this->db->single();
+  }
+
   // Login User
   public function login($email, $password)
   {

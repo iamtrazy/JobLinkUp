@@ -123,7 +123,8 @@ class Jobseekers extends Controller
                         $this->verify_code($id->id, 'seeker', $data['email'], $data['name']);
                         $_SESSION['verify_id'] = $id->id;
                         $_SESSION['verify_emial'] = $data['email'];
-                        $this->view('jobseeker/verify');
+                        $data['code_err'] = 'Please verify your account';
+                        $this->view('jobseeker/verify', $data);
                     } else {
                         die('Something went wrong');
                     }
