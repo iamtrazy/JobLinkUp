@@ -433,7 +433,7 @@ class Recruiters extends Controller
 
         $this->view('recruiters/profile', $data);
     }
-}
+
 public function acceptApplication()
 {
     // Check if request is POST
@@ -713,6 +713,8 @@ public function pay_success()
         } else {
             $response = ['status' => 'error', 'message' => 'Failed to update payment status'];
         }
-        $this->view('api/json', $response);
     }
+    $this->view('api/json', $response);
+
+}
 }

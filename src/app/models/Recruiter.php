@@ -87,7 +87,7 @@ class Recruiter
       }
     }
   }
-<<<<<<< HEAD
+
   public function getAll()
   {
     $this->db->query('SELECT recruiters.*, COUNT(jobs.id) AS job_count 
@@ -122,7 +122,6 @@ class Recruiter
   
   }
 
-=======
 
   public function isBrUploaded($recruiter_id)
   {
@@ -174,5 +173,5 @@ class Recruiter
       return false;
     }
   }
->>>>>>> origin/iamtrazy
+
 }
