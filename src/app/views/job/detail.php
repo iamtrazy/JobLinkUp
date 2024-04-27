@@ -4,9 +4,13 @@ if (isset($_SESSION['user_id'])) {
 } elseif (isset($_SESSION['business_id'])) {
     require APPROOT . '/views/inc/jobs_detail_header.php';
 } else {
-    require APPROOT . '/views/inc/jobs_detail_header.php';
+    require APPROOT . '/views/inc/jobs_detail
+    _header.php';
 }
+
 ?>
+
+
 
 <div class="row">
     <div class="col-lg-8 col-md-12">
@@ -58,7 +62,15 @@ if (isset($_SESSION['user_id'])) {
                             <div class="twm-media">
                                 <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="Profile Picture">
                             </div>
-                            <p class="twm-job-address"><i class="fas fa-building"></i> <?php echo $data['job']->recruiter_name; ?></p>
+                            <p class="twm-job-address"><i class="fas fa-building"></i>
+                                <?php
+                                if ($data['job']->is_varified == 1) {
+                                    echo $data['job']->business_name; // Display business name if is_varified is 1
+                                } else {
+                                    echo $data['job']->recruiter_name; // Display recruiter name otherwise
+                                }
+                                ?>
+                            </p>
 
                             <h4 class="twm-job-title"><?php echo $data['job']->topic; ?> <span class="twm-job-post-duration">/ <?php echo time_elapsed_string($data['job']->created_at); ?></span></h4>
                             <p class="twm-job-address"><i class="fas fa-map-marker-alt"></i><?php echo $data['job']->location; ?></p>

@@ -14,9 +14,9 @@ class Job
         $offset = ($page - 1) * $perPage;
 
         // Prepare the SQL query with LIMIT, OFFSET, and ORDER BY
-        $query = "SELECT j.*, r.is_varified 
+        $query = "SELECT j.*, r.is_varified
                   FROM jobs j 
-                  LEFT JOIN recruiters r ON j.recruiter_id = r.id 
+                  LEFT JOIN recruiters r ON j.recruiter_id = r.id
                   WHERE j.is_deleted = 0";
 
         // If selected categories are provided and not empty, filter by them
@@ -26,7 +26,7 @@ class Job
 
         // Add search filter if search keyword is provided
         if ($searchKeyword !== null && $isLocation == 0) {
-            $query .= " AND (j.topic LIKE :searchKeyword )";
+            $query .= " AND (j.topic LIKE :searchKeyword)";
         }
 
         if ($searchKeyword !== null && $isLocation == 1) {
@@ -91,12 +91,14 @@ class Job
 
 
 
+
     public function getJobById($job_id)
     {
         // Prepare the SQL query to fetch job details by ID, joining with recruiters table
-        $query = "SELECT j.*, r.is_varified, r.name AS recruiter_name 
+        $query = "SELECT j.*, r.is_varified, r.name AS recruiter_name, b.business_name 
                   FROM jobs j 
                   LEFT JOIN recruiters r ON j.recruiter_id = r.id 
+                  LEFT JOIN br_details b ON r.id = b.recruiter_id
                   WHERE j.id = :job_id AND j.is_deleted = 0";
 
         // Bind the job ID parameter

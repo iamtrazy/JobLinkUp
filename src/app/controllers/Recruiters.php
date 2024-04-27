@@ -302,6 +302,12 @@ class Recruiters extends Controller
         }
     }
 
+    public function getRecruiterProfileImage($id)
+    {
+        $profileImage = $this->recruiterModel->getRecruiterProfileImage($id);
+        return $profileImage;
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['business_id'])) {
@@ -310,7 +316,8 @@ class Recruiters extends Controller
             $data = [
                 'style' => 'recruiter/dashboard.css',
                 'title' => 'Dashboard',
-                'header_title' => 'Dashboard'
+                'header_title' => 'Dashboard',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
             ];
         }
 
@@ -323,7 +330,8 @@ class Recruiters extends Controller
         $data = [
             'style' => 'recruiter/postjob.css',
             'title' => 'Post A Job',
-            'header_title' => 'Post A Job'
+            'header_title' => 'Post A Job',
+            'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
         ];
 
         $this->view('recruiters/postjob', $data);
@@ -383,14 +391,16 @@ class Recruiters extends Controller
                     'job' => $job,
                     'style' => 'recruiter/postjob.css',
                     'title' => 'Edit Job',
-                    'header_title' => 'Edit Job'
+                    'header_title' => 'Edit Job',
+                    'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
                 ];
                 $this->view('recruiters/edit-job', $data);
             } else {
                 $data = [
                     'style' => 'recruiter/postjob.css',
                     'title' => 'Edit Job',
-                    'header_title' => 'Edit Job'
+                    'header_title' => 'Edit Job',
+                    'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
                 ];
                 $this->view('recruiters/postjob', $data);
             }
@@ -420,7 +430,8 @@ class Recruiters extends Controller
         $data = [
             'style' => 'recruiter/chat.css',
             'title' => 'Chat',
-            'header_title' => 'Chat With Job Seekers'
+            'header_title' => 'Chat With Job Seekers',
+            'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
         ];
 
         $this->view('recruiters/chat', $data);
@@ -434,19 +445,79 @@ class Recruiters extends Controller
             $data = [
                 'style' => 'recruiter/pay.css',
                 'title' => 'Verified Business',
-                'header_title' => 'Varified Business'
+                'header_title' => 'Varified Business',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
             ];
             $this->view('recruiters/verified', $data);;
+        } else if ($this->recruiterModel->isPaid($_SESSION['business_id'])) {
+            $data = [
+                'style' => 'recruiter/pay.css',
+                'title' => 'Pending Verification',
+                'header_title' => 'Pending Verification',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+            ];
+            $this->view('recruiters/pending', $data);
         } else if ($this->recruiterModel->isBrUploaded($_SESSION['business_id'])) {
             $this->pay();
         } else {
             $data = [
                 'style' => 'recruiter/transactions.css',
                 'title' => 'Verify Business Profile',
-                'header_title' => 'Verify Your Business'
+                'header_title' => 'Verify Your Business',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
             ];
 
             $this->view('recruiters/transactions', $data);
+        }
+    }
+
+    public function profile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'id' => $_SESSION['business_id'],
+                'name' => trim(htmlspecialchars($_POST['name'])),
+                'phone_no' => trim(htmlspecialchars($_POST['phone_no'])),
+                'age' => trim(htmlspecialchars($_POST['age'])),
+                'address' => trim(htmlspecialchars($_POST['address'])),
+                'profile_image' => '',
+                'business_id' => $_SESSION['business_id']
+            ];
+
+            // Handle file upload if profile image is set
+            if (!empty($_FILES['profile_image']['name'])) {
+                $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
+
+                // If profile image is uploaded, add it to $data
+                if ($profileImagePath) {
+                    $data['profile_image'] = $profileImagePath;
+                } else {
+                    jsflash('Image upload failed (check image extension or size)', '/recruiters/profile', 1);
+                }
+            } else {
+                $data['profile_image'] = '';
+            }
+
+            // Validate required fields
+            if (empty($data['name']) || empty($data['phone_no']) || empty($data['age']) || empty($data['address'])) {
+                jsflash('Please enter all details', '/recruiters/profile', 1);
+            } else {
+                // Update the profile
+                if ($this->recruiterModel->updateProfile($data)) {
+                    jsflash('Profile Updated Successfully', '/recruiters/profile');
+                } else {
+                    jsflash('Failed to update profile', '/recruiters/profile', 1);
+                }
+            }
+        } else {
+            $data = [
+                'style' => 'recruiter/profile.css',
+                'title' => 'Profile',
+                'header_title' => 'Recruiter Profile',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+            ];
+
+            $this->view('recruiters/profile', $data);
         }
     }
 
@@ -457,7 +528,8 @@ class Recruiters extends Controller
             'jobs' => $jobs,
             'style' => 'recruiter/manage.css',
             'title' => 'Manage',
-            'header_title' => 'Manage jobs'
+            'header_title' => 'Manage jobs',
+            'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
         ];
 
         $this->view('recruiters/manage', $data);
@@ -471,32 +543,22 @@ class Recruiters extends Controller
             'style' => 'recruiter/applications.css',
             'title' => 'Candidates',
             'header_title' => 'Candidates',
-            'applications' => $applications
+            'applications' => $applications,
+            'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
         ];
 
         $this->view('recruiters/applications', $data);
     }
 
-    public function profile()
+    public function acceptApplication()
     {
-        $data = [
-            'style' => 'recruiter/profile.css',
-            'title' => 'Profile',
-            'header_title' => 'Recruiter Profile'
-        ];
-
-        $this->view('recruiters/profile', $data);
-    }
-
-public function acceptApplication()
-{
-    // Check if request is POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Check if user is logged in
-        if ($this->isLoggedIn()) {
-            // Get application ID from POST data
-            $job_id = $_POST['job_id'];
-            $seeker_id = $_POST['seeker_id'];
+        // Check if request is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = $_POST['job_id'];
+                $seeker_id = $_POST['seeker_id'];
 
             // Perform accept action
             if ($this->applicationModel->acceptApplication($seeker_id, $job_id)) {

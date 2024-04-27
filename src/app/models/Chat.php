@@ -10,7 +10,7 @@ class Chat
 
     public function seekerGetRecruiters($seeker_id)
     {
-        $this->db->query('SELECT chat_threads.id, recruiters.name, chat_threads.created_at 
+        $this->db->query('SELECT chat_threads.id, recruiters.name, recruiters.profile_image, chat_threads.created_at 
                     FROM chat_threads 
                     INNER JOIN recruiters ON chat_threads.recruiter_id = recruiters.id 
                     WHERE chat_threads.seeker_id = :seeker_id');
@@ -21,7 +21,7 @@ class Chat
 
     public function recruiterGetSeekers($recruiter_id)
     {
-        $this->db->query('SELECT chat_threads.id, jobseekers.username, chat_threads.created_at 
+        $this->db->query('SELECT chat_threads.id, jobseekers.username, jobseekers.profile_image, chat_threads.created_at 
                     FROM chat_threads 
                     INNER JOIN jobseekers ON chat_threads.seeker_id = jobseekers.id 
                     WHERE chat_threads.recruiter_id = :recruiter_id');

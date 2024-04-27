@@ -124,6 +124,33 @@ class Recruiter
     }
   }
 
+  public function updateProfile($data)
+  {
+    $this->db->query('UPDATE recruiters SET name = :name, age = :age, phone_no = :phone_no, address = :address, profile_image = :profile_image  WHERE id = :id');
+    // Bind values
+    $this->db->bind(':id', $data['id']);
+    $this->db->bind(':name', $data['name']);
+    $this->db->bind(':age', $data['age']);
+    $this->db->bind(':phone_no', $data['phone_no']);
+    $this->db->bind(':address', $data['address']);
+    $this->db->bind(':profile_image', $data['profile_image']);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function getRecruiterProfileImage($recruiter_id)
+  {
+    $this->db->query('SELECT profile_image FROM recruiters WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single()->profile_image;
+  }
+
   public function applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br, $first_name, $last_name, $phone, $city, $address)
   {
     $this->db->query('INSERT INTO br_details (recruiter_id, business_name, business_type, business_reg_no, business_address, br_path, first_name, last_name, phone, city, address) VALUES(:recruiter_id, :business_name, :business_type, :business_reg_no, :business_address, :br_path, :first_name, :last_name, :phone, :city, :address)');
@@ -211,7 +238,7 @@ class Recruiter
 
   public function paySuccess($recruiter_id)
   {
-    $this->db->query('UPDATE recruiters SET is_varified = 1 WHERE id = :recruiter_id');
+    $this->db->query('UPDATE recruiters SET paid = 1 WHERE id = :recruiter_id');
     $this->db->bind(':recruiter_id', $recruiter_id);
 
     if ($this->db->execute()) {
@@ -229,7 +256,19 @@ class Recruiter
     return $this->db->single()->email;
   }
 
-  public function isVerified($recruiter_id)
+  public function isPaid($recruiter_id)
+  {
+    $this->db->query('SELECT paid FROM recruiters WHERE id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    if ($this->db->single()->paid == 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function isVerified($recruiter_id) //varified as a paid recruiter
   {
     $this->db->query('SELECT is_varified FROM recruiters WHERE id = :recruiter_id');
     $this->db->bind(':recruiter_id', $recruiter_id);
