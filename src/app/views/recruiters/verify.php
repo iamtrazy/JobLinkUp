@@ -3,7 +3,7 @@
 <div class="container">
     <div class="forms-container">
         <div class="signin-signup">
-            <form action="<?php echo URLROOT; ?>/jobseekers/verify" method="post" class="code-verification-form">
+            <form action="<?php echo URLROOT; ?>/recruiters/verify" method="post" class="code-verification-form">
                 <h2 class="title">Enter Verification Code</h2>
                 <div class="input-field <?php echo (!empty($data['code_err'])) ? 'is-invalid' : ''; ?>">
                     <i class="fas fa-key"></i>
@@ -12,7 +12,7 @@
                 <span class="invalid-feedback"><?php echo $data['code_err']; ?></span>
                 <input type="submit" value="Verify" class="btn solid" />
                 <!-- Resend Code Button -->
-                <a href="<?php echo URLROOT; ?>/jobseekers/resend_code" id="resend-code">Resend Code</a>
+                <a href="<?php echo URLROOT; ?>/recruiters/resend_code" id="resend-code">Resend Code</a>
             </form>
         </div>
     </div>
@@ -25,7 +25,7 @@
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
                 ex ratione. Aliquid!
             </p>
-            <a href="<?php echo URLROOT; ?>/jobseekers/register">
+            <a href="<?php echo URLROOT; ?>/recruiters/register">
                 <button class="btn transparent" id="sign-up-btn">
                     Sign up
                 </button>
