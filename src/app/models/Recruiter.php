@@ -244,4 +244,28 @@ class Recruiter
       return false;
     }
   }
+
+  public function postedJobCount($recruiter_id)
+  {
+    $this->db->query('SELECT COUNT(*) as count FROM jobs WHERE recruiter_id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single()->count;
+  }
+
+  public function pendingApplicationsCount($recruiter_id)
+  {
+    $this->db->query('SELECT COUNT(*) as count FROM applications WHERE recruiter_id = :recruiter_id AND status = "pending"');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single()->count;
+  }
+
+  public function totalViewsCount($recruiter_id)
+  {
+    $this->db->query('SELECT SUM(view_count) as count FROM jobs WHERE recruiter_id = :recruiter_id');
+    $this->db->bind(':recruiter_id', $recruiter_id);
+
+    return $this->db->single()->count;
+  }
 }

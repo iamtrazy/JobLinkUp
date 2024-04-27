@@ -60,7 +60,7 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="twm-mid-content">
                             <div class="twm-media">
-                                <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="Profile Picture">
+                                <img src="<?php echo URLROOT . '/img/profile/' . $data['job']->profile_image ?>" alt="Profile Picture">
                             </div>
                             <p class="twm-job-address"><i class="fas fa-building"></i>
                                 <?php

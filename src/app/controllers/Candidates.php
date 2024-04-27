@@ -5,6 +5,7 @@ class Candidates extends Controller
   public $jobseekerModel;
   public $recruiterModel;
   public $candidateModel;
+  public $applicationModel;
 
   public function __construct()
   {
@@ -12,6 +13,7 @@ class Candidates extends Controller
     $this->jobseekerModel = $this->model('Jobseeker');
     $this->recruiterModel = $this->model('Recruiter');
     $this->candidateModel = $this->model('Candidate');
+    $this->applicationModel = $this->model('Application');
   }
 
   public function index()
@@ -38,7 +40,7 @@ class Candidates extends Controller
       $profile = $this->candidateModel->getCandidateById($id);
 
 
-      if (($profile->address) !== null) {
+      if (!empty($profile->address)) {
         $locationData = gelocate($profile->address);
         if ($locationData === null) {
           $profile->country = 'unknown';
@@ -54,11 +56,13 @@ class Candidates extends Controller
       // Check if job details are retrieved successfully
       if ($profile) {
         // Prepare data to pass to the view
+        $acceptedApplicationCount = $this->applicationModel->acceptedApplicationCount($id);
         $data = [
           'style' => 'candidates/profile.css',
           'title' => 'Candidate Details',
           'header_title' => 'Candidate Details',
-          'profile' => $profile // Pass job details to the view
+          'profile' => $profile, // Pass job details to the view
+          'acceptedApplicationCount' => $acceptedApplicationCount
         ];
 
         // Load the detail view with job details

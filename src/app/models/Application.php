@@ -154,4 +154,19 @@ class Application
             return false;
         }
     }
+
+    public function acceptedApplicationCount($seeker_id)
+    {
+        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications WHERE seeker_id = :seeker_id AND status = :status');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $this->db->bind(':status', 'approved');
+        $row = $this->db->single();
+
+        // Check if total applications is retrieved successfully
+        if ($row) {
+            return $row->total_applications;
+        } else {
+            return false;
+        }
+    }
 }

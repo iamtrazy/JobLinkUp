@@ -330,16 +330,38 @@ class Jobseekers extends Controller
         return $profileImage->profile_image;
     }
 
+    private function alert_job_count($id)
+    {
+        $seeker = $this->jobseekerModel->getJobseekerById($id);
+        $jobs = [];
+        if ($seeker->is_complete == 0) {
+            $jobs = $this->algorithmModel->match_keywords($id);
+        } else if ($seeker->location_rec == 0) {
+            $jobs = $this->algorithmModel->match_keywords($id);
+        } else {
+            $jobs = $this->algorithmModel->match_location($id);
+            $jobs = array_merge($jobs, $this->algorithmModel->match_keywords($id));
+        }
+        return count($jobs);
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            $id = $_SESSION['user_id'];
+            $appliedCount = $this->applicationModel->appliedJobCount($id);
+            $wishlistCount = $this->wishlistModel->wishlistedJobCount($id);
+            $alertCount = $this->alert_job_count($id);
             $data = [
                 'style' => 'jobseeker/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id']),
+                'applied_count' => $appliedCount,
+                'wishlist_count' => $wishlistCount,
+                'alert_count' => $alertCount
             ];
 
             $this->view('jobseeker/dashboard', $data);

@@ -314,6 +314,9 @@ class Recruiters extends Controller
             $this->login();
         } else {
             $data = [
+                'total_jobs' => $this->recruiterModel->postedJobCount($_SESSION['business_id']),
+                'total_applications' => $this->recruiterModel->pendingApplicationsCount($_SESSION['business_id']),
+                'total_views' => $this->recruiterModel->totalViewsCount($_SESSION['business_id']),
                 'style' => 'recruiter/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard',

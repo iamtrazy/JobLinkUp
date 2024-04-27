@@ -95,7 +95,7 @@ class Job
     public function getJobById($job_id)
     {
         // Prepare the SQL query to fetch job details by ID, joining with recruiters table
-        $query = "SELECT j.*, r.is_varified, r.name AS recruiter_name, b.business_name 
+        $query = "SELECT j.*, r.is_varified, r.name AS recruiter_name, b.business_name , r.profile_image
                   FROM jobs j 
                   LEFT JOIN recruiters r ON j.recruiter_id = r.id 
                   LEFT JOIN br_details b ON r.id = b.recruiter_id
