@@ -117,6 +117,23 @@ class Jobseeker
     }
   }
 
+  public function changePassword($jobseeker_id, $new_password)
+  {
+    // Hash the new password before updating the database
+    $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+    // Update the password in the database for the specified jobseeker
+    $this->db->query('UPDATE jobseekers SET password = :password WHERE id = :id');
+    $this->db->bind(':password', $hashed_password);
+    $this->db->bind(':id', $jobseeker_id);
+
+    // Execute the query
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public function getJobSeekerProfileImage($id)
   {
     $this->db->query('SELECT profile_image FROM jobseekers WHERE id = :id');

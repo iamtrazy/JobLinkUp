@@ -1,7 +1,7 @@
-<?php require APPROOT . '/views/inc/seeker_header.php'; ?>
+<?php require APPROOT . '/views/inc/recruiter_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
   <div class="twm-right-section-panel site-bg-gray">
-    <form action="<?php echo URLROOT; ?>/jobseekers/changepassword" method="post">
+    <form action="<?php echo URLROOT; ?>/recruiters/changepassword" method="post">
       <div class="panel panel-default">
         <div class="panel-heading wt-panel-heading p-a20">
           <h4 class="panel-tittle m-a0">Change Password</h4>

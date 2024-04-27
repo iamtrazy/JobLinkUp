@@ -145,12 +145,20 @@ if (!empty($city) && !empty($country)) {
                                 <div class="twm-s-info-discription"><?php echo $address ?></div>
                             </div>
                         </li>
+                        <li>
+                            <div class="twm-s-info-inner">
+                                <i class="fas fa-user-tie"></i>
+                                <span class="twm-title">Enrollerd Job Count</span>
+                                <div class="twm-s-info-discription"><?php echo $data['acceptedApplicationCount'] ?>
+                                </div>
+                            </div>
+                        </li>
                         <?php if (isset($data['profile']->website)) : ?>
                             <li>
                                 <div class="twm-s-info-inner">
                                     <i class="fas fa-globe"></i>
                                     <span class="twm-title">Website</sepan>
-                                    <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
+                                        <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
                                 </div>
                             </li>
                         <?php endif; ?>

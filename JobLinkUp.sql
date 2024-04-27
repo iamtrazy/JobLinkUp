@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 27, 2024 at 05:05 PM
+-- Generation Time: Apr 27, 2024 at 10:15 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -113,8 +113,9 @@ CREATE TABLE `chat_texts` (
 --
 
 INSERT INTO `chat_texts` (`id`, `thread_id`, `text`, `reply`, `created_at`) VALUES
-(70, 15, 'hi', 0, '2024-04-27 11:25:18'),
-(71, 14, 'hi', 0, '2024-04-27 11:25:21');
+(72, 15, 'hi', 0, '2024-04-27 19:55:34'),
+(73, 15, 'hi', 1, '2024-04-27 19:57:38'),
+(74, 15, 'Test', 1, '2024-04-27 21:01:46');
 
 -- --------------------------------------------------------
 
@@ -134,9 +135,7 @@ CREATE TABLE `chat_threads` (
 --
 
 INSERT INTO `chat_threads` (`id`, `seeker_id`, `recruiter_id`, `created_at`) VALUES
-(14, 16, 3, '2024-04-26 14:35:29'),
-(15, 16, 1, '2024-04-27 11:23:43'),
-(16, 2, 1, '2024-04-27 11:25:02');
+(15, 16, 1, '2024-04-27 11:23:43');
 
 -- --------------------------------------------------------
 
@@ -180,9 +179,9 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`id`, `recruiter_id`, `topic`, `location`, `website`, `rate`, `rate_type`, `type`, `detail`, `keywords`, `banner_img`, `created_at`, `expire_in`, `is_deleted`, `view_count`) VALUES
-(70, 3, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 3000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 28),
-(71, 1, 'Football Coach', '38/4, mihindu mawatha, malabe', 'example.com', 5000, 'One-Time', 'Freelance', 'test test', '', '662cdd7b52ced5.05595632.jpg', '2024-04-27 11:11:55', '2024-05-11 11:11:55', 0, 11),
-(72, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello World', 'artist engineer user', '662cdf5743afe4.43858272.jpg', '2024-04-27 11:19:51', '2024-05-11 11:19:51', 0, 6);
+(70, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 3000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 38),
+(71, 1, 'Football Coach', '38/4, mihindu mawatha, malabe', 'example.com', 5000, 'One-Time', 'Freelance', 'test test', '', '662cdd7b52ced5.05595632.jpg', '2024-04-27 11:11:55', '2024-05-11 11:11:55', 0, 15),
+(72, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello World', 'artist engineer user', '662cdf5743afe4.43858272.jpg', '2024-04-27 11:19:51', '2024-05-11 11:19:51', 0, 16);
 
 --
 -- Triggers `jobs`
@@ -262,9 +261,14 @@ CREATE TABLE `recruiters` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `age` int(3) DEFAULT NULL,
+  `phone_no` char(10) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `profile_image` varchar(255) NOT NULL DEFAULT 'default_recruiter.jpg',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `code_verified` tinyint(1) NOT NULL DEFAULT 0,
   `br_uploaded` tinyint(1) NOT NULL DEFAULT 0,
+  `paid` tinyint(1) NOT NULL DEFAULT 0,
   `is_varified` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -272,11 +276,11 @@ CREATE TABLE `recruiters` (
 -- Dumping data for table `recruiters`
 --
 
-INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `created_at`, `code_verified`, `br_uploaded`, `is_varified`) VALUES
-(1, 'info@gmail.com', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'AT Softwares', '2023-11-02 09:06:43', 1, 1, 0),
-(2, 'hello@business.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'BG Softwares', '2024-04-21 06:34:39', 0, 0, 0),
-(3, 'iamtrazy@proton.me', '$2y$10$wBOgCFIKnfy19OhZtmy1j.v/TkvYVw7TiHl8jK96.qbW/wweNN4uS', 'XY Softwares', '2024-04-26 07:07:16', 0, 0, 1),
-(7, 'kasunhansamalboy@gmail.com', '$2y$10$GprO4iIN1ERD01Su2Z661eq9/nUtjCGGEj433qxQuUyTqKGebg7dO', 'Hello World', '2024-04-27 10:52:05', 1, 0, 0);
+INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `age`, `phone_no`, `address`, `profile_image`, `created_at`, `code_verified`, `br_uploaded`, `paid`, `is_varified`) VALUES
+(1, 'info@gmail.com', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'AT Softwares', 30, '0702339061', '38/4, Mihindu Mw, Malabe', '662d58a39e78c3.88126634.jpg', '2023-11-02 09:06:43', 1, 1, 1, 1),
+(2, 'hello@business.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'BG Softwares', NULL, NULL, NULL, 'default_recruiter.jpg', '2024-04-21 06:34:39', 0, 0, 0, 0),
+(3, 'iamtrazy@proton.me', '$2y$10$wBOgCFIKnfy19OhZtmy1j.v/TkvYVw7TiHl8jK96.qbW/wweNN4uS', 'XY Softwares', NULL, NULL, NULL, 'default_recruiter.jpg', '2024-04-26 07:07:16', 0, 0, 0, 0),
+(7, 'kasunhansamalboy@gmail.com', '$2y$10$GprO4iIN1ERD01Su2Z661eq9/nUtjCGGEj433qxQuUyTqKGebg7dO', 'Hello World', NULL, NULL, NULL, 'default_recruiter.jpg', '2024-04-27 10:52:05', 1, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -435,7 +439,7 @@ ALTER TABLE `br_details`
 -- AUTO_INCREMENT for table `chat_texts`
 --
 ALTER TABLE `chat_texts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `chat_threads`
