@@ -4,9 +4,8 @@ class Payhere
     public function premium($cno, $address, $city, $fname, $lname, $emaili)
     {
         $amount = 1500;
-        $merchant_id = '1226577'; // Replace your Merchant ID
-        // $merchant_secret = 'NDgyNjY3NzExMjgxODQyMDAyNTIxMDQ5Nzg3MzY3MDE5NDEyNQ=='; iqube.me
-        $merchant_secret = 'MzcwMDQ3MDQwMzU0ODYxMTQwMzc5ODQ0NDcwNTIyNDcwMDI4Njg=';
+        $merchant_id = $_ENV['PAYHERE_MERCHANT_ID']; // Replace your Merchant ID
+        $merchant_secret = $_ENV['PAYHERE_MERCHANT_SECRET'];
         $return_url = URLROOT . '/student/profile'; // Replace with your Return URL
         $cancel_url = URLROOT . '/cancel'; // Replace with your Cancel URL
         $notify_url = URLROOT . '/student/purchase_premium'; // Replace with your Notify URL
