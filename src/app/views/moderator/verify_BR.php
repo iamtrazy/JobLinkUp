@@ -29,136 +29,22 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach ($data['BR_details'] as $BR):?>
                     <tr>
-                        <td> 1 </td>
-                        <td>Zinzu Chan Lee</td>
+                        <td> <?php echo $BR->recruiter_id?></td>
+                        <td><?php echo $BR->business_name?></td>
                         <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 17 Dec, 2022 </td>
+                        <td> <?php echo $BR->recruiter_id?> </td>
                         <td>
                             <p class="status  Rejected"> Rejected</p>
                         </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 2 </td>
-                        <td> Jeet Saru </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 27 Aug, 2023 </td>
                         <td>
-                            <p class="status  Approved"> Approved</p>
+                        <div style="display: flex;">
+                         <button class="approve-btn" role="button">Approve</button>
+                         <button class="reject-btn" role="button">Reject</button> </div>
                         </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
                     </tr>
-                    <tr>
-                        <td> 3</td>
-                        <td> Sonal Gharti </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 14 Mar, 2023 </td>
-                        <td>
-                            <p class="status pending">Pending</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 4</td>
-                        <td> Alson GC </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 25 May, 2023 </td>
-                        <td>
-                            <p class="status  Rejected"> Rejected</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 5</td>
-                        <td> Sarita Limbu </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 23 Apr, 2023 </td>
-                        <td>
-                            <p class="status pending">Pending</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 6</td>
-                        <td> Alex Gonley </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 23 Apr, 2023 </td>
-                        <td>
-                            <p class="status  Approved"> Approved</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 7</td>
-                        <td> Jeet Saru </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 20 May, 2023 </td>
-                        <td>
-                            <p class="status  Rejected"> Rejected</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 8</td>
-                        <td> Aayat Ali Khan </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 30 Feb, 2023 </td>
-                        <td>
-                            <p class="status pending">Pending</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 9</td>
-                        <td> Alson GC </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 22 Dec, 2023 </td>
-                        <td>
-                            <p class="status  Approved"> Approved</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 9</td>
-                        <td> Alson GC </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 22 Dec, 2023 </td>
-                        <td>
-                            <p class="status  Approved"> Approved</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 9</td>
-                        <td> Alson GC </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 22 Dec, 2023 </td>
-                        <td>
-                            <p class="status  Approved"> Approved</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 9</td>
-                        <td> Alson GC </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 22 Dec, 2023 </td>
-                        <td>
-                            <p class="status  Approved"> Approved</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
-                    <tr>
-                        <td> 9</td>
-                        <td> Alson GC </td>
-                        <td> <button class="download-btn" role="button">Download</button> </td>
-                        <td> 22 Dec, 2023 </td>
-                        <td>
-                            <p class="status  Approved"> Approved</p>
-                        </td>
-                        <td><div style="display: flex;"> <button class="approve-btn" role="button">Approve</button> <button class="reject-btn" role="button">Reject</button> </div></td>
-                    </tr>
+                   <?php endforeach;?>
                 </tbody>
             </table>
         </section>

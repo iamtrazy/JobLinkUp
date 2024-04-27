@@ -295,10 +295,12 @@ public function rejectDispute()
     $this->view('api/json', ['message' => $message]);
 }
  public function verifyBR(){
+    $br_details = $this->moderatorModel->getAllBRDetails();
     $data = [
         'style' => 'moderators/verify_BR.css',
         'title' => 'BR verification',
         'header_title' => 'Change Password',
+        'BR_details'=>$br_details
     ];
 
 

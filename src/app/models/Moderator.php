@@ -102,6 +102,30 @@ class Moderator
             return false;
         }
     }
+    public function approveBR($dispute_id)
+    {
+        $this->db->query('UPDATE disputes SET status = :status 
+        WHERE dispute_id = :dispute_id');
+        $this->db->bind(':status', 'approved');
+        $this->db->bind(':dispute_id', $dispute_id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function rejectBR($dispute_id)
+    {
+        $this->db->query('UPDATE disputes SET status = :status 
+        WHERE dispute_id = :dispute_id');
+        $this->db->bind(':status', 'rejected');
+        $this->db->bind(':dispute_id', $dispute_id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
     public function getAllDisputes(){
@@ -148,6 +172,12 @@ class Moderator
         //         error_log("Failed to execute the query to retrieve disputes");
         //     }
         // }
+
+        public function getAllBRDetails(){
+            $this->db->query('SELECT * from br_details ');
+            $row = $this->db->single();
+            return $this->db->resultSet();
+        }
         
     }
 

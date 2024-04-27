@@ -102,6 +102,7 @@
                                             <li><a href="<?php echo URLROOT ?>/admins/managemoderators"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
                                             <li><a href="#"><i class="fa fa-suitcase"></i> Manage Ads</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/transactions"><i class="fa fa-credit-card"></i>Transaction</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/transactions"><i class="fa fa-credit-card"></i>publish notices</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
