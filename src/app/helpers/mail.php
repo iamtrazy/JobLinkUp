@@ -19,13 +19,13 @@ function send_email($receiver, $receiver_name,  $subject, $body_string)
     $mail->Username   = $smtpUsername;                        //SMTP username
     $mail->Password   = $smtpPassword;                           //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-    $mail->Port       = 465;
+    $mail->Port       = 587;
     //-------------------------------------------
 
     //Recipients (change this for every project)
-    $mail->setFrom('<from address email>', '<name>');
+    $mail->setFrom('info@joblinkup.com', 'JobLinkUp');
     $mail->addAddress($receiver, $receiver_name);     //Add a recipient
-    $mail->addReplyTo('<reply to email address>', '<name>');
+    // $mail->addReplyTo('<reply to email address>', '<name>');
 
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
