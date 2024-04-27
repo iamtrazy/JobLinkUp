@@ -201,7 +201,7 @@ class Admins extends Controller
 
                 // Register User
                 if ($this->adminModel->addadmin($data)) {
-                    jsflash('Moderator Added', 'admins/addadmin');
+                    jsflash('Moderator Added', 'admins/managemoderators');
                 } else {
                     die('Something went wrong');
                 }
@@ -252,4 +252,20 @@ class Admins extends Controller
     $this->view('admin/managemoderators', $data);
     }
 
-}    
+
+    public function deleteModerator($moderator_id = null){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            
+                if ($this->moderatorsModel->deleteModerator($moderator_id)) {
+                    $response = ['status' => 'success', 'message' => 'Job Deleted Successfully'];
+                } else {
+                    $response = ['status' => 'error', 'message' => 'Failed to delete job'];
+                }
+            
+
+            $this->view('api/json', $response);
+    }
+
+}  
+}  

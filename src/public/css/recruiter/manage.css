@@ -1110,7 +1110,6 @@ button:not(:disabled) {
 .feather-search:before {
   content: "\e9c1";
 }
-/*! CSS Used from: https://thewebmax.org/jobzilla/css/dataTables.bootstrap5.min.css */
 table.dataTable thead > tr > th.sorting,
 table.dataTable thead > tr > th.sorting_asc {
   cursor: pointer;

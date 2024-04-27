@@ -96,6 +96,7 @@
                                             <li><a href="<?php echo URLROOT ?>/moderators/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                                             <li><a href="#"><i class="fa fa-suitcase"></i>Verify Buisness</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/disputes">"><i class="fa fa-credit-card"></i>handle disputes</a></li>
                                             <li><a href="<?php echo URLROOT ?>/moderators/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/moderators/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>

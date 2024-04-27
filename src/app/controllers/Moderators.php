@@ -215,4 +215,13 @@ class Moderators extends Controller
             }
         }
     }
+    public function disputes(){
+        $data = [
+            'style' => 'moderators/disputes.css',
+            'title' => 'Disputes',
+        ];
+        $this->view('moderator/disputes', $data);
+    }
+
+    
 }

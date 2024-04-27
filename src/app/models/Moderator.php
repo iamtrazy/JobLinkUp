@@ -70,4 +70,10 @@ class Moderator
             return false; // Password update failed
         }
     }
+
+    public function deleteModerator($moderator_id){
+        $this->db->query('UPDATE table moderator SET is_deleted=1
+        WHERE id = :moderator_id');
+        $this->db->bind(':moderator_id',$moderator_id);
+    }
 }

@@ -81,4 +81,9 @@
         </div>
     </div>
 </div>
+
+
+    <script src="script.js"></script>
+
+
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

@@ -66,8 +66,7 @@ function getStatusText($status)
                             <div class="twm-right-btn">
                                 <a href="<?php echo URLROOT . '/candidates/profile/' . $application->seeker_id ?>" class="twm-view-prifile site-text-primary">View Profile</a>
                             </div>
-                            <button class="approve">approve</button>
-                            <button class="reject">reject</button>
+                         
                         </div>
                         <a href="#" class="twm-btn twm-btn-accept" data-seeker-id="<?php echo $application->seeker_id ?>" data-job-id="<?php echo $application->id ?>"><i class="fas fa-check"></i> Accept</a>
                         <a href="#" class="twm-btn twm-btn-reject" data-seeker-id="<?php echo $application->seeker_id ?>" data-job-id="<?php echo $application->id ?>"><i class="fas fa-times"></i> Reject</a>
