@@ -294,5 +294,15 @@ public function rejectDispute()
     // Load 'api/json' view with the message
     $this->view('api/json', ['message' => $message]);
 }
-    
+ public function verifyBR(){
+    $data = [
+        'style' => 'moderators/verify_BR.css',
+        'title' => 'BR verification',
+        'header_title' => 'Change Password',
+    ];
+
+
+    $this->view('moderator/verify_BR', $data);
+
+ }   
 }
