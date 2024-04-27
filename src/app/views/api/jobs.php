@@ -6,8 +6,8 @@
     $border_class = $is_verified ? 'blue-glowing-border' : '';
     $verified_button_class = $is_verified ? 'verified-button' : '';
     ?>
-    <div class="col-lg-6 col-md-12 m-b30 <?php echo $border_class; ?>" style="cursor: pointer;">
-        <div class="twm-jobs-grid-style1" data-jobid="<?php echo $job->id; ?>" style="margin-bottom: 3%;">
+    <div class="col-lg-6 col-md-12 m-b30" style="cursor: pointer;">
+        <div class="twm-jobs-grid-style1 <?php echo $border_class; ?>" data-jobid="<?php echo $job->id; ?>" style="margin-bottom: 3%;">
             <div class="twm-media">
                 <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="#" />
             </div>
