@@ -7,12 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>JobLinkUp | <?php echo $data['title'] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body style="transform: none;">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
 
     <div class="page-wraper" style="transform: none;">
         <header class="site-header header-style-3 mobile-sider-drawer-menu">
@@ -95,9 +99,9 @@
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/admins/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/addadmin"><i class="fa fa-user"></i> Add Moderators</a></li>
-                                            <li><a href="#"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/managemoderators"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
                                             <li><a href="#"><i class="fa fa-suitcase"></i> Manage Ads</a></li>
-                                            <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/transactions"><i class="fa fa-credit-card"></i>Transaction</a></li>
                                             <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
