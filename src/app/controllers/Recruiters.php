@@ -6,6 +6,7 @@ class Recruiters extends Controller
     public $jobModel;
     public $applicationModel;
     public $chatModel;
+    public $payhereModel;
 
     public function __construct()
     {
@@ -13,6 +14,7 @@ class Recruiters extends Controller
         $this->jobModel = $this->model('Job');
         $this->applicationModel = $this->model('Application');
         $this->chatModel = $this->model('Chat');
+        $this->payhereModel = $this->model('Payhere');
     }
 
     public function index()
@@ -373,14 +375,25 @@ class Recruiters extends Controller
 
     public function transactions()
     {
-        //applyForBR
-        $data = [
-            'style' => 'recruiter/transactions.css',
-            'title' => 'Verify Business Profile',
-            'header_title' => 'BR Verification'
-        ];
 
-        $this->view('recruiters/transactions', $data);
+        if ($this->recruiterModel->isVerified($_SESSION['business_id'])) {
+            $data = [
+                'style' => 'recruiter/pay.css',
+                'title' => 'Verified Business',
+                'header_title' => 'Varified Business'
+            ];
+            $this->view('recruiters/verified', $data);;
+        } else if ($this->recruiterModel->isBrUploaded($_SESSION['business_id'])) {
+            $this->pay();
+        } else {
+            $data = [
+                'style' => 'recruiter/transactions.css',
+                'title' => 'Verify Business Profile',
+                'header_title' => 'Verify Your Business'
+            ];
+
+            $this->view('recruiters/transactions', $data);
+        }
     }
 
     public function manage()
@@ -595,77 +608,111 @@ public function applyForBR()
         // Initialize an empty array to store response data
         $response = [];
 
-        // Check if the user is logged in
-        if ($this->isLoggedIn()) {
-            // Validate and process the form data
-            // You can access the form fields using $_POST superglobal
-            // For example:
-            if ($_POST['agree_tos'] == 1) {
-                // Sanitize and validate the form data (business name, type, registration number, business address, and BR file
-                $business_name = trim($_POST['business_name']);
-                $business_type = trim($_POST['type']);
-                $registration_number = trim($_POST['reg_no']);
-                $business_address = trim($_POST['location']);
-                $recruiter_id = $_SESSION['business_id'];
+            // Check if the user is logged in
+            if ($this->isLoggedIn()) {
+                // Validate and process the form data
+                // You can access the form fields using $_POST superglobal
+                // For example:
+                if ($_POST['agree_tos'] == 1) {
+                    // Sanitize and validate the form data (business name, type, registration number, business address, and BR file
+                    $business_name = trim($_POST['business_name']);
+                    $business_type = trim($_POST['type']);
+                    $registration_number = trim($_POST['reg_no']);
+                    $business_address = trim($_POST['location']);
+                    $recruiter_id = $_SESSION['business_id'];
+                    $first_name = trim($_POST['first_name']);
+                    $last_name = trim($_POST['last_name']);
+                    $phone = trim($_POST['phone']);
+                    $city = trim($_POST['city']);
+                    $address = trim($_POST['address']);
 
                 if (!empty($_FILES['br'])) {
                     $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
 
-                    // If profile image is uploaded, add it to $data
-                    if ($br_path) {
-                        $br = $br_path;
+                        // If profile image is uploaded, add it to $data
+                        if ($br_path) {
+                            $br = $br_path;
+                        } else {
+                            $response['status'] = 'error';
+                            $response['message'] = 'BR upload failed (check file extension or size)';
+                        }
                     } else {
-                        $response['status'] = 'error';
-                        $response['message'] = 'BR upload failed (check file extension or size)';
+                        $br = '';
                     }
                 } else {
-                    $br = '';
-                }
-            } else {
-                $response['status'] = 'error';
-                $response['message'] = 'Please agree to the terms of service';
-            }
-            if (empty($business_name) || empty($business_type) || empty($registration_number) || empty($business_address) || empty($br)) {
-                $response['status'] = 'error';
-                $response['message'] = 'Please enter all details';
-            } else {
-                // Save the business registration data
-                if ($this->recruiterModel->applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br)) {
-                    $response['status'] = 'success';
-                    $response['message'] = 'Business registration request submitted successfully';
-                } else {
                     $response['status'] = 'error';
-                    $response['message'] = 'Failed to submit business registration request';
+                    $response['message'] = 'Please agree to the terms of service';
                 }
+                if (empty($business_name) || empty($business_type) || empty($registration_number) || empty($business_address) || empty($br)) {
+                    $response['status'] = 'error';
+                    $response['message'] = 'Please enter all details';
+                } else {
+                    // Save the business registration data
+                    if ($this->recruiterModel->applyForBR($recruiter_id, $business_name, $business_type, $registration_number, $business_address, $br)) {
+                        $response['status'] = 'success';
+                        $response['message'] = 'Business registration request submitted successfully';
+                    } else {
+                        $response['status'] = 'error';
+                        $response['message'] = 'Failed to submit business registration request';
+                    }
+                }
+            } else {
+                // If the user is not logged in, return an error message
+                $response['status'] = 'error';
+                $response['message'] = 'User not logged in';
             }
         } else {
-            // If the user is not logged in, return an error message
+            // If the request method is not POST, return an error message
             $response['status'] = 'error';
-            $response['message'] = 'User not logged in';
+            $response['message'] = 'Invalid request method';
         }
-    } else {
-        // If the request method is not POST, return an error message
-        $response['status'] = 'error';
-        $response['message'] = 'Invalid request method';
+
+
+        // Send the JSON response
+        $this->view('api/json', $response);
     }
 
-
-    // Send the JSON response
-    $this->view('api/json', $response);
+    public function explore()
+    {   
+        $all_recruiters = $this->recruiterModel->getAll();
+        $data = [
+            'style' => 'recruiter/explore.css',
+            'title' => 'Recruiters Grid',
+            'header_title' => 'Explore',
+            'all_recruiters' => $all_recruiters,
+    
+        ];
+        $this->view('recruiters/explore', $data);
 
 }
 
-public function explore()
-{   
-    $all_recruiters = $this->recruiterModel->getAll();
+public function pay()
+{
+    $br = $this->recruiterModel->getBrDetails($_SESSION['business_id']);
+    $email = $this->recruiterModel->getRecruiterEmail($_SESSION['business_id']);
+    $payment = $this->payhereModel->premium($br->phone, $br->address, $br->city, $br->first_name, $br->last_name, $email);
+
+    // $recruiter = $this->recruiterModel->getRecruiterById($_SESSION['business_id']);
     $data = [
-        'style' => 'recruiter/explore.css',
-        'title' => 'Recruiters Grid',
-        'header_title' => 'Explore',
-        'all_recruiters' => $all_recruiters,
+        'style' => 'recruiter/pay.css',
+        'title' => 'Verify Your Business',
+        'header_title' => 'Verify Your Business',
+        'payment' => $payment,
 
     ];
-    $this->view('recruiters/explore', $data);
+
+    $this->view('recruiters/pay', $data);
 }
 
-
+public function pay_success()
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $recruiter_id = $_SESSION['business_id'];
+        if ($this->recruiterModel->paySuccess($recruiter_id)) {
+            $response = ['status' => 'success', 'message' => 'Payment successful'];
+        } else {
+            $response = ['status' => 'error', 'message' => 'Failed to update payment status'];
+        }
+        $this->view('api/json', $response);
+    }
+}

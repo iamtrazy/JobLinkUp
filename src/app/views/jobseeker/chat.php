@@ -79,7 +79,7 @@
 <script>
   $(document).ready(function() {
     // Function to load messages for a specific thread
-    function loadMessages(threadId, recruiterName, businessName) {
+    function loadMessages(threadId, recruiterName) {
       // Function to send a message
       function sendMessage() {
         var message = $('.form-control').val(); // Get the message from the input field
@@ -92,7 +92,7 @@
           },
           success: function(response) {
             // Reload messages after sending the message
-            loadMessages(threadId, recruiterName, businessName);
+            loadMessages(threadId, recruiterName);
             // Clear input field after sending the message
             $('.form-control').val('');
           },
@@ -150,7 +150,6 @@
 
       // Update recruiter name and business name in conversation box
       $('.single-msg-user-name').text(recruiterName);
-      $('.single-msg-business-name').text(businessName);
 
       // Unbind previous event listeners before attaching new ones
       $('button.btn').off('click').on('click', function() {
@@ -183,7 +182,7 @@
                             </div>
                             <div class="msg-user-info-text">
                                 <div class="msg-user-name">${thread.recruiter_name}</div>
-                                <div class="msg-user-discription">${thread.business_name}</div>
+                                <div class="msg-user-discription">${thread.created_at}</div>
                             </div>
                         </div>
                     </div>
@@ -195,9 +194,8 @@
           $('.wt-dashboard-msg-search-list-wrap').off('click').on('click', function() {
             var threadId = $(this).data('thread-id');
             var recruiterName = $(this).find('.msg-user-name').text();
-            var businessName = $(this).find('.msg-user-discription').text();
-            loadMessages(threadId, recruiterName, businessName);
-            // loadMessagesPeriodically(threadId, recruiterName, businessName);
+            loadMessages(threadId, recruiterName);
+            // loadMessagesPeriodically(threadId, recruiterName);
           });
         } else {
           // If there are no threads, display a message
@@ -209,9 +207,9 @@
       }
     });
 
-    function loadMessagesPeriodically(threadId, recruiterName, businessName) {
+    function loadMessagesPeriodically(threadId, recruiterName) {
       setInterval(function() {
-        loadMessages(threadId, recruiterName, businessName);
+        loadMessages(threadId, recruiterName);
       }, 3000); // 3000 milliseconds = 3 seconds
     }
   });

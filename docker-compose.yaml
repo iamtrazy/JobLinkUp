@@ -36,6 +36,8 @@ services:
       - app-network
     extra_hosts:
       host.docker.internal: host-gateway
+    env_file:
+      - .env
   webserver:
     image: caddy:alpine
     depends_on:
@@ -53,6 +55,13 @@ services:
       - ./caddy-data/data:/data
     networks:
       - app-network
+  composer:
+    restart: "no"
+    container_name: composer
+    image: "composer"
+    command: install --no-suggest
+    volumes:
+      - ./src/app/:/app
 
 volumes:
   dbdata:

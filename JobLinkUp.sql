@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 26, 2024 at 06:39 AM
+-- Generation Time: Apr 26, 2024 at 08:38 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -61,11 +61,7 @@ CREATE TABLE `applications` (
 --
 
 INSERT INTO `applications` (`seeker_id`, `job_id`, `recruiter_id`, `created_at`, `status`) VALUES
-(16, 62, 1, '2024-04-25 17:49:01', 'rejected'),
-(16, 63, 1, '2024-04-25 17:49:05', 'rejected'),
-(16, 64, 1, '2024-04-25 17:07:39', 'pending'),
-(16, 65, 1, '2024-04-25 17:00:29', 'pending'),
-(16, 68, 1, '2024-04-25 16:31:03', 'pending');
+(16, 70, 3, '2024-04-26 07:41:38', 'approved');
 
 -- --------------------------------------------------------
 
@@ -80,8 +76,20 @@ CREATE TABLE `br_details` (
   `business_type` varchar(255) NOT NULL,
   `business_reg_no` varchar(50) NOT NULL,
   `business_address` varchar(255) NOT NULL,
-  `br_path` varchar(255) DEFAULT NULL
+  `br_path` varchar(255) DEFAULT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `phone` varchar(10) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `city` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `br_details`
+--
+
+INSERT INTO `br_details` (`application_id`, `recruiter_id`, `business_name`, `business_type`, `business_reg_no`, `business_address`, `br_path`, `first_name`, `last_name`, `phone`, `address`, `city`) VALUES
+(3, 1, 'AT Software', 'Sole Proprietership', '123', '1156 High St, Santa Cruz, CA 95064', '662c022a36f685.96565381.pdf', 'minoli', 'perera', '0771231239', '38/4, Mihindu Mw, Malabe', 'Colombo');
 
 -- --------------------------------------------------------
 
@@ -110,6 +118,13 @@ CREATE TABLE `chat_threads` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `chat_threads`
+--
+
+INSERT INTO `chat_threads` (`id`, `seeker_id`, `recruiter_id`, `created_at`) VALUES
+(14, 16, 3, '2024-04-26 14:35:29');
+
 -- --------------------------------------------------------
 
 --
@@ -122,18 +137,6 @@ CREATE TABLE `disputes` (
   `recruiter_id` int(11) NOT NULL,
   `reason` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `disputes`
---
-
-INSERT INTO `disputes` (`seeker_id`, `job_id`, `recruiter_id`, `reason`) VALUES
-(2, 69, 1, 'inappropriate'),
-(16, 62, 1, 'inappropriate'),
-(16, 63, 1, 'inappropriate'),
-(16, 64, 1, 'misleading'),
-(16, 68, 1, 'inappropriate'),
-(16, 69, 1, 'inappropriate');
 
 -- --------------------------------------------------------
 
@@ -154,21 +157,27 @@ CREATE TABLE `jobs` (
   `keywords` varchar(255) NOT NULL,
   `banner_img` varchar(255) NOT NULL DEFAULT 'job-detail-bg.jpg',
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `expire_in` datetime NOT NULL,
   `is_varified` tinyint(1) NOT NULL DEFAULT 0,
-  `is_deleted` tinyint(1) NOT NULL DEFAULT 0
+  `is_deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `view_count` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `jobs`
 --
 
-INSERT INTO `jobs` (`id`, `recruiter_id`, `topic`, `location`, `website`, `rate`, `rate_type`, `type`, `detail`, `keywords`, `banner_img`, `created_at`, `is_varified`, `is_deleted`) VALUES
-(62, 1, 'Article Writer', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'Hour', 'Internship', 'Hello !', 'artist engineer user', '662b2e803242a4.39722744.jpeg', '2024-04-19 07:50:57', 0, 0),
-(63, 1, 'Article Writer', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello', 'artist engineer', 'job-detail-bg.jpg', '2024-04-19 08:09:47', 0, 0),
-(64, 1, 'Badminton coaching', '1156 High St, Santa Cruz, CA 95064', '', 9500, 'One-Time', 'Freelance', 'Hello !', 'artist engineer', '662344fb1d42e0.98090963.jpg', '2024-04-20 04:30:51', 0, 0),
-(65, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'https://iamtrazy.eu.org', 5000, 'One-Time', 'Part-Time', 'jaokoaiuaoiaoiuiauiauia', 'test\nkeyword', '662575e0080b06.61876525.jpg', '2024-04-21 20:24:00', 0, 0),
-(68, 1, 'Badminton coaching', '1156 High St, Santa Cruz, CA 95064', 'example.com', 9500, 'One-Time', 'Freelance', 'Test Description', 'artist engineer', 'job-detail-bg.jpg', '2024-04-22 04:40:26', 0, 0),
-(69, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Test', 'artist engineer', '66265e8505b4d2.86228966.png', '2024-04-22 12:56:37', 0, 0);
+INSERT INTO `jobs` (`id`, `recruiter_id`, `topic`, `location`, `website`, `rate`, `rate_type`, `type`, `detail`, `keywords`, `banner_img`, `created_at`, `expire_in`, `is_varified`, `is_deleted`, `view_count`) VALUES
+(70, 3, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 0, 7);
+
+--
+-- Triggers `jobs`
+--
+DELIMITER $$
+CREATE TRIGGER `expire` BEFORE INSERT ON `jobs` FOR EACH ROW SET NEW.created_at = IFNULL(NEW.created_at, NOW()), 
+    NEW.expire_in = TIMESTAMPADD(DAY, 14, NEW.created_at)
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -240,17 +249,19 @@ CREATE TABLE `recruiters` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `business_name` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `br_uploaded` tinyint(1) NOT NULL DEFAULT 0,
+  `is_varified` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `recruiters`
 --
 
-INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `business_name`, `created_at`) VALUES
-(1, 'info@sanima.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'AT Softwares', 'Sanima Holdings', '2023-11-02 09:06:43'),
-(2, 'hello@business.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'Test Business', 'Test Company', '2024-04-21 06:34:39');
+INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `created_at`, `br_uploaded`, `is_varified`) VALUES
+(1, 'info@sanima.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'AT Softwares', '2023-11-02 09:06:43', 1, 1),
+(2, 'hello@business.lk', '$2y$10$sZ/Ihj1gB6dzDfrQP.9ZgOT1x/eWN6nRj4p3qo12D6oGD8uXNQ6KW', 'BG Softwares', '2024-04-21 06:34:39', 0, 0),
+(3, 'iamtrazy@proton.me', '$2y$10$wBOgCFIKnfy19OhZtmy1j.v/TkvYVw7TiHl8jK96.qbW/wweNN4uS', 'XY Softwares', '2024-04-26 07:07:16', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -263,16 +274,6 @@ CREATE TABLE `wishlist` (
   `job_id` int(11) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `wishlist`
---
-
-INSERT INTO `wishlist` (`seeker_id`, `job_id`, `created_at`) VALUES
-(2, 69, '2024-04-24 12:44:09'),
-(16, 63, '2024-04-25 16:30:54'),
-(16, 64, '2024-04-25 07:26:59'),
-(16, 65, '2024-04-25 16:28:35');
 
 --
 -- Indexes for dumped tables
@@ -367,25 +368,25 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `br_details`
 --
 ALTER TABLE `br_details`
-  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `chat_texts`
 --
 ALTER TABLE `chat_texts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `chat_threads`
 --
 ALTER TABLE `chat_threads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `jobseekers`
@@ -403,7 +404,7 @@ ALTER TABLE `moderators`
 -- AUTO_INCREMENT for table `recruiters`
 --
 ALTER TABLE `recruiters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

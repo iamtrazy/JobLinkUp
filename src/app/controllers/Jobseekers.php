@@ -39,6 +39,15 @@ class Jobseekers extends Controller
         }
     }
 
+    private function verify_code($role_id, $role, $receiver, $receiver_name)
+    {
+        $this->jobseekerModel->generateVerificationCode($role_id, $role);
+        $code = $this->jobseekerModel->getVerificationCode($role_id, $role);
+        $subject = 'Verification Code';
+        $body_string = 'Your verification code is: ' . $code->code;
+        send_email($receiver, $receiver_name,  $subject, $body_string);
+    }
+
     public function register()
     {
 
@@ -108,11 +117,13 @@ class Jobseekers extends Controller
                     // Validated
 
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-                    // Register User
                     if ($this->jobseekerModel->register($data)) {
-                        flash('register_success', 'You are registered and can log in');
-                        redirect('jobseekers/login');
+                        // flash('register_success', 'You are registered and can log in');
+                        $id = $this->jobseekerModel->getUserId($data['email']);
+                        $this->verify_code($id->id, 'seeker', $data['email'], $data['name']);
+                        $_SESSION['verify_id'] = $id->id;
+                        $_SESSION['verify_emial'] = $data['email'];
+                        $this->view('jobseeker/verify');
                     } else {
                         die('Something went wrong');
                     }
@@ -141,6 +152,37 @@ class Jobseekers extends Controller
                 // Load view
                 $this->view('jobseeker/register', $data);
             }
+        }
+    }
+
+    public function verify()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_SESSION['verify_id']) && isset($_SESSION['verify_email'])) {
+                if (isset($_POST['code'])) {
+                    $code = trim(htmlspecialchars($_POST['code']));
+                    $id = $_SESSION['verify_id'];
+                    if ($this->jobseekerModel->checkVerificationCode($id, 'seeker', $code)) {
+                        $this->jobseekerModel->setVerified($id);
+                        $loggedInUser = $this->jobseekerModel->getJobseekerById($id);
+                        $this->createUserSession($loggedInUser);
+                        redirect('jobseekers/dashboard');
+                    } else {
+                        $data['code_err'] = 'Invalid verification code';
+                        $this->view('jobseeker/verify', $data);
+                    }
+                } else {
+                    $data['code_err'] = 'Please enter verification code';
+                    $this->view('jobseeker/verify', $data);
+                }
+            } else {
+                redirect('jobseekers/login');
+            }
+        } else {
+            $data = [
+                'code_err' => '',
+            ];
+            $this->view('jobseeker/verify', $data);
         }
     }
 
@@ -195,8 +237,16 @@ class Jobseekers extends Controller
                     $loggedInUser = $this->jobseekerModel->login($data['login_email'], $data['login_password']);
 
                     if ($loggedInUser) {
-                        // Create Session
-                        $this->createUserSession($loggedInUser);
+                        if ($loggedInUser->code_verified == 0) {
+                            $this->verify_code($loggedInUser->id, 'seeker', $loggedInUser->email, $loggedInUser->username);
+                            $_SESSION['verify_id'] = $loggedInUser->id;
+                            $_SESSION['verify_email'] = $loggedInUser->email;
+                            $data['code_err'] = 'Please verify your account';
+                            $data['user'] = $loggedInUser;
+                            $this->view('jobseeker/verify', $data);
+                        } else {
+                            $this->createUserSession($loggedInUser);
+                        }
                     } else {
                         $data['login_password_err'] = 'Password incorrect';
 
