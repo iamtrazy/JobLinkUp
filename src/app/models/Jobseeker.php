@@ -185,4 +185,15 @@ public function getJobCount(){
   
 }
 
+
+  public function completeProfile($id)
+  {
+    $this->db->query('UPDATE jobseekers SET is_complete = 1 WHERE id = :id');
+    $this->db->bind(':id', $id);
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -226,7 +226,7 @@
                                     text: response.message
                                 }).then((result) => {
                                     // Redirect to dashboard or any other page
-                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/dashboard';
+                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/transactions';
                                 });
                             } else {
                                 Swal.fire({

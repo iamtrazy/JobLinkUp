@@ -1,9 +1,10 @@
 <?php require APPROOT . '/views/inc/seeker_header.php'; ?>
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
-  <div class="alert alert-info" role="alert">
-    <strong>Complete Your Profile:</strong> Please fill in the required fields below and add keywords to receive personalized job recommendations.
-  </div>
-
+  <?php if (!empty($data['message'])) : ?>
+    <div class="alert alert-info" role="alert">
+      <strong>Complete Your Profile:</strong> Please fill in the required fields below and add keywords to receive personalized job recommendations.
+    </div>
+  <?php endif; ?>
   <div class="twm-right-section-panel site-bg-gray">
     <form method="post" action="<?php echo URLROOT . '/jobseekers/edit_profile' ?>" enctype="multipart/form-data">
       <div class="panel panel-default">
