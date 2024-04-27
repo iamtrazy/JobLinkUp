@@ -737,4 +737,58 @@ public function pay_success()
     $this->view('api/json', $response);
 
 }
+
+public function public_profile($id = null)
+{
+//   if (!isset($_SESSION['business_id'])) {
+//     $_SESSION['guest_id'] = '1';
+//     $_SESSION['user_name'] = 'Guest User';
+//   }
+
+  // Check if $id is provided and is not null
+  if ($id !== null) {
+    // Retrieve recruiter details for the given $id
+
+    // $profile = $this->candidateModel->getCandidateById($id);
+        $profile = $this->recruiterModel->getRecruiterById($id);
+
+
+    if (($profile->address) !== null) {
+      $locationData = gelocate($profile->address);
+      if ($locationData === null) {
+        $profile->country = 'unknown';
+        $profile->city = 'unknown';
+      }
+      $profile->country = $locationData['country'];
+      $profile->city = $locationData['city'];
+    } else {
+      $profile->country = 'unknown';
+      $profile->city = 'unknown';
+    }
+
+    // Check if job details are retrieved successfully
+    if ($profile) {
+      // Prepare data to pass to the view
+      $data = [
+        'style' => 'recruiters/public_profile.css',
+        'title' => 'Recruiter Details',
+        'header_title' => 'Recruiter Details',
+        'profile' => $profile // Pass job details to the view
+      ];
+
+      // Load the detail view with job details
+      $this->view('recruiter/public_profile', $data);
+    } else {
+      // Handle case when job details are not found
+      // You can display an error message or redirect to a different page
+      jsflash('Recruiter not found', 'jobs');
+    }
+  } else {
+    // Handle case when $id is not provided or is null
+    // You can display an error message or redirect to a different page
+    jsflash('recruiter not found', 'jobs');
+  }
+}
+
+
 }

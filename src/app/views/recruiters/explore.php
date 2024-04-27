@@ -70,7 +70,7 @@
                                 <h4> <?php echo $recruiter->name; ?> </h4>
                             </a>
                             <div class="mid-mid-content">
-                                <a href="candidate-detail.html" class="twm-view-prifile site-text-primary">View Business Profile</a>
+                                <a href="<?php echo URLROOT . '/recruiters/public_profile/' . $recruiter->id ?>" class="twm-view-prifile site-text-primary">View profile</a>
                                 <a href="candidate-detail.html" class="twm-download-resume site-text-primary">Resume</a>
                             </div>
                             <div class="twm-fot-content">
