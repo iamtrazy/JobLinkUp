@@ -6,6 +6,7 @@ class Jobseekers extends Controller
     public $jobModel;
     public $wishlistModel;
     public $applicationModel;
+    public $algorithmModel;
 
     public function __construct()
     {
@@ -13,6 +14,7 @@ class Jobseekers extends Controller
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
         $this->applicationModel = $this->model('Application');
+        $this->algorithmModel = $this->model('Algorithm');
     }
 
     public function index()
@@ -349,13 +351,18 @@ class Jobseekers extends Controller
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            $id = $_SESSION['user_id'];
+            $seeker = $this->jobseekerModel->getJobseekerById($id);
             $data = [
                 'style' => 'jobseeker/profile.css',
                 'title' => 'Profile',
                 'header_title' => 'Profile',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id']),
+                'message' => '',
             ];
-
+            if ($seeker->is_complete == 0) {
+                $data['message'] = 'Please complete your profile to receive job alerts';
+            }
             $this->view('jobseeker/profile', $data);
         }
     }
@@ -430,11 +437,27 @@ class Jobseekers extends Controller
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            $id = $_SESSION['user_id'];
+
+            $seeker = $this->jobseekerModel->getJobseekerById($id);
+
+            $jobs = [];
+
+            if ($seeker->is_complete == 0) {
+                jsflash('Please complete your profile to receive job alerts', 'jobseekers/profile');
+            } else if ($seeker->location_rec == 0) {
+                $jobs = $this->algorithmModel->match_keywords($id);
+            } else {
+                $jobs = $this->algorithmModel->match_location($id);
+                $jobs = array_merge($jobs, $this->algorithmModel->match_keywords($id));
+            }
+
             $data = [
                 'style' => 'jobseeker/alerts.css',
                 'title' => 'Jobs Alerts',
                 'header_title' => 'Job Alerts',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id']),
+                'jobs' => $jobs
             ];
 
             $this->view('jobseeker/jobalerts', $data);
@@ -497,6 +520,12 @@ class Jobseekers extends Controller
             // Update $data with sanitized values from $_POST
             $data = array_merge($data, $filteredData);
 
+            if (empty($data['keywords']) || empty($data['address'])) {
+                $data['data_err'] = 'Keywords and address cannot be empty.';
+                jsflash($data['data_err'], 'jobseekers/profile', 1);
+                return; // Stop further execution
+            }
+
             if (!empty($_FILES['profile_image']['name'])) {
                 $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
 
@@ -521,9 +550,11 @@ class Jobseekers extends Controller
             } else {
                 $data['cv'] = '';
             }
+
             // Call the model function to edit profile
             if ($this->jobseekerModel->editProfile($data)) {
                 // Profile updated successfully
+                $this->jobseekerModel->completeProfile($data['id']);
                 jsflash('Profile Updated', 'jobseekers/profile');
             } else {
                 // Handle error

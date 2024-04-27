@@ -14,47 +14,59 @@ class Job
         $offset = ($page - 1) * $perPage;
 
         // Prepare the SQL query with LIMIT, OFFSET, and ORDER BY
-        $query = "SELECT * FROM jobs WHERE is_deleted = 0";
+        $query = "SELECT j.*, r.is_varified 
+                  FROM jobs j 
+                  LEFT JOIN recruiters r ON j.recruiter_id = r.id 
+                  WHERE j.is_deleted = 0";
 
         // If selected categories are provided and not empty, filter by them
-        if (!($selectedCategories[0] == 'all')) {
-            $query .= " AND type IN ('" . implode("', '", $selectedCategories) . "')";
-        } else if ($timeCriterion == 'all') {
-            $query .= " AND 1";
-        } else {
-            $query .= " AND 1";
+        if (!empty($selectedCategories) && !in_array('all', $selectedCategories)) {
+            $query .= " AND j.type IN ('" . implode("', '", $selectedCategories) . "')";
         }
 
         // Add search filter if search keyword is provided
         if ($searchKeyword !== null && $isLocation == 0) {
-            $query .= " AND (topic LIKE :searchKeyword )";
+            $query .= " AND (j.topic LIKE :searchKeyword )";
         }
 
         if ($searchKeyword !== null && $isLocation == 1) {
-            $query .= " AND (location LIKE :searchKeyword)";
+            $query .= " AND (j.location LIKE :searchKeyword)";
         }
 
         // Filter jobs based on the time criterion
-        if (!($timeCriterion == 'all')) {
-            if ($timeCriterion == '1') {
-                $query .= " AND created_at >= NOW() - INTERVAL 1 HOUR";
-            } elseif ($timeCriterion == '24') {
-                $query .= " AND created_at >= NOW() - INTERVAL 24 HOUR";
-            } elseif ($timeCriterion == '7') {
-                $query .= " AND created_at >= NOW() - INTERVAL 7 DAY";
-            } elseif ($timeCriterion == '14') {
-                $query .= " AND created_at >= NOW() - INTERVAL 14 DAY";
-            } elseif ($timeCriterion == '30') {
-                $query .= " AND created_at >= NOW() - INTERVAL 30 DAY";
+        if ($timeCriterion !== 'all') {
+            $interval = '';
+            switch ($timeCriterion) {
+                case '1':
+                    $interval = 'INTERVAL 1 HOUR';
+                    break;
+                case '24':
+                    $interval = 'INTERVAL 24 HOUR';
+                    break;
+                case '7':
+                    $interval = 'INTERVAL 7 DAY';
+                    break;
+                case '14':
+                    $interval = 'INTERVAL 14 DAY';
+                    break;
+                case '30':
+                    $interval = 'INTERVAL 30 DAY';
+                    break;
             }
+            $query .= " AND j.created_at >= NOW() - INTERVAL :interval";
         }
 
-        if ($sort_by == "created_at") {
-            $query .= " ORDER BY created_at DESC";
-        } elseif ($sort_by == "category") {
-            $query .= " ORDER BY type";
-        } elseif ($sort_by == "rate") {
-            $query .= " ORDER BY rate DESC";
+        $query .= " ORDER BY r.is_varified DESC, "; // Sorting by is_varified first
+        switch ($sort_by) {
+            case "created_at":
+                $query .= "j.created_at DESC";
+                break;
+            case "category":
+                $query .= "j.type";
+                break;
+            case "rate":
+                $query .= "j.rate DESC";
+                break;
         }
 
         $query .= " LIMIT :perPage OFFSET :offset";
@@ -67,6 +79,9 @@ class Job
             $searchKeyword = '%' . $searchKeyword . '%';
             $this->db->bind(':searchKeyword', $searchKeyword);
         }
+        if ($timeCriterion !== 'all') {
+            $this->db->bind(':interval', $interval);
+        }
 
         // Execute the query
         $results = $this->db->resultset();
@@ -75,10 +90,14 @@ class Job
     }
 
 
+
     public function getJobById($job_id)
     {
-        // Prepare the SQL query to fetch job details by ID
-        $query = "SELECT * FROM jobs WHERE id = :job_id AND is_deleted = 0";
+        // Prepare the SQL query to fetch job details by ID, joining with recruiters table
+        $query = "SELECT j.*, r.is_varified, r.name AS recruiter_name 
+                  FROM jobs j 
+                  LEFT JOIN recruiters r ON j.recruiter_id = r.id 
+                  WHERE j.id = :job_id AND j.is_deleted = 0";
 
         // Bind the job ID parameter
         $this->db->query($query);
@@ -94,6 +113,7 @@ class Job
             return false; // Return false if job not found
         }
     }
+
 
     public function appliedCount($job_id)
     {

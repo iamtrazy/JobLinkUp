@@ -1,5 +1,12 @@
 <?php foreach ($data['jobs'] as $job) : ?>
-    <div class="col-lg-6 col-md-12 m-b30" style="cursor: pointer;">
+    <?php
+    // Check if the job is verified
+    $is_verified = $job->is_varified == 1;
+    // Generate class names based on verification status
+    $border_class = $is_verified ? 'blue-glowing-border' : '';
+    $verified_button_class = $is_verified ? 'verified-button' : '';
+    ?>
+    <div class="col-lg-6 col-md-12 m-b30 <?php echo $border_class; ?>" style="cursor: pointer;">
         <div class="twm-jobs-grid-style1" data-jobid="<?php echo $job->id; ?>" style="margin-bottom: 3%;">
             <div class="twm-media">
                 <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="#" />
@@ -17,6 +24,12 @@
                 </p>
                 <a href="#" class="twm-job-websites site-text-primary"><?php echo $job->website; ?></a>
             </div>
+            <?php if ($is_verified) : ?>
+                <!-- Display verified button if the job is verified -->
+                <div class="verified-button">
+                    <i class="fas fa-check-circle"></i> Verified
+                </div>
+            <?php endif; ?>
             <div class="twm-right-content" style="margin-top: 3%;">
                 <div class="twm-jobs-amount">
                     LKR <?php echo $job->rate; ?><?php if ($job->rate_type !== 'One-Time') echo ' <span>/ ' . $job->rate_type . '</span>'; ?>

@@ -27,7 +27,7 @@ function flash($name = '', $message = '', $class = 'flash-message success')
     }
 }
 
-function jsflash($message = '', $path = '')
+function jsflash($message = '', $path = '', $error = 0)
 {
     echo '<!DOCTYPE html>
     <html lang="en">
@@ -39,15 +39,26 @@ function jsflash($message = '', $path = '')
     ';
     echo '<script type="text/javascript">';
 
-    if (!empty($message) && !empty($path)) { // Fix: Corrected the condition to properly check both variables
-        echo 'Swal.fire({';
-        echo '  icon: "success",';
-        echo '  title: "' . $message . '",';
-        echo '}).then((result) => {';
-        echo '  if (result.isConfirmed) {';
-        echo '    window.location.href = "' . URLROOT . '/' . $path . '";';
-        echo '  }';
-        echo '});';
+    if (!empty($message) && !empty($path)) {
+        if ($error == 1) { // Show red cross error alert
+            echo 'Swal.fire({';
+            echo '  icon: "error",';
+            echo '  title: "' . $message . '",';
+            echo '}).then((result) => {';
+            echo '  if (result.isConfirmed) {';
+            echo '    window.location.href = "' . URLROOT . '/' . $path . '";';
+            echo '  }';
+            echo '});';
+        } else { // Show success alert
+            echo 'Swal.fire({';
+            echo '  icon: "success",';
+            echo '  title: "' . $message . '",';
+            echo '}).then((result) => {';
+            echo '  if (result.isConfirmed) {';
+            echo '    window.location.href = "' . URLROOT . '/' . $path . '";';
+            echo '  }';
+            echo '});';
+        }
     }
     echo '</script>';
     echo '</body>';
