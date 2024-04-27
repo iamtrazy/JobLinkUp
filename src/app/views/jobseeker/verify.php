@@ -13,7 +13,6 @@
                 <input type="submit" value="Verify" class="btn solid" />
                 <!-- Resend Code Button -->
                 <a href="<?php echo URLROOT; ?>/jobseekers/resend_code" id="resend-code">Resend Code</a>
-                <span id="timeout-counter" style="display: none;">Timeout: <span id="counter">60</span> seconds</span>
             </form>
         </div>
     </div>
@@ -48,32 +47,4 @@
         <img src="<?php echo URLROOT; ?>/img/register.svg" class="image" alt="" />
     </div>
 </div>
-
-<script>
-    // Timeout counter for resend code
-    let counter = 60;
-    let resendCodeBtn = document.getElementById('resend-code');
-    let timeoutCounter = document.getElementById('timeout-counter');
-    let counterSpan = document.getElementById('counter');
-
-    resendCodeBtn.addEventListener('click', function() {
-        // Disable the button
-        resendCodeBtn.disabled = true;
-        // Show timeout counter
-        timeoutCounter.style.display = 'inline-block';
-
-        let interval = setInterval(function() {
-            counter--;
-            counterSpan.textContent = counter;
-            if (counter <= 0) {
-                clearInterval(interval);
-                // Reset counter and enable the button
-                counter = 60;
-                resendCodeBtn.disabled = false;
-                timeoutCounter.style.display = 'none';
-            }
-        }, 1000);
-    });
-</script>
-
 <?php require APPROOT . '/views/inc/footer.php'; ?>

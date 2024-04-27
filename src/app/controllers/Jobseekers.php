@@ -186,6 +186,21 @@ class Jobseekers extends Controller
         }
     }
 
+    public function resend_code()
+    {
+        if (isset($_SESSION['verify_id']) && isset($_SESSION['verify_email'])) {
+            $id = $_SESSION['verify_id'];
+            $email = $_SESSION['verify_email'];
+            $this->verify_code($id, 'seeker', $email, '');
+            $data = [
+                'code_err' => 'Verification code resent',
+            ];
+            $this->view('jobseeker/verify', $data);
+        } else {
+            redirect('jobseekers/login');
+        }
+    }
+
     public function login()
     {
         if (isset($_SESSION['user_id'])) {
