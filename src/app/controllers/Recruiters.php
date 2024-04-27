@@ -308,6 +308,76 @@ class Recruiters extends Controller
         return $profileImage;
     }
 
+    public function changepassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'style' => 'jobseeker/pass.css',
+                'title' => 'Change Password',
+                'header_title' => 'Change Password',
+                'old_password' => trim(htmlspecialchars($_POST['old_password'])),
+                'new_password' => trim(htmlspecialchars($_POST['new_password'])),
+                'confirm_password' => trim(htmlspecialchars($_POST['confirm_password'])),
+                'old_password_err' => '',
+                'new_password_err' => '',
+                'confirm_password_err' => '',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+            ];
+
+
+            // Validate Old Password
+            $loggedInUser = $this->recruiterModel->getRecruiterById($_SESSION['business_id']);
+            if (!$loggedInUser || !password_verify($data['old_password'], $loggedInUser->password)) {
+                $data['old_password_err'] = 'Incorrect old password';
+            }
+
+            // Validate new password
+            if (empty($data['new_password'])) {
+                $data['new_password_err'] = 'Please enter new password';
+            } elseif (strlen($data['new_password']) < 6) {
+                $data['new_password_err'] = 'Password must be at least 6 characters';
+            }
+
+            // Validate confirm password
+            if (empty($data['confirm_password'])) {
+                $data['confirm_password_err'] = 'Please confirm password';
+            } elseif ($data['new_password'] !== $data['confirm_password']) {
+                $data['confirm_password_err'] = 'Passwords do not match';
+            }
+
+            // Make sure errors are empty
+            if (empty($data['old_password_err']) && empty($data['new_password_err']) && empty($data['confirm_password_err'])) {
+                // Validated
+                // Hash password
+                $data['new_password'] = password_hash($data['new_password'], PASSWORD_DEFAULT);
+
+                // Update password
+                if ($this->recruiterModel->changePassword($_SESSION['business_id'], $data['new_password'])) {
+                    jsflash('Password Updated', '/recruiters/changepassword');
+                } else {
+                    jsflash('Failed to update password', '/recruiters/changepassword', 1);
+                }
+            } else {
+                // Load view with errors
+                $this->view('recruiters/changepassword', $data);
+            }
+        } else {
+            $data = [
+                'style' => 'jobseeker/pass.css',
+                'title' => 'Change Password',
+                'header_title' => 'Change Password',
+                'old_password' => '',
+                'new_password' => '',
+                'confirm_password' => '',
+                'old_password_err' => '',
+                'new_password_err' => '',
+                'confirm_password_err' => '',
+                'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+            ];
+            $this->view('recruiters/changepassword', $data);
+        }
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['business_id'])) {

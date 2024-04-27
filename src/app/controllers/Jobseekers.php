@@ -487,19 +487,82 @@ class Jobseekers extends Controller
     }
 
 
-    public function changePassword()
+    public function changepassword()
     {
         if (!isset($_SESSION['user_id'])) {
-            $this->login();
+            $this->index();
         } else {
-            $data = [
-                'style' => 'jobseeker/pass.css',
-                'title' => 'Change Password',
-                'header_title' => 'Change Password',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
-            ];
 
-            $this->view('jobseeker/changepassword', $data);
+            // Check for POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Sanitize POST data
+                $old_password = trim(htmlspecialchars($_POST['old_password']));
+                $new_password = trim(htmlspecialchars($_POST['new_password']));
+                $confirm_password = trim(htmlspecialchars($_POST['confirm_password']));
+
+                // Init data
+                $data = [
+                    'style' => 'jobseeker/pass.css',
+                    'title' => 'Change Password',
+                    'header_title' => 'Change Password',
+                    'old_password' => $old_password,
+                    'new_password' => $new_password,
+                    'confirm_password' => $confirm_password,
+                    'old_password_err' => '',
+                    'new_password_err' => '',
+                    'confirm_password_err' => '',
+                    'profile_image' => $this->getJobseekerProfileImage($_SESSION['business_id'])
+                ];
+
+                // Validate Old Password
+                $loggedInUser = $this->jobseekerModel->getJobseekerById($_SESSION['user_id']);
+                if (!$loggedInUser || !password_verify($data['old_password'], $loggedInUser->password)) {
+                    $data['old_password_err'] = 'Incorrect old password';
+                }
+
+                // Validate New Password
+                if (empty($data['new_password'])) {
+                    $data['new_password_err'] = 'Please enter a new password';
+                } elseif (strlen($data['new_password']) < 6) {
+                    $data['new_password_err'] = 'Password must be at least 6 characters';
+                }
+
+                // Validate Confirm Password
+                if ($data['new_password'] != $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match';
+                }
+
+                // If there are no errors, update the password
+                if (empty($data['old_password_err']) && empty($data['new_password_err']) && empty($data['confirm_password_err'])) {
+                    // Update the password in the database
+                    $seeker_id = $_SESSION['user_id'];
+                    if ($this->jobseekerModel->changePassword($seeker_id, $new_password)) {
+                        jsflash('Password Updated', '/jobseekers/dashboard');
+                    } else {
+                        jsflash('Password update failed', '/jobseekers/changepassword');
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('jobseekers/changepassword', $data);
+                }
+            } else {
+                // Init data
+                $data = [
+                    'style' => 'jobseeker/pass.css',
+                    'title' => 'Change Password',
+                    'header_title' => 'Change Password',
+                    'old_password' => '',
+                    'new_password' => '',
+                    'confirm_password' => '',
+                    'old_password_err' => '',
+                    'new_password_err' => '',
+                    'confirm_password_err' => '',
+                    'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                ];
+
+                // Load view
+                $this->view('jobseeker/changepassword', $data);
+            }
         }
     }
 

@@ -124,6 +124,22 @@ class Recruiter
     }
   }
 
+  public function changePassword($recruiter_id, $new_password)
+  {
+    // Hash the new password before updating the database
+    // Update the password in the database for the specified recruiter
+    $this->db->query('UPDATE recruiters SET password = :password WHERE id = :id');
+    $this->db->bind(':password', $new_password);
+    $this->db->bind(':id', $recruiter_id);
+
+    // Execute the query
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public function updateProfile($data)
   {
     $this->db->query('UPDATE recruiters SET name = :name, age = :age, phone_no = :phone_no, address = :address, profile_image = :profile_image  WHERE id = :id');
