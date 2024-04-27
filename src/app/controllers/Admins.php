@@ -229,14 +229,17 @@ class Admins extends Controller
             $this->view('admin/addadmin', $data);
         }
     }
-    public function transactions()
-    {$data =[
-        'style' => 'admin/dashboard.css',
-        'title' => 'transactions',
-        'header_title' => 'transactions',
+    public function transactions(){
+    $br_details = $this->moderatorsModel->getAllBRDetails();
+    $data = [
+        'style' => 'moderators/verify_BR.css',
+        'title' => 'BR verification',
+        'header_title' => 'Change Password',
+        'BR_details'=>$br_details
     ];
-    // Load view
-    $this->view('admin/transactions', $data);
+
+
+    $this->view('moderator/verify_BR', $data);
     }
     public function managemoderators()
     {
@@ -268,5 +271,9 @@ class Admins extends Controller
     }
 
 }
+
+
+
+
   
 }  

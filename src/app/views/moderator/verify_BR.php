@@ -50,6 +50,19 @@
         </section>
     </main>
     </div>
+
+
+
+    
+    <div class="pagination-outer">
+        <div class="pagination-style1">
+            <ul class="pagination-list clearfix">
+                <!-- Pagination links will be dynamically generated here -->
+                
+            </ul>
+        </div>
+    </div>
+
 </div>
 
 
@@ -188,12 +201,6 @@ function searchTable() {
     });
 }
 </script>
-
-
-<?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
-
-
-
-
+<script src="<?php echo URLROOT ?>/js/moderators/pagination.js"></script>
 
     <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
