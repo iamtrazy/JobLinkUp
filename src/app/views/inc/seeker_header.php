@@ -11,6 +11,52 @@
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <style>
+        /* Default styles */
+        .col-xl-3,
+        .col-lg-4 {
+            flex: 0 0 30%;
+            max-width: 30%;
+        }
+
+        .col-xl-9,
+        .col-lg-8 {
+            flex: 0 0 70%;
+            max-width: 70%;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 1200px) {
+
+            .col-xl-3,
+            .col-lg-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .col-xl-9,
+            .col-lg-8 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 992px) {
+
+            .col-xl-3,
+            .col-lg-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+
+            .col-xl-9,
+            .col-lg-8 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body style="transform: none;">

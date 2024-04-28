@@ -43,7 +43,7 @@
                             <div class="form-group">
                                 <label>Business Registration number</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="reg_no" type="text" placeholder="" required />
+                                    <input class="form-control" name="reg_no" type="text" placeholder="ABC-1234-XYZ" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label>Business Address</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="location" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
+                                    <input class="form-control" name="business_address" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
@@ -79,6 +79,69 @@
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading wt-panel-heading p-a20">
+                    <h4 class="panel-tittle m-a0">
+                        <i class="fa fa-address-book"></i> Payment Contact Details
+                        <small> (Specifically for payment purposes)</small>
+                    </h4>
+                </div>
+                <div class="panel-body wt-panel-body p-a20 m-b30">
+                    <div class="row">
+                        <!-- First Name -->
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="first_name" type="text" placeholder="First Name" required />
+                                    <i class="fs-input-icon fa fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="last_name" type="text" placeholder="Last Name" required />
+                                    <i class="fs-input-icon fa fa-user"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Phone Number -->
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="phone" type="tel" placeholder="Phone Number" required />
+                                    <i class="fs-input-icon fa fa-phone"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Address -->
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>Address</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="address" type="text" placeholder="Address" required />
+                                    <i class="fs-input-icon fa fa-address-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- City -->
+                        <div class="col-xl-6 col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label>City</label>
+                                <div class="ls-inputicon-box">
+                                    <input class="form-control" name="city" type="text" placeholder="City" required />
+                                    <i class="fs-input-icon fa fa-map-marker"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="panel panel-default">
                 <div class="panel-heading wt-panel-heading p-a20">
                     <h4 class="panel-tittle m-a0">
@@ -163,7 +226,7 @@
                                     text: response.message
                                 }).then((result) => {
                                     // Redirect to dashboard or any other page
-                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/dashboard';
+                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/transactions';
                                 });
                             } else {
                                 Swal.fire({

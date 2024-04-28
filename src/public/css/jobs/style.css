@@ -61,7 +61,6 @@ ul {
 
 /* Custom styles for the searching dropdown */
 
-
 #searchResults .dropdown-item {
   padding: 0.5rem 1rem;
   cursor: pointer;
@@ -100,6 +99,23 @@ ul {
 #searchResults .dropdown-item.selected {
   background-color: #007bff; /* Bootstrap primary color */
   color: #ffffff; /* Bootstrap primary text color */
+}
+
+/* Style for blue glowing border */
+.blue-glowing-border {
+  border: 2px solid rgb(24, 116, 215);
+  border-radius: 10px; /* More curved border */
+  box-shadow: 0 0 10px rgba(0, 0, 255, 0.3); /* More elegant shadow */
+}
+
+/* Style for verified button */
+.verified-button {
+  background-color: rgb(0, 183, 255);
+  color: #fff;
+  padding: 8px 15px; /* Increase padding for better appearance */
+  border-radius: 20px; /* More curved border */
+  display: inline-block;
+  margin-top: 10px; /* Increase top margin for better spacing */
 }
 
 ul {
@@ -176,7 +192,7 @@ label {
 
 /* Hover effect */
 .apply-now-btn:hover {
-  background: #da0bbe; /* Change color on hover */
+  background: #0356b5; /* Change color on hover */
   cursor: pointer;
 }
 button {

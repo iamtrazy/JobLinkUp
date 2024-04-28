@@ -28,6 +28,24 @@ h6 {
 h2 {
   font-size: calc(1.325rem + 0.9vw);
 }
+
+/* Styles for the verified badge */
+.twm-verified-badge {
+  background-color: #3498db; /* Blue background color */
+  color: #fff; /* White text color */
+  padding: 5px 10px; /* Padding around the text */
+  border-radius: 20px; /* Rounded corners to create a button shape */
+  display: inline-flex; /* Display as inline-flex to fit content */
+  align-items: center; /* Center align content vertically */
+  justify-content: center; /* Center align content horizontally */
+}
+
+/* Styles for the star icon */
+.twm-verified-badge .fas.fa-star {
+  margin-right: 5px; /* Add some space between the star icon and text */
+  font-size: 20px; /* Increase the size of the star icon */
+}
+
 @media (min-width: 1200px) {
   h2 {
     font-size: 2rem;

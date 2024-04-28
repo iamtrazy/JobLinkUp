@@ -6,6 +6,7 @@ class Jobseekers extends Controller
     public $jobModel;
     public $wishlistModel;
     public $applicationModel;
+    public $algorithmModel;
 
     public function __construct()
     {
@@ -13,6 +14,7 @@ class Jobseekers extends Controller
         $this->jobModel = $this->model('Job');
         $this->wishlistModel = $this->model('Wishlist');
         $this->applicationModel = $this->model('Application');
+        $this->algorithmModel = $this->model('Algorithm');
     }
 
     public function index()
@@ -37,6 +39,15 @@ class Jobseekers extends Controller
         } else {
             $this->view('jobseeker/register', $data);
         }
+    }
+
+    private function verify_code($role_id, $role, $receiver, $receiver_name)
+    {
+        $this->jobseekerModel->generateVerificationCode($role_id, $role);
+        $code = $this->jobseekerModel->getVerificationCode($role_id, $role);
+        $subject = 'Verification Code';
+        $body_string = 'Your verification code is: ' . $code->code;
+        send_email($receiver, $receiver_name,  $subject, $body_string);
     }
 
     public function register()
@@ -108,11 +119,14 @@ class Jobseekers extends Controller
                     // Validated
 
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
-                    // Register User
                     if ($this->jobseekerModel->register($data)) {
-                        flash('register_success', 'You are registered and can log in');
-                        redirect('jobseekers/login');
+                        // flash('register_success', 'You are registered and can log in');
+                        $id = $this->jobseekerModel->getUserId($data['email']);
+                        $this->verify_code($id->id, 'seeker', $data['email'], $data['name']);
+                        $_SESSION['verify_id'] = $id->id;
+                        $_SESSION['verify_email'] = $data['email'];
+                        $data['code_err'] = 'Please verify your account';
+                        $this->view('jobseeker/verify', $data);
                     } else {
                         die('Something went wrong');
                     }
@@ -141,6 +155,52 @@ class Jobseekers extends Controller
                 // Load view
                 $this->view('jobseeker/register', $data);
             }
+        }
+    }
+
+    public function verify()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_SESSION['verify_id']) && isset($_SESSION['verify_email'])) {
+                if (isset($_POST['code'])) {
+                    $code = trim(htmlspecialchars($_POST['code']));
+                    $id = $_SESSION['verify_id'];
+                    if ($this->jobseekerModel->checkVerificationCode($id, 'seeker', $code)) {
+                        $this->jobseekerModel->setVerified($id);
+                        $loggedInUser = $this->jobseekerModel->getJobseekerById($id);
+                        $this->createUserSession($loggedInUser);
+                        redirect('jobseekers/dashboard');
+                    } else {
+                        $data['code_err'] = 'Invalid verification code';
+                        $this->view('jobseeker/verify', $data);
+                    }
+                } else {
+                    $data['code_err'] = 'Please enter verification code';
+                    $this->view('jobseeker/verify', $data);
+                }
+            } else {
+                redirect('jobseekers/login');
+            }
+        } else {
+            $data = [
+                'code_err' => '',
+            ];
+            $this->view('jobseeker/verify', $data);
+        }
+    }
+
+    public function resend_code()
+    {
+        if (isset($_SESSION['verify_id']) && isset($_SESSION['verify_email'])) {
+            $id = $_SESSION['verify_id'];
+            $email = $_SESSION['verify_email'];
+            $this->verify_code($id, 'seeker', $email, '');
+            $data = [
+                'code_err' => 'Verification code resent',
+            ];
+            $this->view('jobseeker/verify', $data);
+        } else {
+            redirect('jobseekers/login');
         }
     }
 
@@ -195,8 +255,16 @@ class Jobseekers extends Controller
                     $loggedInUser = $this->jobseekerModel->login($data['login_email'], $data['login_password']);
 
                     if ($loggedInUser) {
-                        // Create Session
-                        $this->createUserSession($loggedInUser);
+                        if ($loggedInUser->code_verified == 0) {
+                            $this->verify_code($loggedInUser->id, 'seeker', $loggedInUser->email, $loggedInUser->username);
+                            $_SESSION['verify_id'] = $loggedInUser->id;
+                            $_SESSION['verify_email'] = $loggedInUser->email;
+                            $data['code_err'] = 'Please verify your account';
+                            $data['user'] = $loggedInUser;
+                            $this->view('jobseeker/verify', $data);
+                        } else {
+                            $this->createUserSession($loggedInUser);
+                        }
                     } else {
                         $data['login_password_err'] = 'Password incorrect';
 
@@ -262,16 +330,38 @@ class Jobseekers extends Controller
         return $profileImage->profile_image;
     }
 
+    private function alert_job_count($id)
+    {
+        $seeker = $this->jobseekerModel->getJobseekerById($id);
+        $jobs = [];
+        if ($seeker->is_complete == 0) {
+            $jobs = $this->algorithmModel->match_keywords($id);
+        } else if ($seeker->location_rec == 0) {
+            $jobs = $this->algorithmModel->match_keywords($id);
+        } else {
+            $jobs = $this->algorithmModel->match_location($id);
+            $jobs = array_merge($jobs, $this->algorithmModel->match_keywords($id));
+        }
+        return count($jobs);
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            $id = $_SESSION['user_id'];
+            $appliedCount = $this->applicationModel->appliedJobCount($id);
+            $wishlistCount = $this->wishlistModel->wishlistedJobCount($id);
+            $alertCount = $this->alert_job_count($id);
             $data = [
                 'style' => 'jobseeker/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id']),
+                'applied_count' => $appliedCount,
+                'wishlist_count' => $wishlistCount,
+                'alert_count' => $alertCount
             ];
 
             $this->view('jobseeker/dashboard', $data);
@@ -283,13 +373,18 @@ class Jobseekers extends Controller
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            $id = $_SESSION['user_id'];
+            $seeker = $this->jobseekerModel->getJobseekerById($id);
             $data = [
                 'style' => 'jobseeker/profile.css',
                 'title' => 'Profile',
                 'header_title' => 'Profile',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id']),
+                'message' => '',
             ];
-
+            if ($seeker->is_complete == 0) {
+                $data['message'] = 'Please complete your profile to receive job alerts';
+            }
             $this->view('jobseeker/profile', $data);
         }
     }
@@ -364,11 +459,27 @@ class Jobseekers extends Controller
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
+            $id = $_SESSION['user_id'];
+
+            $seeker = $this->jobseekerModel->getJobseekerById($id);
+
+            $jobs = [];
+
+            if ($seeker->is_complete == 0) {
+                jsflash('Please complete your profile to receive job alerts', 'jobseekers/profile');
+            } else if ($seeker->location_rec == 0) {
+                $jobs = $this->algorithmModel->match_keywords($id);
+            } else {
+                $jobs = $this->algorithmModel->match_location($id);
+                $jobs = array_merge($jobs, $this->algorithmModel->match_keywords($id));
+            }
+
             $data = [
                 'style' => 'jobseeker/alerts.css',
                 'title' => 'Jobs Alerts',
                 'header_title' => 'Job Alerts',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id']),
+                'jobs' => $jobs
             ];
 
             $this->view('jobseeker/jobalerts', $data);
@@ -376,19 +487,82 @@ class Jobseekers extends Controller
     }
 
 
-    public function changePassword()
+    public function changepassword()
     {
         if (!isset($_SESSION['user_id'])) {
-            $this->login();
+            $this->index();
         } else {
-            $data = [
-                'style' => 'jobseeker/pass.css',
-                'title' => 'Change Password',
-                'header_title' => 'Change Password',
-                'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
-            ];
 
-            $this->view('jobseeker/changepassword', $data);
+            // Check for POST
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Sanitize POST data
+                $old_password = trim(htmlspecialchars($_POST['old_password']));
+                $new_password = trim(htmlspecialchars($_POST['new_password']));
+                $confirm_password = trim(htmlspecialchars($_POST['confirm_password']));
+
+                // Init data
+                $data = [
+                    'style' => 'jobseeker/pass.css',
+                    'title' => 'Change Password',
+                    'header_title' => 'Change Password',
+                    'old_password' => $old_password,
+                    'new_password' => $new_password,
+                    'confirm_password' => $confirm_password,
+                    'old_password_err' => '',
+                    'new_password_err' => '',
+                    'confirm_password_err' => '',
+                    'profile_image' => $this->getJobseekerProfileImage($_SESSION['business_id'])
+                ];
+
+                // Validate Old Password
+                $loggedInUser = $this->jobseekerModel->getJobseekerById($_SESSION['user_id']);
+                if (!$loggedInUser || !password_verify($data['old_password'], $loggedInUser->password)) {
+                    $data['old_password_err'] = 'Incorrect old password';
+                }
+
+                // Validate New Password
+                if (empty($data['new_password'])) {
+                    $data['new_password_err'] = 'Please enter a new password';
+                } elseif (strlen($data['new_password']) < 6) {
+                    $data['new_password_err'] = 'Password must be at least 6 characters';
+                }
+
+                // Validate Confirm Password
+                if ($data['new_password'] != $data['confirm_password']) {
+                    $data['confirm_password_err'] = 'Passwords do not match';
+                }
+
+                // If there are no errors, update the password
+                if (empty($data['old_password_err']) && empty($data['new_password_err']) && empty($data['confirm_password_err'])) {
+                    // Update the password in the database
+                    $seeker_id = $_SESSION['user_id'];
+                    if ($this->jobseekerModel->changePassword($seeker_id, $new_password)) {
+                        jsflash('Password Updated', '/jobseekers/dashboard');
+                    } else {
+                        jsflash('Password update failed', '/jobseekers/changepassword');
+                    }
+                } else {
+                    // Load view with errors
+                    $this->view('jobseekers/changepassword', $data);
+                }
+            } else {
+                // Init data
+                $data = [
+                    'style' => 'jobseeker/pass.css',
+                    'title' => 'Change Password',
+                    'header_title' => 'Change Password',
+                    'old_password' => '',
+                    'new_password' => '',
+                    'confirm_password' => '',
+                    'old_password_err' => '',
+                    'new_password_err' => '',
+                    'confirm_password_err' => '',
+                    'profile_image' => $this->getJobSeekerProfileImage($_SESSION['user_id'])
+                ];
+
+                // Load view
+                $this->view('jobseeker/changepassword', $data);
+            }
         }
     }
 
@@ -431,6 +605,12 @@ class Jobseekers extends Controller
             // Update $data with sanitized values from $_POST
             $data = array_merge($data, $filteredData);
 
+            if (empty($data['keywords']) || empty($data['address'])) {
+                $data['data_err'] = 'Keywords and address cannot be empty.';
+                jsflash($data['data_err'], 'jobseekers/profile', 1);
+                return; // Stop further execution
+            }
+
             if (!empty($_FILES['profile_image']['name'])) {
                 $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
 
@@ -455,9 +635,11 @@ class Jobseekers extends Controller
             } else {
                 $data['cv'] = '';
             }
+
             // Call the model function to edit profile
             if ($this->jobseekerModel->editProfile($data)) {
                 // Profile updated successfully
+                $this->jobseekerModel->completeProfile($data['id']);
                 jsflash('Profile Updated', 'jobseekers/profile');
             } else {
                 // Handle error

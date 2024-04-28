@@ -46,7 +46,7 @@ if (!empty($city) && !empty($country)) {
                                 <i class="fab fa-whatsapp"></i> WhatsApp
                             </a>
                         <?php endif; ?>
-                        <?php if (isset($data['profile']->facebook_url)) : ?>
+                        <?php if (isset($data['profile']->linkedin_url)) : ?>
                             <a href="https://<?php echo $data['profile']->linkedin_url ?>" class="site-button outline-white" style="background-color: #0077B5; color: #fff;">
                                 <i class="fab fa-linkedin"></i> LinkedIn
                             </a>
@@ -145,12 +145,20 @@ if (!empty($city) && !empty($country)) {
                                 <div class="twm-s-info-discription"><?php echo $address ?></div>
                             </div>
                         </li>
+                        <li>
+                            <div class="twm-s-info-inner">
+                                <i class="fas fa-user-tie"></i>
+                                <span class="twm-title">Enrollerd Job Count</span>
+                                <div class="twm-s-info-discription"><?php echo $data['acceptedApplicationCount'] ?>
+                                </div>
+                            </div>
+                        </li>
                         <?php if (isset($data['profile']->website)) : ?>
                             <li>
                                 <div class="twm-s-info-inner">
                                     <i class="fas fa-globe"></i>
                                     <span class="twm-title">Website</sepan>
-                                    <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
+                                        <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
                                 </div>
                             </li>
                         <?php endif; ?>

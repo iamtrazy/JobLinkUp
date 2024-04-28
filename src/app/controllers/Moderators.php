@@ -21,7 +21,7 @@ class Moderators extends Controller
         ];
 
         if (isset($_SESSION['moderator_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             $this->view('moderator/login', $data);
         }
@@ -30,7 +30,7 @@ class Moderators extends Controller
     public function login()
     {
         if (isset($_SESSION['moderator_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -215,15 +215,4 @@ class Moderators extends Controller
             }
         }
     }
-public function verifiedRecruiters(){
-    $data =[
-         
-                    'style' => 'moderators/verifiedRecruiters.css',
-                    'title' => 'verified recruiters list',
-                    'header_title' => 'verified recruiters list',
-                     
-                ];
-   
-                $this->view('moderator/verifiedRecruiters', $data);             
-}
 }

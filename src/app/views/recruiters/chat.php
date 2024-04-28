@@ -84,6 +84,7 @@
 </div>
 <script>
     $(document).ready(function() {
+        var img = '';
         // Function to load messages for a specific thread
         function loadMessages(threadId, seekerName) {
             // Function to send a message
@@ -122,13 +123,14 @@
                             // Determine message class based on whether it's a reply or not
                             var messageClass = message.reply ? 'single-user-comment-wrap sigle-user-reply' : 'single-user-comment-wrap';
                             var rowClass = message.reply ? 'row justify-content-end' : 'row';
+                            var profileImage = message.reply ? `https://joblinkup.com/img/profile/${img}` : `https://joblinkup.com/img/profile/<?php echo $data['profile_image'] ?>`;
                             // Create HTML elements for each message and append to container
                             var messageHtml = `
                             <div class="${rowClass}">
                                 <div class="col-xl-9 col-lg-12">
                                     <div class="${messageClass} clearfix">
                                         <div class="single-user-com-pic">
-                                            <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                                        <img src="${profileImage}" alt="" />
                                         </div>
                                         <div class="single-user-com-text">
                                             ${message.text}
@@ -175,6 +177,7 @@
             type: 'GET',
             dataType: 'json',
             success: function(response) {
+                img = response[0].profile_image;
                 if (response && response.length > 0) {
                     // Iterate over each chat thread in the response
                     $.each(response, function(index, thread) {
@@ -184,7 +187,7 @@
                             <div class="msg-user-info clearfix">
                                 <div class="msg-user-timing">${thread.created_at}</div>
                                 <div class="msg-user-info-pic">
-                                    <img src="https://joblinkup.com/img/pic4.jpg" alt="" />
+                                <img src="https://joblinkup.com/img/profile/${thread.profile_image}" alt="" />
                                 </div>
                                 <div class="msg-user-info-text">
                                     <div class="msg-user-name">${thread.seeker_name}</div>

@@ -6,7 +6,10 @@ if (isset($_SESSION['user_id'])) {
 } else {
     require APPROOT . '/views/inc/jobs_detail_header.php';
 }
+
 ?>
+
+
 
 <div class="row">
     <div class="col-lg-8 col-md-12">
@@ -44,7 +47,11 @@ if (isset($_SESSION['user_id'])) {
 
                             $time_elapsed = time_elapsed_string($data['job']->created_at);
 
-                            if (strpos($time_elapsed, 'hours') !== false || $time_elapsed === 'now') {
+                            if ($data['job']->is_varified == 1) {
+                                echo '<div class="twm-jobs-category blue"><span class="twm-bg-green">Verified</span></div>';
+                            }
+
+                            if ((strpos($time_elapsed, 'hours') !== false || $time_elapsed === 'now') && $data['job']->is_varified != 1) {
                                 echo '<div class="twm-jobs-category green"><span class="twm-bg-green">New</span></div>';
                             }
                             ?>
@@ -52,8 +59,18 @@ if (isset($_SESSION['user_id'])) {
                         </div>
                         <div class="twm-mid-content">
                             <div class="twm-media">
-                                <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="Profile Picture">
+                                <img src="<?php echo URLROOT . '/img/profile/' . $data['job']->profile_image ?>" alt="Profile Picture">
                             </div>
+                            <p class="twm-job-address"><i class="fas fa-building"></i>
+                                <?php
+                                if ($data['job']->is_varified == 1) {
+                                    echo $data['job']->business_name; // Display business name if is_varified is 1
+                                } else {
+                                    echo $data['job']->recruiter_name; // Display recruiter name otherwise
+                                }
+                                ?>
+                            </p>
+
                             <h4 class="twm-job-title"><?php echo $data['job']->topic; ?> <span class="twm-job-post-duration">/ <?php echo time_elapsed_string($data['job']->created_at); ?></span></h4>
                             <p class="twm-job-address"><i class="fas fa-map-marker-alt"></i><?php echo $data['job']->location; ?></p>
                             <div class="twm-job-self-mid">
@@ -77,14 +94,14 @@ if (isset($_SESSION['user_id'])) {
             </div>
             <h4 class="twm-s-title">Job Description:</h4>
             <p><?php echo $data['job']->detail; ?></p>
-            <h4 class="twm-s-title">Share Profile</h4>
+            <h4 class="twm-s-title">Share Job</h4>
             <div class="twm-social-tags">
-                <a href="javascript:void(0)" class="fb-clr">Facebook</a>
-                <a href="javascript:void(0)" class="tw-clr">Twitter</a>
-                <a href="javascript:void(0)" class="link-clr">Linkedin</a>
-                <a href="javascript:void(0)" class="whats-clr">Whatsapp</a>
-                <a href="javascript:void(0)" class="pinte-clr">Pinterest</a>
+                <a href="#" class="fb-clr">Facebook</a>
+                <a href="#" class="tw-clr">Twitter</a>
+                <a href="#" class="link-clr">Linkedin</a>
+                <a href="#" class="pinte-clr">Pinterest</a>
             </div>
+
         </div>
     </div>
     <div class="col-lg-4 col-md-12 rightSidebar" style="position: relative; overflow: visible; box-sizing: border-box; min-height: 1px;">
@@ -101,7 +118,7 @@ if (isset($_SESSION['user_id'])) {
                             </li>
                             <li>
                                 <i class="fas fa-eye"></i>
-                                <span class="twm-title"><?php echo $data['job'] -> view_count ?> Views</span>
+                                <span class="twm-title"><?php echo $data['job']->view_count ?> Views</span>
                                 <!-- You need to add dynamic data here -->
                             </li>
                             <li>
@@ -124,6 +141,8 @@ if (isset($_SESSION['user_id'])) {
 </div>
 <script>
     $(document).ready(function() {
+
+
         var reportButton = $(".report-button");
         var reportFormPopup = $("#reportFormPopup");
         var overlay = $("<div class='overlay'></div>");
@@ -194,6 +213,36 @@ if (isset($_SESSION['user_id'])) {
                     });
                 }
             });
+        });
+
+        $(".twm-social-tags a").on("click", function(event) {
+            event.preventDefault();
+            var socialNetwork = $(this).text().toLowerCase();
+            var url = window.location.href;
+            var shareUrl = "";
+
+            // Define share URL based on social network
+            switch (socialNetwork) {
+                case "facebook":
+                    shareUrl = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+                    break;
+                case "twitter":
+                    shareUrl = "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url);
+                    break;
+                case "linkedin":
+                    shareUrl = "https://www.linkedin.com/shareArticle?url=" + encodeURIComponent(url);
+                    break;
+                case "pinterest":
+                    shareUrl = "https://pinterest.com/pin/create/button/?url=" + encodeURIComponent(url);
+                    break;
+                default:
+                    break;
+            }
+
+            // Open share URL in a new window
+            if (shareUrl !== "") {
+                window.open(shareUrl, '_blank');
+            }
         });
     });
 </script>

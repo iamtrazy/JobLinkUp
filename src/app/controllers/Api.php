@@ -137,7 +137,7 @@ class Api extends Controller
 
         foreach ($candidates as &$seeker) {
 
-            if (($seeker->address) !== null) {
+            if ((!empty($seeker->address))) {
                 $locationData = gelocate($seeker->address);
                 if ($locationData === null) {
                     $seeker->country = 'unknown';
@@ -258,6 +258,43 @@ class Api extends Controller
         }
     }
 
+    public function recruiter_profile($id) //change permissions
+    {
+        // Check if the user is logged in, if not, set as guest
+        if (!isset($_SESSION['business_id'])) {
+            $_SESSION['guest_id'] = '1';
+            $_SESSION['user_name'] = 'Guest User';
+        }
+
+        // Load the RecruiterModel
+
+        // Get recruiter details by ID
+        $recruiter = $this->recruiterModel->getRecruiterById($id);
+
+        // Check if recruiter exists
+        if ($recruiter) {
+            // Prepare response data
+            $data = [
+                'id' => $recruiter->id,
+                'name' => $recruiter->name,
+                'email' => $recruiter->email,
+                'phone_no' => $recruiter->phone_no,
+                'age' => $recruiter->age,
+                'address' => $recruiter->address,
+                'about' => $recruiter->about,
+                'linkedin_url' => $recruiter->linkedin_url,
+                'whatsapp_url' => $recruiter->whatsapp_url
+            ];
+
+            // Send recruiter details as JSON response
+            $this->view('api/json', $data);
+        } else {
+            // Recruiter not found, return error response
+            $data = ['error' => 'Recruiter not found'];
+            $this->view('api/json', $data);
+        }
+    }
+
     public function chat_threads()
     {
 
@@ -281,7 +318,8 @@ class Api extends Controller
                     $formatted_threads[] = [
                         'thread_id' => $thread->id,
                         'recruiter_name' => $thread->name,
-                        'created_at' => $thread->created_at
+                        'created_at' => $thread->created_at,
+                        'profile_image' => $thread->profile_image
                     ];
                 }
 
@@ -311,7 +349,8 @@ class Api extends Controller
                     $formatted_threads[] = [
                         'thread_id' => $thread->id,
                         'seeker_name' => $thread->username,
-                        'created_at' => $thread->created_at
+                        'created_at' => $thread->created_at,
+                        'profile_image' => $thread->profile_image
                     ];
                 }
 
