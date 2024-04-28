@@ -1,0 +1,545 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500,600,700,800,900,300i,400i,500i,600i,700i,800i,900i&display=swap'); 
+@font-face { 
+  font-family:'Font Awesome 5 Free';
+  font-style:normal;
+  font-weight:400;
+  font-display:block;
+  src:url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot");
+  src:url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix") format("embedded-opentype"), url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2") format("woff2"), url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff") format("woff"), url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf") format("truetype"), url("https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome") format("svg");
+} 
+@font-face { 
+  font-family:'Font Awesome 5 Free';
+  font-style:normal;
+  font-weight:900;
+  font-display:block;
+  src:url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot");
+  src:url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2") format("woff2"), url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff") format("woff"), url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf") format("truetype"), url("https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome") format("svg");
+} 
+@font-face { 
+  font-family:"Font Awesome 5 Free";
+  font-style:normal;
+  font-weight:400;
+  font-display:block;
+  src:url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot);
+  src:url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.eot?#iefix) format("embedded-opentype"),url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff2) format("woff2"),url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.woff) format("woff"),url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.ttf) format("truetype"),url(https://thewebmax.org/jobzilla/fonts/fa-regular-400.svg#fontawesome) format("svg");
+} 
+@font-face { 
+  font-family:"Font Awesome 5 Free";
+  font-style:normal;
+  font-weight:900;
+  font-display:block;
+  src:url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot);
+  src:url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"),url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff2) format("woff2"),url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.woff) format("woff"),url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.ttf) format("truetype"),url(https://thewebmax.org/jobzilla/fonts/fa-solid-900.svg#fontawesome) format("svg");
+} 
+  body {  
+    font-family:var(--bs-body-font-family);
+    font-size:var(--bs-body-font-size);
+    font-weight:var(--bs-body-font-weight);
+    line-height:var(--bs-body-line-height);
+    color:var(--bs-body-color);
+    text-align:var(--bs-body-text-align);
+  }  
+body { 
+/* CSS Variables that may have been missed get put on body */ 
+    --bs-gutter-x:  1.5rem;  
+    --bs-gutter-y:  0;  
+} 
+
+* { 
+    box-sizing: border-box;
+} 
+
+body { 
+    margin: 0; 
+    font-family: var(--bs-body-font-family); 
+    font-size: var(--bs-body-font-size); 
+    font-weight: var(--bs-body-font-weight); 
+    line-height: var(--bs-body-line-height); 
+    color: var(--bs-body-color); 
+    text-align: var(--bs-body-text-align); 
+    background-color: var(--bs-body-bg); 
+    -webkit-text-size-adjust: 100%; 
+    -webkit-tap-highlight-color: transparent;
+} 
+
+body { 
+    color: #3c3c3c; 
+    font-family: "Rubik", sans-serif; 
+    line-height: 1.7; 
+    font-weight: 400; 
+    padding: 0px; 
+    margin: 0px; 
+    overflow-x: hidden; 
+    font-size: 15px;
+} 
+
+:root { 
+    --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; 
+    --bs-body-font-family: var(--bs-font-sans-serif); 
+    --bs-body-font-size: 1rem; 
+    --bs-body-font-weight: 400; 
+    --bs-body-line-height: 1.5; 
+    --bs-body-color: #212529; 
+    --bs-body-bg: #fff;
+} 
+
+@media (prefers-reduced-motion: no-preference){ 
+  :root { 
+    scroll-behavior: smooth;
+  } 
+}     
+
+*,:after,:before { 
+    box-sizing: border-box;
+} 
+
+:selection { 
+    background: #484848; 
+    color: #fff;
+} 
+
+.container { 
+    width: 100%; 
+    padding-right: var(--bs-gutter-x,.75rem); 
+    padding-left: var(--bs-gutter-x,.75rem); 
+    margin-right: auto; 
+    margin-left: auto;
+} 
+
+@media (min-width: 576px){ 
+  .container { 
+    max-width: 540px;
+  } 
+}     
+
+@media (min-width: 768px){ 
+  .container { 
+    max-width: 720px;
+  } 
+}     
+
+@media (min-width: 992px){ 
+  .container { 
+    max-width: 960px;
+  } 
+}     
+
+@media (min-width: 1200px){ 
+  .container { 
+    max-width: 1140px;
+  } 
+}     
+
+@media (min-width: 1400px){ 
+  .container { 
+    max-width: 1320px;
+  } 
+}     
+
+@media (min-width: 1200px){ 
+  .container { 
+    max-width: 1170px;
+  } 
+}     
+
+.contact-one-inner  { 
+    padding-top: 120px; 
+    padding-bottom: 120px; 
+    position: relative;
+} 
+
+.twm-contact-one .contact-one-inner::after { 
+    content: ""; 
+    position: absolute; 
+    width: 420px; 
+    right: -15px; 
+    top: -40px; 
+    bottom: -40px; 
+    background-color: #f0f6fe; 
+    z-index: -1;
+} 
+
+.row { 
+    --bs-gutter-x: 1.5rem; 
+    --bs-gutter-y: 0; 
+    display: flex; 
+    flex-wrap: wrap; 
+    margin-top: calc(-1 * var(--bs-gutter-y)); 
+    margin-right: calc(-.5 * var(--bs-gutter-x)); 
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+} 
+
+.row > *  { 
+    flex-shrink: 0; 
+    width: 100%; 
+    max-width: 100%; 
+    padding-right: calc(var(--bs-gutter-x) * .5); 
+    padding-left: calc(var(--bs-gutter-x) * .5); 
+    margin-top: var(--bs-gutter-y);
+} 
+
+@media (min-width: 768px){ 
+  .col-md-12 { 
+    flex: 0 0 auto; 
+    width: 100%;
+  } 
+}     
+
+@media (min-width: 992px){ 
+  .col-lg-6 { 
+    flex: 0 0 auto; 
+    width: 50%;
+  } 
+}     
+
+.contact-info-wrap  { 
+    margin-left: 100px; 
+    margin-right: 25px; 
+    position: relative; 
+    z-index: 1;
+} 
+
+.twm-contact-one .contact-info-wrap::before { 
+    content: ""; 
+    position: absolute; 
+    left: 0px; 
+    bottom: -57px; 
+    z-index: -1; 
+    width: 0; 
+    height: 0; 
+    border-left: 57px solid transparent; 
+    border-right: 0px solid transparent; 
+    border-top: 57px solid #d8d8d8;
+} 
+
+.section-head.left.wt-small-separator-outer { 
+    text-align: left;
+} 
+
+.contact-form-outer .section-head.left.wt-small-separator-outer  { 
+    text-align: left;
+} 
+
+.contact-info-wrap .contact-info  { 
+    border-radius: 10px 10px 10px 0px; 
+    box-shadow: 0px 0px 25px rgba(56, 152, 226, 0.3); 
+    padding: 40px; 
+    background-color: #fff;
+} 
+
+h2 { 
+    margin-top: 0; 
+    margin-bottom: .5rem; 
+    font-weight: 500; 
+    line-height: 1.2;
+} 
+
+h2 { 
+    font-size: calc(1.325rem + .9vw);
+} 
+
+@media (min-width: 1200px){ 
+  h2 { 
+    font-size: 2rem;
+  } 
+}     
+
+h2 { 
+    font-family: "Rubik", sans-serif; 
+    line-height: 1.2; 
+    color: #17171d;
+} 
+
+h2 { 
+    font-size: 46px; 
+    font-weight: 500;
+} 
+
+.section-head.left.wt-small-separator-outer h2  { 
+    margin-bottom: 35px;
+} 
+
+.contact-form-outer .section-head.left.wt-small-separator-outer h2  { 
+    margin-bottom: 15px;
+} 
+
+p { 
+    margin-top: 0; 
+    margin-bottom: 1rem;
+} 
+
+.section-head.left.wt-small-separator-outer p  { 
+    margin-bottom: 40px;
+} 
+
+@media (min-width: 768px){ 
+  .col-md-6 { 
+    flex: 0 0 auto; 
+    width: 50%;
+  } 
+}     
+
+@media (min-width: 992px){ 
+  .col-lg-12 { 
+    flex: 0 0 auto; 
+    width: 100%;
+  } 
+}     
+
+.contact-info-section .c-info-column  { 
+    padding: 0px 0px 0px 100px; 
+    color: #17171d; 
+    position: relative; 
+    min-height: 75px; 
+    margin-bottom: 90px;
+} 
+
+.contact-info-section .c-info-column:last-child  { 
+    margin-bottom: 0px;
+} 
+
+.mb-3 { 
+    margin-bottom: 1rem!important;
+} 
+
+.form-group { 
+    margin-bottom: 30px;
+} 
+
+button { 
+    border-radius: 0;
+} 
+
+button { 
+    margin: 0; 
+    font-family: inherit; 
+    font-size: inherit; 
+    line-height: inherit;
+} 
+
+button { 
+    text-transform: none;
+} 
+
+[type="submit"],button { 
+    -webkit-appearance: button;
+} 
+
+.site-button { 
+    outline: none; 
+    color: #fff; 
+    padding: 15px 30px; 
+    border-radius: 10px; 
+    position: relative; 
+    overflow: hidden; 
+    cursor: pointer; 
+    display: inline-table; 
+    background-color: #1967d2; 
+    border: none; 
+    font-size: 16px; 
+    font-weight: 600; 
+    transition: 0.5s all ease;
+} 
+
+.site-button { 
+    color: rgba(0, 0, 0, 0) !important; 
+    transition: all 0.3s ease !important; 
+    text-shadow: 0 0 0 #fff, 400px 0 0 #fff;
+} 
+
+[type="submit"]:not(:disabled),button:not(:disabled) { 
+    cursor: pointer;
+} 
+
+.site-button:hover { 
+    color: #000;
+} 
+
+.site-button:hover { 
+    text-shadow: -400px 0 0 #fff, 0 0 0 #fff; 
+    background-color: #171d28;
+} 
+
+.contact-info-section .c-info-column .c-info-icon  { 
+    position: absolute; 
+    font-size: 22px; 
+    left: 0px; 
+    top: 0px; 
+    color: #1967d2; 
+    width: 72px; 
+    height: 72px; 
+    line-height: 72px; 
+    border-radius: 10px; 
+    text-align: center; 
+    background-color: #f0f6fe; 
+    z-index: 1;
+} 
+
+h3 { 
+    margin-top: 0; 
+    margin-bottom: .5rem; 
+    font-weight: 500; 
+    line-height: 1.2;
+} 
+
+h3 { 
+    font-size: calc(1.3rem + .6vw);
+} 
+
+@media (min-width: 1200px){ 
+  h3 { 
+    font-size: 1.75rem;
+  } 
+}     
+
+h3 { 
+    font-family: "Rubik", sans-serif; 
+    line-height: 1.2; 
+    color: #17171d;
+} 
+
+h3 { 
+    font-size: 22px; 
+    font-weight: 500;
+} 
+
+.contact-info-section .c-info-column p  { 
+    font-size: 14px;
+} 
+
+.contact-info-section .c-info-column p  { 
+    margin-bottom: 0px;
+} 
+
+.contact-info-section .c-info-column .c-info-icon.custome-size  { 
+    font-size: 26px;
+} 
+
+input { 
+    margin: 0; 
+    font-family: inherit; 
+    font-size: inherit; 
+    line-height: inherit;
+} 
+
+.form-control { 
+    display: block; 
+    width: 100%; 
+    padding: .375rem .75rem; 
+    font-size: 1rem; 
+    font-weight: 400; 
+    line-height: 1.5; 
+    color: #212529; 
+    background-color: #fff; 
+    background-clip: padding-box; 
+    border: 1px solid #ced4da; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    appearance: none; 
+    border-radius: .25rem; 
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+} 
+
+.form-control { 
+    width: 100%; 
+    height: 60px; 
+    padding: 20px; 
+    border: none; 
+    background-color: #f0f6fe; 
+    border-radius: 10px;
+} 
+
+.cons-contact-form .form-control  { 
+    height: 56px; 
+    padding: 10px 20px; 
+    background-color: #f0f6fe; 
+    border: 0px; 
+    border-radius: 10px;
+} 
+
+textarea { 
+    margin: 0; 
+    font-family: inherit; 
+    font-size: inherit; 
+    line-height: inherit;
+} 
+
+textarea { 
+    resize: vertical;
+} 
+
+textarea.form-control { 
+    min-height: calc(1.5em + .75rem + 2px);
+} 
+
+.cons-contact-form textarea.form-control  { 
+    padding-top: 15px; 
+    height: 80px; 
+    margin-bottom: 40px; 
+    resize: none;
+} 
+
+.fas { 
+    -moz-osx-font-smoothing: grayscale; 
+    -webkit-font-smoothing: antialiased; 
+    display: inline-block; 
+    font-style: normal; 
+    font-variant: normal; 
+    text-rendering: auto; 
+    line-height: 1;
+} 
+
+.fas { 
+    font-family: 'Font Awesome 5 Free'; 
+    font-weight: 900;
+} 
+
+.fas { 
+    font-family: "Font Awesome 5 Free";
+} 
+
+.fas { 
+    font-weight: 900;
+} 
+
+.fa-map-marker-alt:before { 
+    content: "\f3c5";
+} 
+
+.fa-mobile-alt:before { 
+    content: "\f3cd";
+} 
+
+a { 
+    color: #0d6efd; 
+    text-decoration: underline;
+} 
+
+a { 
+    color: #17171d; 
+    outline: 0px none; 
+    text-decoration: none;
+} 
+
+.contact-info-section .c-info-column p a  { 
+    color: #17171d;
+} 
+
+a:hover { 
+    color: #0a58ca;
+} 
+
+a:hover { 
+    outline: 0px none; 
+    text-decoration: none;
+} 
+
+a:active,a:hover { 
+    color: inherit;
+} 
+
+.fa-envelope:before { 
+    content: "\f0e0";
+} 
+
+

@@ -70,4 +70,37 @@ class Moderator
             return false; // Password update failed
         }
     }
+
+    public function deleteModerator($moderator_id)
+    {
+        $this->db->query('UPDATE table moderator SET is_deleted=1
+        WHERE id = :moderator_id');
+        $this->db->bind(':moderator_id', $moderator_id);
+    }
+
+    public function getAllDisputes()
+    {
+        $this->db->query('SELECT * FROM disputes');
+        $row = $this->db->single();
+        return $this->db->resultSet();
+    }
+
+
+    public function getAllBRDetails()
+    {
+        $this->db->query('SELECT r.*, b.business_name, b.br_path, b.created_at AS application_date FROM recruiters r INNER JOIN br_details b ON r.id = b.recruiter_id');
+        $row = $this->db->single();
+        return $this->db->resultSet();
+    }
+
+    public function approve_validation($id)
+    {
+        $this->db->query('UPDATE recruiters SET is_varified = 1 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

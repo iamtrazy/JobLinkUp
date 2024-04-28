@@ -21,7 +21,7 @@ class Moderators extends Controller
         ];
 
         if (isset($_SESSION['moderator_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             $this->view('moderator/login', $data);
         }
@@ -30,7 +30,7 @@ class Moderators extends Controller
     public function login()
     {
         if (isset($_SESSION['moderator_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -214,5 +214,58 @@ class Moderators extends Controller
                 $this->view('moderator/changepassword', $data);
             }
         }
+    }
+    public function disputes($dispute_id = null)
+    {
+        $disputes = $this->moderatorModel->getAlldisputes();
+        $data = [
+            'style' => 'moderators/disputes.css',
+            'title' => 'Disputes',
+            'header_title' => 'Disputes',
+            'disputes' => $disputes
+
+        ];
+        $this->view('moderator/disputes', $data);
+    }
+
+    public function verifications()
+    {
+        $br_details = $this->moderatorModel->getAllBRDetails();
+        $data = [
+            'style' => 'moderators/verify_BR.css',
+            'title' => 'BR verification',
+            'header_title' => 'Change Password',
+            'BR_details' => $br_details
+        ];
+        $this->view('moderator/verify', $data);
+    }
+
+    public function approve_verification()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+
+                // Perform accept action
+                if ($this->moderatorModel->approve_validation($recruiter_id)) {
+                    // Return success message
+                    $message = 'Recruiter Approved';
+                } else {
+                    // Return error message
+                    $message = 'Failed to accept application';
+                }
+            } else {
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
+            }
+        } else {
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
+        }
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
     }
 }

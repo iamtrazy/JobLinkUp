@@ -71,4 +71,13 @@ class Admin
       return false;
     }
   }
+  // Get Moderator Details
+  public function getModeratorDetails(){
+    $this->db->query ('SELECT * FROM moderators' );
+    $row = $this->db->single();
+    
+    return $this->db->resultSet();
+
+  }
+ 
 }

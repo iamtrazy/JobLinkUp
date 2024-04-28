@@ -35,7 +35,7 @@ if (!empty($city) && !empty($country)) {
                             <img src="<?php echo URLROOT . '/img/profile/' . $data['profile']->profile_image ?>" alt="#">
                         </div>
                         <div class="twm-mid-content">
-                            <h4 class="twm-job-title"><?php echo $data['profile']->username ?></h4>
+                            <h4 class="twm-job-title"><?php echo $data['profile']->name ?></h4>
                             <p class="twm-candidate-address"><i class="fas fa-map-marker-alt"></i><?php echo $address ?></p>
                         </div>
                     </div>
@@ -76,29 +76,6 @@ if (!empty($city) && !empty($country)) {
             } else {
                 echo 'No details found';
             } ?>
-            <h4 class="twm-s-title">Keywords</h4>
-            <div class="tw-sidebar-tags-wrap">
-                <?php
-                if (isset($data['profile']->keywords)) {
-                    echo '<div class="tagcloud">';
-
-                    // Explode the comma-separated string into an array
-                    $keywords = explode(',', $data['profile']->keywords);
-
-                    // Iterate over each keyword and echo it inside an <a> tag
-                    foreach ($keywords as $keyword) {
-                        // Trim any extra whitespace
-                        $keyword = trim($keyword);
-                        // Output the <a> tag with the keyword
-                        echo '<a>' . $keyword . '</a>';
-                    }
-
-                    echo '</div>';
-                } else {
-                    echo '<p>No keywords found</p>';
-                }
-                ?>
-            </div>
         </div>
     </div>
     <div class="col-lg-4 col-md-12 rightSidebar">
@@ -115,13 +92,6 @@ if (!empty($city) && !empty($country)) {
                 <h4 class="section-head-small mb-4">Profile Info</h4>
                 <div class="twm-s-info">
                     <ul>
-                        <li>
-                            <div class="twm-s-info-inner">
-                                <i class="fas fa-venus-mars"></i>
-                                <span class="twm-title">Gender</span>
-                                <div class="twm-s-info-discription"><?php echo ucfirst($data['profile']->gender) ?></div>
-                            </div>
-                        </li>
                         <li>
                             <?php if (isset($data['profile']->phone_no)) : ?>
                                 <div class="twm-s-info-inner">
@@ -143,14 +113,6 @@ if (!empty($city) && !empty($country)) {
                                 <i class="fas fa-map-marker-alt"></i>
                                 <span class="twm-title">Location</span>
                                 <div class="twm-s-info-discription"><?php echo $address ?></div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="twm-s-info-inner">
-                                <i class="fas fa-user-tie"></i>
-                                <span class="twm-title">Enrollerd Job Count</span>
-                                <div class="twm-s-info-discription"><?php echo $data['acceptedApplicationCount'] ?>
-                                </div>
                             </div>
                         </li>
                         <?php if (isset($data['profile']->website)) : ?>

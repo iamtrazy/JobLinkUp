@@ -553,12 +553,14 @@ class Recruiters extends Controller
                 'phone_no' => trim(htmlspecialchars($_POST['phone_no'])),
                 'age' => trim(htmlspecialchars($_POST['age'])),
                 'address' => trim(htmlspecialchars($_POST['address'])),
-                'profile_image' => '',
+                'about' => trim(htmlspecialchars($_POST['about'])),
+                'whatsapp_url' => trim(htmlspecialchars($_POST['whatsapp_url'])),
+                'linkedin_url' => trim(htmlspecialchars($_POST['linkedin_url'])),
                 'business_id' => $_SESSION['business_id']
             ];
 
             // Handle file upload if profile image is set
-            if (!empty($_FILES['profile_image']['name'])) {
+            if (isset($_FILES['profile_image']['name'])) {
                 $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
 
                 // If profile image is uploaded, add it to $data
@@ -567,10 +569,7 @@ class Recruiters extends Controller
                 } else {
                     jsflash('Image upload failed (check image extension or size)', '/recruiters/profile', 1);
                 }
-            } else {
-                $data['profile_image'] = '';
             }
-
             // Validate required fields
             if (empty($data['name']) || empty($data['phone_no']) || empty($data['age']) || empty($data['address'])) {
                 jsflash('Please enter all details', '/recruiters/profile', 1);
@@ -657,6 +656,7 @@ class Recruiters extends Controller
         $this->view('api/json', ['message' => $message]);
     }
 
+
     public function rejectApplication()
     {
         // Check if request is POST
@@ -692,6 +692,7 @@ class Recruiters extends Controller
         $this->view('api/json', ['message' => $message]);
     }
 
+
     public function applyForBR()
     {
         // Check if the request method is POST
@@ -716,7 +717,6 @@ class Recruiters extends Controller
                     $phone = trim($_POST['phone']);
                     $city = trim($_POST['city']);
                     $address = trim($_POST['address']);
-
 
                     if (!empty($_FILES['br'])) {
                         $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
@@ -791,7 +791,59 @@ class Recruiters extends Controller
             } else {
                 $response = ['status' => 'error', 'message' => 'Failed to update payment status'];
             }
-            $this->view('api/json', $response);
+        }
+        $this->view('api/json', $response);
+    }
+
+    public function public_profile($id = null)
+    {
+        //   if (!isset($_SESSION['business_id'])) {
+        //     $_SESSION['guest_id'] = '1';
+        //     $_SESSION['user_name'] = 'Guest User';
+        //   }
+
+        // Check if $id is provided and is not null
+        if ($id !== null) {
+            // Retrieve recruiter details for the given $id
+
+            // $profile = $this->candidateModel->getCandidateById($id);
+            $profile = $this->recruiterModel->getRecruiterById($id);
+
+
+            if (($profile->address) !== null) {
+                $locationData = gelocate($profile->address);
+                if ($locationData === null) {
+                    $profile->country = 'unknown';
+                    $profile->city = 'unknown';
+                }
+                $profile->country = $locationData['country'];
+                $profile->city = $locationData['city'];
+            } else {
+                $profile->country = 'unknown';
+                $profile->city = 'unknown';
+            }
+
+            // Check if job details are retrieved successfully
+            if ($profile) {
+                // Prepare data to pass to the view
+                $data = [
+                    'style' => 'candidates/profile.css',
+                    'title' => 'Recruiter Details',
+                    'header_title' => 'Recruiter Details',
+                    'profile' => $profile // Pass job details to the view
+                ];
+
+                // Load the detail view with job details
+                $this->view('recruiters/public_profile', $data);
+            } else {
+                // Handle case when job details are not found
+                // You can display an error message or redirect to a different page
+                jsflash('Recruiter not found', 'jobs');
+            }
+        } else {
+            // Handle case when $id is not provided or is null
+            // You can display an error message or redirect to a different page
+            jsflash('recruiter not found', 'jobs');
         }
     }
 }

@@ -3,10 +3,12 @@ class Admins extends Controller
 {
 
     public $adminModel;
+    public $moderatorsModel;
 
     public function __construct()
     {
         $this->adminModel = $this->model('Admin');
+        $this->moderatorsModel = $this->model('Moderator');
     }
 
     public function index()
@@ -17,7 +19,7 @@ class Admins extends Controller
             'login_email' => '',
             'login_password' => '',
             'login_email_err' => '',
-            'login_password_err' => '',
+            'login_password_err' => ''
         ];
 
         if (isset($_SESSION['admin_id'])) {
@@ -130,7 +132,7 @@ class Admins extends Controller
             $this->index();
         } else {
             $data = [
-                'style' => 'jobseeker/dashboard.css',
+                'style' => 'admin/dashboard.css',
                 'title' => 'Dashboard',
                 'header_title' => 'Dashboard'
             ];
@@ -199,7 +201,7 @@ class Admins extends Controller
 
                 // Register User
                 if ($this->adminModel->addadmin($data)) {
-                    jsflash('Moderator Added', 'admins/addadmin');
+                    jsflash('Moderator Added', 'admins/managemoderators');
                 } else {
                     die('Something went wrong');
                 }
@@ -227,4 +229,51 @@ class Admins extends Controller
             $this->view('admin/addadmin', $data);
         }
     }
+    public function transactions(){
+    $br_details = $this->moderatorsModel->getAllBRDetails();
+    $data = [
+        'style' => 'moderators/verify_BR.css',
+        'title' => 'BR verification',
+        'header_title' => 'Change Password',
+        'BR_details'=>$br_details
+    ];
+
+
+    $this->view('moderator/verify_BR', $data);
+    }
+    public function managemoderators()
+    {
+        $moderators =$this->adminModel-> getModeratorDetails();
+        $data =[
+        'style' => 'admin/dashboard.css',
+        'title' => 'managemoderators',
+        'header_title' => 'managemoderators',
+        'moderators' => $moderators
+    ];
+
+    // Load view
+    $this->view('admin/managemoderators', $data);
+    }
+
+
+    public function deleteModerator($moderator_id = null){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            
+                if ($this->moderatorsModel->deleteModerator($moderator_id)) {
+                    $response = ['status' => 'success', 'message' => 'Job Deleted Successfully'];
+                } else {
+                    $response = ['status' => 'error', 'message' => 'Failed to delete job'];
+                }
+            
+
+            $this->view('api/json', $response);
+    }
+
 }
+
+
+
+
+  
+}  

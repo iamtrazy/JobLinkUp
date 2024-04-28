@@ -287,4 +287,21 @@ class Job
 
         return $results;
     }
+
+
+    public function deleteJobByjobId($job_id) {
+        // Update the record to mark it as deleted
+        $sql = "UPDATE jobs SET is_deleted = true WHERE id = ?";
+        $this->db->query($sql, [$job_id]);
+    
+        // Check if the query was successful
+        if ($this->db->rowCount() > 0) {
+            echo "Record deleted successfully";
+        } else {
+            echo "Job couldnt be deleted";
+        }
+    }
+    
+
+
 }

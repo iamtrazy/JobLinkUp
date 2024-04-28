@@ -194,6 +194,7 @@ class Jobseeker
     }
   }
 
+
   public function completeProfile($id)
   {
     $this->db->query('UPDATE jobseekers SET is_complete = 1 WHERE id = :id');

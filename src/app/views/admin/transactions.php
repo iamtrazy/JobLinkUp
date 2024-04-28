@@ -1,4 +1,52 @@
-<?php require APPROOT . '/views/inc/mod_header.php'; ?>
+<?php require APPROOT . '/views/inc/admin_header.php'; ?>
+<!-- table to view transactions -->
+<!-- <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Order Number</th>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+            <th scope="col">Payment Method</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td class="text-primary">123</td>
+            <td>Social Media Expert</td>
+            <td class="text-primary">$199</td>
+            <td>18/08/2023</td>
+            <td>Paypal</td>
+            <td class="text-success">Success</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">1</th>
+            <td class="text-primary">123</td>
+            <td>Social Media Expert</td>
+            <td class="text-primary">$199</td>
+            <td>18/08/2023</td>
+            <td>Paypal</td>
+            <td class="text-warning">Pending</td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">1</th>
+            <td class="text-primary">123</td>
+            <td>Social Media Expert</td>
+            <td class="text-primary">$199</td>
+            <td>18/08/2023</td>
+            <td>Paypal</td>
+            <td class="text-danger">Rejected</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table> -->
+
+
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
     <div class="twm-right-section-panel site-bg-gray">
 
@@ -9,44 +57,42 @@
             
         </section>
         <section class="table__body table-bordered">
+        <main class="table" id="customersTable">
+        <section class="table__header">
+            <div class="input-group">
+                <input type="search" placeholder="Search Data...">
+                <img src="images/search.png" alt="">
+            </div>
+        </section>
+        <section class="table__body">
             <table>
                 <thead>
-                  
-                        <tr>
-                        <th> Job Id </th>
-                        <th>  Seeker Id </th>
-                        <th>  Recruiter Id </th>
-                        <th> Reason </th>
+                    <tr>
+                        <th> Recruiter Id </th>
+                        <th> Business Name </th>
+                        <th> Documents </th>
+                        <th> Date Applied </th>
+                        <th> Payment Status </th>
                         <th> Action </th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($data['disputes'] as $dispute):?>
+                    <?php foreach ($data['BR_details'] as $BR):?>
                     <tr>
-                        
-                        <td><?php echo $dispute->job_id?></td>
-                        <td><?php echo $dispute->seeker_id?></td>
-                        <td><?php echo $dispute->recruiter_id?></td>
-                        <td><?php echo $dispute->reason?></td>
-                        
-                        <td><div style="display: flex;"> 
-                        <!-- <button class="approve-btn" role="button">Approve</button> 
-                        <button class="reject-btn" role="button">Reject</button>  -->
-
-
-                        <a href="#" class="approve-btn"  data-recruiter-id="<?php echo $dispute->recruiter_id ?>" data-seeker-id="<?php echo $dispute->seeker_id ?>" data-job-id="<?php echo $dispute->job_id ?>><i class="fas fa-check"></i> Accept</a>
-                        <a href="#" class="reject-btn"  data-recruiter-id="<?php echo $dispute->recruiter_id ?>" data-seeker-id="<?php echo $dispute->recruiter_id ?>"data-job-id="<?php echo $dispute->job_id ?>><i class="fas fa-times"></i> Reject</a>
-
-
-
-                    </div></td>
+                        <td> <?php echo $BR->recruiter_id?></td>
+                        <td><?php echo $BR->business_name?></td>
+                        <td> <button class="download-btn" role="button">Download</button> </td>
+                        <td> <?php echo $BR->recruiter_id?> </td>
+                        <td>
+                            <p class="status  Rejected"> Rejected</p>
+                        </td>
+                        <td>
+                        <div style="display: flex;">
+                         <button class="approve-btn" role="button">Approve</button>
+                         <button class="reject-btn" role="button">Reject</button> </div>
+                        </td>
                     </tr>
-                    <?php endforeach;?>
-                    
-                       
-                    
-                  
-                    
+                   <?php endforeach;?>
                 </tbody>
             </table>
         </section>
@@ -169,8 +215,7 @@
     });
 </script>
     
-    <script>
-        const search = document.querySelector('.input-group input'),
+   <script>const search = document.querySelector('.input-group input'),
     table_rows = document.querySelectorAll('tbody tr'),
     table_headings = document.querySelectorAll('thead th');
 
@@ -190,8 +235,7 @@ function searchTable() {
         visible_row.style.backgroundColor = (i % 2 == 0) ? 'transparent' : '#0000000b';
     });
 }
-
-    </script>
+</script>
 
 
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
@@ -200,4 +244,3 @@ function searchTable() {
 
 
 
-    <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
