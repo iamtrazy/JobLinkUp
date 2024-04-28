@@ -260,7 +260,7 @@ class Admins extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             
-                if ($this->moderatorsModel->deleteModerator($moderator_id)) {
+                if ($this->adminModel->deleteModerator($moderator_id)) {
                     $response = ['status' => 'success', 'message' => 'Job Deleted Successfully'];
                 } else {
                     $response = ['status' => 'error', 'message' => 'Failed to delete job'];
@@ -270,10 +270,106 @@ class Admins extends Controller
             $this->view('api/json', $response);
     }
 
+   
+}
+public function publish_notice(){
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        
+        $data = [
+            
+            'notice_id' => trim(htmlspecialchars($_POST['notice_id'])),
+            'title' => trim(htmlspecialchars($_POST['title'])),
+            'description' => trim(htmlspecialchars($_POST['description'])),
+            'link' => trim(htmlspecialchars($_POST['link'])),
+            'expiry_date' => trim(htmlspecialchars($_POST['expiry_date'])),
+            'created_at' => trim(htmlspecialchars($_POST['created_at'])),
+            'persmissons'=>'',
+            //banner image
+
+            // if (array_key_exists('banner_image', $data)) {
+            //     // If 'banner_image' key exists, bind it to the database statement
+            //     $this->db->bind(':banner_image', $data['banner_image']);
+            // } else {
+            //     // If 'banner_image' key does not exist, bind NULL to the database statement
+            //     $this->db->bind(':banner_image', "job-detail-bg.jpg");
+            // }
+
+            'title_empty'=>'',
+            'description_empty'=>'',
+
+            // 'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+        
+        ];
+        if(empty($data['title'])) {
+            $data['title_empty'] = 'please enter a title';
+
+        }
+        if(empty($data['description'])) {
+            $data['title_empty'] = 'please enter a description';
+
+        }
+       
+
+         // Check if banner image is uploaded
+      if (isset($_FILES['notice_image'])) {
+        $bannerImagePath = $this->upload_media("notice_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
+
+        // If banner image is uploaded, add it to $data
+        if ($bannerImagePath) {
+          $data['notice_image'] = $bannerImagePath;
+        }
+      } else {
+        $data['data_err'] = 'Image upload failed (check image extension or size)';
+      }
+        
+            // Validate Confirm Password
+            if (empty($data['confirm_password'])) {
+                $data['confirm_password_err'] = 'Pleae confirm password';
+
+             if(!empty($data['title_empty']) || !empty($data['description_empty'])) {
+                    echo "<p>Please enter all the details</p>";
+                }
+
+        if ($this->adminModel->publishNotice($data)) {
+            jsflash('notice published', 'admins/managenotices');
+        } else {
+            die('Something went wrong');
+        }
+
+    }} else {
+
+        $data = [
+            'style' => 'recruiter/postjob.css',
+            'title' => 'Publish Announcements',
+            'header_title' => 'Publsh announcement',
+            $notice = $this->adminModel->publishNotice()
+
+            // 'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+        ];
+
+        $this->view('admin/publish_notice', $data);
+
+    }
+      
+
+}
+public function manageNotices(){
+
+    $notices = $this->adminModel->getNotices();
+    // $deleteNotice = $this->adminModel->deleteNotice($notices);
+    $data = [
+        'style' => 'recruiter/manage.css',
+        'title' => 'Manage Notices',
+        'header_title' => 'Manage notices',
+        'notices'=>$notices
+    ];
+    $this->view('admin/manage_notices', $data);
+
 }
 
 
 
 
   
-}  
+} 
+ 
