@@ -33,17 +33,6 @@ function getStatusText($status)
   <div class="twm-right-section-panel candidate-save-job site-bg-gray">
     <div class="product-filter-wrap d-flex justify-content-between align-items-center">
       <span class="woocommerce-result-count-left">Applied <?php echo $data['applied_count'] ?> jobs</span>
-
-      <form class="woocommerce-ordering twm-filter-select" method="get">
-        <span class="woocommerce-result-count">Sort By</span>
-
-        <select class="wt-select-bar-2 selectpicker" data-live-search="true" data-bv-field="category">
-          <option>Most Recent</option>
-          <option>Category</option>
-          <option>Price</option>
-        </select>
-
-      </form>
     </div>
 
     <div class="twm-jobs-list-wrap">
@@ -91,4 +80,6 @@ function getStatusText($status)
     </div>
   </div>
 </div>
+
+
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

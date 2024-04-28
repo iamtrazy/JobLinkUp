@@ -1,9 +1,4 @@
 <?php
-  // // DB Params
-  // define('DB_HOST', 'db');
-  // define('DB_USER', 'root');
-  // define('DB_PASS', '123456');
-  // define('DB_NAME', 'JobLinkUp');
 
 $password = $_ENV['MYSQL_ROOT_PASSWORD'];
 // DB Params
