@@ -52,7 +52,7 @@
                             <div class="form-group">
                                 <label>Business Address</label>
                                 <div class="ls-inputicon-box">
-                                    <input class="form-control" name="location" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
+                                    <input class="form-control" name="business_address" type="text" placeholder="1363-1385 Sunset Blvd Los Angeles, CA 90026, USA" required />
                                     <i class="fs-input-icon fa fa-home"></i>
                                 </div>
                             </div>
