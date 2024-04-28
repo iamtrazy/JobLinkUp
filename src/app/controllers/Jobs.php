@@ -6,6 +6,7 @@ class Jobs extends Controller
   public $jobModel;
   public $wishlistModel;
   public $applicationModel;
+  public $adminModel;
 
   public function __construct()
   {
@@ -14,6 +15,7 @@ class Jobs extends Controller
     $this->jobseekerModel = $this->model('Jobseeker');
     $this->wishlistModel = $this->model('Wishlist');
     $this->applicationModel = $this->model('Application');
+    $this->adminModel = $this->model('Admin');
   }
 
   // Load All job
@@ -24,10 +26,13 @@ class Jobs extends Controller
       $_SESSION['user_name'] = 'Guest User';
     }
 
+    $job_ad= $this->adminModel->jobAd();
+
     $data = [
       'style' => 'jobs/style.css',
       'title' => 'Jobs Grid',
       'header_title' => 'The Most Exciting Jobs',
+      'job_ad' => $job_ad
     ];
 
     $this->view('job/index', $data);

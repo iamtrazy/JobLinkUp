@@ -68,7 +68,7 @@ function gelocate($address)
         return ['country' => $country, 'city' => $city];
     } else {
         // Handle API error
-        echo "Error: Unable to retrieve geolocation data";
+        // echo "Error: Unable to retrieve geolocation data";
         return null;
     }
 }

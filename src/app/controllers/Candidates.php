@@ -6,6 +6,7 @@ class Candidates extends Controller
   public $recruiterModel;
   public $candidateModel;
   public $applicationModel;
+  public $adminModel;
 
   public function __construct()
   {
@@ -14,14 +15,17 @@ class Candidates extends Controller
     $this->recruiterModel = $this->model('Recruiter');
     $this->candidateModel = $this->model('Candidate');
     $this->applicationModel = $this->model('Application');
+    $this->adminModel = $this->model('Admin');
   }
 
   public function index()
   {
+    $candidate_ad = $this->adminModel->candidateAd();
     $data = [
       'style' => 'candidates/explore.css',
       'title' => 'Candidates Grid',
       'header_title' => 'Candidates Grid',
+      'candidate_ad' => $candidate_ad
     ];
 
     $this->view('candidates/index', $data);

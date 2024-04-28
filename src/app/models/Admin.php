@@ -101,6 +101,38 @@ class Admin
     }
   }
 
+  public function updateAds($title, $text, $url, $color, $admin_id, $type)
+  {
+    $this->db->query('UPDATE ads SET title = :title, text = :text, url = :url, color = :color, admin_id = :admin_id WHERE type = :type');
+    // Bind values
+    $this->db->bind(':admin_id', $admin_id);
+    $this->db->bind(':type', $type);
+    $this->db->bind(':title', $title);
+    $this->db->bind(':text', $text);
+    $this->db->bind(':url', $url);
+    $this->db->bind(':color', $color);
+
+    // Execute
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public function jobAd()
+  {
+    $this->db->query('SELECT * FROM ads WHERE type = 1 LIMIT 1');
+    $row = $this->db->single();
+    return $row;
+  }
+
+  public function candidateAd()
+  {
+    $this->db->query('SELECT * FROM ads WHERE type = 2 LIMIT 1');
+    $row = $this->db->single();
+    return $row;
+  }
+
   public function publishNotice($data)
   {
     $this->db->query('INSERT into notices VALUES (:notice_id,:title,:description,:link)');

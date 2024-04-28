@@ -84,7 +84,7 @@
                                         <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="">
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4><?php echo $_SESSION['moderator_name'] ?></h4>
+                                        <h4><?php echo isset($_SESSION['moderator_name']) ? $_SESSION['moderator_name'] : 'Admin'; ?></h4>
                                     </div>
 
                                     <div class="twm-nav-list-1">

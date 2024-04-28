@@ -3,12 +3,12 @@ class Admins extends Controller
 {
 
     public $adminModel;
-    public $moderatorsModel;
+    public $moderatorModel;
 
     public function __construct()
     {
         $this->adminModel = $this->model('Admin');
-        $this->moderatorsModel = $this->model('Moderator');
+        $this->moderatorModel = $this->model('Moderator');
     }
 
     public function index()
@@ -232,16 +232,16 @@ class Admins extends Controller
 
     public function transactions()
     {
-        $br_details = $this->moderatorsModel->getAllBRDetails();
+        $br_details = $this->moderatorModel->getAllBRDetails();
         $data = [
             'style' => 'moderators/verify_BR.css',
             'title' => 'BR verification',
             'header_title' => 'Change Password',
             'BR_details' => $br_details
         ];
-
-        $this->view('moderator/verify_BR', $data);
+        $this->view('admin/verify', $data);
     }
+
 
     public function managemoderators()
     {
@@ -338,94 +338,64 @@ class Admins extends Controller
         $this->view('api/json', $response);
     }
 
-    public function publish_notice()
+    public function ads()
+    {
+        $data = [
+            'style' => 'admin/ads.css',
+            'title' => 'Ads',
+            'header_title' => 'Ads'
+        ];
+
+        $this->view('admin/ads', $data);
+    }
+
+    public function post_ads()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $data = [
-
-                'notice_id' => trim(htmlspecialchars($_POST['notice_id'])),
-                'title' => trim(htmlspecialchars($_POST['title'])),
-                'description' => trim(htmlspecialchars($_POST['description'])),
-                'link' => trim(htmlspecialchars($_POST['link'])),
-                'expiry_date' => trim(htmlspecialchars($_POST['expiry_date'])),
-                'created_at' => trim(htmlspecialchars($_POST['created_at'])),
-                'persmissons' => '',
-                //banner image
-
-                // if (array_key_exists('banner_image', $data)) {
-                //     // If 'banner_image' key exists, bind it to the database statement
-                //     $this->db->bind(':banner_image', $data['banner_image']);
-                // } else {
-                //     // If 'banner_image' key does not exist, bind NULL to the database statement
-                //     $this->db->bind(':banner_image', "job-detail-bg.jpg");
-                // }
-
-                'title_empty' => '',
-                'description_empty' => '',
-
-                // 'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
-
-            ];
-            if (empty($data['title'])) {
-                $data['title_empty'] = 'please enter a title';
-            }
-            if (empty($data['description'])) {
-                $data['title_empty'] = 'please enter a description';
-            }
-
-
-            // Check if banner image is uploaded
-            if (isset($_FILES['notice_image'])) {
-                $bannerImagePath = $this->upload_media("notice_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
-
-                // If banner image is uploaded, add it to $data
-                if ($bannerImagePath) {
-                    $data['notice_image'] = $bannerImagePath;
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $admin_id = $_SESSION['admin_id'];
+                $title = trim(htmlspecialchars($_POST['title']));
+                $text = trim(htmlspecialchars($_POST['text']));
+                $url = trim(htmlspecialchars($_POST['url']));
+                $color = trim(htmlspecialchars($_POST['color']));
+                $ad_id = trim(htmlspecialchars($_POST['ad_id']));
+                if ($this->adminModel->updateAds($title, $text, $url, $color, $admin_id, $ad_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Ad updated'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to update ad'
+                    ];
                 }
             } else {
-                $data['data_err'] = 'Image upload failed (check image extension or size)';
-            }
-
-            // Validate Confirm Password
-            if (empty($data['confirm_password'])) {
-                $data['confirm_password_err'] = 'Pleae confirm password';
-
-                if (!empty($data['title_empty']) || !empty($data['description_empty'])) {
-                    echo "<p>Please enter all the details</p>";
-                }
-
-                if ($this->adminModel->publishNotice($data)) {
-                    jsflash('notice published', 'admins/managenotices');
-                } else {
-                    die('Something went wrong');
-                }
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
             }
         } else {
-
-            $data = [
-                'style' => 'recruiter/postjob.css',
-                'title' => 'Publish Announcements',
-                'header_title' => 'Publsh announcement',
-                $notice = $this->adminModel->publishNotice()
-
-                // 'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id'])
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
             ];
-
-            $this->view('admin/publish_notice', $data);
         }
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
     }
-    public function manageNotices()
-    {
-
-        $notices = $this->adminModel->getNotices();
-        // $deleteNotice = $this->adminModel->deleteNotice($notices);
-        $data = [
-            'style' => 'recruiter/manage.css',
-            'title' => 'Manage Notices',
-            'header_title' => 'Manage notices',
-            'notices' => $notices
-        ];
-        $this->view('admin/manage_notices', $data);
+    public function job_ad(){
+        $data['job_ad'] = $this->adminModel->jobAd();
+        $this->view('api/json', $data);
+    }
+    public function candidate_ad(){
+        $data['candidate_ad'] = $this->adminModel->candidateAd();
+        $this->view('api/json', $data);
     }
 }

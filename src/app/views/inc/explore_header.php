@@ -273,13 +273,13 @@
 
 
                             </div>
-
-                            <div class="twm-advertisment" style="background-image:url(images/add-bg.jpg);">
-                                <div class="overlay"></div>
-                                <h4 class="twm-title">Recruiting?</h4>
-                                <p>Get Best Matched Jobs On your <br>
-                                    Email. Add Resume NOW!</p>
-                                <a href="about-1.html" class="site-button white">Read More</a>
+                            <?php if(!empty($data['candidate_ad']->title) && !empty($data['candidate_ad']->text) && !empty($data['candidate_ad']->color) && !empty($data['candidate_ad']->url)) : ?>
+                            <div class="twm-advertisment">
+                                <div class="overlay" style="background-color: <?php echo $data['candidate_ad']->color;?>"></div>
+                                <h4 class="twm-title"><?php echo $data['candidate_ad']->title;?></h4>
+                                <p><?php echo $data['candidate_ad']->text;?></p>
+                                <a href="https://<?php echo $data['candidate_ad']->url;?>" target="_blank" class="site-button white">Read More</a>
                             </div>
+                            <?php endif; ?>
 
                         </div>
