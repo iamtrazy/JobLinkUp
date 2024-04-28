@@ -1,11 +1,11 @@
-/*<?php
-// if (isset($_SESSION['user_id'])) {
-//     require APPROOT . '/views/inc/candidate_profile_header.php';
-// } elseif (isset($_SESSION['business_id'])) {
-//     require APPROOT . '/views/inc/candidate_profile_header.php';
-// } else {
-//     require APPROOT . '/views/inc/candidate_profile_header.php';
-// }
+<?php
+if (isset($_SESSION['user_id'])) {
+    require APPROOT . '/views/inc/candidate_profile_header.php';
+} elseif (isset($_SESSION['business_id'])) {
+    require APPROOT . '/views/inc/candidate_profile_header.php';
+} else {
+    require APPROOT . '/views/inc/candidate_profile_header.php';
+}
 ?>
 
 <?php
@@ -35,7 +35,7 @@ if (!empty($city) && !empty($country)) {
                             <img src="<?php echo URLROOT . '/img/profile/' . $data['profile']->profile_image ?>" alt="#">
                         </div>
                         <div class="twm-mid-content">
-                            <h4 class="twm-job-title"><?php echo $data['profile']->username ?></h4>
+                            <h4 class="twm-job-title"><?php echo $data['profile']->name ?></h4>
                             <p class="twm-candidate-address"><i class="fas fa-map-marker-alt"></i><?php echo $address ?></p>
                         </div>
                     </div>
@@ -46,7 +46,7 @@ if (!empty($city) && !empty($country)) {
                                 <i class="fab fa-whatsapp"></i> WhatsApp
                             </a>
                         <?php endif; ?>
-                        <?php if (isset($data['profile']->facebook_url)) : ?>
+                        <?php if (isset($data['profile']->linkedin_url)) : ?>
                             <a href="https://<?php echo $data['profile']->linkedin_url ?>" class="site-button outline-white" style="background-color: #0077B5; color: #fff;">
                                 <i class="fab fa-linkedin"></i> LinkedIn
                             </a>
@@ -76,29 +76,6 @@ if (!empty($city) && !empty($country)) {
             } else {
                 echo 'No details found';
             } ?>
-            <h4 class="twm-s-title">Keywords</h4>
-            <div class="tw-sidebar-tags-wrap">
-                <?php
-                if (isset($data['profile']->keywords)) {
-                    echo '<div class="tagcloud">';
-
-                    // Explode the comma-separated string into an array
-                    $keywords = explode(',', $data['profile']->keywords);
-
-                    // Iterate over each keyword and echo it inside an <a> tag
-                    foreach ($keywords as $keyword) {
-                        // Trim any extra whitespace
-                        $keyword = trim($keyword);
-                        // Output the <a> tag with the keyword
-                        echo '<a>' . $keyword . '</a>';
-                    }
-
-                    echo '</div>';
-                } else {
-                    echo '<p>No keywords found</p>';
-                }
-                ?>
-            </div>
         </div>
     </div>
     <div class="col-lg-4 col-md-12 rightSidebar">
@@ -115,13 +92,6 @@ if (!empty($city) && !empty($country)) {
                 <h4 class="section-head-small mb-4">Profile Info</h4>
                 <div class="twm-s-info">
                     <ul>
-                        <li>
-                            <div class="twm-s-info-inner">
-                                <i class="fas fa-venus-mars"></i>
-                                <span class="twm-title">Gender</span>
-                                <div class="twm-s-info-discription"><?php echo ucfirst($data['profile']->gender) ?></div>
-                            </div>
-                        </li>
                         <li>
                             <?php if (isset($data['profile']->phone_no)) : ?>
                                 <div class="twm-s-info-inner">
@@ -150,7 +120,7 @@ if (!empty($city) && !empty($country)) {
                                 <div class="twm-s-info-inner">
                                     <i class="fas fa-globe"></i>
                                     <span class="twm-title">Website</sepan>
-                                    <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
+                                        <div class="twm-s-info-discription"><?php echo '<a href="https://' . $data['profile']->website . ' class="site-text-primary"> Visit </a>' ?> </div>
                                 </div>
                             </li>
                         <?php endif; ?>

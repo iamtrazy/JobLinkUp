@@ -82,11 +82,6 @@
                                 <div class="side-bar-st-1">
                                     <div class="twm-candidate-profile-pic">
                                         <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="">
-                                        <div class="upload-btn-wrapper">
-                                            <div id="upload-image-grid"></div>
-                                            <button class="site-button button-sm">Upload Photo</button>
-                                            <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
-                                        </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
                                         <h4><?php echo $_SESSION['moderator_name'] ?></h4>
@@ -95,9 +90,9 @@
                                     <div class="twm-nav-list-1">
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/moderators/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/moderators/verifyBR"><i class="fa fa-suitcase"></i>Verify Buisness</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/verifications"><i class="fa fa-suitcase"></i>Pending Verifications</a></li>
                                             <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/moderators/disputes"><i class="fa fa-credit-card"></i>handle disputes</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/disputes"><i class="fas fa-exclamation-triangle"></i></i>Disputes</a></li>
                                             <li><a href="<?php echo URLROOT ?>/moderators/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/moderators/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>

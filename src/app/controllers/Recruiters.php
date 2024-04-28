@@ -553,12 +553,14 @@ class Recruiters extends Controller
                 'phone_no' => trim(htmlspecialchars($_POST['phone_no'])),
                 'age' => trim(htmlspecialchars($_POST['age'])),
                 'address' => trim(htmlspecialchars($_POST['address'])),
-                'profile_image' => '',
+                'about' => trim(htmlspecialchars($_POST['about'])),
+                'whatsapp_url' => trim(htmlspecialchars($_POST['whatsapp_url'])),
+                'linkedin_url' => trim(htmlspecialchars($_POST['linkedin_url'])),
                 'business_id' => $_SESSION['business_id']
             ];
 
             // Handle file upload if profile image is set
-            if (!empty($_FILES['profile_image']['name'])) {
+            if (isset($_FILES['profile_image']['name'])) {
                 $profileImagePath = $this->upload_media("profile_image", $_FILES, "/img/profile/", ['jpg', 'jpeg', 'png'], 1000000);
 
                 // If profile image is uploaded, add it to $data
@@ -567,10 +569,7 @@ class Recruiters extends Controller
                 } else {
                     jsflash('Image upload failed (check image extension or size)', '/recruiters/profile', 1);
                 }
-            } else {
-                $data['profile_image'] = '';
             }
-
             // Validate required fields
             if (empty($data['name']) || empty($data['phone_no']) || empty($data['age']) || empty($data['address'])) {
                 jsflash('Please enter all details', '/recruiters/profile', 1);
@@ -633,73 +632,73 @@ class Recruiters extends Controller
                 $job_id = $_POST['job_id'];
                 $seeker_id = $_POST['seeker_id'];
 
-            // Perform accept action
-            if ($this->applicationModel->acceptApplication($seeker_id, $job_id)) {
-                // Return success message
-                $message = 'Application accepted successfully';
-                if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
-                    $this->chatModel->startThread($seeker_id, $_SESSION['business_id']);
+                // Perform accept action
+                if ($this->applicationModel->acceptApplication($seeker_id, $job_id)) {
+                    // Return success message
+                    $message = 'Application accepted successfully';
+                    if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
+                        $this->chatModel->startThread($seeker_id, $_SESSION['business_id']);
+                    }
+                } else {
+                    // Return error message
+                    $message = 'Failed to accept application';
                 }
             } else {
-                // Return error message
-                $message = 'Failed to accept application';
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
             }
         } else {
-            // Return error message if user is not logged in
-            $message = 'User not logged in';
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
         }
-    } else {
-        // Return error message if request method is not POST
-        $message = 'Invalid request method';
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
     }
 
-    // Load 'api/json' view with the message
-    $this->view('api/json', ['message' => $message]);
-}
 
+    public function rejectApplication()
+    {
+        // Check if request is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $seeker_id = $_POST['seeker_id'];
+                $job_id = $_POST['job_id'];
 
-public function rejectApplication()
-{
-    // Check if request is POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Check if user is logged in
-        if ($this->isLoggedIn()) {
-            // Get application ID from POST data
-            $seeker_id = $_POST['seeker_id'];
-            $job_id = $_POST['job_id'];
-
-            // Perform reject action
-            if ($this->applicationModel->rejectApplication($seeker_id, $job_id)) {
-                // Return success message
-                if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
-                    $thread_id = $this->chatModel->getThreadId($seeker_id, $_SESSION['business_id']);
-                    $this->chatModel->deleteThread($thread_id);
+                // Perform reject action
+                if ($this->applicationModel->rejectApplication($seeker_id, $job_id)) {
+                    // Return success message
+                    if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
+                        $thread_id = $this->chatModel->getThreadId($seeker_id, $_SESSION['business_id']);
+                        $this->chatModel->deleteThread($thread_id);
+                    }
+                    $message = 'Application rejected successfully';
+                } else {
+                    // Return error message
+                    $message = 'Failed to reject application';
                 }
-                $message = 'Application rejected successfully';
             } else {
-                // Return error message
-                $message = 'Failed to reject application';
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
             }
         } else {
-            // Return error message if user is not logged in
-            $message = 'User not logged in';
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
         }
-    } else {
-        // Return error message if request method is not POST
-        $message = 'Invalid request method';
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
     }
 
-    // Load 'api/json' view with the message
-    $this->view('api/json', ['message' => $message]);
-}
 
-
-public function applyForBR()
-{
-    // Check if the request method is POST
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Initialize an empty array to store response data
-        $response = [];
+    public function applyForBR()
+    {
+        // Check if the request method is POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Initialize an empty array to store response data
+            $response = [];
 
             // Check if the user is logged in
             if ($this->isLoggedIn()) {
@@ -719,8 +718,8 @@ public function applyForBR()
                     $city = trim($_POST['city']);
                     $address = trim($_POST['address']);
 
-                if (!empty($_FILES['br'])) {
-                    $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
+                    if (!empty($_FILES['br'])) {
+                        $br_path = $this->upload_media("br", $_FILES, "/assets/brs/", ['pdf'], 2000000);
 
                         // If profile image is uploaded, add it to $data
                         if ($br_path) {
@@ -766,102 +765,98 @@ public function applyForBR()
     }
 
     public function explore()
-    {   
+    {
         $all_recruiters = $this->recruiterModel->getAll();
         $data = [
             'style' => 'recruiter/explore.css',
             'title' => 'Recruiters Grid',
             'header_title' => 'Explore',
             'all_recruiters' => $all_recruiters,
-    
+
         ];
         $this->view('recruiters/explore', $data);
+    }
 
-}
+    public function pay()
+    {
+        $br = $this->recruiterModel->getBrDetails($_SESSION['business_id']);
+        $email = $this->recruiterModel->getRecruiterEmail($_SESSION['business_id']);
+        $payment = $this->payhereModel->premium($br->phone, $br->address, $br->city, $br->first_name, $br->last_name, $email);
 
-public function pay()
-{
-    $br = $this->recruiterModel->getBrDetails($_SESSION['business_id']);
-    $email = $this->recruiterModel->getRecruiterEmail($_SESSION['business_id']);
-    $payment = $this->payhereModel->premium($br->phone, $br->address, $br->city, $br->first_name, $br->last_name, $email);
+        // $recruiter = $this->recruiterModel->getRecruiterById($_SESSION['business_id']);
+        $data = [
+            'style' => 'recruiter/pay.css',
+            'title' => 'Verify Your Business',
+            'header_title' => 'Verify Your Business',
+            'payment' => $payment,
 
-    // $recruiter = $this->recruiterModel->getRecruiterById($_SESSION['business_id']);
-    $data = [
-        'style' => 'recruiter/pay.css',
-        'title' => 'Verify Your Business',
-        'header_title' => 'Verify Your Business',
-        'payment' => $payment,
+        ];
 
-    ];
+        $this->view('recruiters/pay', $data);
+    }
 
-    $this->view('recruiters/pay', $data);
-}
+    public function pay_success()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $recruiter_id = $_SESSION['business_id'];
+            if ($this->recruiterModel->paySuccess($recruiter_id)) {
+                $response = ['status' => 'success', 'message' => 'Payment successful'];
+            } else {
+                $response = ['status' => 'error', 'message' => 'Failed to update payment status'];
+            }
+        }
+        $this->view('api/json', $response);
+    }
 
-public function pay_success()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $recruiter_id = $_SESSION['business_id'];
-        if ($this->recruiterModel->paySuccess($recruiter_id)) {
-            $response = ['status' => 'success', 'message' => 'Payment successful'];
+    public function public_profile($id = null)
+    {
+        //   if (!isset($_SESSION['business_id'])) {
+        //     $_SESSION['guest_id'] = '1';
+        //     $_SESSION['user_name'] = 'Guest User';
+        //   }
+
+        // Check if $id is provided and is not null
+        if ($id !== null) {
+            // Retrieve recruiter details for the given $id
+
+            // $profile = $this->candidateModel->getCandidateById($id);
+            $profile = $this->recruiterModel->getRecruiterById($id);
+
+
+            if (($profile->address) !== null) {
+                $locationData = gelocate($profile->address);
+                if ($locationData === null) {
+                    $profile->country = 'unknown';
+                    $profile->city = 'unknown';
+                }
+                $profile->country = $locationData['country'];
+                $profile->city = $locationData['city'];
+            } else {
+                $profile->country = 'unknown';
+                $profile->city = 'unknown';
+            }
+
+            // Check if job details are retrieved successfully
+            if ($profile) {
+                // Prepare data to pass to the view
+                $data = [
+                    'style' => 'candidates/profile.css',
+                    'title' => 'Recruiter Details',
+                    'header_title' => 'Recruiter Details',
+                    'profile' => $profile // Pass job details to the view
+                ];
+
+                // Load the detail view with job details
+                $this->view('recruiters/public_profile', $data);
+            } else {
+                // Handle case when job details are not found
+                // You can display an error message or redirect to a different page
+                jsflash('Recruiter not found', 'jobs');
+            }
         } else {
-            $response = ['status' => 'error', 'message' => 'Failed to update payment status'];
+            // Handle case when $id is not provided or is null
+            // You can display an error message or redirect to a different page
+            jsflash('recruiter not found', 'jobs');
         }
     }
-    $this->view('api/json', $response);
-
-}
-
-public function public_profile($id = null)
-{
-//   if (!isset($_SESSION['business_id'])) {
-//     $_SESSION['guest_id'] = '1';
-//     $_SESSION['user_name'] = 'Guest User';
-//   }
-
-  // Check if $id is provided and is not null
-  if ($id !== null) {
-    // Retrieve recruiter details for the given $id
-
-    // $profile = $this->candidateModel->getCandidateById($id);
-        $profile = $this->recruiterModel->getRecruiterById($id);
-
-
-    if (($profile->address) !== null) {
-      $locationData = gelocate($profile->address);
-      if ($locationData === null) {
-        $profile->country = 'unknown';
-        $profile->city = 'unknown';
-      }
-      $profile->country = $locationData['country'];
-      $profile->city = $locationData['city'];
-    } else {
-      $profile->country = 'unknown';
-      $profile->city = 'unknown';
-    }
-
-    // Check if job details are retrieved successfully
-    if ($profile) {
-      // Prepare data to pass to the view
-      $data = [
-        'style' => 'recruiters/public_profile.css',
-        'title' => 'Recruiter Details',
-        'header_title' => 'Recruiter Details',
-        'profile' => $profile // Pass job details to the view
-      ];
-
-      // Load the detail view with job details
-      $this->view('recruiter/public_profile', $data);
-    } else {
-      // Handle case when job details are not found
-      // You can display an error message or redirect to a different page
-      jsflash('Recruiter not found', 'jobs');
-    }
-  } else {
-    // Handle case when $id is not provided or is null
-    // You can display an error message or redirect to a different page
-    jsflash('recruiter not found', 'jobs');
-  }
-}
-
-
 }

@@ -162,15 +162,15 @@
                   </div>
                 </div>
               </div>
-
-              <div class="col-lg-12 col-md-12">
-                <div class="text-left">
-                  <button type="submit" class="site-button">
-                    Save Changes
-                  </button>
-                </div>
-              </div>
             </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12">
+          <div class="text-left">
+            <button type="submit" class="site-button">
+              Save Changes
+            </button>
           </div>
         </div>
       </div>

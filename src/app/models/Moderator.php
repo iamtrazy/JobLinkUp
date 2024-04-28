@@ -71,114 +71,36 @@ class Moderator
         }
     }
 
-    public function deleteModerator($moderator_id){
+    public function deleteModerator($moderator_id)
+    {
         $this->db->query('UPDATE table moderator SET is_deleted=1
         WHERE id = :moderator_id');
-        $this->db->bind(':moderator_id',$moderator_id);
+        $this->db->bind(':moderator_id', $moderator_id);
     }
 
-    // Method to accept an application
-    public function acceptDispute($dispute_id)
+    public function getAllDisputes()
     {
-        $this->db->query('UPDATE disputes SET status = :status 
-        WHERE dispute_id = :dispute_id');
-        $this->db->bind(':status', 'approved');
-        $this->db->bind(':dispute_id', $dispute_id);
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function rejectDispute($dispute_id)
-    {
-        $this->db->query('UPDATE disputes SET status = :status 
-        WHERE dispute_id = :dispute_id');
-        $this->db->bind(':status', 'rejected');
-        $this->db->bind(':dispute_id', $dispute_id);
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function approveBR($dispute_id)
-    {
-        $this->db->query('UPDATE disputes SET status = :status 
-        WHERE dispute_id = :dispute_id');
-        $this->db->bind(':status', 'approved');
-        $this->db->bind(':dispute_id', $dispute_id);
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function rejectBR($dispute_id)
-    {
-        $this->db->query('UPDATE disputes SET status = :status 
-        WHERE dispute_id = :dispute_id');
-        $this->db->bind(':status', 'rejected');
-        $this->db->bind(':dispute_id', $dispute_id);
-        if ($this->db->execute()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public function getAllDisputes(){
         $this->db->query('SELECT * FROM disputes');
         $row = $this->db->single();
         return $this->db->resultSet();
-
-    //result set statement
-
     }
 
-   
-        // public function findDuplicateDisputes(){
-        //     // Construct the compound key by concatenating seeker_id and job_id
-        //     $compoundKey = 'seekerID_' . 'job_id'; // Adjust this based on your actual column names and desired format
-        
-        //     // Execute the query to retrieve seeker_id and job_id from the disputes table
-        //     $query = $this->db->query('SELECT seeker_id, job_id FROM disputes');
-        
-        //     // Check if the query was executed successfully
-        //     if ($query) {
-        //         // Fetch the results (assuming your database library provides a method for fetching results)
-        //         $results = $query->fetchAll(); // Adjust this based on your database library
-        
-        //         // Process the results as needed
-        //         foreach ($results as $row) {
-        //             // Access the seeker_id and job_id values from each row
-        //             $seekerId = $row['seeker_id'];
-        //             $jobId = $row['job_id'];
-        
-        //             // Use the values to check for duplicate disputes or perform other operations
-        //             // For example, you can compare $seekerId and $jobId with the compoundKey
-        //             if (($seekerId . '_' . $jobId) === $compoundKey) {
-        //                 // Handle the duplicate dispute
-        //                 // This could involve logging, reporting, or taking corrective actions
-        //                 // Example: Log the occurrence of a duplicate dispute
-        //                 echo "No disputes found in the database<br>";
 
-        //             }
-        //         }
-        //     } else {
-        //         // Handle the case where the query execution failed
-        //         // Example: Log an error message or throw an exception
-        //         error_log("Failed to execute the query to retrieve disputes");
-        //     }
-        // }
+    public function getAllBRDetails()
+    {
+        $this->db->query('SELECT r.*, b.business_name, b.br_path, b.created_at AS application_date FROM recruiters r INNER JOIN br_details b ON r.id = b.recruiter_id');
+        $row = $this->db->single();
+        return $this->db->resultSet();
+    }
 
-        public function getAllBRDetails(){
-            $this->db->query('SELECT * from br_details ');
-            $row = $this->db->single();
-            return $this->db->resultSet();
+    public function approve_validation($id)
+    {
+        $this->db->query('UPDATE recruiters SET is_varified = 1 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
         }
-        
     }
-
-
+}
