@@ -91,7 +91,7 @@ if (!empty($city) && !empty($country)) {
                     <?php else : ?>
                         <button class="btn btn-danger disable-btn animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #dc3545; color: #fff;"><i class="fas fa-user-slash"></i> Disable Account</button>
                     <?php endif; ?>
-                    <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
+                    <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;" id="reportToAdmin"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
                 </div>
             <?php endif; ?>
 
@@ -202,6 +202,47 @@ if (!empty($city) && !empty($country)) {
                             Swal.fire({
                                 title: 'Error',
                                 text: 'Failed to disable recruiter. Please try again later.',
+                                icon: 'error'
+                            });
+                        });
+                    }
+                });
+            });
+
+            $("#reportToAdmin").click(function() {
+                // Confirm the action using SweetAlert
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to report this job to the admin!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ffc107',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, report it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send POST request to report job to admin
+                        $.post('<?php echo URLROOT . '/moderators/report_recruiter_admin' ?>', {
+                            recruiter_id: <?php echo $data['profile']->id ?>
+                        }).done(function(data) {
+                            // Check for success or error message
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Job Reported',
+                                    text: data.message,
+                                    icon: 'success'
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        }).fail(function() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to report job. Please try again later.',
                                 icon: 'error'
                             });
                         });

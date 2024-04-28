@@ -154,4 +154,52 @@ class Moderator
             return false;
         }
     }
+
+    public function reportJobAdmin($job_id, $mod_id)
+    {
+        $this->db->query('INSERT INTO admin_report_jobs (job_id, moderator_id) VALUES (:job_id, :mod_id)');
+        $this->db->bind(':job_id', $job_id);
+        $this->db->bind(':mod_id', $mod_id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function reportRecruiterAdmin($recruiter_id, $mod_id)
+    {
+        $this->db->query('INSERT INTO admin_report_recruiters (recruiter_id, moderator_id) VALUES (:recruiter_id, :mod_id)');
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $this->db->bind(':mod_id', $mod_id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function jobAlreadyReported($job_id)
+    {
+        $this->db->query('SELECT * FROM admin_report_jobs WHERE job_id = :job_id');
+        $this->db->bind(':job_id', $job_id);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function recruiterAlreadyReported($recruiter_id)
+    {
+        $this->db->query('SELECT * FROM admin_report_recruiters WHERE recruiter_id = :recruiter_id');
+        $this->db->bind(':recruiter_id', $recruiter_id);
+        $row = $this->db->single();
+        if ($this->db->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

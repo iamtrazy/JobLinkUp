@@ -111,7 +111,7 @@ if (isset($_SESSION['user_id'])) {
                         <?php else : ?>
                             <button class="btn btn-success animate-on-click enable-job-btn" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #28a745; color: #fff;"><i class="fas fa-undo"></i> Restore Job</button>
                         <?php endif; ?>
-                        <button class="btn btn-warning ml-2 animate-on-click report-job-btn" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
+                        <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;" id="reportToAdmin"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
                     </div>
                 </div>
             <?php endif; ?>
@@ -309,6 +309,47 @@ if (isset($_SESSION['user_id'])) {
                 });
             });
 
+            // Report Job to Admin Button
+            $("#reportToAdmin").click(function() {
+                // Confirm the action using SweetAlert
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to report this job to the admin!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#ffc107',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, report it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send POST request to report job to admin
+                        $.post('<?php echo URLROOT . '/moderators/report_job_admin' ?>', {
+                            job_id: <?php echo $data['job']->id ?>
+                        }).done(function(data) {
+                            // Check for success or error message
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Job Reported',
+                                    text: data.message,
+                                    icon: 'success'
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        }).fail(function() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to report job. Please try again later.',
+                                icon: 'error'
+                            });
+                        });
+                    }
+                });
+            });
             // Enable Job Button
             $(".enable-job-btn").click(function() {
                 // Confirm the action using SweetAlert

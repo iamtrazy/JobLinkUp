@@ -445,4 +445,100 @@ class Moderators extends Controller
         // Load 'api/json' view with the response
         $this->view('api/json', $response);
     }
+
+    public function report_job_admin()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = trim(htmlspecialchars($_POST['job_id']));
+                $mod_id = $_SESSION['moderator_id'];
+
+                if ($this->moderatorModel->jobAlreadyReported($job_id, $mod_id)) {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Job already reported'
+                    ];
+                } else {
+                    // Perform report action
+                    if ($this->moderatorModel->reportJobAdmin($job_id, $mod_id)) {
+                        // Return success message
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Job Reported'
+                        ];
+                    } else {
+                        // Return error message
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Failed to report job'
+                        ];
+                    }
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+        $this->view('api/json', $response);
+    }
+
+    public function report_recruiter_admin()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+                $mod_id = $_SESSION['moderator_id'];
+
+                if ($this->moderatorModel->recruiterAlreadyReported($recruiter_id, $mod_id)) {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Recruiter already reported'
+                    ];
+                } else {
+                    // Perform report action
+                    if ($this->moderatorModel->reportRecruiterAdmin($recruiter_id, $mod_id)) {
+                        // Return success message
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Recruiter Reported'
+                        ];
+                    } else {
+                        // Return error message
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Failed to report recruiter'
+                        ];
+                    }
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+        $this->view('api/json', $response);
+    }
 }

@@ -13,9 +13,9 @@
                     <thead>
 
                         <tr>
-                            <th> Job Id </th>
-                            <th> Seeker Id </th>
-                            <th> Recruiter Id </th>
+                            <th> Reported Person </th>
+                            <th> Reported Job </th>
+                            <th> Job Publisher </th>
                             <th> Reason </th>
                         </tr>
                     </thead>
