@@ -72,41 +72,58 @@ class Admin
     }
   }
   // Get Moderator Details
-  public function getModeratorDetails(){
-    $this->db->query ('SELECT * FROM moderators' );
+  public function getModeratorDetails()
+  {
+    $this->db->query('SELECT * FROM moderators');
     $row = $this->db->single();
-    
     return $this->db->resultSet();
-
   }
-  public function deleteModerator($moderator_id){
-    $this->db->query('UPDATE table moderator SET is_deleted=1
-    WHERE id = :moderator_id');
-    $this->db->bind(':moderator_id',$moderator_id);
-}
-  public function publishNotice($data){
-    $this->db->query ('INSERT into notices VALUES (:notice_id,:title,:description,:link)');
-     // Execute
-    
-     $this->db->bind(':notice_id', $data['notice_id']);
-     $this->db->bind(':title', $data['title']);
-     $this->db->bind(':description', $data['description']);
-     $this->db->bind(':link', $data['link']);
-     $this->db->bind(':created_at', $data['created_at']);
-     $this->db->bind(':expiry_date', $data['expiry_date']);
-     if ($this->db->execute()) {
+
+  public function deleteModerator($moderator_id)
+  {
+    $this->db->query('UPDATE moderators SET is_disabled = 1 WHERE id = :moderator_id');
+    $this->db->bind(':moderator_id', $moderator_id);
+    if ($this->db->execute()) {
       return true;
     } else {
       return false;
     }
   }
 
-  public function getNotices(){
-    $this->db->query ('SELECT * from notices');
-    $row = $this->db->single();
-    
-    return $this->db->resultSet();
+  public function restoreModerator($moderator_id)
+  {
+    $this->db->query('UPDATE moderators SET is_disabled = 0 WHERE id = :moderator');
+    $this->db->bind(':moderator', $moderator_id);
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
- 
+  public function publishNotice($data)
+  {
+    $this->db->query('INSERT into notices VALUES (:notice_id,:title,:description,:link)');
+    // Execute
+
+    $this->db->bind(':notice_id', $data['notice_id']);
+    $this->db->bind(':title', $data['title']);
+    $this->db->bind(':description', $data['description']);
+    $this->db->bind(':link', $data['link']);
+    $this->db->bind(':created_at', $data['created_at']);
+    $this->db->bind(':expiry_date', $data['expiry_date']);
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function getNotices()
+  {
+    $this->db->query('SELECT * from notices');
+    $row = $this->db->single();
+
+    return $this->db->resultSet();
+  }
 }

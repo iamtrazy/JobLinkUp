@@ -2,99 +2,152 @@
 <div class="col-xl-9 col-lg-8 col-md-12 m-b30">
   <!--Filter Short By-->
   <div class="twm-right-section-panel site-bg-gray">
-
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Hello <?php echo ucfirst($_SESSION['admin_name']) ?>!</h1>
-        <br>
-      </div>
-
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Full Name</th>
-            <th scope="col">ID</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($data['moderators'] as $moderators): ?>
-          <tr>
-            <th scope="row">1</th>
-            <td><?php echo $moderators-> name ?> </td>
-            <td><?php echo $moderators-> id ?></td>
-            <!-- <td><button type="button" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button></td> -->
-            <td><button class="delete-moderator" title="Remove moderator" data-bs-toggle="tooltip" data-bs-placement="top" data-moderator-id="<?php echo $moderators->id ?>">
-                                                            <span class="far fa-trash-alt"></span>
-                                                        </button>
-          </td>
-          </tr>
-          <?php endforeach ?>
-        </tbody>
-      </table>
-    </div>
+    <main class="table table-bordered" id="customersTable">
+      <section class="table__body table-bordered">
+        <main class="table" id="customersTable">
+          <section class="table__header">
+            <div class="input-group">
+              <input id="searchInput" type="search" placeholder="Search Data...">
+              <img src="images/search.png" alt="">
+            </div>
+          </section>
+          <section class="table__body table-bordered">
+            <table>
+              <thead>
+                <tr>
+                  <th> Moderator Name </th>
+                  <th> Email </th>
+                  <th> Last Active </th>
+                  <th> Action </th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($data['moderators'] as $moderator) : ?>
+                  <tr class="table-row">
+                    <td> <?php echo $moderator->name ?></td>
+                    <td><?php echo $moderator->email ?></td>
+                    <td><?php echo time_elapsed_string($moderator->last_active) ?></td>
+                    <td>
+                      <?php if ($moderator->is_disabled == 1) : ?>
+                        <button class="enable-btn" style="background-color: #069433; color: white; padding: 5px 10px; border-radius: 20px;" data-moderator-id="<?php echo $moderator->id; ?>">Enable</button>
+                      <?php else : ?>
+                        <button class="disable-btn" style="background-color: #e62b1e; color: white; padding: 5px 10px; border-radius: 20px;" data-moderator-id="<?php echo $moderator->id; ?>">Disable</button>
+                      <?php endif; ?>
+                    </td>
+                    <!-- <td>
+                      <?php if ($transaction->paid == 1) : ?>
+                        <p style="background-color: #007bff; color: white; padding: 5px 10px; border-radius: 20px;">Paid</p>
+                      <?php elseif ($transaction->br_uploaded == 1) : ?>
+                        <p style="background-color: #d9b518; color: white; padding: 5px 10px; border-radius: 20px;">Payment Pending</p>
+                      <?php endif; ?>
+                    </td> -->
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </section>
+        </main>
+      </section>
+    </main>
   </div>
 </div>
 <script>
-    $(document).ready(function() {
-        // Function to handle job deletion
-        $('.delete-moderator').on('click', function(e) {
-            e.preventDefault();
-            var moderatorId = $(this).data('moderator-id');
+  $(document).ready(function() {
+    // Event listener for clicking the disable button
+    $(".disable-btn").click(function() {
+      // Get the moderator ID from the data attribute
+      var moderatorId = $(this).data('moderator-id');
 
-            // Show confirmation dialog using SweetAlert2
+      // Confirm the action using SweetAlert
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to disable this moderator!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, disable it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Send POST request to disable moderator
+          $.post('/admins/disable_moderator', {
+            moderator_id: moderatorId
+          }).done(function(data) {
+            // Check for success or error message
+            if (data.status === 'success') {
+              Swal.fire({
+                title: 'Moderator Disabled',
+                text: data.message,
+                icon: 'success'
+              }).then(() => {
+                // Reload the page or perform any other action
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: data.message,
+                icon: 'error'
+              });
+            }
+          }).fail(function() {
             Swal.fire({
-                title: 'Are you sure you want to delete this moderator?',
-                text: 'this action can not be undone',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Delete'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // If user confirms deletion, send AJAX request to delete the moderator
-                    $.ajax({
-                        url: '<?php echo URLROOT . '/admin/deleteModerator/' ?>' + moderatorId,
-                        type: 'POST',
-                        dataType: 'json',
-                        success: function(response) {
-                            if (response.status === 'success') {
-                                // If moderator is deleted successfully, show success message
-                                Swal.fire(
-                                    'Deleted!',
-                                    response.message,
-                                    'success'
-                                ).then(() => {
-                                    // Reload the page after successful deletion
-                                    location.reload();
-                                });
-                            } else {
-                                // If deletion fails, show error message
-                                Swal.fire(
-                                    'Error!',
-                                    response.message,
-                                    'error'
-                                );
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("Error deleting job:", error);
-                            // Show generic error message if AJAX request fails
-                            Swal.fire(
-                                'Error!',
-                                'Failed to delete job. Please try again later.',
-                                'error'
-                            );
-                        }
-                    });
-                }
+              title: 'Error',
+              text: 'Failed to disable moderator. Please try again later.',
+              icon: 'error'
             });
-        });
-
-      
+          });
+        }
+      });
     });
+
+    // Event listener for clicking the enable button
+    $(".enable-btn").click(function() {
+      // Get the moderator ID from the data attribute
+      var moderatorId = $(this).data('moderator-id');
+
+      // Confirm the action using SweetAlert
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You are about to enable this moderator!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, enable it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Send POST request to enable moderator
+          $.post('/admins/enable_moderator', {
+            moderator_id: moderatorId
+          }).done(function(data) {
+            // Check for success or error message
+            if (data.status === 'success') {
+              Swal.fire({
+                title: 'Moderator Enabled',
+                text: data.message,
+                icon: 'success'
+              }).then(() => {
+                // Reload the page or perform any other action
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: data.message,
+                icon: 'error'
+              });
+            }
+          }).fail(function() {
+            Swal.fire({
+              title: 'Error',
+              text: 'Failed to enable moderator. Please try again later.',
+              icon: 'error'
+            });
+          });
+        }
+      });
+    });
+  });
 </script>
-<script src="<?php echo URLROOT ?>/js/admin/dashboard.js"></script>
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>
