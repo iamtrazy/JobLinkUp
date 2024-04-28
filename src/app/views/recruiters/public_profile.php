@@ -81,12 +81,20 @@ if (!empty($city) && !empty($country)) {
             <?php if (isset($_SESSION['moderator_id'])) : ?>
                 <div class="moderator-actions-container mt-4" style="border: 2px solid #dc3545; border-radius: 20px; padding: 10px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); margin-top:50px">
                     <h4 style="margin-bottom: 10px;">Moderator Actions</h4>
-                    <div class="moderator-actions">
-                        <button class="btn btn-danger animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #dc3545; color: #fff;"><i class="fas fa-user-slash"></i> Disable Account</button>
-                        <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
-                    </div>
+                    <?php if ($data['profile']->is_banned) : ?>
+                        <div class="alert alert-warning" role="alert">
+                            This account is disabled.
+                        </div>
+                        <button class="btn btn-success enable-btn" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #039e27; color: #fff;">
+                            <i class="fas fa-user-check"></i> Enable Account
+                        </button>
+                    <?php else : ?>
+                        <button class="btn btn-danger disable-btn animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #dc3545; color: #fff;"><i class="fas fa-user-slash"></i> Disable Account</button>
+                    <?php endif; ?>
+                    <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
                 </div>
             <?php endif; ?>
+
         </div>
     </div>
     <div class="col-lg-4 col-md-12 rightSidebar">
@@ -151,4 +159,103 @@ if (!empty($city) && !empty($country)) {
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        <?php if (isset($_SESSION['moderator_id'])) : ?>
+            // Moderator is logged in, enable moderator actions
+            // Disable Account Button
+            $('.disable-btn').click(function() {
+                // Confirm the action using SweetAlert
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to disable this recruiter's account!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, disable it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send POST request to disable recruiter
+                        $.post('<?php echo URLROOT . '/moderators/disable_recruiter' ?>', {
+                            recruiter_id: <?php echo $data['profile']->id ?> // Assuming the recruiter ID is accessible here
+                        }).done(function(data) {
+                            // Check for success or error message
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Recruiter Disabled',
+                                    text: data.message,
+                                    icon: 'success'
+                                }).then(() => {
+                                    // Redirect to /moderators/disputes
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        }).fail(function() {
+                            // Error handling for failed AJAX request
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to disable recruiter. Please try again later.',
+                                icon: 'error'
+                            });
+                        });
+                    }
+                });
+            });
+
+            // Enable Account Button
+            $('.enable-btn').click(function() {
+                // Confirm the action using SweetAlert
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to enable this recruiter's account!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28a745',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, enable it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send POST request to enable recruiter
+                        $.post('<?php echo URLROOT . '/moderators/enable_recruiter' ?>', {
+                            recruiter_id: <?php echo $data['profile']->id ?> // Assuming the recruiter ID is accessible here
+                        }).done(function(data) {
+                            // Check for success or error message
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Recruiter Enabled',
+                                    text: data.message,
+                                    icon: 'success'
+                                }).then(() => {
+                                    // Reload the page
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        }).fail(function() {
+                            // Error handling for failed AJAX request
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to enable recruiter. Please try again later.',
+                                icon: 'error'
+                            });
+                        });
+                    }
+                });
+            });
+        <?php endif; ?>
+    });
+</script>
+
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

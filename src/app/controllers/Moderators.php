@@ -280,4 +280,169 @@ class Moderators extends Controller
         // Load 'api/json' view with the message
         $this->view('api/json', ['message' => $message]);
     }
+
+    public function disable_recruiter()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+
+                // Perform disable action
+                if ($this->moderatorModel->disablerecruiter($recruiter_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Recruiter Disabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to disable recruiter'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+    public function enable_recruiter()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+
+                // Perform enable action
+                if ($this->moderatorModel->enablerecruiter($recruiter_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Recruiter Enabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to enable recruiter'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+    public function disable_job()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = trim(htmlspecialchars($_POST['job_id']));
+
+                // Perform disable action
+                if ($this->moderatorModel->disableJob($job_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Job Disabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to disable job'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+
+    public function enable_job()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = trim(htmlspecialchars($_POST['job_id']));
+
+                // Perform enable action
+                if ($this->moderatorModel->enableJob($job_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Job Enabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to enable job'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
 }

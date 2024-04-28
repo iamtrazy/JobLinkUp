@@ -43,9 +43,16 @@ class Jobs extends Controller
 
     // Check if $id is provided and is not null
     if ($id !== null) {
+      if (isset($_SESSION['moderator_id'])) {
+        $job = $this->jobModel->getJobById($id, 1);
+      } else {
+        $job = $this->jobModel->getJobById($id);
+      }
       // Retrieve job details for the given $id
-      $job = $this->jobModel->getJobById($id);
+
       $appliedCount = $this->jobModel->appliedCount($id);
+
+
       $this->jobModel->increaseViewCount($id);
 
       // Check if job details are retrieved successfully

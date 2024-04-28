@@ -41,7 +41,7 @@ class Application
 
     public function appliedJobCount($seeker_id)
     {
-        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications WHERE seeker_id = :seeker_id');
+        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications a INNER JOIN jobs j ON j.id=a.job_id WHERE seeker_id = :seeker_id AND j.expire_in >= CURDATE() AND  j.is_deleted = 0');
         $this->db->bind(':seeker_id', $seeker_id);
         $row = $this->db->single();
 
@@ -56,7 +56,7 @@ class Application
 
     public function appliedForMoreThanFiveJobs($seeker_id)
     {
-        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications WHERE seeker_id = :seeker_id');
+        $this->db->query('SELECT COUNT(*) AS total_applications FROM applications a INNER JOIN jobs j ON j.id=a.job_id WHERE seeker_id = :seeker_id AND j.expire_in >= CURDATE() AND  j.is_deleted = 0');
         $this->db->bind(':seeker_id', $seeker_id);
         $row = $this->db->single();
 

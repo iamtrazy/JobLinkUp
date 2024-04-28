@@ -106,8 +106,12 @@ if (isset($_SESSION['user_id'])) {
                 <div class="moderator-actions-container mt-4" style="border: 2px solid #dc3545; border-radius: 20px; padding: 10px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); margin-top: 30px;">
                     <h4 style="margin-bottom: 10px;">Moderator Actions</h4>
                     <div class="moderator-actions">
-                        <button class="btn btn-danger animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #dc3545; color: #fff;"><i class="fas fa-trash-alt"></i> Remove Job </button>
-                        <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
+                        <?php if ($data['job']->is_deleted == 0) : ?>
+                            <button class="btn btn-danger animate-on-click disable-job-btn" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #dc3545; color: #fff;"><i class="fas fa-ban"></i> Disable Job</button>
+                        <?php else : ?>
+                            <button class="btn btn-success animate-on-click enable-job-btn" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #28a745; color: #fff;"><i class="fas fa-undo"></i> Restore Job</button>
+                        <?php endif; ?>
+                        <button class="btn btn-warning ml-2 animate-on-click report-job-btn" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
                     </div>
                 </div>
             <?php endif; ?>
@@ -257,6 +261,108 @@ if (isset($_SESSION['user_id'])) {
     });
 </script>
 
+<?php if (isset($_SESSION['moderator_id'])) : ?>
+    <script>
+        $(document).ready(function() {
+            // Disable Job Button
+            $(".disable-job-btn").click(function() {
+                // Confirm the action using SweetAlert
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to disable this job!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, disable it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send POST request to disable job
+                        $.post('<?php echo URLROOT . '/moderators/disable_job' ?>', {
+                            job_id: <?php echo $data['job']->id ?>
+                        }).done(function(data) {
+                            // Check for success or error message
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Job Disabled',
+                                    text: data.message,
+                                    icon: 'success'
+                                }).then(() => {
+                                    // Reload the page
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        }).fail(function() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to disable job. Please try again later.',
+                                icon: 'error'
+                            });
+                        });
+                    }
+                });
+            });
+
+            // Enable Job Button
+            $(".enable-job-btn").click(function() {
+                // Confirm the action using SweetAlert
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to restore this job!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#28a745',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, restore it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Send POST request to enable job
+                        $.post('<?php echo URLROOT . '/moderators/enable_job' ?>', {
+                            job_id: <?php echo $data['job']->id ?>
+                        }).done(function(data) {
+                            // Check for success or error message
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    title: 'Job Restored',
+                                    text: data.message,
+                                    icon: 'success'
+                                }).then(() => {
+                                    // Reload the page
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: data.message,
+                                    icon: 'error'
+                                });
+                            }
+                        }).fail(function() {
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Failed to restore job. Please try again later.',
+                                icon: 'error'
+                            });
+                        });
+                    }
+                });
+            });
+
+            // Report Job Button
+            $(".report-job-btn").click(function() {
+                // Open report form popup
+                $("#reportFormPopup").show();
+                $(".overlay").show();
+            });
+        });
+    </script>
+<?php endif; ?>
 
 
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

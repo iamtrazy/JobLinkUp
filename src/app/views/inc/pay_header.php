@@ -129,7 +129,7 @@
                             <div class="theiaStickySidebar" style="padding-top: 0px; padding-bottom: 1px; position: static; transform: none; left: 531px; top: 0px;">
                                 <div class="side-bar-st-1">
                                     <div class="twm-candidate-profile-pic">
-                                        <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="">
+                                        <img src="<?php echo URLROOT .'/img/profile/' . $data['profile_image'] ?>" alt="">
                                     </div>
                                     <div class="twm-mid-content text-center">
                                         <h4><?php echo $_SESSION['business_name'] ?></h4>

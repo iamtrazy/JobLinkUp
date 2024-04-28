@@ -19,6 +19,9 @@ class Job
                   LEFT JOIN recruiters r ON j.recruiter_id = r.id
                   WHERE j.is_deleted = 0";
 
+        // Add condition to filter out expired jobs
+        $query .= " AND j.expire_in >= CURDATE()";
+
         // If selected categories are provided and not empty, filter by them
         if (!empty($selectedCategories) && !in_array('all', $selectedCategories)) {
             $query .= " AND j.type IN ('" . implode("', '", $selectedCategories) . "')";
@@ -92,14 +95,19 @@ class Job
 
 
 
-    public function getJobById($job_id)
+    public function getJobById($job_id, $is_mod = 0)
     {
         // Prepare the SQL query to fetch job details by ID, joining with recruiters table
         $query = "SELECT j.*, r.is_varified, r.name AS recruiter_name, b.business_name , r.profile_image
                   FROM jobs j 
                   LEFT JOIN recruiters r ON j.recruiter_id = r.id 
                   LEFT JOIN br_details b ON r.id = b.recruiter_id
-                  WHERE j.id = :job_id AND j.is_deleted = 0";
+                  WHERE j.id = :job_id AND j.expire_in >= CURDATE()";
+
+        // Adjust the query based on is_mod parameter
+        if ($is_mod == 0) {
+            $query .= " AND j.is_deleted = 0";
+        }
 
         // Bind the job ID parameter
         $this->db->query($query);
@@ -218,7 +226,7 @@ class Job
         $this->db->query("SELECT jobs.id, jobs.topic, jobs.type , wishlist.created_at
                         FROM wishlist
                         INNER JOIN jobs ON jobs.id=wishlist.job_id
-                        WHERE wishlist.seeker_id = $id;");
+                        WHERE wishlist.seeker_id = $id AND jobs.expire_in >= CURDATE() AND  jobs.is_deleted = 0;");
         $results = $this->db->resultset();
         return $results;
     }
@@ -228,7 +236,7 @@ class Job
         $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , applications.created_at, applications.status
         FROM applications
         INNER JOIN jobs ON jobs.id=applications.job_id
-        WHERE applications.seeker_id = $id;");
+        WHERE applications.seeker_id = $id  AND jobs.expire_in >= CURDATE() AND  jobs.is_deleted = 0;");
         $results = $this->db->resultset();
         return $results;
     }
@@ -278,7 +286,7 @@ class Job
             SELECT jobs.id, jobs.topic, jobs.location, jobs.type, jobs.rate, jobs.rate_type, jobs.created_at,
             (SELECT COUNT(*) FROM applications WHERE recruiter_id = :recruiter_id AND job_id = jobs.id) AS appliedCount
             FROM jobs
-            WHERE jobs.recruiter_id = :recruiter_id AND jobs.is_deleted = 0
+            WHERE jobs.recruiter_id = :recruiter_id AND jobs.is_deleted = 0 AND jobs.expire_in >= CURDATE()
             ORDER BY appliedCount DESC;");
 
         $this->db->bind(':recruiter_id', $recruiter_id);
@@ -289,11 +297,12 @@ class Job
     }
 
 
-    public function deleteJobByjobId($job_id) {
+    public function deleteJobByjobId($job_id)
+    {
         // Update the record to mark it as deleted
         $sql = "UPDATE jobs SET is_deleted = true WHERE id = ?";
         $this->db->query($sql, [$job_id]);
-    
+
         // Check if the query was successful
         if ($this->db->rowCount() > 0) {
             echo "Record deleted successfully";
@@ -301,7 +310,4 @@ class Job
             echo "Job couldnt be deleted";
         }
     }
-    
-
-
 }

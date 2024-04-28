@@ -110,4 +110,48 @@ class Moderator
         $row = $this->db->single();
         return $this->db->resultSet();
     }
+
+    public function disablerecruiter($id)
+    {
+        $this->db->query('UPDATE recruiters SET is_banned = 1 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function enablerecruiter($id)
+    {
+        $this->db->query('UPDATE recruiters SET is_banned = 0 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function disableJob($id)
+    {
+        $this->db->query('UPDATE jobs SET is_deleted = 1 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function enableJob($id)
+    {
+        $this->db->query('UPDATE jobs SET is_deleted = 0 WHERE id = :id');
+        $this->db->bind(':id', $id);
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

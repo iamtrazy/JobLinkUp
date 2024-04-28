@@ -22,7 +22,7 @@ class Algorithm
                        ) AS numbers
             WHERE n <= 1 + LENGTH(keywords) - LENGTH(REPLACE(keywords, ',', ''))
         ) js ON j.keywords LIKE CONCAT('%', js.keyword, '%')
-        WHERE js.jobseeker_id = :id
+        WHERE js.jobseeker_id = :id AND j.expire_in >= CURDATE() AND  j.is_deleted = 0
         LIMIT 10;
     ");
         $this->db->bind(':id', $id);
@@ -55,7 +55,7 @@ class Algorithm
             }
             $sql .= "LOWER(location) LIKE '%" . $word . "%' ";
         }
-        $sql .= "LIMIT 10;";
+        $sql .= "AND jobs.expire_in >= CURDATE() AND  jobs.is_deleted = 0 LIMIT 10;";
         $this->db->query($sql);
         return $this->db->resultSet();
     }
