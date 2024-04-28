@@ -273,8 +273,7 @@ class Job
     }
 
     public function getRecruiterJobs($recruiter_id)
-    {   
-        // $job_id = $this->db->query('SELECT jobs.recruiter_id from jobs where jobs.recruiter_id = $recruiter_id');
+    {
         $this->db->query("
             SELECT jobs.id, jobs.topic, jobs.location, jobs.type, jobs.rate, jobs.rate_type, jobs.created_at,
             (SELECT COUNT(*) FROM applications WHERE recruiter_id = :recruiter_id AND job_id = jobs.id) AS appliedCount
@@ -283,10 +282,6 @@ class Job
             ORDER BY appliedCount DESC;");
 
         $this->db->bind(':recruiter_id', $recruiter_id);
-
-        // $job_id = jobs.id;
-        // $this->deleteJob($job_id);
-
 
         $results = $this->db->resultset();
 

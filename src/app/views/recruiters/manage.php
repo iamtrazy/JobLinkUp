@@ -15,7 +15,6 @@
                                     <th>Job Types</th>
                                     <th>Rate</th>
                                     <th>Applications</th>
-                                    <!-- <th>Status</th> -->
                                     <th>Date</th>
                                     <th>Action</th>
                                 </tr>
@@ -45,8 +44,6 @@
                                                 View Applicants
                                             </a>
                                         </td>
-                                      
-
                                         <td>
                                             <span class="text-clr-green2"><?php echo time_elapsed_string($job->created_at); ?></span>
                                         </td>

@@ -281,6 +281,9 @@ class Api extends Controller
                 'phone_no' => $recruiter->phone_no,
                 'age' => $recruiter->age,
                 'address' => $recruiter->address,
+                'about' => $recruiter->about,
+                'linkedin_url' => $recruiter->linkedin_url,
+                'whatsapp_url' => $recruiter->whatsapp_url
             ];
 
             // Send recruiter details as JSON response

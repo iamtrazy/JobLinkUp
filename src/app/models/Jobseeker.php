@@ -193,14 +193,6 @@ class Jobseeker
       return false;
     }
   }
-  public function getAll($data){
-    $this->db->query('SELECT * FROM jobseekers');
-
-    return $this->db->resultSet();
-}
-public function getJobCount(){
-  
-}
 
 
   public function completeProfile($id)

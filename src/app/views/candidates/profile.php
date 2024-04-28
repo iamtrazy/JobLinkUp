@@ -46,7 +46,7 @@ if (!empty($city) && !empty($country)) {
                                 <i class="fab fa-whatsapp"></i> WhatsApp
                             </a>
                         <?php endif; ?>
-                        <?php if (isset($data['profile']->facebook_url)) : ?>
+                        <?php if (isset($data['profile']->linkedin_url)) : ?>
                             <a href="https://<?php echo $data['profile']->linkedin_url ?>" class="site-button outline-white" style="background-color: #0077B5; color: #fff;">
                                 <i class="fab fa-linkedin"></i> LinkedIn
                             </a>

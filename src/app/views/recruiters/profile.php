@@ -66,16 +66,54 @@
                                 <input id="profile-upload" type="file" name="profile_image" accept=".jpg, .jpeg, .png" />
                             </div>
                         </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>About Me</label>
+                                <textarea id="about" class="form-control" name="about" rows="3" minlength="2" maxlength="255" placeholder="Enter your description about yourself."></textarea>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <div class="col-lg-12 col-md-12">
-                        <div class="text-left">
-                            <button type="submit" class="site-button">
-                                Save Changes
-                            </button>
+                    <div class="panel panel-default">
+                        <div class="panel-heading wt-panel-heading p-a20">
+                            <h4 class="panel-tittle m-a0">Social Network</h4>
+                        </div>
+                        <div class="panel-body wt-panel-body p-a20 m-b30">
+                            <div class="row">
+
+                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Linkedin</label>
+                                        <div class="ls-inputicon-box">
+                                            <input id="linkedin_url" class="form-control wt-form-control" name="linkedin_url" type="text" placeholder="https://in.linkedin.com/" minlength="10" maxlength="255" />
+                                            <i class="fs-input-icon fab fa-linkedin-in"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label>Whatsapp</label>
+                                        <div class="ls-inputicon-box">
+                                            <input id="whatsapp_url" class="form-control wt-form-control" name="whatsapp_url" type="text" placeholder="https://www.whatsapp.com/" minlength="10" maxlength="255" />
+                                            <i class="fs-input-icon fab fa-whatsapp"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="text-left">
+                                        <button type="submit" class="site-button">
+                                            Save Changes
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </form>
 
     </div>
@@ -96,6 +134,9 @@
                 $('#phone').val(response.phone_no);
                 $('#age').val(response.age === 0 ? '' : response.age); // If age is zero, leave the field empty
                 $('#address').val(response.address);
+                $('#about').val(response.about);
+                $('#linkedin_url').val(response.linkedin_url); // Populate linkedin_url field
+                $('#whatsapp_url').val(response.whatsapp_url); // Populate whatsapp_url field
                 // You can populate other form fields in a similar manner
             },
             error: function(xhr, status, error) {

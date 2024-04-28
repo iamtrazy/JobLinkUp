@@ -4,8 +4,7 @@ if (isset($_SESSION['user_id'])) {
 } elseif (isset($_SESSION['business_id'])) {
     require APPROOT . '/views/inc/jobs_detail_header.php';
 } else {
-    require APPROOT . '/views/inc/jobs_detail
-    _header.php';
+    require APPROOT . '/views/inc/jobs_detail_header.php';
 }
 
 ?>
