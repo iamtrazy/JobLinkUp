@@ -148,7 +148,7 @@
                                             <li><a href="<?php echo URLROOT ?>/candidates"><i class="fa fa-user-check"></i> Browse Applications</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/chat"><i class="far fa-comments"></i>Chat</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/transactions"><i class="fa fa-credit-card"></i>Verify Your Business</a></li>
-                                            <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/recruiters/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/recruiters/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
                                     </div>
