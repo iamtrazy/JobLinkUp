@@ -131,19 +131,19 @@
         type: 'GET',
         dataType: 'json',
         success: function(response) {
+          var totalMessagesCount = 0; // Declare totalMessagesCount outside the if block
           if (response && response.length > 0) {
-            var totalMessagesCount = 0;
             $('#inboxMessages').empty(); // Clear previous messages
             $.each(response, function(index, thread) {
               var messagesCount = 0;
               var threadHtml = `
-                            <div class="dashboard-messages-box">
-                                <div class="dashboard-message-avtar">
-                                    <img src="https://joblinkup.com/img/profile/${thread.profile_image}" alt="" />
-                                </div>
-                                <div class="dashboard-message-area">
-                                    <h5>${thread.recruiter_name}<span>${thread.created_at}</span></h5>
-                                    <p>`;
+                <div class="dashboard-messages-box">
+                  <div class="dashboard-message-avtar">
+                    <img src="https://joblinkup.com/img/profile/${thread.profile_image}" alt="" />
+                  </div>
+                  <div class="dashboard-message-area">
+                    <h5>${thread.recruiter_name}<span>${thread.created_at}</span></h5>
+                    <p>`;
               $.ajax({
                 url: '<?php echo URLROOT . '/api/chat_thread_messages/' ?>' + thread.thread_id,
                 type: 'GET',
@@ -156,9 +156,9 @@
                         messagesCount++;
                         var profileImage = `https://joblinkup.com/img/profile/${thread.profile_image}`;
                         var messageHtml = `
-                                                <div class="single-message">
-                                                </div>
-                                            `;
+                          <div class="single-message">
+                          </div>
+                        `;
                         threadHtml += messageHtml;
                       }
                     });
@@ -166,16 +166,16 @@
                 }
               });
               threadHtml += `</p>
-                                    <p>${messagesCount} New Message(s)</p>
-                                </div>
-                            </div>`;
+                    <p>${messagesCount} New Message(s)</p>
+                  </div>
+                </div>`;
               $('#inboxMessages').append(threadHtml);
               totalMessagesCount += messagesCount;
             });
-            $('#totalMessagesCounter').text(totalMessagesCount); // Update total messages count
           } else {
             $('#inboxMessages').html('<p>No threads available</p>');
           }
+          $('#totalMessagesCounter').text(totalMessagesCount); // Update total messages count
         },
         error: function(xhr, status, error) {
           console.error("Error fetching chat threads:", error);
@@ -190,4 +190,5 @@
     setInterval(fetchChatThreadsAndMessages, 3000); // 3000 milliseconds = 3 seconds
   });
 </script>
+
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

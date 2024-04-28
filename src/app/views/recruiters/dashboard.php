@@ -51,7 +51,7 @@
                                     <i class="fa fa-envelope"></i>
                                 </div>
                                 <div class="wt-card-right wt-total-listing-review counter" id="totalMessagesCounter">
-                                    
+
                                 </div>
                                 <div class="wt-card-bottom-2">
                                     <h4 class="m-b0">Messages</h4>
@@ -68,7 +68,11 @@
                                     <i class="fa fa-eye"></i>
                                 </div>
                                 <div class="wt-card-right wt-total-listing-bookmarked counter">
-                                    <?php echo $data['total_views'] ?>
+                                    <?php if ($data['total_views'] > 0) {
+                                        echo $data['total_views'];
+                                    } else {
+                                        echo '0';
+                                    } ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
                                     <h4 class="m-b0">Total Job Views</h4>
@@ -125,6 +129,7 @@
 <script>
     $(document).ready(function() {
         // Function to fetch chat threads and display messages
+        var totalMessagesCount = 0;
         function fetchChatThreadsAndMessages() {
             $.ajax({
                 url: '<?php echo URLROOT . '/api/chat_threads' ?>',
@@ -132,7 +137,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response && response.length > 0) {
-                        var totalMessagesCount = 0;
+                        totalMessagesCount = 0;
                         $('#inboxMessages').empty(); // Clear previous messages
                         $.each(response, function(index, thread) {
                             var messagesCount = 0;
@@ -172,10 +177,11 @@
                             $('#inboxMessages').append(threadHtml);
                             totalMessagesCount += messagesCount;
                         });
-                        $('#totalMessagesCounter').text(totalMessagesCount); // Update total messages count
                     } else {
+                        totalMessagesCount = 0;
                         $('#inboxMessages').html('<p>No threads available</p>');
                     }
+                    $('#totalMessagesCounter').text(totalMessagesCount); // Update total messages count
                 },
                 error: function(xhr, status, error) {
                     console.error("Error fetching chat threads:", error);

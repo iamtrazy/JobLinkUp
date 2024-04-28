@@ -710,7 +710,7 @@ class Recruiters extends Controller
                     $business_name = trim($_POST['business_name']);
                     $business_type = trim($_POST['type']);
                     $registration_number = trim($_POST['reg_no']);
-                    $business_address = trim($_POST['location']);
+                    $business_address = trim($_POST['business_address']);
                     $recruiter_id = $_SESSION['business_id'];
                     $first_name = trim($_POST['first_name']);
                     $last_name = trim($_POST['last_name']);

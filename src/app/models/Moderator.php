@@ -88,7 +88,7 @@ class Moderator
 
     public function getAllBRDetails()
     {
-        $this->db->query('SELECT r.*, b.business_name, b.br_path, b.created_at AS application_date FROM recruiters r INNER JOIN br_details b ON r.id = b.recruiter_id');
+        $this->db->query('SELECT r.*, b.business_name, b.br_path, b.created_at AS application_date FROM recruiters r INNER JOIN br_details b ON r.id = b.recruiter_id where r.paid = 1');
         $row = $this->db->single();
         return $this->db->resultSet();
     }
@@ -102,5 +102,12 @@ class Moderator
         } else {
             return false;
         }
+    }
+
+    public function getAllTransactions()
+    {
+        $this->db->query('SELECT *, b.created_at AS application_date FROM recruiters r RIGHT JOIN br_details b ON r.id = b.recruiter_id');
+        $row = $this->db->single();
+        return $this->db->resultSet();
     }
 }

@@ -240,6 +240,18 @@ class Moderators extends Controller
         $this->view('moderator/verify', $data);
     }
 
+    public function transactions()
+    {
+        $transactions = $this->moderatorModel->getAllTransactions();
+        $data = [
+            'style' => 'moderators/transactions.css',
+            'title' => 'Transactions',
+            'header_title' => 'Transactions',
+            'transactions' => $transactions
+        ];
+        $this->view('moderator/transactions', $data);
+    }
+
     public function approve_verification()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

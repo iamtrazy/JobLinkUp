@@ -101,6 +101,16 @@ if (isset($_SESSION['user_id'])) {
                 <a href="#" class="link-clr">Linkedin</a>
                 <a href="#" class="pinte-clr">Pinterest</a>
             </div>
+            <!-- Moderator Actions Container -->
+            <?php if (isset($_SESSION['moderator_id'])) : ?>
+                <div class="moderator-actions-container mt-4" style="border: 2px solid #dc3545; border-radius: 20px; padding: 10px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); margin-top: 30px;">
+                    <h4 style="margin-bottom: 10px;">Moderator Actions</h4>
+                    <div class="moderator-actions">
+                        <button class="btn btn-danger animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #dc3545; color: #fff;"><i class="fas fa-trash-alt"></i> Remove Job </button>
+                        <button class="btn btn-warning ml-2 animate-on-click" style="border-radius: 30px; padding: 8px 20px; font-size: 16px; background-color: #ffc107; color: #212529;"><i class="fas fa-exclamation-triangle"></i> Report to Admin</button>
+                    </div>
+                </div>
+            <?php endif; ?>
 
         </div>
     </div>
