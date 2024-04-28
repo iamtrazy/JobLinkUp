@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="twm-mid-content">
-                <a href="candidate-detail.html" class="twm-job-title">
+                <div class="twm-job-title">
                     <h4> <?php echo $seeker->username; ?> </h4>
-                </a>
+                </div>
                 <div class="mid-mid-content">
                     <a href="<?php echo URLROOT . '/candidates/profile/' . $seeker->id ?>" class="twm-view-prifile site-text-primary">View Profile</a>
                     <?php
