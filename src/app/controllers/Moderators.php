@@ -220,6 +220,7 @@ class Moderators extends Controller
         $data = [
             'style' => 'moderators/disputes.css',
             'title' => 'Disputes',
+            'header_title' => 'Disputes',
             'disputes' => $disputes
 
         ];
