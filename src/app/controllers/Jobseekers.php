@@ -60,8 +60,6 @@ class Jobseekers extends Controller
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Process form
-
-
                 // Init data
                 $data = [
                     'name' => trim(htmlspecialchars($_POST['name'])),
@@ -95,7 +93,7 @@ class Jobseekers extends Controller
                     $data['name_err'] = 'Pleae enter name';
                 }
 
-                if (empty($data['gender'] || $data['gender'] !== 'male' || $data['gender'] !== 'female')) {
+                if (empty($data['gender']) || $data['gender'] !== 'male' || $data['gender'] !== 'female') {
                     $data['gender_err'] = 'Pleae select gender';
                 }
 

@@ -64,9 +64,9 @@ if (isset($_SESSION['user_id'])) {
                             <p class="twm-job-address"><i class="fas fa-building"></i>
                                 <?php
                                 if ($data['job']->is_varified == 1) {
-                                    echo $data['job']->business_name; // Display business name if is_varified is 1
+                                    echo '<a href="' . URLROOT . '/recruiters/public_profile/' . $data['job']->recruiter_id . '">' . $data['job']->business_name . '</a>'; // Display business name if is_varified is 1
                                 } else {
-                                    echo $data['job']->recruiter_name; // Display recruiter name otherwise
+                                    echo '<a href="' . URLROOT . '/recruiters/public_profile/' . $data['job']->recruiter_id . '">' . $data['job']->recruiter_name . '</a>'; // Display recruiter name otherwise
                                 }
                                 ?>
                             </p>

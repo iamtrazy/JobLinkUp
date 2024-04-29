@@ -18,15 +18,58 @@ class Jobs extends Controller
     $this->adminModel = $this->model('Admin');
   }
 
-  // Load All job
-  public function index()
+  private function whichUser()
+  {
+    if (isset($_SESSION['user_id'])) {
+      return 'seeker';
+    } elseif (isset($_SESSION['business_id'])) {
+      return 'recruiter';
+    } elseif (isset($_SESSION['moderator_id'])) {
+      return 'moderator';
+    } else {
+      return 'guest';
+    }
+  }
+
+  private function setGuest()
   {
     if (!isset($_SESSION['user_id'])) {
       $_SESSION['guest_id'] = '1';
       $_SESSION['user_name'] = 'Guest User';
     }
+  }
 
-    $job_ad= $this->adminModel->jobAd();
+  private function redirectToSeeker()
+  {
+    if ($this->whichUser() !== 'seeker') {
+      jsflash('Login As a Job seeker for this action', 'jobseekers/login');
+      die();
+    }
+  }
+
+  private function redirectToRecruiter()
+  {
+    if ($this->whichUser() !== 'recruiter') {
+      jsflash('Login As a Recruiter for this action', 'recruiters/login');
+      die();
+    }
+  }
+
+  private function jsonRedirectToSeeker()
+  {
+    if ($this->whichUser() !== 'seeker') {
+      $response['error'] = 'Login As a Job seeker for this action';
+      echo json_encode($response);
+      exit;
+    }
+  }
+
+  // Load All job
+  public function index()
+  {
+    $this->setGuest();
+
+    $job_ad = $this->adminModel->jobAd();
 
     $data = [
       'style' => 'jobs/style.css',
@@ -41,11 +84,7 @@ class Jobs extends Controller
 
   public function detail($id = null)
   {
-    if (!isset($_SESSION['user_id'])) {
-      $_SESSION['guest_id'] = '1';
-      $_SESSION['user_name'] = 'Guest User';
-    }
-
+    $this->setGuest();
     // Check if $id is provided and is not null
     if ($id !== null) {
       if (isset($_SESSION['moderator_id'])) {
@@ -54,12 +93,8 @@ class Jobs extends Controller
         $job = $this->jobModel->getJobById($id);
       }
       // Retrieve job details for the given $id
-
       $appliedCount = $this->jobModel->appliedCount($id);
-
-
       $this->jobModel->increaseViewCount($id);
-
       // Check if job details are retrieved successfully
       if ($job) {
         // Prepare data to pass to the view
@@ -70,7 +105,6 @@ class Jobs extends Controller
           'job' => $job, // Pass job details to the view
           'appliedCount' => $appliedCount // Pass applied count to the view
         ];
-
         // Load the detail view with job details
         $this->view('job/detail', $data);
       } else {
@@ -105,6 +139,9 @@ class Jobs extends Controller
 
   public function wishlist($id)
   {
+
+    $this->redirectToSeeker();
+
     $job_id_str = trim(htmlspecialchars($id));
     $job_id = (int)$job_id_str;
 
@@ -130,6 +167,8 @@ class Jobs extends Controller
 
   public function apply($id, $confirm = "no")
   {
+    $this->redirectToSeeker();
+
     $job_id_str = trim(htmlspecialchars($id));
     $job_id = (int)$job_id_str;
 
@@ -172,6 +211,7 @@ class Jobs extends Controller
   // Add Job
   public function add()
   {
+    $this->redirectToRecruiter();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       // Check if a file is uploaded
       $data = [
@@ -230,6 +270,7 @@ class Jobs extends Controller
 
   public function report()
   {
+    $this->jsonRedirectToSeeker();
     // Check if the request is a POST request
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $response = []; // Initialize response array
