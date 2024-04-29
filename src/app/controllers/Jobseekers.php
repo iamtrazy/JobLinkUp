@@ -51,6 +51,28 @@ class Jobseekers extends Controller
         send_email($receiver, $receiver_name,  $subject, $body_string);
     }
 
+    private function whichUser()
+    {
+        if (isset($_SESSION['user_id'])) {
+            return 'seeker';
+        } elseif (isset($_SESSION['business_id'])) {
+            return 'recruiter';
+        } elseif (isset($_SESSION['moderator_id'])) {
+            return 'moderator';
+        } elseif (isset($_SESSION['admin_id'])) {
+            return 'admin';
+        } else {
+            return 'guest';
+        }
+    }
+
+    private function onlySeeker(){
+        if ($this->whichUser() !== 'seeker') {
+            jsflash('Login As a Job seeker for this action', 'jobseekers/login');
+            die();
+        }
+    }
+
     public function register()
     {
 

@@ -26,6 +26,8 @@ class Jobs extends Controller
       return 'recruiter';
     } elseif (isset($_SESSION['moderator_id'])) {
       return 'moderator';
+    } elseif (isset($_SESSION['admin_id'])) {
+      return 'admin';
     } else {
       return 'guest';
     }
