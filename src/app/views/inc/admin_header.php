@@ -97,7 +97,8 @@
                                             <li><a href="<?php echo URLROOT ?>/admins/managemoderators"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/ads"><i class="fa fa-suitcase"></i> Notices & Ads</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/transactions"><i class="fa fa-credit-card"></i>Transaction</a></li>
-                                            <li><a href="<?php echo URLROOT ?>/admins/backups"><i class="fa fa-hdd"></i>Backups</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/dropbox"><i class="fab fa-dropbox"></i>Dropbox</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/backup"><i class="fa fa-cloud"></i>Backup Now</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>

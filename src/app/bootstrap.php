@@ -11,6 +11,8 @@ require_once 'helpers/session_helper.php';
 require_once 'helpers/date_helper.php';
 require_once 'helpers/geolocate.php';
 require_once 'helpers/mail.php';
+require_once 'helpers/sqldump.php';
+require_once 'helpers/dropbox.php';
 
 
 // Autoload Core Libraries

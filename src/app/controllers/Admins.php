@@ -390,12 +390,148 @@ class Admins extends Controller
         // Load 'api/json' view with the response
         $this->view('api/json', $response);
     }
-    public function job_ad(){
+    public function job_ad()
+    {
         $data['job_ad'] = $this->adminModel->jobAd();
         $this->view('api/json', $data);
     }
-    public function candidate_ad(){
+    public function candidate_ad()
+    {
         $data['candidate_ad'] = $this->adminModel->candidateAd();
         $this->view('api/json', $data);
+    }
+
+    public function dropbox()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($this->isLoggedIn()) {
+
+                $admin_id = $_SESSION['admin_id'];
+                if ($this->adminModel->isDropBoxKeysPresent($admin_id)) {
+                    $client_id = trim(htmlspecialchars($_POST['client_id']));
+                    $client_secret = trim(htmlspecialchars($_POST['client_secret']));
+                    $access_token = trim(htmlspecialchars($_POST['access_token']));
+                    if ($this->adminModel->updateDropBoxKeys($client_id, $client_secret, $access_token, $admin_id)) {
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Dropbox keys updated'
+                        ];
+                    } else {
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Failed to update Dropbox keys'
+                        ];
+                    }
+                } else {
+                    $client_id = trim(htmlspecialchars($_POST['client_id']));
+                    $client_secret = trim(htmlspecialchars($_POST['client_secret']));
+                    $access_token = trim(htmlspecialchars($_POST['access_token']));
+                    if ($this->adminModel->addDropBoxKeys($client_id, $client_secret, $access_token, $admin_id)) {
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Dropbox keys added'
+                        ];
+                    } else {
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Failed to add Dropbox keys'
+                        ];
+                    }
+                }
+            } else {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+            $this->view('api/json', $response);
+        } else {
+            $data = [
+                'style' => 'admin/ads.css',
+                'title' => 'Dropbox',
+                'header_title' => 'Dropbox',
+                'dropbox_keys' => ''
+            ];
+            $admin_id = $_SESSION['admin_id'];
+            if ($this->adminModel->isDropBoxKeysPresent($admin_id)) {
+                $data['dropbox_keys'] = $this->adminModel->getDropBoxKeys($admin_id);
+            }
+            $this->view('admin/dropbox', $data);
+        }
+    }
+
+    public function backup()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($this->isLoggedIn()) {
+                $backup = $this->adminModel->backups('/tmp');
+                if ($backup) {
+                    $file = '/tmp/' . $backup;
+                    $dropbox_path = '/' . $backup;
+                    $dropbox_keys = $this->adminModel->getDropBoxKeys($_SESSION['admin_id']);
+                    if ($dropbox_keys) {
+                        $client_id = $dropbox_keys->client_id;
+                        $client_secret = $dropbox_keys->client_secret;
+                        $access_token = $dropbox_keys->access_token;
+                        if ($this->adminModel->upload_database($client_id, $client_secret, $access_token, $file, $dropbox_path)) {
+                            $response = [
+                                'status' => 'success',
+                                'message' => 'Backup created and uploaded'
+                            ];
+                        } else {
+                            $response = [
+                                'status' => 'error',
+                                'message' => 'Failed to upload backup'
+                            ];
+                        }
+                    } else {
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Dropbox keys not set'
+                        ];
+                    }
+                } else {
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to create backup'
+                    ];
+                }
+            } else {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+            $this->view('api/json', $response);
+        } else {
+            $data = [
+                'style' => 'admin/ads.css',
+                'title' => 'Backup',
+                'header_title' => 'Backup'
+            ];
+            $this->view('admin/backup', $data);
+        }
+    }
+
+    public function test_backup()
+    {
+        $backup = $this->adminModel->backups('/tmp');
+        if ($backup) {
+            echo 'Backup created';
+        } else {
+            echo 'Failed to create backup';
+        }
+        $file = '/tmp/' . $backup;
+        $dropbox_path = '/' . $backup;
+
+        $client_id = 'm91cjmivnpmg6rh';
+        $client_secret = '6rs0z9ki0ylyv1t';
+        $access_token = 'sl.B0OotKuStC6HHxbX7jYwLJp_tEYwe2i9GnUqpf4qfHXr9YkcjvVcvVXUB5ZxE-Bd0gOjtRQgDrZvYO7aTBqS7tUHhNxc7InFqmdFIfDOZ6vF7reZKTf3ZqztQKM6zZ-O_ecWBeCsqgAe';
+
+        if ($this->adminModel->upload_database($client_id, $client_secret, $access_token, $file, $dropbox_path)) {
+            echo 'Backup uploaded';
+        } else {
+            echo 'Failed to upload backup';
+        }
     }
 }

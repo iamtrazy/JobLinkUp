@@ -158,4 +158,73 @@ class Admin
 
     return $this->db->resultSet();
   }
+
+  public function insertDropBoxKeys($client_id, $client_secret, $access_token, $admin_id)
+  {
+    $this->db->query('INSERT INTO dropbox_keys (client_id, client_secret, access_token, admin_id) VALUES (:client_id, :client_secret, :access_token, :admin_id)');
+    $this->db->bind(':client_id', $client_id);
+    $this->db->bind(':client_secret', $client_secret);
+    $this->db->bind(':access_token', $access_token);
+    $this->db->bind(':admin_id', $admin_id);
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function updateDropBoxKeys($client_id, $client_secret, $access_token, $admin_id)
+  {
+    $this->db->query('UPDATE dropbox_keys SET client_id = :client_id, client_secret = :client_secret, access_token = :access_token WHERE admin_id = :admin_id');
+    $this->db->bind(':client_id', $client_id);
+    $this->db->bind(':client_secret', $client_secret);
+    $this->db->bind(':access_token', $access_token);
+    $this->db->bind(':admin_id', $admin_id);
+    if ($this->db->execute()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function isDropBoxKeysPresent($admin_id)
+  {
+    $this->db->query('SELECT * FROM dropbox_keys WHERE admin_id = :admin_id');
+    $this->db->bind(':admin_id', $admin_id);
+    $row = $this->db->single();
+    if ($row) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function getDropBoxKeys($admin_id)
+  {
+    $this->db->query('SELECT * FROM dropbox_keys WHERE admin_id = :admin_id');
+    $this->db->bind(':admin_id', $admin_id);
+    $row = $this->db->single();
+    return $row;
+  }
+
+  public function backups($path)
+  {
+    $filename = 'joblinkup_' . date('Y_m_d_His') . '.sql';
+    $path = $path . '/' . $filename;
+    dump_database($path);
+    if (file_exists($path)) {
+      return $filename;
+    } else {
+      return false;
+    }
+  }
+
+  public function upload_database($client_id, $client_secret, $access_token, $file_path, $dropbox_path)
+  {
+    if (uploadToDropbox($client_id, $client_secret, $access_token, $file_path, $dropbox_path)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
