@@ -22,7 +22,7 @@ $(document).ready(function () {
         sortBy = "category";
       } else if (selectedOption === "Price") {
         sortBy = "price";
-      } else if (selectedOption === "Most Recent") { 
+      } else if (selectedOption === "Most Recent") {
         sortBy = "created_at";
       }
 
@@ -411,5 +411,23 @@ $(document).ready(function () {
 
     // Update number of jobs shown
     $(".woocommerce-result-count-left").text("Showing " + totalJobs + " jobs");
+  }
+
+  function extractKeywordFromURL() {
+    // Get the URL parameters
+    var urlParams = new URLSearchParams(window.location.search);
+    // Get the value of the 'keyword' parameter
+    var keyword = urlParams.get("keyword");
+    return keyword;
+  }
+
+  // Trigger search when keyword is provided in the URL parameter
+  var keywordFromURL = extractKeywordFromURL();
+  if (keywordFromURL) {
+    // Trigger keypress event with the extracted keyword
+    $("#searchInput")
+      .val(keywordFromURL)
+      .trigger("input")
+      .trigger($.Event("keypress", { keyCode: 13 }));
   }
 });
