@@ -66,10 +66,11 @@ class Jobseekers extends Controller
         }
     }
 
-    private function onlySeeker(){
+    private function onlySeeker()
+    {
         if ($this->whichUser() !== 'seeker') {
-            jsflash('Login As a Job seeker for this action', 'jobseekers/login');
-            die();
+            redirect('jobseekers/login');
+            return;
         }
     }
 
@@ -337,16 +338,7 @@ class Jobseekers extends Controller
         redirect('');
     }
 
-    private function isLoggedIn()
-    {
-        if (isset($_SESSION['user_id'])) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function getJobSeekerProfileImage($id)
+    private function getJobSeekerProfileImage($id)
     {
         $profileImage = $this->jobseekerModel->getJobSeekerProfileImage($id);
         return $profileImage->profile_image;
@@ -369,6 +361,7 @@ class Jobseekers extends Controller
 
     public function dashboard()
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
@@ -392,6 +385,7 @@ class Jobseekers extends Controller
 
     public function profile()
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
@@ -413,6 +407,7 @@ class Jobseekers extends Controller
 
     public function wishlist($job_id = null, $action = null)
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
@@ -451,6 +446,7 @@ class Jobseekers extends Controller
 
     public function applications()
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
@@ -478,6 +474,7 @@ class Jobseekers extends Controller
 
     public function jobalerts()
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
@@ -511,6 +508,7 @@ class Jobseekers extends Controller
 
     public function changepassword()
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->index();
         } else {
@@ -533,7 +531,7 @@ class Jobseekers extends Controller
                     'old_password_err' => '',
                     'new_password_err' => '',
                     'confirm_password_err' => '',
-                    'profile_image' => $this->getJobseekerProfileImage($_SESSION['business_id'])
+                    'profile_image' => $this->getJobseekerProfileImage($_SESSION['user_id'])
                 ];
 
                 // Validate Old Password
@@ -559,13 +557,13 @@ class Jobseekers extends Controller
                     // Update the password in the database
                     $seeker_id = $_SESSION['user_id'];
                     if ($this->jobseekerModel->changePassword($seeker_id, $new_password)) {
-                        jsflash('Password Updated', '/jobseekers/dashboard');
+                        jsflash('Password Updated', '/jobseeker/dashboard');
                     } else {
-                        jsflash('Password update failed', '/jobseekers/changepassword');
+                        jsflash('Password update failed', '/jobseeker/changepassword');
                     }
                 } else {
                     // Load view with errors
-                    $this->view('jobseekers/changepassword', $data);
+                    $this->view('jobseeker/changepassword', $data);
                 }
             } else {
                 // Init data
@@ -590,6 +588,7 @@ class Jobseekers extends Controller
 
     public function chat()
     {
+        $this->onlySeeker();
         if (!isset($_SESSION['user_id'])) {
             $this->login();
         } else {
@@ -641,6 +640,8 @@ class Jobseekers extends Controller
                     $data['profile_image'] = $profileImagePath;
                 } else {
                     $data['data_err'] = 'Image upload failed (check image extension or size)';
+                    jsflash($data['data_err'], 'jobseekers/profile', 1);
+                    return; // Stop further execution
                 }
             } else {
                 $data['profile_image'] = '';
@@ -653,6 +654,8 @@ class Jobseekers extends Controller
                     $data['cv'] = $cvPath;
                 } else {
                     $data['data_err'] = 'CV upload failed (check file extension or size)';
+                    jsflash($data['data_err'], 'jobseekers/profile', 1);
+                    return; // Stop further execution
                 }
             } else {
                 $data['cv'] = '';

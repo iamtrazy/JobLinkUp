@@ -47,13 +47,14 @@ class Core
 
     // Check for second part of url
     if (isset($url[1])) {
-      // Check to see if method exists in controller
-      if (method_exists($this->currentController, $url[1])) {
+      // Check to see if method exists in controller and is public
+      $reflectionClass = new ReflectionClass($this->currentController);
+      if ($reflectionClass->hasMethod($url[1]) && $reflectionClass->getMethod($url[1])->isPublic()) {
         $this->currentMethod = $url[1];
         // Unset 1 index
         unset($url[1]);
       } else {
-        // Method doesn't exist, redirect to 404 page
+        // Method doesn't exist or is not public, redirect to 404 page
         header("Location: /404.html");
         exit();
       }

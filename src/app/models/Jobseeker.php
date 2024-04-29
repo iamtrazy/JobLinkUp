@@ -152,7 +152,7 @@ class Jobseeker
 
   public function editProfile($data)
   {
-    $query = 'UPDATE jobseekers SET username = :username, phone_no = :phone_no, gender = :gender, website = :website, age = :age, address = :address, about = :about, keywords = :keywords, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url';
+    $query = 'UPDATE jobseekers SET username = :username, phone_no = :phone_no, gender = :gender, website = :website, age = :age, address = :address, location_rec = :location_rec, about = :about, keywords = :keywords, linkedin_url = :linkedin_url, whatsapp_url = :whatsapp_url';
 
     // Conditionally add profile_image and cv columns to the query and bind values
     if (!empty($data['profile_image'])) {
@@ -174,6 +174,7 @@ class Jobseeker
     $this->db->bind(':website', $data['website']);
     $this->db->bind(':age', $data['age']);
     $this->db->bind(':address', $data['address']);
+    $this->db->bind(':location_rec', $data['location_rec']);
     $this->db->bind(':about', $data['about']);
     $this->db->bind(':keywords', $data['keywords']);
     $this->db->bind(':linkedin_url', $data['linkedin_url']);

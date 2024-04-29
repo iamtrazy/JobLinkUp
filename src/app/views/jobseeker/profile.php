@@ -27,7 +27,7 @@
               <div class="form-group">
                 <label>Phone</label>
                 <div class="ls-inputicon-box">
-                  <input id="phone" class="form-control" name="phone_no" type="text" placeholder="07xxxxxxxx" minlength="10" maxlength="15">
+                  <input id="phone" class="form-control" name="phone_no" type="tel" placeholder="07xxxxxxxx" minlength="10" maxlength="15">
                   <i class="fs-input-icon fa fa-phone-alt"></i>
                 </div>
               </div>
@@ -47,7 +47,7 @@
               <div class="form-group">
                 <label>Website</label>
                 <div class="ls-inputicon-box">
-                  <input id="website" class="form-control" name="website" type="text" placeholder="https://example.net" minlength="5" maxlength="255" />
+                  <input id="website" class="form-control" name="website" type="text" placeholder="example.net" minlength="5" maxlength="255" />
                   <i class="fs-input-icon fa fa-globe-americas"></i>
                 </div>
               </div>
@@ -89,6 +89,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12">
               <div class="form-group">
                 <div class="form-check">
+                  <input type="hidden" name="location_rec" value="0"> <!-- Hidden input field -->
                   <input class="form-check-input" name="location_rec" type="checkbox" id="locationCheckbox">
                   <label class="form-check-label" for="locationCheckbox">
                     Recommend me jobs based on my location
@@ -107,7 +108,7 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Enter Keywords for Job Recommendations</label>
-                <textarea id="keywords" class="form-control" name="keywords" rows="3" minlength="2" maxlength="255" placeholder="Please enter keywords related to your skills, experience, and interests."></textarea>
+                <textarea id="keywords" class="form-control" name="keywords" rows="3" minlength="2" maxlength="255" placeholder="Please enter keywords related to your skills, experience, and interests seperated by commas for each keyword"></textarea>
               </div>
             </div>
 
@@ -147,7 +148,7 @@
                 <div class="form-group">
                   <label>Linkedin</label>
                   <div class="ls-inputicon-box">
-                    <input id="linkedin_url" class="form-control wt-form-control" name="linkedin_url" type="text" placeholder="https://in.linkedin.com/" minlength="10" maxlength="255" />
+                    <input id="linkedin_url" class="form-control wt-form-control" name="linkedin_url" type="text" placeholder="in.linkedin.com/profile" minlength="10" maxlength="255" />
                     <i class="fs-input-icon fab fa-linkedin-in"></i>
                   </div>
                 </div>
@@ -157,7 +158,7 @@
                 <div class="form-group">
                   <label>Whatsapp</label>
                   <div class="ls-inputicon-box">
-                    <input id="whatsapp_url" class="form-control wt-form-control" name="whatsapp_url" type="text" placeholder="https://www.whatsapp.com/" minlength="10" maxlength="255" />
+                    <input id="whatsapp_url" class="form-control wt-form-control" name="whatsapp_url" type="tel" placeholder="https://www.whatsapp.com/" minlength="10" maxlength="255" />
                     <i class="fs-input-icon fab fa-whatsapp"></i>
                   </div>
                 </div>
@@ -178,8 +179,6 @@
 
   </div>
 </div>
-<?php require APPROOT . '/views/inc/seeker_footer.php'; ?>
-
 <script>
   $(document).ready(function() {
     // AJAX request to fetch job seeker details
@@ -218,3 +217,5 @@
     });
   });
 </script>
+
+<?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

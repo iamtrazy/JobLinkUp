@@ -236,7 +236,7 @@ class Job
         $this->db->query("SELECT jobs.id, jobs.topic, jobs.location ,jobs.rate, jobs.rate_type , applications.created_at, applications.status
         FROM applications
         INNER JOIN jobs ON jobs.id=applications.job_id
-        WHERE applications.seeker_id = $id  AND jobs.expire_in >= CURDATE() AND  jobs.is_deleted = 0;");
+        WHERE applications.seeker_id = $id  AND jobs.expire_in >= CURDATE() AND  jobs.is_deleted = 0 ORDER BY applications.created_at DESC;");
         $results = $this->db->resultset();
         return $results;
     }
