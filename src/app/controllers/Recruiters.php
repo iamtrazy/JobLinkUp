@@ -775,6 +775,7 @@ class Recruiters extends Controller
             'style' => 'recruiter/pay.css',
             'title' => 'Verify Your Business',
             'header_title' => 'Verify Your Business',
+            'profile_image' => $this->getRecruiterProfileImage($_SESSION['business_id']),
             'payment' => $payment,
 
         ];
