@@ -17,11 +17,23 @@
       $this->view('pages/info');
     }
 
-    public function about(){
-      $data = [
-        'title' => 'About Us'
-      ];
 
-      $this->view('pages/about', $data);
+    public function aboutus(){
+      $data = [
+        'style' => 'about/about.css',
+        'title' => 'About',
+        'header_title'=>'About us',
+      ];
+     
+      $this->view('aboutus/about', $data);
+    }
+    public function contactus(){
+      $data = [
+        'style' => 'contactus/contactus.css',
+        'title' => 'Contact',
+        'header_title'=>'Contact us',
+      ];
+     
+      $this->view('contactus/contactus', $data);
     }
   }
