@@ -3,7 +3,7 @@
 require_once 'config/config.php';
 
 // load Composer
-require 'vendor/autoload.php';
+// require 'vendor/autoload.php';
 
 // Load Helpers
 require_once 'helpers/url_helper.php';
