@@ -191,11 +191,11 @@ class Recruiters extends Controller
                         redirect('recruiters/dashboard');
                     } else {
                         $data['code_err'] = 'Invalid verification code';
-                        $this->view('recruiter/verify', $data);
+                        $this->view('recruiters/verify', $data);
                     }
                 } else {
                     $data['code_err'] = 'Please enter verification code';
-                    $this->view('recruiter/verify', $data);
+                    $this->view('recruiters/verify', $data);
                 }
             } else {
                 redirect('recruiters/login');
