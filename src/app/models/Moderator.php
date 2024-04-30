@@ -54,6 +54,14 @@ class Moderator
         }
     }
 
+    public function getUserByEmail($email)
+    {
+        $this->db->query('SELECT * FROM moderators WHERE email = :email');
+        $this->db->bind(':email', $email);
+        $row = $this->db->single();
+        return $this->db->single();
+    }
+
     public function changePassword($moderator_id, $new_password)
     {
         // Hash the new password before updating the database
@@ -229,5 +237,12 @@ class Moderator
         } else {
             return false;
         }
+    }
+
+    public function getAdminEmail()
+    {
+        $this->db->query('SELECT * FROM admins LIMIT 1');
+        $row = $this->db->single();
+        return $this->db->single();
     }
 }

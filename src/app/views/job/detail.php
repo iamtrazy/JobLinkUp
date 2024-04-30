@@ -102,7 +102,7 @@ if (isset($_SESSION['user_id'])) {
                 <a href="#" class="pinte-clr">Pinterest</a>
             </div>
             <!-- Moderator Actions Container -->
-            <?php if (isset($_SESSION['moderator_id'])) : ?>
+            <?php if (isset($_SESSION['moderator_id']) || isset($_SESSION['admin_id'])) : ?>
                 <div class="moderator-actions-container mt-4" style="border: 2px solid #dc3545; border-radius: 20px; padding: 10px; box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); margin-top: 30px;">
                     <h4 style="margin-bottom: 10px;">Moderator Actions</h4>
                     <div class="moderator-actions">

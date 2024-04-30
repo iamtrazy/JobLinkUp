@@ -23,7 +23,7 @@ class Admins extends Controller
         ];
 
         if (isset($_SESSION['admin_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             $this->view('admin/login', $data);
         }
@@ -47,7 +47,7 @@ class Admins extends Controller
 
     private function onlyAdmin(){
         if($this->whichUser() != 'admin'){
-            redirect('pages');
+            redirect('/admins/login');
         }
     }
 
@@ -231,10 +231,13 @@ class Admins extends Controller
             if (empty($data['email_err']) && empty($data['name_err']) && empty($data['password_err']) && empty($data['confirm_password_err'])) {
                 // Validated
 
+                $password = $data['password'];
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 // Register User
                 if ($this->adminModel->addadmin($data)) {
+                    $email_body = 'Your account has been created. You can login at ' . URLROOT . '/moderators' . ' with your email and below password. <br> Password: ' . $password . '<br> Please change your password after logging in.';
+                    send_email($data['email'], $data['name'],'Moderator Account Created', $email_body);
                     jsflash('Moderator Added', 'admins/managemoderators');
                 } else {
                     die('Something went wrong');

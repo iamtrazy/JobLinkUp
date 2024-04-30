@@ -84,6 +84,10 @@ class Moderators extends Controller
 
                 // Check for user/email
                 if ($this->moderatorModel->findUserByEmail($data['login_email'])) {
+                    $mod = $this->moderatorModel->getUserByEmail($data['login_email']);
+                    if ($mod->is_disabled == 1) {
+                        $data['login_email_err'] = 'User disabled';
+                    }
                     // User found
                 } else {
                     // User not found
@@ -305,9 +309,9 @@ class Moderators extends Controller
 
                 // Perform accept action
                 if ($this->moderatorModel->approve_validation($recruiter_id)) {
-                    $recruiter=$this->recruiterModel->getRecruiterById($recruiter_id);
-                    $email_body="Your Business Registration has been approved by the moderator. You can now post Varified Jobs on our platform";
-                    send_email($recruiter->email,$recruiter->name,"Business Registration Approved",$email_body);
+                    $recruiter = $this->recruiterModel->getRecruiterById($recruiter_id);
+                    $email_body = "Your Business Registration has been approved by the moderator. You can now post Varified Jobs on our platform";
+                    send_email($recruiter->email, $recruiter->name, "Business Registration Approved", $email_body);
                     // Return success message
                     $message = 'Recruiter Approved';
                 } else {
@@ -516,6 +520,9 @@ class Moderators extends Controller
                     // Perform report action
                     if ($this->moderatorModel->reportJobAdmin($job_id, $mod_id)) {
                         // Return success message
+                        $admin_email = $this->moderatorModel->getAdminEmail()->email;
+                        $email_body = 'A job has been reported by a moderator. Please review the job and take necessary action' . '<a href="' . URLROOT . '/jobs/details/' . $job_id . '"> View Job</a>';
+                        send_email($admin_email, 'Admin', 'Job Reported', $email_body);
                         $response = [
                             'status' => 'success',
                             'message' => 'Job Reported'
@@ -565,6 +572,9 @@ class Moderators extends Controller
                     // Perform report action
                     if ($this->moderatorModel->reportRecruiterAdmin($recruiter_id, $mod_id)) {
                         // Return success message
+                        $admin_email = $this->moderatorModel->getAdminEmail()->email;
+                        $email_body = 'A Recruiter has been reported by a moderator. Please review and take necessary action' . '<a href="' . URLROOT . '/recruiters/public_profile/' . $recruiter_id . '"> View Recruiter</a>';
+                        send_email($admin_email, 'Admin', 'Recruiter Reported', $email_body);
                         $response = [
                             'status' => 'success',
                             'message' => 'Recruiter Reported'
