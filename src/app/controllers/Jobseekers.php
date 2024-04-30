@@ -116,7 +116,7 @@ class Jobseekers extends Controller
                     $data['name_err'] = 'Pleae enter name';
                 }
 
-                if (empty($data['gender']) || $data['gender'] !== 'male' || $data['gender'] !== 'female') {
+                if ($data['gender'] == 'select') {
                     $data['gender_err'] = 'Pleae select gender';
                 }
 

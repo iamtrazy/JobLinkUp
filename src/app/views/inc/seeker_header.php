@@ -86,7 +86,7 @@
                                         <a href="<?php echo URLROOT ?>">Home</a>
                                     </li>
                                     <li>
-                                        <a href="<?php echo URLROOT ?>/jobs">Jobs</a>
+                                        <a href="<?php echo URLROOT ?>/jobs" target="_blank">Jobs</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo URLROOT ?>/jobseekers">Job Seekers</a>
