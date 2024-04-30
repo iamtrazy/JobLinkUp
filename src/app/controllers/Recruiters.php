@@ -266,6 +266,9 @@ class Recruiters extends Controller
                             $data['code_err'] = 'Please verify your account';
                             $data['user'] = $loggedInUser;
                             $this->view('recruiters/verify', $data);
+                        } else if ($loggedInUser->is_banned == 1) {
+                            $data['login_email_err'] = 'Your account has been banned';
+                            $this->view('recruiters/register', $data);
                         } else {
                             $this->createUserSession($loggedInUser);
                         }

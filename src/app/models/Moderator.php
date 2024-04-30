@@ -85,12 +85,26 @@ class Moderator
         return $this->db->resultSet();
     }
 
+    public function countDisputes()
+    {
+        $this->db->query('SELECT COUNT(*) AS disputes_count FROM disputes');
+        $row = $this->db->single();
+        return $this->db->single();
+    }
+
 
     public function getAllBRDetails()
     {
-        $this->db->query('SELECT r.*, b.business_name, b.br_path, b.created_at AS application_date FROM recruiters r INNER JOIN br_details b ON r.id = b.recruiter_id where r.paid = 1');
+        $this->db->query('SELECT r.*, b.business_name, b.br_path, b.created_at AS application_date FROM recruiters r LEFT JOIN br_details b ON r.id = b.recruiter_id where r.paid = 1');
         $row = $this->db->single();
         return $this->db->resultSet();
+    }
+
+    public function countBRDetails()
+    {
+        $this->db->query('SELECT COUNT(*) AS application_count FROM br_details');
+        $row = $this->db->single();
+        return $this->db->single();
     }
 
     public function approve_validation($id)
@@ -102,6 +116,20 @@ class Moderator
         } else {
             return false;
         }
+    }
+
+    public function countPendingPayments()
+    {
+        $this->db->query('SELECT COUNT(*) AS pending_payments FROM recruiters WHERE paid = 0 AND br_uploaded = 1');
+        $row = $this->db->single();
+        return $this->db->single();
+    }
+
+    public function countVerifiedRecruiters()
+    {
+        $this->db->query('SELECT COUNT(*) AS verified_recruiters FROM recruiters WHERE is_varified = 1');
+        $row = $this->db->single();
+        return $this->db->single();
     }
 
     public function getAllTransactions()
