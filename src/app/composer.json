@@ -1,0 +1,7 @@
+{
+  "require": {
+    "phpmailer/phpmailer": "^6.9.1",
+    "ifsnop/mysqldump-php": "^2.12",
+    "kunalvarma05/dropbox-php-sdk": "^0.4.2"
+  }
+}

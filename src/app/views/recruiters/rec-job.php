@@ -23,7 +23,7 @@
     />
 
     <!-- PAGE TITLE HERE -->
-    <title>Jobzilla Template | Employer Profile</title>
+    <title>JobLinkUp | recruiter Profile</title>
 
     <!-- MOBILE SPECIFIC -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />

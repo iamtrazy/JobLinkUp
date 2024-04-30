@@ -17,7 +17,7 @@
                 </div>
                 <span class="invalid-feedback"><?php echo $data['login_password_err']; ?></span>
                 <input type="submit" value="Login" class="btn solid" />
-                <p class="social-text">Or Sign in with social platforms</p>
+                <!-- <p class="social-text">Or Sign in with social platforms</p>
                 <div class="social-media">
                     <a href="#" class="social-icon">
                         <i class="fab fa-google"></i>
@@ -25,7 +25,7 @@
                     <a href="#" class="social-icon">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                </div>
+                </div> -->
             </form>
             <form action="<?php echo URLROOT; ?>/recruiters/register" method="post" class="sign-up-form">
                 <h2 class="title">Sign up</h2>
@@ -50,7 +50,7 @@
                 </div>
                 <span class="invalid-feedback"><?php echo $data['confirm_password_err']; ?></span>
                 <input type="submit" value="Register" class="btn" value="Sign up" />
-                <p class="social-text">Or Sign up with social platforms</p>
+                <!-- <p class="social-text">Or Sign up with social platforms</p>
                 <div class="social-media">
                     <a href="#" class="social-icon">
                         <i class="fab fa-google"></i>
@@ -58,7 +58,7 @@
                     <a href="#" class="social-icon">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
@@ -66,10 +66,9 @@
     <div class="panels-container">
         <div class="panel left-panel">
             <div class="content">
-                <h3>New here ?</h3>
+                <h3>New here as a Recruiter?</h3>
                 <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                    ex ratione. Aliquid!
+                looking to find the best talent for your company? Join our platform and access a pool of skilled professionals ready to contribute to your organization's success. Whether you're seeking full-time employees, freelancers, or interns, we've got the tools to streamline your recruitment process.
                 </p>
                 <button class="btn transparent" id="sign-up-btn">
                     Sign up
@@ -79,10 +78,9 @@
         </div>
         <div class="panel right-panel">
             <div class="content">
-                <h3>One of us ?</h3>
+                <h3>Already a part of us?</h3>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                    laboriosam ad deleniti.
+                Ready to discover top-notch talent? Sign in to our platform and start connecting with qualified candidates who match your job requirements. With our intuitive interface and advanced search filters, finding the perfect fit for your team has never been easier.
                 </p>
                 <button class="btn transparent" id="sign-in-btn">
                     Sign in

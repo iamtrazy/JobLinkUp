@@ -9,7 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
+
 
 <body style="transform: none;">
 
@@ -61,7 +64,7 @@
                                 <div class="extra-cell">
                                     <div class="header-nav-btn-section">
                                         <div class="twm-nav-btn-left">
-                                            <a class="twm-nav-sign-up" href="' .URLROOT. '/jobseekers/register" role="button">
+                                            <a class="twm-nav-sign-up" href="' . URLROOT . '/jobseekers/register" role="button">
                                                 <i class="fa fa-user"></i> Sign Up
                                             </a>
                                         </div>
@@ -73,13 +76,13 @@
                                     </div>
                                 </div>
                             </div>';
-                            }else{
+                            } else {
                                 echo '<div class="extra-nav header-2-nav">
                                 <div class="extra-cell"></div>
                                 <div class="extra-cell">
                                     <div class="header-nav-btn-section">
                                         <div class="twm-nav-btn-right">
-                                            <a href="' .URLROOT . '/jobseekers/logout" class="twm-nav-post-a-job">
+                                            <a href="' . URLROOT . '/jobseekers/logout" class="twm-nav-post-a-job">
                                                 <i class="fa fa-share-square"></i> Logout
                                             </a>
                                         </div>

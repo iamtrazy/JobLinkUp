@@ -3,10 +3,12 @@ class Moderators extends Controller
 {
 
     public $moderatorModel;
+    public $recruiterModel;
 
     public function __construct()
     {
         $this->moderatorModel = $this->model('Moderator');
+        $this->recruiterModel = $this->model('Recruiter');
     }
 
     public function index()
@@ -21,16 +23,39 @@ class Moderators extends Controller
         ];
 
         if (isset($_SESSION['moderator_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             $this->view('moderator/login', $data);
+        }
+    }
+
+    private function whichUser()
+    {
+        if (isset($_SESSION['user_id'])) {
+            return 'seeker';
+        } elseif (isset($_SESSION['business_id'])) {
+            return 'recruiter';
+        } elseif (isset($_SESSION['moderator_id'])) {
+            return 'moderator';
+        } elseif (isset($_SESSION['admin_id'])) {
+            return 'admin';
+        } else {
+            return 'guest';
+        }
+    }
+
+
+    private function onlyModerator()
+    {
+        if ($this->whichUser() != 'moderator') {
+            redirect('moderators/login');
         }
     }
 
     public function login()
     {
         if (isset($_SESSION['moderator_id'])) {
-            // $this->dashboard();
+            $this->dashboard();
         } else {
             // Check for POST
             if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -86,6 +111,8 @@ class Moderators extends Controller
             } else {
                 // Init data
                 $data = [
+                    'style' => 'moderators/login.css',
+                    'title' => 'Moderator Login',
                     'login_email' => '',
                     'login_password' => '',
                     'login_email_err' => '',
@@ -126,13 +153,24 @@ class Moderators extends Controller
 
     public function dashboard()
     {
+        $this->onlyModerator();
+
+        $count_applications = $this->moderatorModel->countBRDetails()->application_count;
+        $count_pending_payments = $this->moderatorModel->countPendingPayments()->pending_payments;
+        $count_disputes = $this->moderatorModel->countDisputes()->disputes_count;
+        $count_verified_recruiters = $this->moderatorModel->countVerifiedRecruiters()->verified_recruiters;
+
         if (!isset($_SESSION['moderator_id'])) {
             $this->index();
         } else {
             $data = [
                 'style' => 'jobseeker/dashboard.css',
                 'title' => 'Dashboard',
-                'header_title' => 'Dashboard'
+                'header_title' => 'Dashboard',
+                'application_count' => $count_applications,
+                'pending_payments' => $count_pending_payments,
+                'disputes_count' => $count_disputes,
+                'verified_recruiters' => $count_verified_recruiters
             ];
 
             $this->view('moderator/dashboard', $data);
@@ -141,6 +179,7 @@ class Moderators extends Controller
 
     public function changepassword()
     {
+        $this->onlyModerator();
         if (!isset($_SESSION['moderator_id'])) {
             $this->index();
         } else {
@@ -214,5 +253,344 @@ class Moderators extends Controller
                 $this->view('moderator/changepassword', $data);
             }
         }
+    }
+    public function disputes($dispute_id = null)
+    {
+        $this->onlyModerator();
+        $disputes = $this->moderatorModel->getAlldisputes();
+        $data = [
+            'style' => 'moderators/disputes.css',
+            'title' => 'Disputes',
+            'header_title' => 'Disputes',
+            'disputes' => $disputes
+
+        ];
+        $this->view('moderator/disputes', $data);
+    }
+
+    public function verifications()
+    {
+        $this->onlyModerator();
+        $br_details = $this->moderatorModel->getAllBRDetails();
+        $data = [
+            'style' => 'moderators/verify_BR.css',
+            'title' => 'BR verification',
+            'header_title' => 'Change Password',
+            'BR_details' => $br_details
+        ];
+        $this->view('moderator/verify', $data);
+    }
+
+    public function transactions()
+    {
+        $this->onlyModerator();
+        $transactions = $this->moderatorModel->getAllTransactions();
+        $data = [
+            'style' => 'moderators/transactions.css',
+            'title' => 'Transactions',
+            'header_title' => 'Transactions',
+            'transactions' => $transactions
+        ];
+        $this->view('moderator/transactions', $data);
+    }
+
+    public function approve_verification()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+
+                // Perform accept action
+                if ($this->moderatorModel->approve_validation($recruiter_id)) {
+                    $recruiter=$this->recruiterModel->getRecruiterById($recruiter_id);
+                    $email_body="Your Business Registration has been approved by the moderator. You can now post Varified Jobs on our platform";
+                    send_email($recruiter->email,$recruiter->name,"Business Registration Approved",$email_body);
+                    // Return success message
+                    $message = 'Recruiter Approved';
+                } else {
+                    // Return error message
+                    $message = 'Failed to accept application';
+                }
+            } else {
+                // Return error message if user is not logged in
+                $message = 'User not logged in';
+            }
+        } else {
+            // Return error message if request method is not POST
+            $message = 'Invalid request method';
+        }
+
+        // Load 'api/json' view with the message
+        $this->view('api/json', ['message' => $message]);
+    }
+
+    public function disable_recruiter()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+
+                // Perform disable action
+                if ($this->moderatorModel->disablerecruiter($recruiter_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Recruiter Disabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to disable recruiter'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+    public function enable_recruiter()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+
+                // Perform enable action
+                if ($this->moderatorModel->enablerecruiter($recruiter_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Recruiter Enabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to enable recruiter'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+    public function disable_job()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = trim(htmlspecialchars($_POST['job_id']));
+
+                // Perform disable action
+                if ($this->moderatorModel->disableJob($job_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Job Disabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to disable job'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+
+    public function enable_job()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = trim(htmlspecialchars($_POST['job_id']));
+
+                // Perform enable action
+                if ($this->moderatorModel->enableJob($job_id)) {
+                    // Return success message
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Job Enabled'
+                    ];
+                } else {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Failed to enable job'
+                    ];
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+
+        // Load 'api/json' view with the response
+        $this->view('api/json', $response);
+    }
+
+    public function report_job_admin()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $job_id = trim(htmlspecialchars($_POST['job_id']));
+                $mod_id = $_SESSION['moderator_id'];
+
+                if ($this->moderatorModel->jobAlreadyReported($job_id, $mod_id)) {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Job already reported'
+                    ];
+                } else {
+                    // Perform report action
+                    if ($this->moderatorModel->reportJobAdmin($job_id, $mod_id)) {
+                        // Return success message
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Job Reported'
+                        ];
+                    } else {
+                        // Return error message
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Failed to report job'
+                        ];
+                    }
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+        $this->view('api/json', $response);
+    }
+
+    public function report_recruiter_admin()
+    {
+        $this->onlyModerator();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if user is logged in
+            if ($this->isLoggedIn()) {
+                // Get application ID from POST data
+                $recruiter_id = trim(htmlspecialchars($_POST['recruiter_id']));
+                $mod_id = $_SESSION['moderator_id'];
+
+                if ($this->moderatorModel->recruiterAlreadyReported($recruiter_id, $mod_id)) {
+                    // Return error message
+                    $response = [
+                        'status' => 'error',
+                        'message' => 'Recruiter already reported'
+                    ];
+                } else {
+                    // Perform report action
+                    if ($this->moderatorModel->reportRecruiterAdmin($recruiter_id, $mod_id)) {
+                        // Return success message
+                        $response = [
+                            'status' => 'success',
+                            'message' => 'Recruiter Reported'
+                        ];
+                    } else {
+                        // Return error message
+                        $response = [
+                            'status' => 'error',
+                            'message' => 'Failed to report recruiter'
+                        ];
+                    }
+                }
+            } else {
+                // Return error message if user is not logged in
+                $response = [
+                    'status' => 'error',
+                    'message' => 'User not logged in'
+                ];
+            }
+        } else {
+            // Return error message if request method is not POST
+            $response = [
+                'status' => 'error',
+                'message' => 'Invalid request method'
+            ];
+        }
+        $this->view('api/json', $response);
     }
 }

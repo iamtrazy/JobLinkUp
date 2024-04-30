@@ -43,6 +43,9 @@ services:
       - ./src:/var/www/joblinkup/
     networks:
       - app-network
+    env_file:
+      - .env
+    
   wordpress:
     depends_on:
       - db
@@ -79,6 +82,7 @@ services:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - app-network
+
   webserver:
     image: caddy:alpine
     depends_on:
@@ -117,6 +121,13 @@ services:
       - ./car-rental-nikila/assets:/app/assets
     networks:
       - app-network
+  composer:
+    restart: "no"
+    container_name: composer
+    image: "composer"
+    command: install --no-suggest
+    volumes:
+      - ./src/app/:/app
 
 volumes:
   dbdata:

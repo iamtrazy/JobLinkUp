@@ -12,19 +12,18 @@
             Discover Part-Time Opportunities Aligned with Your Interests Here
           </div>
           <div class="twm-bnr-search-bar">
-            <form>
+            <form id="searchForm">
               <div class="row">
                 <!--Title-->
                 <div class="form-group col-xl-8 col-lg-8 col-md-8">
                   <label>What</label>
                   <div class="twm-single-iput">
-                    <input name="username" type="text" required="" class="form-control bg-none" placeholder="Job title, Keywords, or company" />
+                    <input id="searchInputBox" name="username" type="text" required="" class="form-control bg-none" placeholder="Job title, Keywords, or company" />
                   </div>
                 </div>
-
                 <!--Find job btn-->
                 <div class="form-group col-xl-4 col-lg-4 col-md-4">
-                  <button type="button" class="site-button">
+                  <button id="findJobBtn" type="submit" class="site-button">
                     Find Job
                   </button>
                 </div>
@@ -33,21 +32,21 @@
           </div>
           <div class="twm-bnr-popular-search">
             <span class="twm-title">Popular Searches:</span>
-            <a href="#">Freelance Writing</a>
+            <a href="/jobs?keyword=freelance">Freelance Writing</a>
             ,
-            <a href="#">Babysitting</a>
+            <a href="/jobs?keyword=babysitting">Babysitting</a>
             ,
-            <a href="#">Remote Work</a>
+            <a href="/jobs?keyword=remote">Remote Work</a>
             ,
-            <a href="#">Pet Care</a>
+            <a href="/jobs?keyword=petcare">Pet Care</a>
             ,
-            <a href="#">Lawn Care</a>
+            <a href="/jobs?keyword=lawncare">Lawn Care</a>
             ,
-            <a href="#">Barista</a>
+            <a href="/jobs?keyword=barsta">Barista</a>
             ,
-            <a href="#">Writing</a>
+            <a href="/jobs?keyword=writing">Writing</a>
             ,
-            <a href="#">Dog Walking</a>...
+            <a href="/jobs?keyword=dogsitting">Dog Walking</a>...
           </div>
         </div>
       </div>
@@ -131,7 +130,25 @@
     </div>
   </div>
 </div>
-</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#searchForm').submit(function(e) {
+      e.preventDefault(); // Prevent form submission
+      var keyword = $('#searchInputBox').val().trim();
+      if (keyword !== '') {
+        window.location.href = '/jobs?keyword=' + encodeURIComponent(keyword);
+      }
+    });
+
+    $('#searchInputBox').keypress(function(e) {
+      if (e.which == 13) { // 13 is the Enter key code
+        $('#searchForm').submit();
+      }
+    });
+  });
+</script>
 </body>
 
 </html>

@@ -9,6 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css" integrity="sha512-KuSX+43gVS5MEIJD2ewtrFPOHqC1PJnL8o2f5ciggPC0JUZ8XV0QXlfArO1mSzKkVFdRjsBDfrTU96C5SuRfqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js" integrity="sha512-1aNp9qKP+hKU/VJwCtYqJP9tdZWbMDN5pEEXXoXT0pTAxZq1HHZhNBR/dtTNSrHO4U1FsFGGILbqG1O9nl8Mdg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css" integrity="sha512-KuSX+43gVS5MEIJD2ewtrFPOHqC1PJnL8o2f5ciggPC0JUZ8XV0QXlfArO1mSzKkVFdRjsBDfrTU96C5SuRfqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body style="transform: none;">
@@ -80,11 +85,6 @@
                                 <div class="side-bar-st-1">
                                     <div class="twm-candidate-profile-pic">
                                         <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="">
-                                        <div class="upload-btn-wrapper">
-                                            <div id="upload-image-grid"></div>
-                                            <button class="site-button button-sm">Upload Photo</button>
-                                            <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
-                                        </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
                                         <h4><?php echo $_SESSION['admin_name'] ?></h4>
@@ -94,10 +94,12 @@
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/admins/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/addadmin"><i class="fa fa-user"></i> Add Moderators</a></li>
-                                            <li><a href="#"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
-                                            <li><a href="#"><i class="fa fa-suitcase"></i> Manage Ads</a></li>
-                                            <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
-                                            <li><a href="#"><i class="fa fa-fingerprint"></i> Change Password</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/managemoderators"><i class="fa fa-book-reader"></i> Manage Moderators</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/ads"><i class="fa fa-suitcase"></i> Notices & Ads</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/transactions"><i class="fa fa-credit-card"></i>Transaction</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/dropbox"><i class="fab fa-dropbox"></i>Dropbox</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/backup"><i class="fa fa-cloud"></i>Backup Now</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/admins/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/admins/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
                                     </div>

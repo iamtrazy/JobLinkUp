@@ -17,10 +17,10 @@
                                     <i class="fa fa-briefcase"></i>
                                 </div>
                                 <div class="wt-card-right wt-total-active-listing counter">
-                                    3
+                                <?php echo $data['disputes_count'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Posted Jobs</h4>
+                                    <h4 class="m-b0">No of Disputes</h4>
                                 </div>
                             </div>
                         </div>
@@ -34,10 +34,10 @@
                                     <i class="fa fa-tasks"></i>
                                 </div>
                                 <div class="wt-card-right wt-total-listing-view counter">
-                                    10
+                                    <?php echo $data['application_count'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Pending Applications</h4>
+                                    <h4 class="m-b0">Pending Approvals</h4>
                                 </div>
                             </div>
                         </div>
@@ -48,13 +48,13 @@
                         <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-3">
                             <div class="wt-card-wrap-2">
                                 <div class="wt-card-icon-2">
-                                    <i class="fa fa-envelope"></i>
+                                <i class="fas fa-money-bill-alt"></i>
                                 </div>
                                 <div class="wt-card-right wt-total-listing-review counter">
-                                    28
+                                <?php echo $data['pending_payments'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Messages</h4>
+                                    <h4 class="m-b0">Pending Payments</h4>
                                 </div>
                             </div>
                         </div>
@@ -65,13 +65,13 @@
                         <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-4">
                             <div class="wt-card-wrap-2">
                                 <div class="wt-card-icon-2">
-                                    <i class="fa fa-bell"></i>
+                                <i class="fas fa-certificate"></i>
                                 </div>
                                 <div class="wt-card-right wt-total-listing-bookmarked counter">
-                                    18
+                                <?php echo $data['verified_recruiters'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Notifications</h4>
+                                    <h4 class="m-b0">Verified Recruiters</h4>
                                 </div>
                             </div>
                         </div>
@@ -81,4 +81,9 @@
         </div>
     </div>
 </div>
+
+
+    <script src="script.js"></script>
+
+
 <?php require APPROOT . '/views/inc/recruiter_footer.php'; ?>

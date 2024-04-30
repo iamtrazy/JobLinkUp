@@ -27,15 +27,40 @@ function flash($name = '', $message = '', $class = 'flash-message success')
     }
 }
 
-function jsflash($message = '', $path = '')
+function jsflash($message = '', $path = '', $error = 0)
 {
-
+    echo '<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
+    <body>
+    ';
     echo '<script type="text/javascript">';
 
-    if (!empty($message && $path)) {
-        echo 'window.alert("' . $message . '");';
-        echo 'window.location.href = "' . URLROOT . '/' . $path . '";';
+    if (!empty($message) && !empty($path)) {
+        if ($error == 1) { // Show red cross error alert
+            echo 'Swal.fire({';
+            echo '  icon: "error",';
+            echo '  title: "' . $message . '",';
+            echo '}).then((result) => {';
+            echo '  if (result.isConfirmed) {';
+            echo '    window.location.href = "' . URLROOT . '/' . $path . '";';
+            echo '  }';
+            echo '});';
+        } else { // Show success alert
+            echo 'Swal.fire({';
+            echo '  icon: "success",';
+            echo '  title: "' . $message . '",';
+            echo '}).then((result) => {';
+            echo '  if (result.isConfirmed) {';
+            echo '    window.location.href = "' . URLROOT . '/' . $path . '";';
+            echo '  }';
+            echo '});';
+        }
     }
-
     echo '</script>';
+    echo '</body>';
+    echo '</html>';
 }

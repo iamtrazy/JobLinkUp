@@ -1,9 +1,11 @@
 <?php
-  // DB Params
-  define('DB_HOST', 'db');
-  define('DB_USER', 'root');
-  define('DB_PASS', 'xvhblk123');
-  define('DB_NAME', 'JobLinkUp');
+
+$password = $_ENV['MYSQL_ROOT_PASSWORD'];
+// DB Params
+define('DB_HOST', 'db');
+define('DB_USER', 'root');
+define('DB_PASS', $password);
+define('DB_NAME', 'JobLinkUp');
 
   // App Root
   define('APPROOT', dirname(dirname(__FILE__)));

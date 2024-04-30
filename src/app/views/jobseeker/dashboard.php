@@ -17,7 +17,7 @@
                   <i class="fa fa-briefcase"></i>
                 </div>
                 <div class="wt-card-right wt-total-active-listing counter">
-                  3
+                  <?php echo $data['applied_count'] ?>
                 </div>
                 <div class="wt-card-bottom-2">
                   <h4 class="m-b0">Applied Jobs</h4>
@@ -34,7 +34,7 @@
                   <i class="fa fa-tasks"></i>
                 </div>
                 <div class="wt-card-right wt-total-listing-view counter">
-                  10
+                  <?php echo $data['wishlist_count'] ?>
                 </div>
                 <div class="wt-card-bottom-2">
                   <h4 class="m-b0">Wish listed Jobs</h4>
@@ -50,8 +50,8 @@
                 <div class="wt-card-icon-2">
                   <i class="fa fa-envelope"></i>
                 </div>
-                <div class="wt-card-right wt-total-listing-review counter">
-                  28
+                <div class="wt-card-right wt-total-listing-review counter" id="totalMessagesCounter">
+
                 </div>
                 <div class="wt-card-bottom-2">
                   <h4 class="m-b0">Messages</h4>
@@ -68,10 +68,10 @@
                   <i class="fa fa-bell"></i>
                 </div>
                 <div class="wt-card-right wt-total-listing-bookmarked counter">
-                  18
+                  <?php echo $data['alert_count'] ?>
                 </div>
                 <div class="wt-card-bottom-2">
-                  <h4 class="m-b0">Notifications</h4>
+                  <h4 class="m-b0">Job Alerts</h4>
                 </div>
               </div>
             </div>
@@ -95,73 +95,10 @@
                                   margin-right: 0px;
                                   max-height: 394px;
                                 ">
-                  <div class="dashboard-messages-box">
-                    <div class="dashboard-message-avtar">
-                      <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                    </div>
-                    <div class="dashboard-message-area">
-                      <h5>Lucy Smith<span>18 June 2023</span></h5>
-                      <p>
-                        Bring to the table win-win survival
-                        strategies to ensure proactive domination.
-                        at the end of the day, going forward, a
-                        new normal that has evolved from
-                        generation.
-                      </p>
-                    </div>
+                  <div class="dashboard-messages-box" id="inboxMessages">
+                    <!-- Chat thread messages will be displayed here -->
                   </div>
 
-                  <div class="dashboard-messages-box">
-                    <div class="dashboard-message-avtar">
-                      <img src="<?php echo URLROOT ?>/img/pic3.jpg" alt="" />
-                    </div>
-                    <div class="dashboard-message-area">
-                      <h5>
-                        Richred paul<span>19 June 2023</span>
-                      </h5>
-                      <p>
-                        Bring to the table win-win survival
-                        strategies to ensure proactive domination.
-                        at the end of the day, going forward, a
-                        new normal that has evolved from
-                        generation.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="dashboard-messages-box">
-                    <div class="dashboard-message-avtar">
-                      <img src="<?php echo URLROOT ?>/img/pic4.jpg" alt="" />
-                    </div>
-                    <div class="dashboard-message-area">
-                      <h5>Jon Doe<span>20 June 2023</span></h5>
-                      <p>
-                        Bring to the table win-win survival
-                        strategies to ensure proactive domination.
-                        at the end of the day, going forward, a
-                        new normal that has evolved from
-                        generation.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="dashboard-messages-box">
-                    <div class="dashboard-message-avtar">
-                      <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="" />
-                    </div>
-                    <div class="dashboard-message-area">
-                      <h5>
-                        Thomas Smith<span>22 June 2023</span>
-                      </h5>
-                      <p>
-                        Bring to the table win-win survival
-                        strategies to ensure proactive domination.
-                        at the end of the day, going forward, a
-                        new normal that has evolved from
-                        generation.
-                      </p>
-                    </div>
-                  </div>
                 </div>
                 <div class="scroll-element scroll-x scroll-scrolly_visible">
                   <div class="scroll-element_outer">
@@ -185,4 +122,73 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    // Function to fetch chat threads and display messages
+    function fetchChatThreadsAndMessages() {
+      $.ajax({
+        url: '<?php echo URLROOT . '/api/chat_threads' ?>',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          var totalMessagesCount = 0; // Declare totalMessagesCount outside the if block
+          if (response && response.length > 0) {
+            $('#inboxMessages').empty(); // Clear previous messages
+            $.each(response, function(index, thread) {
+              var messagesCount = 0;
+              var threadHtml = `
+                <div class="dashboard-messages-box">
+                  <div class="dashboard-message-avtar">
+                    <img src="https://joblinkup.com/img/profile/${thread.profile_image}" alt="" />
+                  </div>
+                  <div class="dashboard-message-area">
+                    <h5>${thread.recruiter_name}<span>${thread.created_at}</span></h5>
+                    <p>`;
+              $.ajax({
+                url: '<?php echo URLROOT . '/api/chat_thread_messages/' ?>' + thread.thread_id,
+                type: 'GET',
+                dataType: 'json',
+                async: false, // Ensure synchronous request
+                success: function(messages) {
+                  if (messages && messages.length > 0) {
+                    $.each(messages, function(i, message) {
+                      if (message.reply) {
+                        messagesCount++;
+                        var profileImage = `https://joblinkup.com/img/profile/${thread.profile_image}`;
+                        var messageHtml = `
+                          <div class="single-message">
+                          </div>
+                        `;
+                        threadHtml += messageHtml;
+                      }
+                    });
+                  }
+                }
+              });
+              threadHtml += `</p>
+                    <p>${messagesCount} New Message(s)</p>
+                  </div>
+                </div>`;
+              $('#inboxMessages').append(threadHtml);
+              totalMessagesCount += messagesCount;
+            });
+          } else {
+            $('#inboxMessages').html('<p>No threads available</p>');
+          }
+          $('#totalMessagesCounter').text(totalMessagesCount); // Update total messages count
+        },
+        error: function(xhr, status, error) {
+          console.error("Error fetching chat threads:", error);
+        }
+      });
+    }
+
+    // Fetch chat threads and messages when the page loads
+    fetchChatThreadsAndMessages();
+
+    // Fetch chat threads and messages periodically
+    setInterval(fetchChatThreadsAndMessages, 3000); // 3000 milliseconds = 3 seconds
+  });
+</script>
+
 <?php require APPROOT . '/views/inc/seeker_footer.php'; ?>

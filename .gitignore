@@ -3,3 +3,7 @@ caddy-data
 Hotel-Management/
 car-rental-nikila/
 uploads.ini
+
+src/app/vendor
+src/app/autoload.php
+src/app/composer.lock

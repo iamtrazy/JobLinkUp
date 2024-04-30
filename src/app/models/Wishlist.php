@@ -69,4 +69,18 @@ class Wishlist
             return false;
         }
     }
+
+    public function wishlistedJobCount($seeker_id)
+    {
+        $this->db->query('SELECT COUNT(*) AS total_wishlist FROM wishlist WHERE seeker_id = :seeker_id');
+        $this->db->bind(':seeker_id', $seeker_id);
+        $row = $this->db->single();
+
+        // Check if total applications is retrieved successfully
+        if ($row) {
+            return $row->total_wishlist;
+        } else {
+            return false;
+        }
+    }
 }

@@ -8,6 +8,8 @@
     <title>JobLinkUp | <?php echo $data['title'] ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo URLROOT ?>/css/<?php echo $data['style'] ?>" />
 </head>
 
@@ -80,21 +82,17 @@
                                 <div class="side-bar-st-1">
                                     <div class="twm-candidate-profile-pic">
                                         <img src="<?php echo URLROOT ?>/img/pic1.jpg" alt="">
-                                        <div class="upload-btn-wrapper">
-                                            <div id="upload-image-grid"></div>
-                                            <button class="site-button button-sm">Upload Photo</button>
-                                            <input type="file" name="myfile" id="file-uploader" accept=".jpg, .jpeg, .png">
-                                        </div>
                                     </div>
                                     <div class="twm-mid-content text-center">
-                                        <h4><?php echo $_SESSION['moderator_name'] ?></h4>
+                                        <h4><?php echo isset($_SESSION['moderator_name']) ? $_SESSION['moderator_name'] : 'Admin'; ?></h4>
                                     </div>
 
                                     <div class="twm-nav-list-1">
                                         <ul>
                                             <li><a href="<?php echo URLROOT ?>/moderators/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
-                                            <li><a href="#"><i class="fa fa-suitcase"></i>Verify Buisness</a></li>
-                                            <li><a href="#"><i class="fa fa-credit-card"></i>Transaction</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/transactions"><i class="fa fa-credit-card"></i>Transactions</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/verifications"><i class="fa fa-suitcase"></i>Pending Verifications</a></li>
+                                            <li><a href="<?php echo URLROOT ?>/moderators/disputes"><i class="fas fa-exclamation-triangle"></i></i>Disputes</a></li>
                                             <li><a href="<?php echo URLROOT ?>/moderators/changepassword"><i class="fa fa-fingerprint"></i> Change Password</a></li>
                                             <li><a href="<?php echo URLROOT ?>/moderators/logout"><i class="fa fa-share-square"></i> Logout</a></li>
                                         </ul>
