@@ -52,8 +52,8 @@ class Jobs extends Controller
   private function redirectToRecruiter()
   {
     if ($this->whichUser() !== 'recruiter') {
-      jsflash('Login As a Recruiter for this action', 'recruiters/login');
-      die();
+      redirect('recruiters/login');
+      return;
     }
   }
 
@@ -215,7 +215,6 @@ class Jobs extends Controller
   {
     $this->redirectToRecruiter();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-      // Check if a file is uploaded
       $data = [
         'recruiter_id' => $_SESSION['business_id'],
         'location' => '',
@@ -235,17 +234,23 @@ class Jobs extends Controller
       // Update $data with sanitized values from $_POST
       $data = array_merge($data, $filteredData);
 
+      // Check if rate is numeric
+      if (!is_numeric($data['rate'])) {
+        $data['data_err'] = 'Rate must be a number';
+      }
+
       // Check if banner image is uploaded
-      if (isset($_FILES['banner_image'])) {
+      if (isset($_FILES['banner_image']) && $_FILES['banner_image']['error'] !== UPLOAD_ERR_NO_FILE) {
         $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
 
         // If banner image is uploaded, add it to $data
         if ($bannerImagePath) {
           $data['banner_image'] = $bannerImagePath;
+        } else {
+          $data['data_err'] = 'Image upload failed (check image extension or size)';
         }
-      } else {
-        $data['data_err'] = 'Image upload failed (check image extension or size)';
       }
+
       // Validate form data
       if (empty($data['rate'])) {
         $data['data_err'] = 'Please enter rate';
@@ -257,7 +262,7 @@ class Jobs extends Controller
       // Make sure there are no errors
       if (empty($data['data_err'])) {
         // Validation passed
-        //Execute
+        // Execute
         if ($this->jobModel->addJob($data)) {
           jsflash('Job published', 'recruiters/postjob');
         } else {
@@ -265,10 +270,11 @@ class Jobs extends Controller
         }
       } else {
         // Load view with errors
-        jsflash($data['data_err'], 'recruiters/postjob');
+        jsflash($data['data_err'], 'recruiters/postjob', 1);
       }
     }
   }
+
 
   public function report()
   {

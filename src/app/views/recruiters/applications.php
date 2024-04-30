@@ -51,7 +51,7 @@ function getStatusText($status)
                         } ?>
                     </div>
                     <div class="twm-mid-content">
-                        <a href="candidate-detail.html" class="twm-job-title">
+                        <a href="<?php echo URLROOT . '/candidates/profile/' .$application->seeker_id ?>" target="_blank" class="twm-job-title">
                             <h4> <?php echo $application->username ?> </h4>
                         </a>
                         <p><?php echo $application->email ?></p>

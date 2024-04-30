@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 29, 2024 at 11:07 AM
+-- Generation Time: Apr 29, 2024 at 11:56 PM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -206,9 +206,7 @@ CREATE TABLE `chat_threads` (
 INSERT INTO `chat_threads` (`id`, `seeker_id`, `recruiter_id`, `created_at`) VALUES
 (20, 2, 1, '2024-04-28 07:25:10'),
 (21, 29, 1, '2024-04-28 13:29:20'),
-(22, 16, 1, '2024-04-29 09:24:17'),
 (23, 31, 1, '2024-04-29 09:24:21'),
-(24, 16, 1, '2024-04-29 09:53:55'),
 (25, 16, 1, '2024-04-29 09:54:03');
 
 -- --------------------------------------------------------
@@ -282,9 +280,9 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`id`, `recruiter_id`, `topic`, `location`, `website`, `rate`, `rate_type`, `type`, `detail`, `keywords`, `banner_img`, `created_at`, `expire_in`, `is_deleted`, `view_count`) VALUES
-(70, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 3000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 57),
+(70, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 3000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 85),
 (71, 1, 'Football Coach', '38/4, mihindu mawatha, malabe', 'example.com', 5000, 'One-Time', 'Freelance', 'test test', '', '662cdd7b52ced5.05595632.jpg', '2024-04-27 11:11:55', '2024-04-27 11:11:55', 0, 21),
-(72, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello World', 'artist engineer user', '662cdf5743afe4.43858272.jpg', '2024-04-27 11:19:51', '2024-05-11 11:19:51', 1, 59);
+(72, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello World', 'artist engineer user', '662cdf5743afe4.43858272.jpg', '2024-04-27 11:19:51', '2024-05-11 11:19:51', 0, 61);
 
 --
 -- Triggers `jobs`
@@ -329,7 +327,7 @@ CREATE TABLE `jobseekers` (
 
 INSERT INTO `jobseekers` (`id`, `username`, `email`, `gender`, `password`, `created_at`, `code_verified`, `phone_no`, `website`, `age`, `address`, `location_rec`, `keywords`, `about`, `profile_image`, `cv`, `linkedin_url`, `whatsapp_url`, `is_complete`) VALUES
 (2, 'Kasun Hansamal', 'iamtrazy@proton.me', 'male', '$2y$10$bNf7boyMzTsZDN6a6NDabehUP7Ow5.PjeLy/jC/RJLEW0JhBbjmWC', '2023-09-30 12:46:49', 1, '0702339061', '', 20, '', 0, 'hi hi hiii', '', 'default.jpg', NULL, '', '', 0),
-(16, 'Kasun hansamal', 'kasun@gmail.com', 'male', '$2y$10$z4UT/b/wj/9Hj.9ukYytO.q/hqKrV6mZNJgVm6RWdm0ePIIxrQS/6', '2023-11-01 01:56:14', 1, '0702339061', 'iamtrazy.eu.org', 22, 'malabe', 1, 'test,test,test,test', 'Hello', '662e273b843e84.84142593.jpg', '662a471480f875.44027307.pdf', 'linkedin.com', '0702339061', 1),
+(16, 'Kasun Hansamal', 'kasun@gmail.com', 'male', '$2y$10$z4UT/b/wj/9Hj.9ukYytO.q/hqKrV6mZNJgVm6RWdm0ePIIxrQS/6', '2023-11-01 01:56:14', 1, '0702339061', 'iamtrazy.eu.org', 22, 'malabe', 0, 'Test', 'Hello', '662ff607effd08.74674414.png', '662ff9d0e184c9.23175327.pdf', 'linkedin.com', '0702339061', 1),
 (27, 'Test User', 'discord.cmn24@simplelogin.com', 'male', '$2y$10$TmrBCGbFFuOTMenlL6Xkgu.mUPLbZVt5IRA.13EdonlJ1bmqooyXm', '2024-04-27 11:00:23', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, 'default.jpg', NULL, NULL, NULL, 0),
 (28, 'Hello Hello', 'hello@gmail.com', 'male', '$2y$10$qJbMx5c4tRBdyO6PYE/8IO/wuFuB7A5m1mlvfkc4jD27Gj5SZU/SC', '2024-04-28 10:19:28', 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, 'default.jpg', NULL, NULL, NULL, 0),
 (29, 'Testing 1', 'zcx1b6abm@mozmail.com', 'male', '$2y$10$Ib8qFpBJ1oEaPtCBelFpyeOiZEUUOpOGpN/LufHR7oRS0OVVit4hG', '2024-04-28 13:24:08', 1, NULL, NULL, NULL, NULL, 0, NULL, NULL, 'default.jpg', NULL, NULL, NULL, 0),

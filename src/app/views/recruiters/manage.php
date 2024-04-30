@@ -25,7 +25,7 @@
                                         <td>
                                             <div class="twm-bookmark-list">
                                                 <div class="twm-mid-content">
-                                                    <a href="#" class="twm-job-title">
+                                                    <a href="<?php echo URLROOT . '/jobs/detail/' . $job->id ?>" target="_blank" class="twm-job-title">
                                                         <h4><?php echo $job->topic ?></h4>
                                                         <p class="twm-bookmark-address">
                                                             <i class="fas fa-map-marker-alt"></i><?php echo $job->location; ?>

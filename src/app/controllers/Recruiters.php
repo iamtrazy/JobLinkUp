@@ -7,6 +7,7 @@ class Recruiters extends Controller
     public $applicationModel;
     public $chatModel;
     public $payhereModel;
+    public $jobseekerModel;
 
     public function __construct()
     {
@@ -15,6 +16,7 @@ class Recruiters extends Controller
         $this->applicationModel = $this->model('Application');
         $this->chatModel = $this->model('Chat');
         $this->payhereModel = $this->model('Payhere');
+        $this->jobseekerModel = $this->model('Jobseeker');
     }
 
     public function index()
@@ -38,6 +40,29 @@ class Recruiters extends Controller
             $this->dashboard();
         } else {
             $this->view('recruiters/register', $data);
+        }
+    }
+
+    private function whichUser()
+    {
+        if (isset($_SESSION['user_id'])) {
+            return 'seeker';
+        } elseif (isset($_SESSION['business_id'])) {
+            return 'recruiter';
+        } elseif (isset($_SESSION['moderator_id'])) {
+            return 'moderator';
+        } elseif (isset($_SESSION['admin_id'])) {
+            return 'admin';
+        } else {
+            return 'guest';
+        }
+    }
+
+    private function onlyRecruiter()
+    {
+        if ($this->whichUser() !== 'recruiter') {
+            redirect('recruiters/login');
+            return;
         }
     }
 
@@ -302,7 +327,7 @@ class Recruiters extends Controller
         }
     }
 
-    public function getRecruiterProfileImage($id)
+    private function getRecruiterProfileImage($id)
     {
         $profileImage = $this->recruiterModel->getRecruiterProfileImage($id);
         return $profileImage;
@@ -310,6 +335,7 @@ class Recruiters extends Controller
 
     public function changepassword()
     {
+        $this->onlyRecruiter();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'style' => 'jobseeker/pass.css',
@@ -380,6 +406,7 @@ class Recruiters extends Controller
 
     public function dashboard()
     {
+        $this->onlyRecruiter();
         if (!isset($_SESSION['business_id'])) {
             $this->login();
         } else {
@@ -400,6 +427,7 @@ class Recruiters extends Controller
 
     public function postjob()
     {
+        $this->onlyRecruiter();
         $data = [
             'style' => 'recruiter/postjob.css',
             'title' => 'Post A Job',
@@ -412,6 +440,8 @@ class Recruiters extends Controller
 
     public function editjob($job_id = null)
     {
+        $this->onlyRecruiter();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'topic' => trim(htmlspecialchars($_POST['topic'])),
@@ -425,41 +455,56 @@ class Recruiters extends Controller
                 'job_id' => $job_id
             ];
 
+            // Check if rate is numeric
+            if (!is_numeric($data['rate'])) {
+                $response = ['status' => 'error', 'message' => 'Rate must be a number'];
+                $this->view('api/json', $response);
+                return; // Stop execution
+            }
+
             // Check if the current user is authorized to edit this job
             $job = $this->jobModel->getJobById($job_id);
-            if ($job->recruiter_id !== $_SESSION['business_id']) {
+            if (!$job || $job->recruiter_id !== $_SESSION['business_id']) {
                 $response = ['status' => 'error', 'message' => 'You are not authorized to edit this job'];
+                $this->view('api/json', $response);
+                return; // Stop execution
+            }
+
+            // Handle file upload if banner image is set
+            if (isset($_FILES['banner_image']) && $_FILES['banner_image']['error'] !== UPLOAD_ERR_NO_FILE) {
+                $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
+
+                // If banner image upload failed
+                if (!$bannerImagePath) {
+                    $response = ['status' => 'error', 'message' => 'Image upload failed (check image extension or size)'];
+                    $this->view('api/json', $response);
+                    return; // Stop execution
+                }
+
+                // Add banner image path to data
+                $data['banner_image'] = $bannerImagePath;
+            }
+
+            // Validate required fields
+            if (empty($data['rate']) || empty($data['location']) || empty($data['topic']) || empty($data['type']) || empty($data['detail'])) {
+                $response = ['status' => 'error', 'message' => 'Please enter all details'];
+                $this->view('api/json', $response);
+                return; // Stop execution
+            }
+
+            // Update the job
+            if ($this->jobModel->updateJob($data)) {
+                $response = ['status' => 'success', 'message' => 'Job Updated Successfully'];
             } else {
-                // Handle file upload if banner image is set
-                if (isset($_FILES['banner_image'])) {
-                    $bannerImagePath = $this->upload_media("banner_image", $_FILES, "/img/job_banner/", ['jpg', 'jpeg', 'png'], 1000000);
-
-                    // If banner image is uploaded, add it to $data
-                    if ($bannerImagePath) {
-                        $data['banner_image'] = $bannerImagePath;
-                    } else {
-                        $response = ['status' => 'error', 'message' => 'Image upload failed (check image extension or size)'];
-                    }
-                }
-
-                // Validate required fields
-                if (empty($data['rate']) || empty($data['location']) || empty($data['topic']) || empty($data['type']) || empty($data['detail'])) {
-                    $response = ['status' => 'error', 'message' => 'Please enter all details'];
-                } else {
-                    // Update the job
-                    if ($this->jobModel->updateJob($data)) {
-                        $response = ['status' => 'success', 'message' => 'Job Updated Successfully'];
-                    } else {
-                        $response = ['status' => 'error', 'message' => 'Failed to update job'];
-                    }
-                }
+                $response = ['status' => 'error', 'message' => 'Failed to update job'];
             }
 
             // Return JSON response
             $this->view('api/json', $response);
         } else {
             // If GET request, load the job data for editing
-            if ($job = $this->jobModel->getJobById($job_id)) {
+            $job = $this->jobModel->getJobById($job_id);
+            if ($job && $job->recruiter_id === $_SESSION['business_id']) {
                 $data = [
                     'job' => $job,
                     'style' => 'recruiter/postjob.css',
@@ -469,6 +514,7 @@ class Recruiters extends Controller
                 ];
                 $this->view('recruiters/edit-job', $data);
             } else {
+                // Error: Job not found or not authorized to edit
                 $data = [
                     'style' => 'recruiter/postjob.css',
                     'title' => 'Edit Job',
@@ -480,8 +526,10 @@ class Recruiters extends Controller
         }
     }
 
+
     public function deletejob($job_id = null)
     {
+        $this->onlyRecruiter();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $job = $this->jobModel->getJobById($job_id);
             if ($job->recruiter_id !== $_SESSION['business_id']) {
@@ -500,6 +548,7 @@ class Recruiters extends Controller
 
     public function chat()
     {
+        $this->onlyRecruiter();
         $data = [
             'style' => 'recruiter/chat.css',
             'title' => 'Chat',
@@ -513,6 +562,7 @@ class Recruiters extends Controller
 
     public function transactions()
     {
+        $this->onlyRecruiter();
 
         if ($this->recruiterModel->isVerified($_SESSION['business_id'])) {
             $data = [
@@ -546,6 +596,7 @@ class Recruiters extends Controller
 
     public function profile()
     {
+        $this->onlyRecruiter();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'id' => $_SESSION['business_id'],
@@ -595,6 +646,7 @@ class Recruiters extends Controller
 
     public function manage()
     {
+        $this->onlyRecruiter();
         $jobs  = $this->jobModel->getRecruiterJobs($_SESSION['business_id']);
         $data = [
             'jobs' => $jobs,
@@ -610,6 +662,7 @@ class Recruiters extends Controller
 
     public function applications($job_id = null)
     {
+        $this->onlyRecruiter();
         $applications = $this->applicationModel->getApplications($job_id);
         $data = [
             'style' => 'recruiter/applications.css',
@@ -624,6 +677,7 @@ class Recruiters extends Controller
 
     public function acceptApplication()
     {
+        $this->onlyRecruiter();
         // Check if request is POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if user is logged in
@@ -636,6 +690,13 @@ class Recruiters extends Controller
                 if ($this->applicationModel->acceptApplication($seeker_id, $job_id)) {
                     // Return success message
                     $message = 'Application accepted successfully';
+
+                    $seeker = $this->jobseekerModel->getJobSeekerById($seeker_id);
+                    $job = $this->jobModel->getJobById($job_id);
+                    $email_body = 'Your application for the job ' . $job->topic . ' has been accepted. Please contact the recruiter for further details. for further reference, visit the <a href="' . URLROOT . '/jobs/detail/' . $job_id . '">job</a> page';
+
+                    send_email($seeker->email, $seeker->first_name, 'Application Accepted', $email_body);
+
                     if ($this->chatModel->checkThreadExists($seeker_id, $_SESSION['business_id'])) {
                         $this->chatModel->startThread($seeker_id, $_SESSION['business_id']);
                     }
@@ -659,6 +720,7 @@ class Recruiters extends Controller
 
     public function rejectApplication()
     {
+        $this->onlyRecruiter();
         // Check if request is POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if user is logged in
@@ -695,6 +757,7 @@ class Recruiters extends Controller
 
     public function applyForBR()
     {
+        $this->onlyRecruiter();
         // Check if the request method is POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Initialize an empty array to store response data
@@ -766,6 +829,7 @@ class Recruiters extends Controller
 
     public function pay()
     {
+        $this->onlyRecruiter();
         $br = $this->recruiterModel->getBrDetails($_SESSION['business_id']);
         $email = $this->recruiterModel->getRecruiterEmail($_SESSION['business_id']);
         $payment = $this->payhereModel->premium($br->phone, $br->address, $br->city, $br->first_name, $br->last_name, $email);
@@ -785,6 +849,7 @@ class Recruiters extends Controller
 
     public function pay_success()
     {
+        $this->onlyRecruiter();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $recruiter_id = $_SESSION['business_id'];
             if ($this->recruiterModel->paySuccess($recruiter_id)) {

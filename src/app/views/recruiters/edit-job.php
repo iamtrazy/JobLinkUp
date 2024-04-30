@@ -155,24 +155,38 @@
                         processData: false, // Prevent jQuery from automatically processing data
                         contentType: false, // Prevent jQuery from automatically setting contentType
                         success: function(response) {
-                            // Handle successful response using SweetAlert2
-                            Swal.fire({
-                                title: 'Success!',
-                                text: response.message,
-                                icon: 'success'
-                            }).then(() => {
-                                window.location.href = '<?php echo URLROOT; ?>/recruiters/manage';
-                            });
+                            if (response.status === 'success') {
+                                // Handle successful response using SweetAlert2 with success icon
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: response.message,
+                                    icon: 'success'
+                                }).then(() => {
+                                    window.location.href = '<?php echo URLROOT; ?>/recruiters/manage';
+                                });
+                            } else {
+                                // Handle error response using SweetAlert2 with error icon
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: response.message,
+                                    icon: 'error',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'OK'
+                                });
+                            }
                         },
                         error: function(xhr, status, error) {
-                            // Handle error using SweetAlert2
+                            // Handle error using SweetAlert2 with error message
                             Swal.fire({
                                 title: 'Error!',
                                 text: 'Failed to update job. Please try again later.',
-                                icon: 'error'
+                                icon: 'error',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
                             });
                             console.error("Error:", error);
                         }
+
                     });
                 }
             });
