@@ -1,4 +1,4 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/explore_header.php'; ?>
 <h1><?php echo $data['title']; ?></h1>
 
 <div class="section-content snipcss-oeZP9">

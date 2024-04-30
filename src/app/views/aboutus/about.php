@@ -1,4 +1,4 @@
-<?php require APPROOT . '/views/inc/header.php'; ?>
+<?php require APPROOT . '/views/inc/guest_header.php'; ?>
 <h1><?php echo $data['title']; ?></h1>
 
 <div class="col-lg-9 col-md-12 snipcss-h2ttD">
