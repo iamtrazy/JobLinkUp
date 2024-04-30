@@ -119,6 +119,35 @@ class Admin
       return false;
     }
   }
+
+  public function countJobs()
+  {
+    $this->db->query('SELECT * FROM jobs');
+    $row = $this->db->single();
+    return $this->db->rowCount();
+  }
+
+  public function countRecruiters()
+  {
+    $this->db->query('SELECT * FROM recruiters');
+    $row = $this->db->single();
+    return $this->db->rowCount();
+  }
+
+  public function countJobSeekers()
+  {
+    $this->db->query('SELECT * FROM jobseekers');
+    $row = $this->db->single();
+    return $this->db->rowCount();
+  }
+
+  public function totalIncome()
+  {
+    $this->db->query('SELECT count(*) FROM recruiters where is_varified = 1');
+    $row = $this->db->single();
+    return $this->db->rowCount();
+  }
+
   public function jobAd()
   {
     $this->db->query('SELECT * FROM ads WHERE type = 1 LIMIT 1');

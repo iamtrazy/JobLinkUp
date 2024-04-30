@@ -15,7 +15,7 @@
                                     <i class="fa fa-briefcase"></i>
                                 </div>
                                 <div class="value wt-card-right wt-total-active-listing counter" akhi="69">
-                                    3
+                                    <?php echo $data['total_jobs'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2 ">
                                     <h4 class="m-b0">Jobs</h4>
@@ -29,13 +29,13 @@
                         <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-2">
                             <div class="wt-card-wrap-2">
                                 <div class="wt-card-icon-2">
-                                    <i class="fa fa-tasks"></i>
+                                <i class="fas fa-user-tie"></i>
                                 </div>
                                 <div class="value wt-card-right wt-total-active-listing counter" akhi="69">
-                                    3
+                                    <?php echo $data['total_recruiters'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Tasks</h4>
+                                    <h4 class="m-b0">Recruiters</h4>
                                 </div>
                             </div>
                         </div>
@@ -46,13 +46,13 @@
                         <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-3">
                             <div class="wt-card-wrap-2">
                                 <div class="wt-card-icon-2">
-                                    <i class="fa fa-envelope"></i>
+                                <i class="fas fa-users"></i>
                                 </div>
                                 <div class="value wt-card-right wt-total-active-listing counter" akhi="69">
-                                    3
+                                    <?php echo $data['total_jobseekers'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Messages</h4>
+                                    <h4 class="m-b0">Job Seekers</h4>
                                 </div>
                             </div>
                         </div>
@@ -63,13 +63,13 @@
                         <div class="panel-body wt-panel-body dashboard-card-2 block-gradient-4">
                             <div class="wt-card-wrap-2">
                                 <div class="wt-card-icon-2">
-                                    <i class="fa fa-bell"></i>
+                                <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div class="value wt-card-right wt-total-active-listing counter" akhi="69">
-                                    3
+                                    <?php echo $data['total_income'] ?>
                                 </div>
                                 <div class="wt-card-bottom-2">
-                                    <h4 class="m-b0">Notifications</h4>
+                                    <h4 class="m-b0">Varified</h4>
                                 </div>
                             </div>
                         </div>

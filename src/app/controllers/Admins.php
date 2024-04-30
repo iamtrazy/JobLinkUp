@@ -29,6 +29,28 @@ class Admins extends Controller
         }
     }
 
+
+    private function whichUser()
+    {
+        if (isset($_SESSION['user_id'])) {
+            return 'seeker';
+        } elseif (isset($_SESSION['business_id'])) {
+            return 'recruiter';
+        } elseif (isset($_SESSION['moderator_id'])) {
+            return 'moderator';
+        } elseif (isset($_SESSION['admin_id'])) {
+            return 'admin';
+        } else {
+            return 'guest';
+        }
+    }
+
+    private function onlyAdmin(){
+        if($this->whichUser() != 'admin'){
+            redirect('pages');
+        }
+    }
+
     public function login()
     {
         if (isset($_SESSION['admin_id'])) {
@@ -128,13 +150,24 @@ class Admins extends Controller
 
     public function dashboard()
     {
+        $this->onlyAdmin();
+
+        $total_jobs = $this->adminModel->countJobs();
+        $total_recruiters = $this->adminModel->countRecruiters();
+        $total_jobseekers = $this->adminModel->countJobseekers();
+        $total_income = $this->adminModel->totalIncome();
+
         if (!isset($_SESSION['admin_id'])) {
             $this->index();
         } else {
             $data = [
                 'style' => 'admin/dashboard.css',
                 'title' => 'Dashboard',
-                'header_title' => 'Dashboard'
+                'header_title' => 'Dashboard',
+                'total_jobs' => $total_jobs,
+                'total_recruiters' => $total_recruiters,
+                'total_jobseekers' => $total_jobseekers,
+                'total_income' => $total_income
             ];
 
             $this->view('admin/dashboard', $data);
@@ -143,6 +176,7 @@ class Admins extends Controller
 
     public function addadmin()
     {
+        $this->onlyAdmin();
         // Check for POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Process form
@@ -232,6 +266,7 @@ class Admins extends Controller
 
     public function transactions()
     {
+        $this->onlyAdmin();
         $br_details = $this->moderatorModel->getAllBRDetails();
         $data = [
             'style' => 'moderators/verify_BR.css',
@@ -245,6 +280,7 @@ class Admins extends Controller
 
     public function managemoderators()
     {
+        $this->onlyAdmin();
         $moderators = $this->adminModel->getModeratorDetails();
         $data = [
             'style' => 'admin/mod_manage.css',
@@ -258,6 +294,7 @@ class Admins extends Controller
 
     public function disable_moderator()
     {
+        $this->onlyAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if user is logged in
             if ($this->isLoggedIn()) {
@@ -299,6 +336,7 @@ class Admins extends Controller
 
     public function enable_moderator()
     {
+        $this->onlyAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Check if user is logged in
             if ($this->isLoggedIn()) {
@@ -340,6 +378,7 @@ class Admins extends Controller
 
     public function ads()
     {
+        $this->onlyAdmin();
         $data = [
             'style' => 'admin/ads.css',
             'title' => 'Ads',
@@ -351,6 +390,7 @@ class Admins extends Controller
 
     public function post_ads()
     {
+        $this->onlyAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($this->isLoggedIn()) {
                 // Get application ID from POST data
@@ -392,17 +432,20 @@ class Admins extends Controller
     }
     public function job_ad()
     {
+        $this->onlyAdmin();
         $data['job_ad'] = $this->adminModel->jobAd();
         $this->view('api/json', $data);
     }
     public function candidate_ad()
     {
+        $this->onlyAdmin();
         $data['candidate_ad'] = $this->adminModel->candidateAd();
         $this->view('api/json', $data);
     }
 
     public function dropbox()
     {
+        $this->onlyAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($this->isLoggedIn()) {
 
@@ -462,6 +505,7 @@ class Admins extends Controller
 
     public function backup()
     {
+        $this->onlyAdmin();
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($this->isLoggedIn()) {
                 $backup = $this->adminModel->backups('/tmp');

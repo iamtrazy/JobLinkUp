@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Apr 29, 2024 at 11:56 PM
+-- Generation Time: Apr 30, 2024 at 02:28 AM
 -- Server version: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
 -- PHP Version: 8.2.18
 
@@ -40,7 +40,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `created_at`) VALUES
-(1, 'iamtrazy', 'iamtrazy@proton.me', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-11-02 17:10:10');
+(1, 'Administrator', 'iamtrazy@proton.me', '$2y$10$w3FtqY32n8c4gF0FBGK0QekpuX0kE2jrXluYsUd1GdY3tDjxAhYWW', '2023-11-02 17:10:10');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,7 @@ CREATE TABLE `applications` (
 
 INSERT INTO `applications` (`seeker_id`, `job_id`, `recruiter_id`, `created_at`, `status`) VALUES
 (2, 72, 1, '2024-04-27 11:24:25', 'approved'),
-(16, 70, 3, '2024-04-26 07:41:38', 'approved'),
+(16, 70, 3, '2024-04-26 07:41:38', 'rejected'),
 (16, 71, 1, '2024-04-27 22:47:30', 'rejected'),
 (16, 72, 1, '2024-04-27 11:22:17', 'approved'),
 (29, 72, 1, '2024-04-28 13:27:41', 'approved'),
@@ -158,8 +158,7 @@ CREATE TABLE `br_details` (
 
 INSERT INTO `br_details` (`application_id`, `recruiter_id`, `business_name`, `business_type`, `business_reg_no`, `business_address`, `br_path`, `first_name`, `last_name`, `phone`, `address`, `city`, `created_at`) VALUES
 (3, 1, 'AT Software', 'Sole Proprietership', '123', '1156 High St, Santa Cruz, CA 95064', '662c022a36f685.96565381.pdf', 'minoli', 'perera', '0771231239', '38/4, Mihindu Mw, Malabe', 'Colombo', '2024-04-28 06:09:40'),
-(5, 2, 'BG software', 'Sole Proprietership', '123', '38/4, Mihindu Mawatha , Malabe', '662e474fc73520.02995312.pdf', 'minoli', 'perera', '0771231239', '38/4, Mihindu Mw, Malabe', 'Colombo', '2024-04-28 12:55:47'),
-(6, 1, 'TestBusiness', 'Sole Proprietership', '123', '38/4, Mihindu Mawatha , Malabe', '662f68113a43c5.80402283.pdf', 'iamtrazy', 'Senavirathna', '0771231239', '38/4, Mihindu Mw, Malabe', 'Colombo', '2024-04-29 09:27:45');
+(5, 2, 'BG software', 'Sole Proprietership', '123', '38/4, Mihindu Mawatha , Malabe', '662e474fc73520.02995312.pdf', 'minoli', 'perera', '0771231239', '38/4, Mihindu Mw, Malabe', 'Colombo', '2024-04-28 12:55:47');
 
 -- --------------------------------------------------------
 
@@ -183,8 +182,7 @@ INSERT INTO `chat_texts` (`id`, `thread_id`, `text`, `reply`, `created_at`) VALU
 (75, 21, 'hi', 0, '2024-04-28 13:29:39'),
 (76, 21, 'hi', 1, '2024-04-28 13:29:47'),
 (77, 23, 'hi', 1, '2024-04-29 09:25:40'),
-(78, 23, 'hi', 0, '2024-04-29 09:25:47'),
-(79, 25, 'hi', 0, '2024-04-29 09:54:52');
+(78, 23, 'hi', 0, '2024-04-29 09:25:47');
 
 -- --------------------------------------------------------
 
@@ -207,7 +205,9 @@ INSERT INTO `chat_threads` (`id`, `seeker_id`, `recruiter_id`, `created_at`) VAL
 (20, 2, 1, '2024-04-28 07:25:10'),
 (21, 29, 1, '2024-04-28 13:29:20'),
 (23, 31, 1, '2024-04-29 09:24:21'),
-(25, 16, 1, '2024-04-29 09:54:03');
+(26, 2, 1, '2024-04-30 01:09:35'),
+(27, 2, 1, '2024-04-30 01:15:55'),
+(28, 2, 1, '2024-04-30 01:19:15');
 
 -- --------------------------------------------------------
 
@@ -280,9 +280,12 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`id`, `recruiter_id`, `topic`, `location`, `website`, `rate`, `rate_type`, `type`, `detail`, `keywords`, `banner_img`, `created_at`, `expire_in`, `is_deleted`, `view_count`) VALUES
-(70, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 3000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 85),
+(70, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 3000, 'One-Time', 'Part-Time', 'TEST TEST', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-26 07:30:01', '2024-05-10 07:30:01', 0, 87),
 (71, 1, 'Football Coach', '38/4, mihindu mawatha, malabe', 'example.com', 5000, 'One-Time', 'Freelance', 'test test', '', '662cdd7b52ced5.05595632.jpg', '2024-04-27 11:11:55', '2024-04-27 11:11:55', 0, 21),
-(72, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'Hello World', 'artist engineer user', '662cdf5743afe4.43858272.jpg', '2024-04-27 11:19:51', '2024-05-11 11:19:51', 0, 61);
+(72, 1, 'Tennis Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 6000, 'One-Time', 'Freelance', 'Hello World', 'artist engineer user', '66303d871a9bb2.85590529.jpeg', '2024-04-27 11:19:51', '2024-05-11 11:19:51', 0, 66),
+(73, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 6000, 'One-Time', 'Freelance', 'Hi', 'artist engineer', '6630395eec99e6.13229338.jpg', '2024-04-30 00:16:55', '2024-05-14 00:16:55', 0, 3),
+(74, 1, 'Football Coach', '1156 High St, Santa Cruz, CA 95064', 'example.com', 5000, 'One-Time', 'Freelance', 'hiaaaaaaaaaaa', 'artist engineer', 'job-detail-bg.jpg', '2024-04-30 00:23:19', '2024-05-14 00:23:19', 0, 1),
+(75, 1, 'Badminton coaching', '1156 High St, Santa Cruz, CA 95064', 'example.com', 12345, 'One-Time', 'Freelance', 'hihiahiah', 'artist engineer user', 'job-detail-bg.jpg', '2024-04-30 00:41:37', '2024-05-14 00:41:37', 0, 1);
 
 --
 -- Triggers `jobs`
@@ -388,9 +391,9 @@ CREATE TABLE `recruiters` (
 --
 
 INSERT INTO `recruiters` (`id`, `email`, `password`, `name`, `age`, `phone_no`, `address`, `profile_image`, `about`, `linkedin_url`, `whatsapp_url`, `created_at`, `code_verified`, `br_uploaded`, `paid`, `is_varified`, `is_banned`) VALUES
-(1, 'info@gmail.com', '$2y$10$ungeuHkk3ZE9JnrkCdPDyO.8p1I325lKr3wAvYKpGEtXfYuMkLNTm', 'AT Softwares', 30, '0702339061', '38/4, Mihindu Mw, Malabe', '662f6854b88e60.25610087.jpg', 'Test About', 'linkedin.com', '0702339061', '2023-11-02 09:06:43', 1, 1, 0, 0, 0),
-(2, 'hello@business.lk', '$2y$10$ungeuHkk3ZE9JnrkCdPDyO.8p1I325lKr3wAvYKpGEtXfYuMkLNTm', 'BG Softwares', NULL, NULL, NULL, 'default_recruiter.jpg', NULL, NULL, '', '2024-04-21 06:34:39', 1, 0, 0, 0, 0),
-(3, 'iamtrazy@proton.me', '$2y$10$wBOgCFIKnfy19OhZtmy1j.v/TkvYVw7TiHl8jK96.qbW/wweNN4uS', 'XY Softwares', NULL, NULL, NULL, 'default_recruiter.jpg', NULL, NULL, '', '2024-04-26 07:07:16', 0, 0, 0, 0, 0),
+(1, 'iamtrazy@proton.me', '$2y$10$4sF75Dmow/zTRv/cmz5L2.qXnPAFv/TNtJumb4JlHBN7PiB3tGqXK', 'AT Softwares', 30, '0702339061', '38/4, Mihindu Mw, Malabe', '662f6854b88e60.25610087.jpg', 'Test About', 'linkedin.com', '0702339061', '2023-11-02 09:06:43', 1, 1, 1, 1, 0),
+(2, 'hello@business.lk', '$2y$10$ungeuHkk3ZE9JnrkCdPDyO.8p1I325lKr3wAvYKpGEtXfYuMkLNTm', 'BG Softwares', NULL, NULL, NULL, 'default_recruiter.jpg', NULL, NULL, '', '2024-04-21 06:34:39', 1, 1, 0, 0, 0),
+(3, 'iamtrazy@proton.me', '$2y$10$wBOgCFIKnfy19OhZtmy1j.v/TkvYVw7TiHl8jK96.qbW/wweNN4uS', 'XY Softwares', NULL, NULL, NULL, 'default_recruiter.jpg', NULL, NULL, '', '2024-04-26 07:07:16', 0, 0, 0, 1, 0),
 (7, 'kasunhansamalboy@gmail.com', '$2y$10$GprO4iIN1ERD01Su2Z661eq9/nUtjCGGEj433qxQuUyTqKGebg7dO', 'Hello World', NULL, NULL, NULL, 'default_recruiter.jpg', NULL, NULL, '', '2024-04-27 10:52:05', 1, 0, 0, 0, 0),
 (8, 'hello@gmail.com', '$2y$10$7u6JXuTwwfbGxfA7Lhvl7e4DYX0q3E.xqBJOUUrojSHBFsDHEGNzq', 'Hello Hello', NULL, NULL, NULL, 'default_recruiter.jpg', NULL, NULL, NULL, '2024-04-28 10:20:56', 0, 0, 0, 0, 0);
 
@@ -610,7 +613,7 @@ ALTER TABLE `ads`
 -- AUTO_INCREMENT for table `br_details`
 --
 ALTER TABLE `br_details`
-  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `application_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `chat_texts`
@@ -622,7 +625,7 @@ ALTER TABLE `chat_texts`
 -- AUTO_INCREMENT for table `chat_threads`
 --
 ALTER TABLE `chat_threads`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `dropbox_keys`
@@ -634,7 +637,7 @@ ALTER TABLE `dropbox_keys`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `jobseekers`
