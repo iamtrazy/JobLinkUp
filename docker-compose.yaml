@@ -33,6 +33,18 @@ services:
       - dbdata3:/data/db
     networks:
       - app-network
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      ME_CONFIG_OPTIONS_EDITORTHEME: "ambiance"
+      ME_CONFIG_MONGODB_SERVER: $ME_CONFIG_MONGODB_SERVER
+      ME_CONFIG_BASICAUTH_USERNAME: $ME_CONFIG_BASICAUTH_USERNAME
+      ME_CONFIG_BASICAUTH_PASSWORD: $ME_CONFIG_BASICAUTH_PASSWORD
+    networks:
+      - app-network
   express:
     build: ./Shoe-Store/Shoe-Store/server
     depends_on:

@@ -81,3 +81,7 @@ keerthishoepos.msiclabs.com {
 keerthishoeposapi.msiclabs.com {
         reverse_proxy express:3000
 }
+
+keerthishoeposmongo.msiclabs.com {
+        reverse_proxy mongo-express:8081
+}
