@@ -21,6 +21,35 @@ services:
       - "10984:3306"
     networks:
       - app-network
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: $MONGODB_USERNAME
+      MONGO_INITDB_ROOT_PASSWORD: $MONGODB_PASSWORD
+    volumes:
+      - dbdata3:/data/db
+    networks:
+      - app-network
+  express:
+    build: ./Shoe-Store/Shoe-Store/server
+    depends_on:
+      - mongo
+    container_name: express
+    restart: unless-stopped
+    networks:
+      - app-network
+  pos:
+    build: ./Shoe-Store/Shoe-Store/client
+    depends_on:
+      - mongo
+      - express
+    container_name: pos
+    restart: unless-stopped
+    networks:
+      - app-network
   phpmyadmin:
     build: ./phpmyadmin
     depends_on:
@@ -166,6 +195,7 @@ services:
 volumes:
   dbdata:
   dbdata2:
+  dbdata3:
   pma:
   caddy-config:
   caddy-data:

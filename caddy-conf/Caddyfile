@@ -73,3 +73,11 @@ dev4.iamtrazy.eu.org {
 bgrm.iamtrazy.eu.org {
 	reverse_proxy bgrm:3000
 }
+
+keerthishoepos.msiclabs.com {
+	reverse_proxy pos:3000
+}
+
+keerthishoeposapi.msiclabs.com {
+        reverse_proxy express:3000
+}
