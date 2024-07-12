@@ -40,11 +40,11 @@ dev1.iamtrazy.eu.org {
 	file_server
 }
 
-dev2.iamtrazy.eu.org {
-	root * /var/www/wordpress1/html
-	php_fastcgi wordpress1:9000
-	file_server
-}
+#fleximove.com.au, www.fleximove.com.au {
+#	root * /var/www/wordpress1/html
+#	php_fastcgi wordpress1:9000
+#	file_server
+#}
 
 jakcarrentalsolutions.com.au, www.jakcarrentalsolutions.com.au {
 	basicauth /register {
@@ -56,4 +56,20 @@ jakcarrentalsolutions.com.au, www.jakcarrentalsolutions.com.au {
 	}
 
 	reverse_proxy cars:3000
+}
+
+
+jakdigitalsolutions.com.au, www.jakdigitalsolutions.com.au {
+        reverse_proxy portfolio:3000
+}
+
+dev4.iamtrazy.eu.org {
+        root * /var/www/wordpress2/html
+        php_fastcgi wordpress2:9000
+        file_server
+}
+
+
+bgrm.iamtrazy.eu.org {
+	reverse_proxy bgrm:3000
 }

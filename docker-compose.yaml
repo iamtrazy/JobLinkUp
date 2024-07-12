@@ -45,7 +45,6 @@ services:
       - app-network
     env_file:
       - .env
-    
   wordpress:
     depends_on:
       - db
@@ -82,12 +81,31 @@ services:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - app-network
-
+  wordpress2:
+    depends_on:
+      - db
+    image: wordpress:6-fpm-alpine
+    container_name: wordpress2
+    restart: unless-stopped
+    env_file: .env
+    working_dir: /var/www/wordpress2/html
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=wordpress2
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress2
+    volumes:
+      - wordpress2:/var/www/wordpress2/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    networks:
+      - app-network
   webserver:
     image: caddy:alpine
     depends_on:
       - phpmyadmin
       - wordpress
+      - wordpress1
+      - wordpress2
     container_name: webserver
     restart: unless-stopped
     ports:
@@ -97,6 +115,7 @@ services:
       - pma:/var/www/pma/html/
       - wordpress:/var/www/wordpress0/html
       - wordpress1:/var/www/wordpress1/html
+      - wordpress2:/var/www/wordpress2/html
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
       - caddy-config:/config
@@ -121,6 +140,21 @@ services:
       - ./car-rental-nikila/assets:/app/assets
     networks:
       - app-network
+  bgrm:
+    build: ./bgrm
+    depends_on:
+      - webserver
+    container_name: bgrm
+    networks:
+      - app-network
+  portfolio:
+    build: ./JAK-Digi-Portfolio
+    depends_on:
+      - webserver
+    container_name: portfolio
+    restart: unless-stopped
+    networks:
+      - app-network
   composer:
     restart: "no"
     container_name: composer
@@ -137,6 +171,7 @@ volumes:
   caddy-data:
   wordpress:
   wordpress1:
+  wordpress2:
 
 networks:
   app-network:

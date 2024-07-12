@@ -2,9 +2,8 @@
 caddy-data
 Hotel-Management/
 car-rental-nikila/
-JAK-Digi-Portfolio/
+AK-Digi-Portfolio
 uploads.ini
-Shoe-Store/
 
 src/app/vendor
 src/app/autoload.php
