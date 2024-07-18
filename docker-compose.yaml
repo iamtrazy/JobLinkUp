@@ -188,6 +188,32 @@ services:
     container_name: bgrm
     networks:
       - app-network
+  simple-upload:
+    build: ./simple-upload
+    depends_on:
+      - webserver
+    container_name: simple-upload
+    networks:
+      - app-network
+    volumes:
+      - ./simple-upload/uploads:/usr/src/app/uploads
+  la-fresca-backend:
+    build: ./La-Fresca/la-fresca-backend
+    depends_on:
+      - webserver
+    container_name: la-fresca-backend
+    environment:
+      - DATABASE_URL=$LAFRESCA_DB
+    networks:
+      - app-network
+  la-fresca-frontend:
+    build: ./La-Fresca/la-fresca-frontend
+    depends_on:
+      - webserver
+      - la-fresca-backend
+    container_name: la-fresca-frontend
+    networks:
+      - app-network
   portfolio:
     build: ./JAK-Digi-Portfolio
     depends_on:
@@ -214,6 +240,7 @@ volumes:
   wordpress:
   wordpress1:
   wordpress2:
+  simple-upload:
 
 networks:
   app-network:

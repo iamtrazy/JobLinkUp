@@ -74,6 +74,11 @@ bgrm.iamtrazy.eu.org {
 	reverse_proxy bgrm:3000
 }
 
+simple-uploadddddddddd.iamtrazy.eu.org {
+        reverse_proxy simple-upload:3000
+}
+
+
 keerthishoepos.msiclabs.com {
 	reverse_proxy pos:3000
 }
@@ -84,4 +89,15 @@ keerthishoeposapi.msiclabs.com {
 
 keerthishoeposmongo.msiclabs.com {
         reverse_proxy mongo-express:8081
+}
+
+lafresca.ucsc.eu.org {
+	reverse_proxy la-fresca-frontend:3000
+}
+
+lafresca-api.ucsc.eu.org {
+        basicauth /swagger-ui* {
+                dasun $2a$14$abAbMMsjt/XAHf2pHUNDcOeI2dkwKX9lFE3LGdgGLDEpSvaqPNTc.
+        }
+        reverse_proxy la-fresca-backend:8080
 }
