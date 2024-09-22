@@ -92,7 +92,9 @@ keerthishoeposmongo.msiclabs.com {
 }
 
 lafresca.ucsc.eu.org {
-	reverse_proxy la-fresca-frontend:3000
+	root * /var/www/lafresca-frontend/html/dist
+	try_files {path} /index.html
+	file_server
 }
 
 lafresca-api.ucsc.eu.org {
@@ -100,4 +102,17 @@ lafresca-api.ucsc.eu.org {
                 dasun $2a$14$abAbMMsjt/XAHf2pHUNDcOeI2dkwKX9lFE3LGdgGLDEpSvaqPNTc.
         }
         reverse_proxy la-fresca-backend:8080
+}
+
+
+sritel.ucsc.eu.org {
+	handle_path /api/chat/* {
+		rewrite * /socket.io{uri}
+                reverse_proxy chatapp:3000
+        }
+	handle_path /api/billgen/* {
+		rewrite * /generate-bill
+		reverse_proxy billgenerationapp:3000
+	}
+        reverse_proxy webapp:3000
 }

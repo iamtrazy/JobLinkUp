@@ -29,6 +29,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: $MONGODB_USERNAME
       MONGO_INITDB_ROOT_PASSWORD: $MONGODB_PASSWORD
+      TZ: Asia/Colombo
     volumes:
       - dbdata3:/data/db
     networks:
@@ -157,12 +158,14 @@ services:
       - wordpress:/var/www/wordpress0/html
       - wordpress1:/var/www/wordpress1/html
       - wordpress2:/var/www/wordpress2/html
+      - /var/www/lafresca-frontend:/var/www/lafresca-frontend
       - ./src:/var/www/joblinkup/
       - ./caddy-conf:/etc/caddy/
       - caddy-config:/config
       - caddy-data:/data
     networks:
       - app-network
+      - middleware_net-dapr
   hotels:
     build: ./Hotel-Management
     depends_on:
@@ -198,20 +201,12 @@ services:
     volumes:
       - ./simple-upload/uploads:/usr/src/app/uploads
   la-fresca-backend:
-    build: ./La-Fresca/la-fresca-backend
+    image: ghcr.io/la-fresca/la-fresca-backend:main
     depends_on:
       - webserver
     container_name: la-fresca-backend
     environment:
       - DATABASE_URL=$LAFRESCA_DB
-    networks:
-      - app-network
-  la-fresca-frontend:
-    build: ./La-Fresca/la-fresca-frontend
-    depends_on:
-      - webserver
-      - la-fresca-backend
-    container_name: la-fresca-frontend
     networks:
       - app-network
   portfolio:
@@ -245,3 +240,5 @@ volumes:
 networks:
   app-network:
     driver: bridge
+  middleware_net-dapr:
+    external: true
